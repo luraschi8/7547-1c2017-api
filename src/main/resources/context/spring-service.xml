@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+ 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- Configuración para la capa de negocio/persistencia -->
+
+	<!-- Propiedades DB -->
+	<context:property-placeholder location="classpath:database.properties" />
+
+	<!-- Fuente de datos - Los valores se obtendran del archivo declarado arriba. 
+		No es obligatorio el uso de un archivo separado. -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+	</bean>
+
+	<!-- En vez de establecer una clase aparte, la definimos como un bean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<!-- Aca pondremos las clases que mapeemos -->
+				<value>ar.com.trips.persistencia.modelo.CiudadModelo
+				</value>
+				<value>ar.com.trips.persistencia.modelo.AtraccionModelo
+				</value>
+				<value>ar.com.trips.persistencia.modelo.UsuarioModelo
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.id.new_generator_mappings">false</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Engarga de realizar transacciones -->
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- DAOs -->
+	<bean id="ciudadDAO"
+		class="ar.com.trips.persistencia.dao.impl.CiudadDAOImpl" />
+	<bean id="atraccionDAO"
+		class="ar.com.trips.persistencia.dao.impl.AtraccionDAOImpl" />
+	<bean id="usuarioDAO"
+		class="ar.com.trips.persistencia.dao.impl.UsuarioDAOImpl" />
+	
+</beans>

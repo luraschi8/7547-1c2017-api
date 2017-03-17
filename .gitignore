@@ -21,3 +21,9 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/workspace.xml
 
+/target/
+/build/
+/.settings
+.classpath
+.project
+
