@@ -1,1 +1,1 @@
-web:    java -jar target/Trips.jar
+web: sh target/bin/webapp
