@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	
+	xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/jee
+          http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+	
+	<security:http pattern="/inicio" security="none"/>
+	
+	<security:http>
+		<security:intercept-url pattern="/usuarios" access="hasAuthority('usuarios_listar')" />
+				
+		<security:intercept-url pattern="/principal" access="isAuthenticated()" />
+		
+		<security:intercept-url pattern="/ingresar" access="isAuthenticated()" />
+		
+		<security:form-login login-page="/inicio"
+							always-use-default-target="true"
+							authentication-failure-url="/inicio?error"
+							default-target-url="/atracciones"
+							username-parameter="username" password-parameter="password" />
+		
+		<security:logout logout-success-url="/inicio"  />
+
+		<security:access-denied-handler error-page="/403" />
+		
+		<security:csrf disabled="true"/>
+	</security:http>
+	
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="dataSource" role-prefix=""
+				users-by-username-query="SELECT nombre as username, contrasena as password,true as enabled FROM Usuario WHERE nombre=?"
+				authorities-by-username-query="SELECT u.nombreUsuario as username, concat(concat(LOWER(p.modulo),'_'),LOWER(p.permiso)) as authority FROM Usuario u join PerfilUsuario pu on u.id = pu.idUsuario join PerfilPermiso pp on pu.idPerfil = pp.idPerfil join Permiso p on p.id = pp.idPermiso WHERE nombreUsuario=?"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>
