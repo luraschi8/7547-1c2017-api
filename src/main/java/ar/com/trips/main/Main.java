@@ -1,5 +1,5 @@
 package ar.com.trips.main;
-
+/*
 import java.io.File;
 
 import org.apache.catalina.WebResourceRoot;
@@ -7,12 +7,12 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
-
+*/
 public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        String webappDirLocation = "WebContent/";
+/*        String webappDirLocation = "WebContent/";
         Tomcat tomcat = new Tomcat();
 
         //The port that we should run on can be set into an environment variable
@@ -36,6 +36,6 @@ public class Main {
         ctx.setResources(resources);
 
         tomcat.start();
-        tomcat.getServer().await();
+        tomcat.getServer().await();*/
     }
 }

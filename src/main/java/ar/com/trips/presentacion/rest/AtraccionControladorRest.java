@@ -24,6 +24,7 @@ public class AtraccionControladorRest {
 	public HashMap<String, List> listar() {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		lista.put(DATA, atraccionDao.listar(AtraccionModelo.class));
+		
 		return lista;
 	}
 	

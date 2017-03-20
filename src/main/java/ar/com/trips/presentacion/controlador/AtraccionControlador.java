@@ -16,9 +16,9 @@ public class AtraccionControlador {
 	
 	@RequestMapping(path="/atracciones")
 	public ModelAndView listar() {
-		ModelAndView model = new ModelAndView("inicio");
+		ModelAndView model = new ModelAndView("atracciones/atracciones");
 		model.addObject("listaAtracciones", atraccionDao.listar(AtraccionModelo.class));
-		//model.addObject("listaAtracciones", atraccionDao.listar());
+		model.addObject("atraccion", new AtraccionModelo());
 		return model;
 	}
 	
