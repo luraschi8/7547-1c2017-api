@@ -6,6 +6,5 @@
    	<import resource="context/spring-base.xml" />
 	<import resource="context/spring-webmvc.xml" />
 	<import resource="context/spring-service.xml" />
-	<import resource="context/spring-security.xml" />
 
 </beans>
