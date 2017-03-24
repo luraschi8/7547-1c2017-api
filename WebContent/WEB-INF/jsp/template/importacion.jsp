@@ -15,4 +15,3 @@
 <script src="${pageContext.request.contextPath}/js/bootbox.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/ripples.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/material.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/floating-label.js"></script>

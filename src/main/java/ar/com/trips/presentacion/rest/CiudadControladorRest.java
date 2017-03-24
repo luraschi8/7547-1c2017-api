@@ -1,6 +1,7 @@
 package ar.com.trips.presentacion.rest;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,11 @@ public class CiudadControladorRest {
 	@RequestMapping("/ciudadesJson")
 	public HashMap<String, List> listar() {
 		HashMap<String, List> lista = new HashMap<String, List>();
-		lista.put(DATA, ciudadDao.listar(CiudadModelo.class));
+		List<CiudadModelo> listaAux = ciudadDao.listar(CiudadModelo.class);
+		for (CiudadModelo ciudadModelo : listaAux) {
+			ciudadModelo.setCantAtracciones(ciudadModelo.getListaAtracciones().size());
+		}
+		lista.put(DATA, listaAux);
 		return lista;
 	}
 

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -38,6 +39,9 @@ public class CiudadModelo extends Modelo {
 	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
 	@JsonBackReference
 	private List<AtraccionModelo> listaAtracciones = new ArrayList<>();	
+	
+	@Transient
+	private int cantAtracciones;
 	
 	public CiudadModelo() {
 		
@@ -89,6 +93,14 @@ public class CiudadModelo extends Modelo {
 
 	public void setListaAtracciones(List<AtraccionModelo> listaAtracciones) {
 		this.listaAtracciones = listaAtracciones;
+	}
+
+	public int getCantAtracciones() {
+		return cantAtracciones;
+	}
+
+	public void setCantAtracciones(int cantAtracciones) {
+		this.cantAtracciones = cantAtracciones;
 	}
 
 }

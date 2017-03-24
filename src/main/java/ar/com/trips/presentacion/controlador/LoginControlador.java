@@ -10,7 +10,7 @@ public class LoginControlador {
 	
 	@RequestMapping("/")
 	public String inicio() {
-		return "redirect:/inicio";
+		return "redirect:/ciudades";
 	}
 	
 	@RequestMapping("/inicio")
