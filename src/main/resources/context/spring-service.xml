@@ -58,4 +58,10 @@
 	<bean id="usuarioDAO"
 		class="ar.com.trips.persistencia.dao.impl.UsuarioDAOImpl" />
 	
+	
+	<!-- Validaciones -->
+	<bean name="ciudadValidacion"
+		class="ar.com.trips.presentacion.validacion.CiudadValidacion">
+	</bean>
+	
 </beans>
