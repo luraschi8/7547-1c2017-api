@@ -36,3 +36,15 @@
 #pac-input:focus {
     border-color: #4d90fe;
 }
+
+#archivoImagenPiso {
+    display: none;
+}
+
+.cuadrado {
+	height: 400px;
+	width: 600px;/*600px;*/
+	background-color: gray;
+/* 	float: left; */
+	overflow: hidden;   
+}

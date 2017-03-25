@@ -1,16 +1,14 @@
 package ar.com.trips.presentacion.controlador;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.modelo.CiudadModelo;
-import ar.com.trips.presentacion.validacion.CiudadValidacion;
 
 @Controller
 public class CiudadControlador {
@@ -19,9 +17,6 @@ public class CiudadControlador {
 	
 	@Autowired
 	private ICiudadDAO ciudadDao;
-	
-	@Autowired
-	CiudadValidacion ciudadValidacion;
 	
 	@RequestMapping(path="/ciudades")
 	public ModelAndView listar() {
@@ -39,14 +34,17 @@ public class CiudadControlador {
 	}
 	
 	@RequestMapping("ciudadNuevoValidar")
-	public ModelAndView nuevoValidar(@ModelAttribute("ciudad") CiudadModelo ciudad) {
+	public ModelAndView nuevoValidar(@RequestParam("nombre") String nombre,
+									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
+		
+		CiudadModelo ciudad = new CiudadModelo();
+		ciudad.setNombre(nombre);;
 		ciudad.setPais("Pais");
-		List<String> listaErrores = ciudadValidacion.validar(ciudad);
-		if (listaErrores.size() != 0) {
-			ModelAndView model = new ModelAndView(CIUDAD_NUEVO_PATH);
-			model.addObject("listaErrores",listaErrores);
-			model.addObject("ciudad",ciudad);
-			return model;
+		try {
+			byte[] bytes = imagen.getBytes();
+			ciudad.setFileimage(bytes);
+		} catch (Exception e) {
+			
 		}
 		ciudad.setLatitud(98);
 		ciudad.setLongitud(98);

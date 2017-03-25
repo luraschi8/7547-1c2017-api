@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.dataTables.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ripples.min.css" >
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/custom.css" >
 
 <!-- JS -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.1.0.min.js"></script>

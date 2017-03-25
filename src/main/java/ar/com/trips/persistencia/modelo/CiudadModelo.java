@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -35,6 +36,10 @@ public class CiudadModelo extends Modelo {
 	
 	@Column(name="longitud")
 	private float longitud;
+	
+	@Column(name="imagen")
+	@Lob
+	private byte[] fileimage;
 	
 	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
 	@JsonBackReference
@@ -103,4 +108,12 @@ public class CiudadModelo extends Modelo {
 		this.cantAtracciones = cantAtracciones;
 	}
 
+	public byte[] getFileimage() {
+		return fileimage;
+	}
+
+	public void setFileimage(byte[] fileimage) {
+		this.fileimage = fileimage;
+	}
+	
 }

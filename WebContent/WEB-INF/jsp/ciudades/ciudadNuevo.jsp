@@ -9,7 +9,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="../template/importacion.jsp"></jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/maps.css" >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Ciudad nueva</title>
@@ -18,27 +17,44 @@
 
 <h1 class="page-header">Ciudad nueva</h1>
 
-<form:form class="form-horizontal maxwid" id ="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad">
+<div>
+	<input type="button" id="get_file" class="btn btn-default" value="Elegir imagen">
+</div>
+
+<form:form class="form-horizontal maxwid" id ="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad" enctype="multipart/form-data">
 	<div class="form-group">
 		<form:label class="control-label col-sm-2" path="nombre">Nombre:</form:label>
 	    <div class="col-sm-10">
 			<form:input class="form-control" id="nombre" path="nombre" required="required"/>
 		</div>
 		<input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+		
+		<input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
+		
+		<div class="cuadrado" id="zonaArrastrable">
+			<img id="imagen">
+		</div>
         
         <div id="map"></div>
 		
 	</div>
 
 </form:form>
-<c:if test="${!empty listaErrores}"> 
-	<div id="errores" class="alert alert-warning fade in" style="display:block;">
-		<c:forEach items="${listaErrores}" var="error"> 
-			<c:out value="${error}"> </c:out>
-			<br>
-		</c:forEach>
-	</div>
-</c:if>
+
+<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
+ 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+ 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+</div>
+
+<div class="alert alert-warning fade in" id="mensajeNombreRepetido" style="display: none;">
+ 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+ 	<strong>Error!</strong> La ciudad seleccionada ya se encuentra registrada, seleccione otra.
+</div>
+
+<div class="alert alert-warning fade in" id="mensajeNombreVacio" style="display: none;">
+ 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+ 	<strong>Error!</strong> No se ha seleccionado ninguna ciudad.
+</div>
 
 <form:form id="formAtras" action="ciudades" method="post">
 	<input id="url" type="hidden" name="url" />	
@@ -46,7 +62,7 @@
 <div class="form-group">
     <div >
 		<input id="botonAtras" class="btn btn-default" type="button" value="Atras" />
-		<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
+		<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar"/>
 	</div>
 </div>
 <div class="wait"></div>
@@ -62,9 +78,95 @@ $('#botonAtras').on('click', function(e) {
 
 $('#botonNuevo').on('click', function(e) {
 	e.preventDefault();
-	document.getElementById("formNuevo").submit();
+	hayError = 0;
+	document.getElementById("mensajeNombreRepetido").style.display = 'none';
+	if (document.getElementById('archivoImagenPiso').value == '') {
+		document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	}
+	if (document.getElementById('nombre').value == '') {
+		document.getElementById("mensajeNombreVacio").style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById("mensajeNombreVacio").style.display = 'none';
+	}
+	if (hayError == 1) {
+		return;
+	} 
+	var json = {
+		"nombre" : document.getElementById("nombre").value,
+		"pais": "Pais"
+	};
+	console.log("JSON");
+	console.log(json);
+	console.log(JSON.stringify(json));
+	$.ajax({
+		url : "validarCiudad",
+		type : "POST",
+		data : JSON.stringify(json),
+		processData : false,
+		dataType: "json",
+		contentType : "application/json",
+		success: function (data) {
+			if (data.existe == false) {
+				document.getElementById("formNuevo").submit();
+			} else {
+				document.getElementById("mensajeNombreRepetido").style.display = 'block';
+			}
+		}
+	});
+	
 });
 
+</script>
+
+<!-- Imagen -->
+
+<script>
+$(document).ready(function() {
+	document.getElementById('get_file').onclick = function() {
+		document.getElementById('archivoImagenPiso').addEventListener('change', readURL, true);
+		var fileButton = document.getElementById('archivoImagenPiso');
+		fileButton.click();
+	};
+	
+	$("#archivoImagenPiso").change(function() {
+	    var val = $(this).val();
+	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	        case 'gif': case 'jpg': case 'png':
+	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	break;
+	        default:
+	            $(this).val('');
+				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+				document.getElementById('archivoImagenPiso').value = "" ;
+				document.getElementById('imagen').src = "" ;
+				break;
+	    }
+	});
+	
+	function readURL(){
+		var file = document.getElementById("archivoImagenPiso").files[0];
+		var reader = new FileReader();
+	    reader.onloadend = function(){
+			document.getElementById('imagen').src = reader.result ;        
+			}
+		if(file){
+			reader.readAsDataURL(file);
+		} 
+	}
+	
+	$('#formNuevo').on('keyup keypress', function(e) {
+	  var keyCode = e.keyCode || e.which;
+	  if (keyCode === 13) { 
+	    e.preventDefault();
+	    return false;
+	  }
+	});
+	
+});
 </script>
 
 <script>
