@@ -28,10 +28,12 @@
 	    	<form:input id="city" class="controls" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
 		</div>
 		<form:input id="pais" type="hidden" name="pais" path="pais"/>
+		<form:input id="latitud" type="hidden" name="latitud" path="latitud"/>
+		<form:input id="longitud" type="hidden" name="longitud" path="longitud"/>
 
         <br><br>
-        <div id="lat" path="latitud"></div>
-        <div id="lng" path="longitud"></div>
+        <!-- <div id="lat" path="latitud"></div>
+        <div id="lng" path="longitud"></div>  -->
         <div id="map"></div>
         
         <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
@@ -84,15 +86,17 @@ $('#botonAtras').on('click', function(e) {
 $('#botonNuevo').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("mensajeNombreRepetido").style.display = 'none';
-	var city = document.getElementById('city');
+	var city = {
+		name: document.getElementById('city').value,
+		country: "Desconocido"
+	};
 	var geocoder = new google.maps.Geocoder();
-	geocoder.geocode({'address': city.value}, function(results, status) {
-		if (status === google.maps.GeocoderStatus.OK) {
-			document.formNuevo.pais.value = "Hola";
-			validarCiudadRepetida();
-		}
-	});
+	parseCity(city);
+	document.formNuevo.nombre.value = city.name;
+	document.formNuevo.pais.value = city.country;
+	validarCiudadRepetida();
 });
+
 function validarCiudadRepetida() {
 	hayError = 0;
 	if (document.getElementById('archivoImagenPiso').value == '') {
@@ -111,8 +115,10 @@ function validarCiudadRepetida() {
 		return;
 	} 
 	var json = {
-		"nombre" : document.getElementById("city").value,
-		"pais": document.formNuevo.pais.value
+		"nombre" : document.formNuevo.nombre.value,
+		"pais": document.formNuevo.pais.value,
+		"latitud": document.formNuevo.latitud.value,
+		"longitud": document.formNuevo.longitud.value
 	};
 	$.ajax({
 		url : "validarCiudad",
@@ -129,6 +135,15 @@ function validarCiudadRepetida() {
 			}
 		}
 	});
+}
+
+function parseCity(city) {
+	var complete_city = city.name;
+	var n = complete_city.lastIndexOf(", ");
+	if ((n > 1) && (n < complete_city.length)) {
+		city.name = complete_city.substring(0, n);
+		city.country = complete_city.substring(n + 2, complete_city.length);
+	}
 }
 </script>
 
@@ -231,8 +246,9 @@ $(document).ready(function() {
             marker.setPosition(place.geometry.location);
             marker.setVisible(true);
 
-            /*setValue('lat', place.geometry.location.lat);//place.geometry.location.lat;
-            window.alert(document.getElementById('lat').value);*/
+            // Se guardan las coordenadas
+            document.formNuevo.latitud.value = place.geometry.location.lat();
+            document.formNuevo.longitud.value = place.geometry.location.lng();
 
             var address = '';
             if (place.address_components) {
