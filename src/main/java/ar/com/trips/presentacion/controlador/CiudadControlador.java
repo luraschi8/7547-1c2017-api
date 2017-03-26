@@ -2,6 +2,7 @@ package ar.com.trips.presentacion.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,15 +35,13 @@ public class CiudadControlador {
 	}
 	
 	@RequestMapping("ciudadNuevoValidar")
-	public ModelAndView nuevoValidar(@RequestParam("nombre") String nombre,
-									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
-		
-		CiudadModelo ciudad = new CiudadModelo();
-		ciudad.setNombre(nombre);;
-		ciudad.setPais("Pais");
+	public ModelAndView nuevoValidar(@ModelAttribute("ciudad") CiudadModelo ciudad
+									/*,@RequestParam("archivoImagenPiso") MultipartFile imagen*/) {
+		//CiudadModelo ciudad = new CiudadModelo();
+		//ciudad.setNombre(nombre);
 		try {
-			byte[] bytes = imagen.getBytes();
-			ciudad.setFileimage(bytes);
+			//byte[] bytes = imagen.getBytes();
+			//ciudad.setFileimage(bytes);
 		} catch (Exception e) {
 			
 		}

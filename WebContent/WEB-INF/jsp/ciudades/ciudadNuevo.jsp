@@ -9,7 +9,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="../template/importacion.jsp"></jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/maps.css" >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Trips - Nueva ciudad</title>
@@ -18,7 +17,7 @@
 
 <h1 class="page-header">Nueva ciudad</h1>
 
-<form:form class="form-horizontal maxwid" id ="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad">
+<form:form class="form-horizontal maxwid" id ="formNuevo" name="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad">
 	<div class="form-group">
 		<form:label class="control-label col-sm-2" path="nombre">Nombre:</form:label>
 	    <div class="col-sm-10">
@@ -134,29 +133,23 @@ function setValue(id, new_value) {
 	  s.innerHTML = new_value;
 }
 
-
-
-
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
-	var url = document.URL;
-	document.getElementById("url").value = url;
 	document.getElementById("formAtras").submit();
 });
 
 $('#botonNuevo').on('click', function(e) {
 	e.preventDefault();
-
-
 	var city = document.getElementById('city');
+	
 	var geocoder = new google.maps.Geocoder();
 	geocoder.geocode({'address': city.value}, function(results, status) {
 		if (status === google.maps.GeocoderStatus.OK) {
 			//document.getElementById('lat') = "HOLA";
 			window.alert(document.getElementById('city').value);
+			document.formNuevo.pais.value = "Hola";
 			document.getElementById("formNuevo").submit();
 			//setValue('pais', "HOLA");
-			document.formNuevo.pais.value = "Hola";
 			//document.getElementById("pais").value = "1";
 			window.alert(document.getElementById('pais').value);
 			window.alert(document.getElementById('city').value);
