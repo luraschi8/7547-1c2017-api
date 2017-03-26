@@ -39,21 +39,24 @@
 	</div>
 </div>
 
-	<c:set var="value">
-		Desea borrar?
-	</c:set>
-	<input id="mensajeBorrar" type="hidden" value="${value}" />
-	
-	<c:set var="borrar">
-		Borrar
-	</c:set>
+<c:set var="value">
+	Desea borrar?
+</c:set>
+<input id="mensajeBorrar" type="hidden" value="${value}" />
 
-	<c:set var="modificar">
-		Modificar
-	</c:set>
+<c:set var="borrar">
+	Borrar
+</c:set>
+
+<c:set var="ver">
+	Ver
+</c:set>
 <form class="form-horizontal maxwid" id ="formBorrar" name="formBorrar" action="ciudadBorrar" method="post">
 	<input id="id" name="id" type="hidden"> 
 </form>
+<form:form id="formVer" name="formVer" action="ciudadVer" method="post" commandName="ciudad">
+	<form:input id="id" path="id" type="hidden"/>
+</form:form>
 <div class="wait"></div>
 
 <script>
@@ -67,7 +70,7 @@ $(document).ready(function() {
 	        {data: "pais" },
 	        {data: "cantAtracciones" },
 	        {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
-	        {defaultContent:'<button class="btn btn-warning" id="modificar">${modificar}</button>'}
+	        {defaultContent:'<button class="btn btn-warning" id="ver">${ver}</button>'}
 	        ],
 	    select:true,
 	    paging:true,
@@ -94,6 +97,13 @@ $(document).ready(function() {
 				document.getElementById("formBorrar").submit();
 			}
 		});
+	});
+	
+	$('#tablita tbody').on('click', '#ver', function (e) {
+		var data = table.row(this.closest("tr")).data();
+		e.preventDefault();
+		document.formVer.id.value = data["id"];
+		document.getElementById("formVer").submit();
 	});
 });
 	

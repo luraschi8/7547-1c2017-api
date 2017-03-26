@@ -54,4 +54,12 @@ public class CiudadControlador {
 		ciudadDao.borrar(id);
 		return new ModelAndView("redirect:/ciudades");
 	}
+	
+	@RequestMapping("ciudadVer")
+	public ModelAndView ver(@RequestParam("id") int id) {
+		CiudadModelo ciudad = ciudadDao.get(CiudadModelo.class, id);
+		ModelAndView model = new ModelAndView("ciudades/ciudad");
+		model.addObject("ciudad",ciudad);		
+		return model;
+	}
 }
