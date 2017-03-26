@@ -35,7 +35,7 @@ public class CiudadControlador {
 	}
 	
 	@RequestMapping("ciudadNuevoValidar")
-	public ModelAndView nuevoValidar(@ModelAttribute("ciudad") CiudadModelo ciudad,
+	public ModelAndView nuevo(@ModelAttribute("ciudad") CiudadModelo ciudad,
 									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
 		try {
 			byte[] bytes = imagen.getBytes();
@@ -44,6 +44,23 @@ public class CiudadControlador {
 			
 		}
 		ciudadDao.guardar(ciudad);
+		return new ModelAndView("redirect:/ciudades");
+	}
+	
+	@RequestMapping("ciudadModificar")
+	public ModelAndView modificar(@ModelAttribute("ciudad") CiudadModelo ciudadId,
+									@RequestParam("imagenCambiada") int imagenCambiada,
+									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
+		CiudadModelo ciudad = ciudadDao.get(CiudadModelo.class, ciudadId.getId());
+		if (imagenCambiada == 1) {
+			try {
+				byte[] bytes = imagen.getBytes();
+				ciudad.setImagen(bytes);
+			} catch (Exception e) {
+				
+			}
+		}
+		ciudadDao.modificar(ciudad);
 		return new ModelAndView("redirect:/ciudades");
 	}
 	
