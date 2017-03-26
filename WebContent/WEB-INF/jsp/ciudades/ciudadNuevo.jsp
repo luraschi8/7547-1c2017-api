@@ -15,62 +15,157 @@
 </head>
 <body>
 
-<h1 class="page-header">Nueva ciudad</h1>
+	<h1 class="page-header">Nueva ciudad</h1>
 
-<div>
-	<input type="button" id="get_file" class="btn btn-default" value="Elegir imagen">
-</div>
-
-<form:form class="form-horizontal maxwid" id ="formNuevo" name="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad" enctype="multipart/form-data">
-	<div class="form-group">
-		<form:label class="control-label col-sm-2" path="nombre">Nombre:</form:label>
-	    <div class="col-sm-10">
-	    	<form:input id="city" class="controls" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
-		</div>
-		<form:input id="pais" type="hidden" name="pais" path="pais"/>
-		<form:input id="latitud" type="hidden" name="latitud" path="latitud"/>
-		<form:input id="longitud" type="hidden" name="longitud" path="longitud"/>
-
-        <br><br>
-        <!-- <div id="lat" path="latitud"></div>
-        <div id="lng" path="longitud"></div>  -->
-        <div id="map"></div>
-        
-        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
+	<form:form class="form-horizontal maxwid" id ="formNuevo" name="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad" enctype="multipart/form-data">
+		<div class="input-and-image-group" style="width: 100%; overflow: hidden;">	
+			<div class="input" style="float:left">
+				<div class="name-group">
+					<form:label class="name-label" path="nombre">Nombre de la ciudad</form:label>
+				    <form:input id="city" class="name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
+					
+					<form:input id="pais" type="hidden" name="pais" path="pais"/>
+					<form:input id="latitud" type="hidden" name="latitud" path="latitud"/>
+					<form:input id="longitud" type="hidden" name="longitud" path="longitud"/>
+				</div>
 		
-		<div class="cuadrado" id="zonaArrastrable">
-			<img id="imagen">
+				<div class="image-route">
+					<form:label class="image-route-label" path="">Agregar imagen</form:label>
+					<form:input class="image-route-box" type="text" required="required" placeholder="Ruta imagen" path=""/>
+					
+					<input type="button" id="get_file" class="btn-get-file" value="...">
+			        
+			        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
+				</div>
+				
+				<div class="image-group">
+					<div class="cuadrado" style="float:right" id="zonaArrastrable">
+						<img id="imagen">
+					</div>
+					<div class="image-label" style="float:left">Se recomienda usar una imagen con resolución 1024x800</div>
+					
+					<div class="alert-message">
+						<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+						</div>
+						
+						<div class="alert alert-warning fade in" id="mensajeNombreRepetido" style="display: none;">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>Error!</strong> La ciudad seleccionada ya se encuentra registrada, seleccione otra.
+						</div>
+						
+						<div class="alert alert-warning fade in" id="mensajeNombreVacio" style="display: none;">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>Error!</strong> No se ha seleccionado ninguna ciudad.
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		    <div id="map" style="float:right"></div>  
 		</div>
-		
-	</div>
+	</form:form>
 	
-<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
- 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
- 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
-</div>
-
-<div class="alert alert-warning fade in" id="mensajeNombreRepetido" style="display: none;">
- 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
- 	<strong>Error!</strong> La ciudad seleccionada ya se encuentra registrada, seleccione otra.
-</div>
-
-<div class="alert alert-warning fade in" id="mensajeNombreVacio" style="display: none;">
- 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
- 	<strong>Error!</strong> No se ha seleccionado ninguna ciudad.
-</div>
-
-</form:form>
-
-<form:form id="formAtras" action="ciudades" method="post">
-</form:form>
-<div class="form-group">
-    <div >
-		<input id="botonAtras" class="btn btn-default" type="button" value="Atras" />
-		<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
-	</div>
+<form:form id="formAtras" action="ciudades" method="post"></form:form>
+<div class="btn-final" style="text-align:center;">
+	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
+	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
 </div>
 <div class="wait"></div>
-
+	
+	<style type="text/css">
+		html {
+  			font-size: 10px;
+		}
+		
+		.page-header {
+			 margin-left: 2rem;
+		}
+		
+		.input-and-image-group {
+			margin-left: 8rem;
+		}
+		
+		.name-group {
+			margin-top: 3rem;
+			display: inline-block;
+    		vertical-align: top;
+		}
+		
+		.name-label {
+			margin-left: 2rem;
+			width: 15rem;
+		}
+		
+		.name-box {
+			margin-top: 0.5rem;
+			height: 2.5rem;
+			width: 70rem;
+		}
+		
+		.input {
+			margin-top: 0.5rem;
+		}
+		
+		.image-group {
+			margin-top: 3rem;
+			display: inline-block;
+    		vertical-align: top;
+		}
+		
+		.image-label {
+			margin-left: 2rem;
+			margin-top: 3.5rem;
+			width: 12.4rem;
+			font-weight: bold;
+		}
+		
+		.cuadrado {
+			margin-left: 3rem;
+			height: 15rem;
+			width: 70rem;
+		}
+		
+		.image-route-box {
+			margin-left: 4.2rem;
+			height: 2.55rem;
+			width: 66.4rem;
+		}
+		
+		.image-route-label {
+			margin-left: 2rem;
+		}
+		
+		.image-route {
+			margin-top: 0.5rem;
+			height: 2.5rem;
+			width: 90rem;
+		}
+		
+		#map {
+			margin-top: 3rem;
+			margin-right: 17rem;
+		    width: 25rem;
+		    height: 25rem;
+		}
+		
+		.btn-get-file {
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+			width: 3.2rem;
+			height: 2.55rem;
+		}
+		
+		.btn-final {
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+		}
+		
+		.alert-message{ 
+			margin-top: 17rem;
+		}
+	</style>
 <script>
 
 function setValue(id, new_value) {
