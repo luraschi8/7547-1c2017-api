@@ -10,12 +10,19 @@ create table Usuario (
     contrasena varchar(50)
 );
 
+create table Permiso (
+	id bigint(10) primary key not null auto_increment,
+    idUsuario bigint(10) not null,
+    permiso bigint(10) not null
+);
+
 create table Ciudad (
 	id bigint(10) primary key not null auto_increment,
-    nombre varchar(50),
-    pais varchar(50),
-    latitud float,
-    longitud float
+    nombre varchar(50) not null,
+    pais varchar(50) not null,
+    latitud float not null,
+    longitud float not null,
+    imagen mediumblob
 );
 
 create table Atraccion (
@@ -25,7 +32,7 @@ create table Atraccion (
     horarioVisitaComienzo time,
     horarioVisitaFin time,
     precio float,
-    latitud float,
-    longitud float,
+    latitud float not null,
+    longitud float not null,
     foreign key (idCiudad) references Ciudad (id)
 );
