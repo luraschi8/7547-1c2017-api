@@ -36,7 +36,7 @@
 					
 					<div class="button-message-group" style="float:left">
 						<div class="image-route" style="float:up">
-							<input type="button" id="get_file" class="btn-get-file" value="Agregar imagen">
+							<input type="button" id="get_file" class="btn btn-default btn-get-file" value="Agregar imagen">
 					        
 					        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
 						</div>
@@ -58,6 +58,11 @@
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>Error!</strong> No se ha seleccionado ninguna ciudad.
 						</div>
+						
+						<div class="alert alert-warning fade in" id="mensajeNombreIncorrecto" style="display: none;">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>Error!</strong> La ciudad seleccionada es incorecta.
+						</div>
 					</div>
 				</div>
 			</div>
@@ -73,91 +78,6 @@
 </div>
 <div class="wait"></div>
 	
-	<style type="text/css">
-		html {
-  			font-size: 10px;
-		}
-		
-		.page-header {
-			 margin-left: 2rem;
-		}
-		
-		.input-and-image-group {
-			margin-left: 8rem;
-		}
-		
-		.name-group {
-			margin-top: 3rem;
-		}
-		
-		.name-label {
-			margin-left: 2rem;
-			width: 15rem;
-		}
-		
-		.name-box {
-			margin-top: 0.5rem;
-			height: 2.5rem;
-			width: 50rem;
-		}
-		
-		.input {
-			margin-top: 0.5rem;
-			margin-left: 10rem;
-		}
-		
-		.image-group {
-			margin-top: 3rem;
-			display: inline-block;	
-    		vertical-align: top;
-		}
-		
-		.image-label {
-			margin-left: 2.3rem;
-			margin-top: 2rem;
-			width: 12.1rem;
-			font-weight: bold;
-			text-align: center;
-		}
-		
-		.image-box {
-			margin-left: 3rem;
-			height: 18.75rem;
-			width: 50rem;
-			background-color: #909090;
-		}
-		
-		.image-route {
-			margin-top: 0.5rem;
-			height: 2.5rem;
-			width: 10rem;
-		}
-		
-		#map {
-			margin-top: 3rem;
-			margin-right: 25rem;
-		    width: 27rem;
-		    height: 27rem;
-		}
-		
-		.btn-get-file {
-			margin-left: 1.8rem;
-			margin-top: 1rem;
-			margin-bottom: 1rem;
-			width: 14rem;
-			height: 2.55rem;
-		}
-		
-		.btn-final {
-			margin-top: 1rem;
-			margin-bottom: 1rem;
-		}
-		
-		.alert-message{ 
-			margin-top: 20rem;
-		}
-	</style>
-	
 <script>
 	function setValue(id, new_value) {
 		  var s = document.getElementById(id);
@@ -172,15 +92,27 @@
 	$('#botonNuevo').on('click', function(e) {
 		e.preventDefault();
 		document.getElementById("mensajeNombreRepetido").style.display = 'none';
+		document.getElementById("mensajeNombreIncorrecto").style.display = 'none';
 		var city = {
 			name: document.getElementById('city').value,
 			country: "Desconocido"
 		};
 		var geocoder = new google.maps.Geocoder();
-		parseCity(city);
-		document.formNuevo.nombre.value = city.name;
-		document.formNuevo.pais.value = city.country;
-		validarCiudadRepetida();
+	    geocoder.geocode({'address': city.name}, function(results, status){
+	   	    if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
+	       	    result = results[0].formatted_address;
+	       	    if (result != city.name) {
+	       	    	document.getElementById("mensajeNombreIncorrecto").style.display = 'block';
+	       	    }
+	       	    parseCity(city);
+				document.formNuevo.nombre.value = city.name;
+				document.formNuevo.pais.value = city.country;
+				validarCiudadRepetida();
+	       	} else {
+	       		alert("Invalid address");
+	       		return;
+	       	}
+	    });
 	});
 	
 	function validarCiudadRepetida() {
