@@ -57,6 +57,7 @@
 	</div>
 </div>
 
+<form:form id="formAtras" action="ciudades" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
 	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
@@ -92,7 +93,7 @@ function initMap() {
 	    center: {lat: ${latitud}, lng: ${longitud}}, //Buenos Aires coordinates
 	    zoom: 13
 	});
-}
+};
   
 var table = $('#tablita').DataTable( {
 	dom: 'frtip',
@@ -136,6 +137,11 @@ $('#botonNuevo').on('click', function(e) {
 		return;
 	}
 	document.getElementById("formModificar").submit();
+});
+
+$('#botonAtras').on('click', function(e) {
+	e.preventDefault();
+	document.getElementById("formAtras").submit();
 });
 </script>
 
