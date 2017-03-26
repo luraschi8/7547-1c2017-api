@@ -25,9 +25,11 @@
 	<div class="form-group">
 		<form:label class="control-label col-sm-2" path="nombre">Nombre:</form:label>
 	    <div class="col-sm-10">
-			<form:input class="form-control" id="nombre" path="nombre" required="required"/>
+	    	<form:input id="city" class="controls" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
 		</div>
-		<input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+		<form:input id="pais" type="hidden" name="pais" path="pais"/>
+
+        <br><br>
 		
 		<input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
 		
@@ -68,6 +70,12 @@
 <div class="wait"></div>
 
 <script>
+
+function setValue(id, new_value) {
+	  var s = document.getElementById(id);
+	  s.innerHTML = new_value;
+}
+
 
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
@@ -118,6 +126,24 @@ $('#botonNuevo').on('click', function(e) {
 		}
 	});
 	
+    
+    
+    
+    
+    var city = document.getElementById('city');
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode({'address': city.value}, function(results, status) {
+		if (status === google.maps.GeocoderStatus.OK) {
+			//document.getElementById('lat') = "HOLA";
+			window.alert(document.getElementById('city').value);
+			document.getElementById("formNuevo").submit();
+			//setValue('pais', "HOLA");
+			document.formNuevo.pais.value = "Hola";
+			//document.getElementById("pais").value = "1";
+			window.alert(document.getElementById('pais').value);
+			window.alert(document.getElementById('city').value);
+		}
+	});
 });
 
 </script>
@@ -177,7 +203,7 @@ $(document).ready(function() {
         });
         var input = (document.getElementById('pac-input'));
         
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
         var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
         autocomplete.bindTo('bounds', map);
@@ -213,6 +239,13 @@ $(document).ready(function() {
             }));
             marker.setPosition(place.geometry.location);
             marker.setVisible(true);
+            
+            
+            
+            
+            /*setValue('lat', place.geometry.location.lat);//place.geometry.location.lat;
+            window.alert(document.getElementById('lat').value);*/
+            
 
             var address = '';
             if (place.address_components) {
