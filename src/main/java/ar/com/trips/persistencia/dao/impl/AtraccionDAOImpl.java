@@ -3,6 +3,7 @@ package ar.com.trips.persistencia.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.modelo.AtraccionModelo;
@@ -19,4 +20,15 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 		return lista;
 	}
 
+	@Transactional
+	public void borrar(long id) {
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		AtraccionModelo model = s.get(AtraccionModelo.class, id);
+		model.setBorrado(true);
+		s.update(model);
+		s.getTransaction().commit();
+		s.close();
+	}
+	
 }

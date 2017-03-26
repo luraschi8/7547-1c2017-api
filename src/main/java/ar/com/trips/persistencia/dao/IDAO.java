@@ -13,6 +13,4 @@ public interface IDAO {
 	public void guardar(Modelo modelo);
 	
 	public void modificar(Modelo modelo);
-	
-	public <T> void borrar(Class<T> clazz, long id);
 }

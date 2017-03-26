@@ -22,7 +22,8 @@ create table Ciudad (
     pais varchar(50) not null,
     latitud float not null,
     longitud float not null,
-    imagen mediumblob
+    imagen mediumblob,
+    borrado boolean default false not null
 );
 
 create table Atraccion (
@@ -34,5 +35,6 @@ create table Atraccion (
     precio float,
     latitud float not null,
     longitud float not null,
+    borrado boolean default false not null,
     foreign key (idCiudad) references Ciudad (id)
 );

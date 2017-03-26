@@ -51,7 +51,9 @@
 	<c:set var="modificar">
 		Modificar
 	</c:set>
-
+<form class="form-horizontal maxwid" id ="formBorrar" name="formBorrar" action="ciudadBorrar" method="post">
+	<input id="id" name="id" type="hidden"> 
+</form>
 <div class="wait"></div>
 
 <script>
@@ -83,28 +85,13 @@ $(document).ready(function() {
 	
 	$('#tablita tbody').on('click', '#borrar', function (e) {
 		var data = table.row(this.closest("tr")).data();
-		var json = {
-			"id" : data["id"],
-			"nombre" : data["nombre"],
-			"stockHuevos" : data["stockHuevos"],
-			"stockMaximo" : data["stockMaximo"],
-			"borrado" : data["borrado"]
-		};
+		var id = data["id"];
 		var mensaje = document.getElementById("mensajeBorrar").value;
 		e.preventDefault();
 		bootbox.confirm(mensaje, function (response) {
 			if (response) {
-				$.ajax({
-					url : "depositosBorrarJson",
-					type : "DELETE",
-					data : JSON.stringify(json),
-					dataType : "json",
-					contentType : "application/json",
-					processData : false,
-					complete : function () {
-						table.ajax.reload();
-					}
-				});
+				document.formBorrar.id.value = id;
+				document.getElementById("formBorrar").submit();
 			}
 		});
 	});

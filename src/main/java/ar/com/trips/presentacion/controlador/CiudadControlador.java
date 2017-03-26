@@ -39,7 +39,7 @@ public class CiudadControlador {
 									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
 		try {
 			byte[] bytes = imagen.getBytes();
-			ciudad.setFileimage(bytes);
+			ciudad.setImagen(bytes);
 		} catch (Exception e) {
 			
 		}
@@ -49,4 +49,9 @@ public class CiudadControlador {
 		return new ModelAndView("redirect:/ciudades");
 	}
 	
+	@RequestMapping("ciudadBorrar")
+	public ModelAndView borrar(@RequestParam("id") int id) {
+		ciudadDao.borrar(id);
+		return new ModelAndView("redirect:/ciudades");
+	}
 }

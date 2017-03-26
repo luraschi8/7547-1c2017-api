@@ -42,6 +42,9 @@ public class AtraccionModelo {
 	@Column(name="longitud")
 	private float longitud;
 	
+	@Column(name="borrado")
+	private boolean borrado;
+	
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idCiudad")
 	@JsonBackReference
@@ -113,6 +116,14 @@ public class AtraccionModelo {
 
 	public void setCiudad(CiudadModelo ciudad) {
 		this.ciudad = ciudad;
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 }

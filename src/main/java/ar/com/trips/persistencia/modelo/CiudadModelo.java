@@ -39,7 +39,10 @@ public class CiudadModelo extends Modelo {
 	
 	@Column(name="imagen")
 	@Lob
-	private byte[] fileimage;
+	private byte[] imagen;
+	
+	@Column(name="borrado")
+	private boolean borrado;
 	
 	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
 	@JsonBackReference
@@ -108,12 +111,20 @@ public class CiudadModelo extends Modelo {
 		this.cantAtracciones = cantAtracciones;
 	}
 
-	public byte[] getFileimage() {
-		return fileimage;
+	public byte[] getImagen() {
+		return imagen;
 	}
 
-	public void setFileimage(byte[] fileimage) {
-		this.fileimage = fileimage;
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 }
