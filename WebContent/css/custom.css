@@ -4,47 +4,88 @@
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-#map {
-    height: 300px;
-    width: 300px;
-}
-
-.controls {
-    margin-top: 10px;
-    border: 1px solid transparent;
-    border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    height: 32px;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-#pac-input {
-    background-color: #fff;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    margin-left: 12px;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 300px;
-}
-
-#pac-input:focus {
-    border-color: #4d90fe;
+    font-size: 10px;
 }
 
 #archivoImagenPiso {
     display: none;
 }
 
-.cuadrado {
-	height: 400px;
-	width: 600px;/*600px;*/
-	background-color: gray;
-/* 	float: left; */
-	overflow: hidden;   
+.page-header {
+	 margin-left: 2rem;
+}
+
+.input-and-image-group {
+	margin-left: 8rem;
+}
+
+.name-group {
+	margin-top: 3rem;
+}
+
+.name-label {
+	margin-left: 2rem;
+	width: 15rem;
+}
+
+.name-box {
+	margin-top: 0.5rem;
+	height: 2.5rem;
+	width: 50rem;
+}
+
+.input {
+	margin-top: 0.5rem;
+	margin-left: 10rem;
+}
+
+.image-group {
+	margin-top: 3rem;
+	display: inline-block;	
+  		vertical-align: top;
+}
+
+.image-label {
+	margin-left: 2.3rem;
+	margin-top: 2rem;
+	width: 12.1rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+.image-box {
+	margin-left: 3rem;
+	height: 18.75rem;
+	width: 50rem;
+	background-color: #909090;
+}
+
+.image-route {
+	margin-top: 0.5rem;
+	height: 2.5rem;
+	width: 10rem;
+}
+
+#map {
+	margin-top: 3rem;
+	margin-right: 25rem;
+    width: 27rem;
+    height: 27rem;
+}
+
+.btn-get-file {
+	margin-left: 1.8rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	width: 14rem;
+	height: 2.55rem;
+}
+
+.btn-final {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.alert-message{ 
+	margin-top: 20rem;
 }

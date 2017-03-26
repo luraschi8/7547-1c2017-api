@@ -28,21 +28,20 @@
 					<form:input id="latitud" type="hidden" name="latitud" path="latitud"/>
 					<form:input id="longitud" type="hidden" name="longitud" path="longitud"/>
 				</div>
-		
-				<div class="image-route">
-					<form:label class="image-route-label" path="">Agregar imagen</form:label>
-					<form:input class="image-route-box" type="text" required="required" placeholder="Ruta imagen" path=""/>
-					
-					<input type="button" id="get_file" class="btn-get-file" value="...">
-			        
-			        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
-				</div>
 				
 				<div class="image-group">
-					<div class="cuadrado" style="float:right" id="zonaArrastrable">
-						<img id="imagen">
+					<div class="image-box" style="float:right" id="zonaArrastrable">
+						<img id="imagen" style="width:100%; height:100%">
 					</div>
-					<div class="image-label" style="float:left">Se recomienda usar una imagen con resolución 1024x800</div>
+					
+					<div class="button-message-group" style="float:left">
+						<div class="image-route" style="float:up">
+							<input type="button" id="get_file" class="btn-get-file" value="Agregar imagen">
+					        
+					        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
+						</div>
+						<div class="image-label" style="float:down">Se recomienda usar una imagen con resolución 30x80 u otra de similar escala</div>
+					</div>
 					
 					<div class="alert-message">
 						<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
@@ -89,8 +88,6 @@
 		
 		.name-group {
 			margin-top: 3rem;
-			display: inline-block;
-    		vertical-align: top;
 		}
 		
 		.name-label {
@@ -101,59 +98,53 @@
 		.name-box {
 			margin-top: 0.5rem;
 			height: 2.5rem;
-			width: 70rem;
+			width: 50rem;
 		}
 		
 		.input {
 			margin-top: 0.5rem;
+			margin-left: 10rem;
 		}
 		
 		.image-group {
 			margin-top: 3rem;
-			display: inline-block;
+			display: inline-block;	
     		vertical-align: top;
 		}
 		
 		.image-label {
-			margin-left: 2rem;
-			margin-top: 3.5rem;
-			width: 12.4rem;
+			margin-left: 2.3rem;
+			margin-top: 2rem;
+			width: 12.1rem;
 			font-weight: bold;
+			text-align: center;
 		}
 		
-		.cuadrado {
+		.image-box {
 			margin-left: 3rem;
-			height: 15rem;
-			width: 70rem;
-		}
-		
-		.image-route-box {
-			margin-left: 4.2rem;
-			height: 2.55rem;
-			width: 66.4rem;
-		}
-		
-		.image-route-label {
-			margin-left: 2rem;
+			height: 18.75rem;
+			width: 50rem;
+			background-color: #909090;
 		}
 		
 		.image-route {
 			margin-top: 0.5rem;
 			height: 2.5rem;
-			width: 90rem;
+			width: 10rem;
 		}
 		
 		#map {
 			margin-top: 3rem;
-			margin-right: 17rem;
-		    width: 25rem;
-		    height: 25rem;
+			margin-right: 25rem;
+		    width: 27rem;
+		    height: 27rem;
 		}
 		
 		.btn-get-file {
+			margin-left: 1.8rem;
 			margin-top: 1rem;
 			margin-bottom: 1rem;
-			width: 3.2rem;
+			width: 14rem;
 			height: 2.55rem;
 		}
 		
@@ -163,83 +154,83 @@
 		}
 		
 		.alert-message{ 
-			margin-top: 17rem;
+			margin-top: 20rem;
 		}
 	</style>
+	
 <script>
-
-function setValue(id, new_value) {
-	  var s = document.getElementById(id);
-	  s.innerHTML = new_value;
-}
-
-$('#botonAtras').on('click', function(e) {
-	e.preventDefault();
-	document.getElementById("formAtras").submit();
-});
-
-$('#botonNuevo').on('click', function(e) {
-	e.preventDefault();
-	document.getElementById("mensajeNombreRepetido").style.display = 'none';
-	var city = {
-		name: document.getElementById('city').value,
-		country: "Desconocido"
-	};
-	var geocoder = new google.maps.Geocoder();
-	parseCity(city);
-	document.formNuevo.nombre.value = city.name;
-	document.formNuevo.pais.value = city.country;
-	validarCiudadRepetida();
-});
-
-function validarCiudadRepetida() {
-	hayError = 0;
-	if (document.getElementById('archivoImagenPiso').value == '') {
-		document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-		hayError = 1;
-	} else {
-		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	function setValue(id, new_value) {
+		  var s = document.getElementById(id);
+		  s.innerHTML = new_value;
 	}
-	if (document.getElementById('city').value == '') {
-		document.getElementById("mensajeNombreVacio").style.display = 'block';
-		hayError = 1;
-	} else {
-		document.getElementById("mensajeNombreVacio").style.display = 'none';
-	}
-	if (hayError == 1) {
-		return;
-	} 
-	var json = {
-		"nombre" : document.formNuevo.nombre.value,
-		"pais": document.formNuevo.pais.value,
-		"latitud": document.formNuevo.latitud.value,
-		"longitud": document.formNuevo.longitud.value
-	};
-	$.ajax({
-		url : "validarCiudad",
-		type : "POST",
-		data : JSON.stringify(json),
-		processData : false,
-		dataType: "json",
-		contentType : "application/json",
-		success: function (data) {
-			if (data.existe == false) {
-				document.getElementById("formNuevo").submit();
-			} else {
-				document.getElementById("mensajeNombreRepetido").style.display = 'block';
-			}
-		}
+	
+	$('#botonAtras').on('click', function(e) {
+		e.preventDefault();
+		document.getElementById("formAtras").submit();
 	});
-}
-
-function parseCity(city) {
-	var complete_city = city.name;
-	var n = complete_city.lastIndexOf(", ");
-	if ((n > 1) && (n < complete_city.length)) {
-		city.name = complete_city.substring(0, n);
-		city.country = complete_city.substring(n + 2, complete_city.length);
+	
+	$('#botonNuevo').on('click', function(e) {
+		e.preventDefault();
+		document.getElementById("mensajeNombreRepetido").style.display = 'none';
+		var city = {
+			name: document.getElementById('city').value,
+			country: "Desconocido"
+		};
+		var geocoder = new google.maps.Geocoder();
+		parseCity(city);
+		document.formNuevo.nombre.value = city.name;
+		document.formNuevo.pais.value = city.country;
+		validarCiudadRepetida();
+	});
+	
+	function validarCiudadRepetida() {
+		hayError = 0;
+		if (document.getElementById('archivoImagenPiso').value == '') {
+			document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+			hayError = 1;
+		} else {
+			document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+		}
+		if (document.getElementById('city').value == '') {
+			document.getElementById("mensajeNombreVacio").style.display = 'block';
+			hayError = 1;
+		} else {
+			document.getElementById("mensajeNombreVacio").style.display = 'none';
+		}
+		if (hayError == 1) {
+			return;
+		} 
+		var json = {
+			"nombre" : document.formNuevo.nombre.value,
+			"pais": document.formNuevo.pais.value,
+			"latitud": document.formNuevo.latitud.value,
+			"longitud": document.formNuevo.longitud.value
+		};
+		$.ajax({
+			url : "validarCiudad",
+			type : "POST",
+			data : JSON.stringify(json),
+			processData : false,
+			dataType: "json",
+			contentType : "application/json",
+			success: function (data) {
+				if (data.existe == false) {
+					document.getElementById("formNuevo").submit();
+				} else {
+					document.getElementById("mensajeNombreRepetido").style.display = 'block';
+				}
+			}
+		});
 	}
-}
+	
+	function parseCity(city) {
+		var complete_city = city.name;
+		var n = complete_city.lastIndexOf(", ");
+		if ((n > 1) && (n < complete_city.length)) {
+			city.name = complete_city.substring(0, n);
+			city.country = complete_city.substring(n + 2, complete_city.length);
+		}
+	}
 </script>
 
 <!-- Imagen -->
@@ -279,9 +270,9 @@ $(document).ready(function() {
 		var file = document.getElementById("archivoImagenPiso").files[0];
 		var reader = new FileReader();
 	    reader.onloadend = function(){
-			document.getElementById('imagen').src = reader.result ;        
-			}
-		if(file){
+			document.getElementById('imagen').src = reader.result;
+		}
+		if(file) {
 			reader.readAsDataURL(file);
 		} 
 	}
