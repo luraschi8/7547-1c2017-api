@@ -43,8 +43,6 @@ public class CiudadControlador {
 		} catch (Exception e) {
 			
 		}
-		ciudad.setLatitud(98);
-		ciudad.setLongitud(98);
 		ciudadDao.guardar(ciudad);
 		return new ModelAndView("redirect:/ciudades");
 	}

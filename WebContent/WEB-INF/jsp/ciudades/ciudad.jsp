@@ -56,7 +56,16 @@
 
 <script>
 
-$(document).ready(function() {
+//$(document).ready(function() {
+   	var map;
+
+	function initMap() {
+		map = new google.maps.Map(document.getElementById('map'), {
+		    center: {lat: -34.6036844, lng: -58.3815591}, //Buenos Aires coordinates
+		    zoom: 13
+		});
+	}
+   
     var table = $('#tablita').DataTable( {
 		dom: 'frtip',
 		ajax: "atraccionesCiudadJson/${id}",
@@ -71,19 +80,22 @@ $(document).ready(function() {
 	    ordering:true,
 	    bFilter: false
 	});
-});
-
-
-</script>
-
-<script type="text/javascript">
-
-function initMap() {
-	var map = new google.maps.Map(document.getElementById('map'), {
-	    center: {lat: -34.6036844, lng: -58.3815591}, //Buenos Aires coordinates
-	    zoom: 13
+	
+	$('#tablita tbody').on('click', '#ver', function (e) {
+		var data = table.row(this.closest("tr")).data();
+		e.preventDefault();
+		var latitud = data["latitud"];
+		var longitud = data["longitud"];
+		var myLatlng = new google.maps.LatLng(latitud,longitud);
+		var marker = new google.maps.Marker({
+          position: myLatlng,
+          title: 'Hello World!'
+        });
+        marker.setMap(map);
+		map.setCenter(marker.getPosition());
 	});
-}
+//});
+
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places&callback=initMap" async defer></script>
