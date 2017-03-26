@@ -35,13 +35,11 @@ public class CiudadControlador {
 	}
 	
 	@RequestMapping("ciudadNuevoValidar")
-	public ModelAndView nuevoValidar(@ModelAttribute("ciudad") CiudadModelo ciudad
-									/*,@RequestParam("archivoImagenPiso") MultipartFile imagen*/) {
-		//CiudadModelo ciudad = new CiudadModelo();
-		//ciudad.setNombre(nombre);
+	public ModelAndView nuevoValidar(@ModelAttribute("ciudad") CiudadModelo ciudad,
+									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
 		try {
-			//byte[] bytes = imagen.getBytes();
-			//ciudad.setFileimage(bytes);
+			byte[] bytes = imagen.getBytes();
+			ciudad.setFileimage(bytes);
 		} catch (Exception e) {
 			
 		}
