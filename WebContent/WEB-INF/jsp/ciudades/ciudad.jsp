@@ -74,6 +74,14 @@
 	${ciudad.id}
 </c:set>
 
+<c:set var="latitud">
+	${ciudad.latitud}
+</c:set>
+
+<c:set var="longitud">
+	${ciudad.longitud}
+</c:set>
+
 <script>
 
 //$(document).ready(function() {
@@ -81,7 +89,7 @@ var map;
 
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
-	    center: {lat: -34.6036844, lng: -58.3815591}, //Buenos Aires coordinates
+	    center: {lat: ${latitud}, lng: ${longitud}}, //Buenos Aires coordinates
 	    zoom: 13
 	});
 }
