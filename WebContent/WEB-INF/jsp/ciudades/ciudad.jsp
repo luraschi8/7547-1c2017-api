@@ -11,7 +11,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<title>Ciudad</title>
+<title>Trips - Ciudad</title>
 
 </head>
 <body>
@@ -20,29 +20,32 @@
 </h1>
 
 <form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="ciudadModificar" method="post" commandName="ciudad" enctype="multipart/form-data">
-
 	<form:input id="id" type="hidden" name="id" path="id" value="${ciudad.id}"/>
 
 	<input type="button" id="get_file" class="btn-get-file" value="...">
 	<input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
 	<input id="imagenCambiada" name="imagenCambiada" type="hidden" value="0">
-	<div class="panel-group">
-		<div class="panel panel-primary">
-			<img id="imagen" src="/Trips/imagenCiudad?id=${ciudad.id}"/>
+	
+	<div class="image-view-city">
+		<div class="panel panel-primary image-box sobreBoton">
+			<img id="imagen" src="/Trips/imagenCiudad?id=${ciudad.id}" style="width:100%; height:100%"/>
+           	<input type="button" id="get_file" class="btn btn-default btn-get-file" value="Editar">
 		</div>
-	</div>	
-	<div class="alert-message">
-	<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
-	 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-	 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 	</div>
-</div>
+	
+	<div class="alert-message">
+		<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
+		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+		 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+		</div>
+	</div>
 </form:form>
-<div class="panel-group">
-	<div id="map"></div>
-	<div class="panel panel-primary">
+
+<div class="panel-group" style="width: 100%; overflow: hidden;">
+	<div id="map" class="view-city-map" style="float:left"></div>
+	<div class="panel panel-primary view-city-panel" style="float:right">
 		<div class="panel-body">
-			<table id="tablita" class="display order-column" cellspacing="0" width="100%">
+			<table id="tablita" class="display order-column view-city-board" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th>Nombre</th>
@@ -58,7 +61,7 @@
 </div>
 
 <form:form id="formAtras" action="ciudades" method="post"></form:form>
-<div class="btn-final" style="text-align:center;">
+<div class="btn-final-view-city" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
 	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
 </div>

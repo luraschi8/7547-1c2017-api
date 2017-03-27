@@ -73,10 +73,13 @@ body {
 }
 
 #map {
-	margin-top: 3rem;
-	margin-right: 25rem;
     width: 27rem;
     height: 27rem;
+}
+
+.map-new-city {
+	margin-top: 3rem;
+	margin-right: 25rem;
 }
 
 .btn-get-file {
@@ -89,6 +92,17 @@ body {
 .btn-final {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+}
+
+.sobreBoton {
+    display:inline-block;
+    position:relative;
+}
+ 
+.sobreBoton input {
+    position:absolute;
+    bottom:-11px;
+    right:-1px;
 }
 
 .alert-message{ 
