@@ -104,20 +104,17 @@
  	       	    result = results[0].formatted_address;
  	       	    if (result != city.name) {
  	       	    	document.getElementById("mensajeNombreIncorrecto").style.display = 'block';
+ 	       	    	return;
  	       	    }
  	       	    parseCity(city);
  				document.formNuevo.nombre.value = city.name;
  				document.formNuevo.pais.value = city.country;
- 				validarCiudadRepetida();
+ 				validarCiudadRepetida(city.all);
  	       	} else {
- 	       		alert("Invalid address");
+ 	       		document.getElementById("mensajeNombreIncorrecto").style.display = 'block';
  	       		return;
  	       	}
  	    });
-		parseCity(city);
-		document.formNuevo.nombre.value = city.name;
-		document.formNuevo.pais.value = city.country;
-		validarCiudadRepetida(city.all);
 	});
 	
 	function validarCiudadRepetida(city) {
