@@ -36,7 +36,7 @@
 					
 					<div class="button-message-group" style="float:left">
 						<div class="image-route" style="float:up">
-							<input type="button" id="get_file" class="btn btn-default btn-get-file" value="Agregar imagen">
+							<input type="button" id="get_file" class="btn-get-file" value="Agregar imagen">
 					        
 					        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
 						</div>
@@ -57,11 +57,6 @@
 						<div class="alert alert-warning fade in" id="mensajeNombreVacio" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>Error!</strong> No se ha seleccionado ninguna ciudad.
-						</div>
-						
-						<div class="alert alert-warning fade in" id="mensajeNombreIncorrecto" style="display: none;">
-						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>Error!</strong> La ciudad seleccionada es incorecta.
 						</div>
 					</div>
 				</div>
@@ -92,30 +87,19 @@
 	$('#botonNuevo').on('click', function(e) {
 		e.preventDefault();
 		document.getElementById("mensajeNombreRepetido").style.display = 'none';
-		document.getElementById("mensajeNombreIncorrecto").style.display = 'none';
 		var city = {
+			all: document.getElementById('city').value,
 			name: document.getElementById('city').value,
 			country: "Desconocido"
 		};
 		var geocoder = new google.maps.Geocoder();
-	    geocoder.geocode({'address': city.name}, function(results, status){
-	   	    if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
-	       	    result = results[0].formatted_address;
-	       	    if (result != city.name) {
-	       	    	document.getElementById("mensajeNombreIncorrecto").style.display = 'block';
-	       	    }
-	       	    parseCity(city);
-				document.formNuevo.nombre.value = city.name;
-				document.formNuevo.pais.value = city.country;
-				validarCiudadRepetida();
-	       	} else {
-	       		alert("Invalid address");
-	       		return;
-	       	}
-	    });
+		parseCity(city);
+		document.formNuevo.nombre.value = city.name;
+		document.formNuevo.pais.value = city.country;
+		validarCiudadRepetida(city.all);
 	});
 	
-	function validarCiudadRepetida() {
+	function validarCiudadRepetida(city) {
 		hayError = 0;
 		if (document.getElementById('archivoImagenPiso').value == '') {
 			document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
@@ -130,6 +114,7 @@
 			document.getElementById("mensajeNombreVacio").style.display = 'none';
 		}
 		if (hayError == 1) {
+			document.formNuevo.city.value = city;
 			return;
 		} 
 		var json = {
@@ -156,11 +141,15 @@
 	}
 	
 	function parseCity(city) {
-		var complete_city = city.name;
-		var n = complete_city.lastIndexOf(", ");
-		if ((n > 1) && (n < complete_city.length)) {
-			city.name = complete_city.substring(0, n);
-			city.country = complete_city.substring(n + 2, complete_city.length);
+		var n = city.all.lastIndexOf(", ");
+		/*alert(n);
+		alert(city.all);
+		alert(city.name);
+		alert(city.country);
+		alert(city.all.length);*/
+		if ((n > 1) && (n < city.all.length)) {
+			city.name = city.all.substring(0, n);
+			city.country = city.all.substring(n + 2, city.all.length);
 		}
 	}
 </script>
