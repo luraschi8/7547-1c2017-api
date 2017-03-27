@@ -40,7 +40,7 @@
 </form:form>
 
 <h1 class="page-header">
-	${ciudad.nombre}
+	${ciudad.nombre} , ${ciudad.pais}
 </h1>
 
 <div class="panel-group" style="width: 100%; overflow: hidden;">
@@ -50,6 +50,7 @@
 			<table id="tablita" class="display order-column view-city-board" cellspacing="0" width="100%">
 				<thead>
 					<tr>
+						<th></th>
 						<th>Nombre</th>
 						<th></th>
 						<th></th>
@@ -104,6 +105,11 @@ var table = $('#tablita').DataTable( {
 	dom: 'frtip',
 	ajax: "atraccionesCiudadJson/${id}",
     columns: [
+        {	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="/Trips/imagenAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },
         {data: "nombre" },
         {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
         {defaultContent:'<button class="btn btn-warning" id="ver">${ver}</button>'}
@@ -163,7 +169,7 @@ $(document).ready(function() {
 	$("#archivoImagenPiso").change(function() {
 	    var val = $(this).val();
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
-	        case 'gif': case 'jpg': case 'png':
+	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	        	break;
 	        default:

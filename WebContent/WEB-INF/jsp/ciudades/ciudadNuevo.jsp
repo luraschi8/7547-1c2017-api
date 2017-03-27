@@ -188,7 +188,7 @@ $(document).ready(function() {
 	$("#archivoImagenPiso").change(function() {
 	    var val = $(this).val();
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
-	        case 'gif': case 'jpg': case 'png':
+	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	        	break;
 	        default:

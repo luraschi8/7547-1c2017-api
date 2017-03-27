@@ -36,5 +36,6 @@ create table Atraccion (
     latitud float not null,
     longitud float not null,
     borrado boolean default false not null,
+    imagen mediumblob,
     foreign key (idCiudad) references Ciudad (id)
 );
