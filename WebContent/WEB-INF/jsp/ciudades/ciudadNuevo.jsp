@@ -29,7 +29,7 @@
 					<form:input id="longitud" type="hidden" name="longitud" path="longitud"/>
 				</div>
 				
-				<div class="image-group">
+				<div class="image-group" style="width:100%; height:100%; overflow: auto;">
 					<div class="image-box" style="float:right" id="zonaArrastrable">
 						<img id="imagen" style="width:100%; height:100%">
 					</div>
@@ -40,7 +40,7 @@
 					        
 					        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
 						</div>
-						<div class="image-label" style="float:down">Se recomienda usar una imagen con resolución 30x80 u otra de similar escala</div>
+						<div class="image-label" style="float:down">Se recomienda usar una imagen con resolución 800x300 u otra de similar escala</div>
 					</div>
 					
 					<div class="alert-message">
@@ -67,7 +67,7 @@
 				</div>
 			</div>
 			
-		    <div id="map" style="float:right"></div>  
+		    <div id="map" class="map-new-city" style="float:right"></div>  
 		</div>
 	</form:form>
 	

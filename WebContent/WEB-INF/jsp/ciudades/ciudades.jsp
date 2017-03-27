@@ -11,7 +11,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<title>Ciudades</title>
+<title>Trips - Ciudades</title>
 
 </head>
 <body>
