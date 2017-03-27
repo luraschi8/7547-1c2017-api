@@ -109,7 +109,13 @@ body {
 	margin-top: 20rem;
 }
 
-.view-city-image {
+.view-city-image-box {
+    display: block;
+    margin: 0 auto;
+    margin-top: 3rem;
+	height: 18.75rem;
+	width: 50rem;
+	background-color: #909090;
 }
 
 .view-city-panel {
