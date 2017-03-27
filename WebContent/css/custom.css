@@ -108,3 +108,20 @@ body {
 .alert-message{ 
 	margin-top: 20rem;
 }
+
+.view-city-image {
+}
+
+.view-city-panel {
+	margin-right: 5rem;
+	width: 90rem;
+}
+
+.view-city-map {
+	margin-left: 5rem;
+}
+
+.view-city-btn-final {
+	margin-top: 1rem;
+	margin-bottom: 3rem;
+}

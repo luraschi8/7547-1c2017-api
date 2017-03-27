@@ -14,10 +14,8 @@
 <title>Trips - Ciudad</title>
 
 </head>
+
 <body>
-<h1 class="page-header">
-	${ciudad.nombre}
-</h1>
 
 <form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="ciudadModificar" method="post" commandName="ciudad" enctype="multipart/form-data">
 	<form:input id="id" type="hidden" name="id" path="id" value="${ciudad.id}"/>
@@ -26,7 +24,7 @@
 	<input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
 	<input id="imagenCambiada" name="imagenCambiada" type="hidden" value="0">
 	
-	<div class="image-view-city">
+	<div class="view-city-image">
 		<div class="panel panel-primary image-box sobreBoton">
 			<img id="imagen" src="/Trips/imagenCiudad?id=${ciudad.id}" style="width:100%; height:100%"/>
            	<input type="button" id="get_file" class="btn btn-default btn-get-file" value="Editar">
@@ -40,6 +38,10 @@
 		</div>
 	</div>
 </form:form>
+
+<h1 class="page-header">
+	${ciudad.nombre}
+</h1>
 
 <div class="panel-group" style="width: 100%; overflow: hidden;">
 	<div id="map" class="view-city-map" style="float:left"></div>
@@ -61,7 +63,7 @@
 </div>
 
 <form:form id="formAtras" action="ciudades" method="post"></form:form>
-<div class="btn-final-view-city" style="text-align:center;">
+<div class="view-city-btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
 	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
 </div>
