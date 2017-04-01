@@ -93,6 +93,7 @@
 
 //$(document).ready(function() {
 var map;
+var markers = [];
 
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -127,12 +128,21 @@ $('#tablita tbody').on('click', '#ver', function (e) {
 	var latitud = data["latitud"];
 	var longitud = data["longitud"];
 	var myLatlng = new google.maps.LatLng(latitud,longitud);
+	for (var i = 0; i < markers.length; i++) {
+		pos = markers[i].getPosition();
+		if (pos.lat() == myLatlng.lat() && pos.lng() == myLatlng.lng()) {
+			markers[i].setMap(null);
+			markers.splice(i,1);
+			return;
+		}
+	}
 	var marker = new google.maps.Marker({
          position: myLatlng,
          title: 'Hello World!'
        });
        marker.setMap(map);
 	map.setCenter(marker.getPosition());
+	markers.push(marker);
 });
 
 $('#botonNuevo').on('click', function(e) {
