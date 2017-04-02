@@ -34,8 +34,9 @@ public class CiudadControladorRest {
 			ciudadModelo.setCantAtracciones(ciudadModelo.getListaAtracciones().size());
 		}*/
 		for (int i = 0; i < listaAux.size(); i++) {
-			CiudadModelo ciudad = (CiudadModelo) listaAux.get(i);
-			ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
+			CiudadModelo ciudad = new CiudadModelo();//(CiudadModelo) listaAux.get(i);
+			ciudad.setNombre(listaAux.get(i).getNombre());
+			//ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
 		}
 		lista.put(DATA, listaAux);
 		return lista;
