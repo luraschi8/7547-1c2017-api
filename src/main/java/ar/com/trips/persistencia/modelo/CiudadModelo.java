@@ -42,7 +42,7 @@ public class CiudadModelo extends Modelo {
 	private byte[] imagen;
 	
 	@Column(name="borrado")
-	private boolean borrado;
+	private int borrado;
 	
 	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
 	@JsonBackReference
@@ -119,12 +119,12 @@ public class CiudadModelo extends Modelo {
 		this.imagen = imagen;
 	}
 
-	public boolean isBorrado() {
+	public int getBorrado() {
 		return borrado;
 	}
 
-	public void setBorrado(boolean borrado) {
+	public void setBorrado(int borrado) {
 		this.borrado = borrado;
 	}
-	
+
 }

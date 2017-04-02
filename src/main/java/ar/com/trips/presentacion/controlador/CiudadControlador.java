@@ -22,7 +22,8 @@ public class CiudadControlador {
 	@RequestMapping(path="/ciudades")
 	public ModelAndView listar() {
 		ModelAndView model = new ModelAndView("ciudades/ciudades");
-		model.addObject("listaCiudades", ciudadDao.listar(CiudadModelo.class));
+		//model.addObject("listaCiudades", ciudadDao.listar(CiudadModelo.class));
+		model.addObject("listaCiudades", ciudadDao.listar());
 		model.addObject("ciudad", new CiudadModelo());
 		return model;
 	}

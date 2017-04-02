@@ -29,7 +29,7 @@ public class CiudadControladorRest {
 	@RequestMapping("/ciudadesJson")
 	public HashMap<String, List> listar() {
 		HashMap<String, List> lista = new HashMap<String, List>();
-		List<CiudadModelo> listaAux = ciudadDao.listar(CiudadModelo.class);
+		List<CiudadModelo> listaAux = ciudadDao.listar();
 		for (CiudadModelo ciudadModelo : listaAux) {
 			ciudadModelo.setCantAtracciones(ciudadModelo.getListaAtracciones().size());
 		}

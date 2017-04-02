@@ -21,12 +21,21 @@ public class CiudadDAOImpl extends DAOImpl implements ICiudadDAO {
 		return lista.size() != 0;
 	}
 	
+	@Override
+	public List<CiudadModelo> listar() {
+		Session session = sessionFactory.openSession();
+		@SuppressWarnings("unchecked")
+		List<CiudadModelo> lista = session.createQuery("from CiudadModelo where borrado = 0").list();
+		session.close();
+		return lista;
+	}
+	
 	@Transactional
 	public void borrar(long id) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		CiudadModelo model = s.get(CiudadModelo.class, id);
-		model.setBorrado(true);
+		model.setBorrado(1);
 		s.update(model);
 		s.getTransaction().commit();
 		s.close();
