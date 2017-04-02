@@ -30,9 +30,10 @@ public class CiudadControladorRest {
 	public HashMap<String, List> listar() {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		List<CiudadModelo> listaAux = ciudadDao.listar();
-		for (int i = 0; i < listaAux.size(); i++) {
+		List<CiudadModelo> otraLista = listaAux;
+		for (int i = 0; i < otraLista.size(); i++) {
 			CiudadModelo ciudad = new CiudadModelo();//(CiudadModelo) listaAux.get(i);
-			ciudad.setNombre(listaAux.get(i).getNombre());
+			ciudad.setNombre(otraLista.get(i).getNombre());
 			//ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
 		}
 		lista.put(DATA, listaAux);
