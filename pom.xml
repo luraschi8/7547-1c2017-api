@@ -199,7 +199,7 @@
 
 
 		<!-- Tomcat -->
-		<!-- 
+		
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-core</artifactId>
@@ -234,6 +234,6 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.4.1208</version>
-		</dependency>-->
+		</dependency>
 	</dependencies>
 </project>
