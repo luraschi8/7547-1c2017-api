@@ -30,7 +30,8 @@ public class CiudadDAOImpl extends DAOImpl implements ICiudadDAO {
 	public List<CiudadModelo> listar() {
 		Session session = sessionFactoryAux.openSession();
 		@SuppressWarnings("unchecked")
-		List<CiudadModelo> lista = (List<CiudadModelo>)session.createQuery("from "  + CiudadModelo.class.getName() + " where borrado = 0").list();
+		//List<CiudadModelo> lista = (List<CiudadModelo>)session.createQuery("from "  + CiudadModelo.class.getName() + " where borrado = 0").list();
+		List<CiudadModelo> lista = (List<CiudadModelo>)session.createSQLQuery("from "  + CiudadModelo.class.getName() + " where borrado = 0").addEntity(CiudadModelo.class).list();
 		session.close();
 		return lista;
 	}
