@@ -3,6 +3,7 @@ package ar.com.trips.presentacion.rest;
 import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
