@@ -24,7 +24,7 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 	public void borrar(long id) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
-		AtraccionModelo model = s.get(AtraccionModelo.class, id);
+		AtraccionModelo model = (AtraccionModelo) s.get(AtraccionModelo.class, id);
 		model.setBorrado(true);
 		s.update(model);
 		s.getTransaction().commit();

@@ -40,7 +40,7 @@ public class CiudadDAOImpl extends DAOImpl implements ICiudadDAO {
 	public void borrar(long id) {
 		Session s = sessionFactoryAux.openSession();
 		s.beginTransaction();
-		CiudadModelo model = s.get(CiudadModelo.class, id);
+		CiudadModelo model = (CiudadModelo) s.get(CiudadModelo.class, id);
 		model.setBorrado(1);
 		s.update(model);
 		s.getTransaction().commit();

@@ -19,7 +19,7 @@ public class DAOImpl implements IDAO {
 	@Transactional
 	public <T> T get(Class<T> clazz, long id) {
 		Session s = sessionFactory.openSession();
-		T e = s.get(clazz, id);
+		T e = (T) s.get(clazz, id);
 		s.close();
 		return e;
 	}
