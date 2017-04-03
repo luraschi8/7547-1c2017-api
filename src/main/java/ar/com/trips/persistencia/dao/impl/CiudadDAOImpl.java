@@ -42,7 +42,8 @@ public class CiudadDAOImpl extends DAOImpl implements ICiudadDAO {
 		s.beginTransaction();
 		CiudadModelo model = (CiudadModelo) s.get(CiudadModelo.class, id);
 		model.setBorrado(1);
-		s.update(model);
+		//s.update(model);
+		s.delete(model);
 		s.getTransaction().commit();
 		s.close();
 	}
