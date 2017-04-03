@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.type.ImageType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -41,9 +42,9 @@ public class CiudadModelo extends Modelo {
 	
 	@Column(name="imagen")
 	@Lob
-	@Type(type="org.hibernate.type.TextType")
+	@Type(type="org.hibernate.type.ImageType")
 	private byte[] imagen;
-	
+
 	@Column(name="borrado")
 	private int borrado;
 	
