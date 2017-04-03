@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -39,6 +41,7 @@ public class CiudadModelo extends Modelo {
 	
 	@Column(name="imagen")
 	@Lob
+	@Type(type="org.hibernate.type.TextType")
 	private byte[] imagen;
 	
 	@Column(name="borrado")
