@@ -32,13 +32,17 @@ public class CiudadControladorRest {
 	public HashMap<String, List> listar() {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		List<CiudadModelo> listaAux = ciudadDao.listar();
-		Gson gson = new Gson();
+		/*Gson gson = new Gson();
 		String json = gson.toJson(listaAux);
 		List<CiudadModelo> list = gson.fromJson(json, new TypeToken<List<CiudadModelo>>(){}.getType());
 		for (CiudadModelo ciudad : list) {
 			ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
 		}
-		lista.put(DATA, list);
+		lista.put(DATA, list);*/
+		for (CiudadModelo ciudad : listaAux) {
+			ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
+		}
+		lista.put(DATA, listaAux);
 		return lista;
 	}
 	
