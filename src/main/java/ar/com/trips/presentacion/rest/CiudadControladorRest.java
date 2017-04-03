@@ -35,11 +35,12 @@ public class CiudadControladorRest {
 		String json = gson.toJson(listaAux);
 		List<CiudadModelo> list = gson.fromJson(json, new TypeToken<List<CiudadModelo>>(){}.getType());
 		for (int i = 0; i < list.size(); i++) {
-			CiudadModelo ciudad = new CiudadModelo();//(CiudadModelo) listaAux.get(i);
-			ciudad.setNombre(listaAux.get(i).getNombre());
-			//ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
+			CiudadModelo ciudad = list.get(i);
+			ciudad.setCantAtracciones(ciudad.getCantAtracciones());
+			int a = 8;
+			ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
 		}
-		lista.put(DATA, listaAux);
+		lista.put(DATA, list);
 		return lista;
 	}
 	
