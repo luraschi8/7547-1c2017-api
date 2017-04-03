@@ -44,6 +44,7 @@ public class CiudadControlador {
 		} catch (Exception e) {
 			
 		}
+		ciudad.setBorrado(0);
 		ciudadDao.guardar(ciudad);
 		return new ModelAndView("redirect:/ciudades");
 	}
