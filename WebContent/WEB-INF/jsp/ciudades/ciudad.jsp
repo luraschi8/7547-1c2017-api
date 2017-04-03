@@ -26,7 +26,7 @@
 	
 	<div class="view-city-image">
 		<div class="panel panel-primary view-city-image-box sobreBoton">
-			<img id="imagen" src="/Trips/imagenCiudad?id=${ciudad.id}" style="width:100%; height:100%"/>
+			<img id="imagen" src="${pageContext.request.contextPath}/imagenCiudad?id=${ciudad.id}" style="width:100%; height:100%"/>
            	<input type="button" id="get_file" class="btn btn-default btn-get-file" value="Editar">
 		</div>
 	</div>
