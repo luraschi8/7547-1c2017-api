@@ -1,7 +1,6 @@
 package ar.com.trips.presentacion.rest;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.trips.persistencia.dao.IAtraccionDAO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.modelo.CiudadModelo;
 import ar.com.trips.presentacion.validacion.CiudadValidacion;
@@ -30,10 +31,12 @@ public class CiudadControladorRest {
 	public HashMap<String, List> listar() {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		List<CiudadModelo> listaAux = ciudadDao.listar();
-		List<CiudadModelo> otraLista = listaAux;
-		for (int i = 0; i < otraLista.size(); i++) {
+		Gson gson = new Gson();
+		String json = gson.toJson(listaAux);
+		List<CiudadModelo> list = gson.fromJson(json, new TypeToken<List<CiudadModelo>>(){}.getType());
+		for (int i = 0; i < list.size(); i++) {
 			CiudadModelo ciudad = new CiudadModelo();//(CiudadModelo) listaAux.get(i);
-			ciudad.setNombre(otraLista.get(i).getNombre());
+			ciudad.setNombre(listaAux.get(i).getNombre());
 			//ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
 		}
 		lista.put(DATA, listaAux);
