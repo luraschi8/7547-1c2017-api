@@ -6,16 +6,16 @@ import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
-import ar.com.trips.persistencia.modelo.AtraccionModelo;
+import ar.com.trips.persistencia.modelo.Atraccion;
 
 public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 
 	@Override
 	public List listarPorCiudad(int idCiudad) {
 		Session session = sessionFactory.openSession();
-		String query = "FROM " + AtraccionModelo.class.getName() + " a WHERE a.ciudad.id = " + idCiudad;
+		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.ciudad.id = " + idCiudad;
 		@SuppressWarnings("unchecked")
-		List<AtraccionModelo> lista = session.createQuery(query).list();
+		List<Atraccion> lista = session.createQuery(query).list();
 		session.close();
 		return lista;
 	}
@@ -24,8 +24,8 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 	public void borrar(long id) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
-		AtraccionModelo model = (AtraccionModelo) s.get(AtraccionModelo.class, id);
-		model.setBorrado(true);
+		Atraccion model = (Atraccion) s.get(Atraccion.class, id);
+		model.setBorrado(1);
 		s.update(model);
 		s.getTransaction().commit();
 		s.close();

@@ -9,8 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
-import ar.com.trips.persistencia.modelo.AtraccionModelo;
-import ar.com.trips.persistencia.modelo.CiudadModelo;
+import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.Ciudad;
 
 @Controller
 public class AtraccionControlador {
@@ -21,8 +21,8 @@ public class AtraccionControlador {
 	@RequestMapping(path="/atracciones")
 	public ModelAndView listar() {
 		ModelAndView model = new ModelAndView("atracciones/atracciones");
-		model.addObject("listaAtracciones", atraccionDao.listar(AtraccionModelo.class));
-		model.addObject("atraccion", new AtraccionModelo());
+		model.addObject("listaAtracciones", atraccionDao.listar(Atraccion.class));
+		model.addObject("atraccion", new Atraccion());
 		return model;
 	}
 	

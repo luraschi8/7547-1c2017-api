@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Usuario")
-public class UsuarioModelo {
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class UsuarioModelo {
 	@Column(name="contrasena")
 	private String contrasena;
 	
-	public UsuarioModelo(){
+	public Usuario(){
 		
 	}
 

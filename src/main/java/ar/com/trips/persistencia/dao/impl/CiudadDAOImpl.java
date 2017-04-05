@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.ICiudadDAO;
-import ar.com.trips.persistencia.modelo.CiudadModelo;
+import ar.com.trips.persistencia.modelo.Ciudad;
 
 public class CiudadDAOImpl extends DAOImpl implements ICiudadDAO {
 
@@ -16,31 +16,21 @@ public class CiudadDAOImpl extends DAOImpl implements ICiudadDAO {
 	protected SessionFactory sessionFactoryAux;
 	
 	@Override
-	public boolean ciudadExistente(CiudadModelo ciudadModelo) {
+	public boolean ciudadExistente(Ciudad ciudadModelo) {
 		Session session = sessionFactoryAux.openSession();
-		String query = "FROM " + CiudadModelo.class.getName() + " c WHERE c.nombre = '" + ciudadModelo.getNombre() + "'"
+		String query = "FROM " + Ciudad.class.getName() + " c WHERE c.nombre = '" + ciudadModelo.getNombre() + "'"
 						+ " AND c.pais = '" + ciudadModelo.getPais() + "'";
 		@SuppressWarnings("unchecked")
-		List<CiudadModelo> lista = session.createQuery(query).list();
+		List<Ciudad> lista = session.createQuery(query).list();
 		session.close();
 		return lista.size() != 0;
-	}
-	
-	@Override
-	public List<CiudadModelo> listar() {
-		Session session = sessionFactoryAux.openSession();
-		@SuppressWarnings("unchecked")
-		//List<CiudadModelo> lista = (List<CiudadModelo>)session.createQuery("from "  + CiudadModelo.class.getName() + " where borrado = 0").list();
-		List<CiudadModelo> lista = (List<CiudadModelo>)session.createSQLQuery("select * from Ciudad where borrado = 0").addEntity(CiudadModelo.class).list();
-		session.close();
-		return lista;
 	}
 	
 	@Transactional
 	public void borrar(long id) {
 		Session s = sessionFactoryAux.openSession();
 		s.beginTransaction();
-		CiudadModelo model = (CiudadModelo) s.get(CiudadModelo.class, id);
+		Ciudad model = (Ciudad) s.get(Ciudad.class, id);
 		model.setBorrado(1);
 		s.update(model);
 		s.getTransaction().commit();

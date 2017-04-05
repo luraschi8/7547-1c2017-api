@@ -27,7 +27,7 @@ public class DAOImpl implements IDAO {
 	public <T> List<T> listar(Class<T> clazz) {
 		Session session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<T> lista = session.createQuery("from " + clazz.getName() + " where borrado is false").list();
+		List<T> lista = session.createQuery("from " + clazz.getName() + " where borrado = 0").list();
 		session.close();
 		return lista;
 	}

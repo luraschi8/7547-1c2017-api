@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IUsuarioDAO;
-import ar.com.trips.persistencia.modelo.UsuarioModelo;
+import ar.com.trips.persistencia.modelo.Usuario;
 
 @Controller
 public class UsuarioControlador {
@@ -17,7 +17,7 @@ public class UsuarioControlador {
 	@RequestMapping(path="/usuarioes")
 	public ModelAndView depositos() {
 		ModelAndView model = new ModelAndView("inicio");
-		model.addObject("listaUsuarioes", usuarioDao.listar(UsuarioModelo.class));
+		model.addObject("listaUsuarioes", usuarioDao.listar(Usuario.class));
 		return model;
 	}
 	

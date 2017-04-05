@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.ICiudadDAO;
-import ar.com.trips.persistencia.modelo.AtraccionModelo;
-import ar.com.trips.persistencia.modelo.CiudadModelo;
+import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.Ciudad;
+import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 
 @Controller
 public class ImagenControlador {
@@ -26,10 +28,13 @@ public class ImagenControlador {
 	@Autowired
 	private IAtraccionDAO atraccionDao;
 	
+	@Autowired
+	private IImagenAtraccionDAO imagenAtraccionDao;
+	
 	@RequestMapping(path="/imagenCiudad", method=RequestMethod.GET)
 	public void imagenCiudad(@RequestParam("id") Integer id, HttpServletResponse response,HttpServletRequest request) 
 	          throws ServletException, IOException {
-		CiudadModelo ciudad = ciudadDao.get(CiudadModelo.class, id);        
+		Ciudad ciudad = ciudadDao.get(Ciudad.class, id);        
 	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 	    response.getOutputStream().write(ciudad.getImagen());
 	    response.getOutputStream().close();
@@ -38,9 +43,9 @@ public class ImagenControlador {
 	@RequestMapping(path="/imagenAtraccion", method=RequestMethod.GET)
 	public void imagenAtraccion(@RequestParam("id") Integer id, HttpServletResponse response,HttpServletRequest request) 
 	          throws ServletException, IOException {
-		AtraccionModelo atraccion = atraccionDao.get(AtraccionModelo.class, id);        
+		ImagenAtraccion imagenAtraccion = imagenAtraccionDao.get(ImagenAtraccion.class, id);        
 	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-	    response.getOutputStream().write(atraccion.getImagen());
+	    response.getOutputStream().write(imagenAtraccion.getImagen());
 	    response.getOutputStream().close();
 	}
 	

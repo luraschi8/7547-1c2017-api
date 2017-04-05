@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
-import ar.com.trips.persistencia.modelo.AtraccionModelo;
+import ar.com.trips.persistencia.modelo.Atraccion;
 
 @RestController
 public class AtraccionControladorRest {
@@ -23,7 +23,7 @@ public class AtraccionControladorRest {
 	@RequestMapping("/atraccionesJson")
 	public HashMap<String, List> listar() {
 		HashMap<String, List> lista = new HashMap<String, List>();
-		lista.put(DATA, atraccionDao.listar(AtraccionModelo.class));
+		lista.put(DATA, atraccionDao.listar(Atraccion.class));
 		
 		return lista;
 	}

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IUsuarioDAO;
-import ar.com.trips.persistencia.modelo.UsuarioModelo;
+import ar.com.trips.persistencia.modelo.Usuario;
 
 @RestController
 public class UsuarioControladorRest {
@@ -21,7 +21,7 @@ public class UsuarioControladorRest {
 	@RequestMapping("/usuariosJson")
 	public HashMap<String, List> listar() {
 		HashMap<String, List> lista = new HashMap<String, List>();
-		lista.put(DATA, usuarioDao.listar(UsuarioModelo.class));
+		lista.put(DATA, usuarioDao.listar(Usuario.class));
 		return lista;
 	}
 }

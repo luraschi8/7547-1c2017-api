@@ -15,13 +15,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
-import org.hibernate.type.ImageType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="Ciudad")
-public class CiudadModelo extends Modelo {
+public class Ciudad extends Modelo {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -49,13 +48,13 @@ public class CiudadModelo extends Modelo {
 	private int borrado;
 	
 	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
-	@JsonBackReference
-	private List<AtraccionModelo> listaAtracciones = new ArrayList<>();	
+	@JsonBackReference(value="listaAtracciones")
+	private List<Atraccion> listaAtracciones = new ArrayList<>();	
 	
 	@Transient
 	private int cantAtracciones;
 	
-	public CiudadModelo() {
+	public Ciudad() {
 		
 	}
 
@@ -99,11 +98,11 @@ public class CiudadModelo extends Modelo {
 		this.longitud = longitud;
 	}
 
-	public List<AtraccionModelo> getListaAtracciones() {
+	public List<Atraccion> getListaAtracciones() {
 		return listaAtracciones;
 	}
 
-	public void setListaAtracciones(List<AtraccionModelo> listaAtracciones) {
+	public void setListaAtracciones(List<Atraccion> listaAtracciones) {
 		this.listaAtracciones = listaAtracciones;
 	}
 

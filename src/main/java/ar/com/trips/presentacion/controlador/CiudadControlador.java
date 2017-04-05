@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.ICiudadDAO;
-import ar.com.trips.persistencia.modelo.CiudadModelo;
+import ar.com.trips.persistencia.modelo.Ciudad;
 
 @Controller
 public class CiudadControlador {
@@ -22,21 +22,20 @@ public class CiudadControlador {
 	@RequestMapping(path="/ciudades")
 	public ModelAndView listar() {
 		ModelAndView model = new ModelAndView("ciudades/ciudades");
-		//model.addObject("listaCiudades", ciudadDao.listar(CiudadModelo.class));
-		model.addObject("listaCiudades", ciudadDao.listar());
-		model.addObject("ciudad", new CiudadModelo());
+		model.addObject("listaCiudades", ciudadDao.listar(Ciudad.class));
+		model.addObject("ciudad", new Ciudad());
 		return model;
 	}
 	
 	@RequestMapping("ciudadNuevo")
 	public ModelAndView nuevo() {
 		ModelAndView model = new ModelAndView(CIUDAD_NUEVO_PATH);
-		model.addObject("ciudad", new CiudadModelo());
+		model.addObject("ciudad", new Ciudad());
 		return model;
 	}
 	
 	@RequestMapping("ciudadNuevoValidar")
-	public ModelAndView nuevo(@ModelAttribute("ciudad") CiudadModelo ciudad,
+	public ModelAndView nuevo(@ModelAttribute("ciudad") Ciudad ciudad,
 									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
 		try {
 			byte[] bytes = imagen.getBytes();
@@ -50,10 +49,10 @@ public class CiudadControlador {
 	}
 	
 	@RequestMapping("ciudadModificar")
-	public ModelAndView modificar(@ModelAttribute("ciudad") CiudadModelo ciudadId,
+	public ModelAndView modificar(@ModelAttribute("ciudad") Ciudad ciudadId,
 									@RequestParam("imagenCambiada") int imagenCambiada,
 									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
-		CiudadModelo ciudad = ciudadDao.get(CiudadModelo.class, ciudadId.getId());
+		Ciudad ciudad = ciudadDao.get(Ciudad.class, ciudadId.getId());
 		if (imagenCambiada == 1) {
 			try {
 				byte[] bytes = imagen.getBytes();
@@ -74,7 +73,7 @@ public class CiudadControlador {
 	
 	@RequestMapping("ciudadVer")
 	public ModelAndView ver(@RequestParam("id") int id) {
-		CiudadModelo ciudad = ciudadDao.get(CiudadModelo.class, id);
+		Ciudad ciudad = ciudadDao.get(Ciudad.class, id);
 		ModelAndView model = new ModelAndView("ciudades/ciudad");
 		model.addObject("ciudad",ciudad);		
 		return model;

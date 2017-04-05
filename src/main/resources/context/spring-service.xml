@@ -27,11 +27,13 @@
 		<property name="annotatedClasses">
 			<list>
 				<!-- Aca pondremos las clases que mapeemos -->
-				<value>ar.com.trips.persistencia.modelo.CiudadModelo
+				<value>ar.com.trips.persistencia.modelo.Ciudad
 				</value>
-				<value>ar.com.trips.persistencia.modelo.AtraccionModelo
+				<value>ar.com.trips.persistencia.modelo.Atraccion
 				</value>
-				<value>ar.com.trips.persistencia.modelo.UsuarioModelo
+				<value>ar.com.trips.persistencia.modelo.Usuario
+				</value>
+				<value>ar.com.trips.persistencia.modelo.ImagenAtraccion
 				</value>
 			</list>
 		</property>
@@ -57,6 +59,8 @@
 		class="ar.com.trips.persistencia.dao.impl.AtraccionDAOImpl" />
 	<bean id="usuarioDAO"
 		class="ar.com.trips.persistencia.dao.impl.UsuarioDAOImpl" />
+	<bean id="imagenAtraccionDAO"
+		class="ar.com.trips.persistencia.dao.impl.ImagenAtraccionDAOImpl" />
 	
 	
 	<!-- Validaciones -->

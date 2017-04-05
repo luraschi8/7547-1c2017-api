@@ -1,6 +1,7 @@
 package ar.com.trips.persistencia.modelo;
 
-import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,13 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="Atraccion")
-public class AtraccionModelo {
+public class Atraccion {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -28,14 +32,14 @@ public class AtraccionModelo {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="horarioVisitaComienzo")
-	private Time horarioVisitaComienzo;
+	@Column(name="horario")
+	private String horario;
 	
-	@Column(name="horarioVisitaFin")
-	private Time horarioVisitaFin;
+	@Column(name="descripcion")
+	private String descripcion;
 	
 	@Column(name="precio")
-	private float precio;
+	private String precio;
 	
 	@Column(name="latitud")
 	private float latitud;
@@ -44,21 +48,44 @@ public class AtraccionModelo {
 	private float longitud;
 	
 	@Column(name="borrado")
-	private boolean borrado;
+	private int borrado;
 	
-	@Column(name="imagen")
+	@Column(name="plano")
 	@Lob
-	private byte[] imagen;
+	@Type(type="org.hibernate.type.ImageType")
+	private byte[] plano;
 	
+	@Column(name="audioEN")
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
+	private byte[] audioEN;
+	
+	@Column(name="audioES")
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
+	private byte[] audioES;
+	
+	@Column(name="video")
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
+	private byte[] video;
+	
+	@Column(name="recorrible")
+	private int recorrible;
+		
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idCiudad")
-	@JsonBackReference
-	private CiudadModelo ciudad;
+	@JsonBackReference(value="ciudad")
+	private Ciudad ciudad;
+	
+	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
+	@JsonBackReference(value="listaImagenes")
+	private List<ImagenAtraccion> listaImagenes = new ArrayList<>();	
 
-	public AtraccionModelo() {
+	public Atraccion() {
 		
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -75,27 +102,27 @@ public class AtraccionModelo {
 		this.nombre = nombre;
 	}
 
-	public Time getHorarioVisitaComienzo() {
-		return horarioVisitaComienzo;
+	public String getHorario() {
+		return horario;
 	}
 
-	public void setHorarioVisitaComienzo(Time horarioVisitaComienzo) {
-		this.horarioVisitaComienzo = horarioVisitaComienzo;
+	public void setHorario(String horario) {
+		this.horario = horario;
 	}
 
-	public Time getHorarioVisitaFin() {
-		return horarioVisitaFin;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setHorarioVisitaFin(Time horarioVisitaFin) {
-		this.horarioVisitaFin = horarioVisitaFin;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
-	public float getPrecio() {
+	public String getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(float precio) {
+	public void setPrecio(String precio) {
 		this.precio = precio;
 	}
 
@@ -115,28 +142,68 @@ public class AtraccionModelo {
 		this.longitud = longitud;
 	}
 
-	public CiudadModelo getCiudad() {
-		return ciudad;
-	}
-
-	public void setCiudad(CiudadModelo ciudad) {
-		this.ciudad = ciudad;
-	}
-
-	public boolean isBorrado() {
+	public int getBorrado() {
 		return borrado;
 	}
 
-	public void setBorrado(boolean borrado) {
+	public void setBorrado(int borrado) {
 		this.borrado = borrado;
 	}
 
-	public byte[] getImagen() {
-		return imagen;
+	public byte[] getPlano() {
+		return plano;
 	}
 
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
+	public void setPlano(byte[] plano) {
+		this.plano = plano;
+	}
+
+	public byte[] getAudioEN() {
+		return audioEN;
+	}
+
+	public void setAudioEN(byte[] audioEN) {
+		this.audioEN = audioEN;
+	}
+
+	public byte[] getAudioES() {
+		return audioES;
+	}
+
+	public void setAudioES(byte[] audioES) {
+		this.audioES = audioES;
+	}
+
+	public byte[] getVideo() {
+		return video;
+	}
+
+	public void setVideo(byte[] video) {
+		this.video = video;
+	}
+
+	public int getRecorrible() {
+		return recorrible;
+	}
+
+	public void setRecorrible(int recorrible) {
+		this.recorrible = recorrible;
+	}
+
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public List<ImagenAtraccion> getListaImagenes() {
+		return listaImagenes;
+	}
+
+	public void setListaImagenes(List<ImagenAtraccion> listaImagenes) {
+		this.listaImagenes = listaImagenes;
 	}
 	
 }

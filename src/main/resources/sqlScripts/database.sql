@@ -31,13 +31,14 @@ create table Atraccion (
 	nombre varchar(50) not null,
     idCiudad bigint(10) not null,
     horario varchar(50),
-    precio varchar(25),
+    descripcion varchar(50),
+    precio varchar(50),
     latitud float not null,
     longitud float not null,
     borrado tinyint default 0 not null,
     plano mediumblob,
-    audio_EN mediumblob,
-    audio_ES mediumblob,
+    audioEN mediumblob,
+    audioES mediumblob,
     video mediumblob,
     recorrible tinyint default 0,
     foreign key (idCiudad) references Ciudad (id)
@@ -56,4 +57,4 @@ create table PuntoInteres (
     imagen mediumblob,
     idAtraccion bigint(10),
     foreign key (idAtraccion) references Atraccion (id)
-)
+)	
