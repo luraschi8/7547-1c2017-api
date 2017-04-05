@@ -15,6 +15,8 @@ import ar.com.trips.persistencia.modelo.Ciudad;
 @Controller
 public class AtraccionControlador {
 
+	private static final String ATRACCION_NUEVO_PATH = "atracciones/atraccionNuevo";
+	
 	@Autowired
 	private IAtraccionDAO atraccionDao;
 	
@@ -26,4 +28,10 @@ public class AtraccionControlador {
 		return model;
 	}
 	
+	@RequestMapping("atraccionNuevo")
+	public ModelAndView nuevo() {
+		ModelAndView model = new ModelAndView(ATRACCION_NUEVO_PATH);
+		model.addObject("atraccion", new Atraccion());
+		return model;
+	}
 }

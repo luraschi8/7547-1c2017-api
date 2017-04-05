@@ -27,8 +27,9 @@
 				<thead>
 					<tr>
 						<th>Nombre</th>
-						<th>Pais</th>
+						<th>Pa&iacutes</th>
 						<th>Cantidad de atracciones</th>
+						<th></th>
 						<th></th>
 						<th></th>
 					</tr>

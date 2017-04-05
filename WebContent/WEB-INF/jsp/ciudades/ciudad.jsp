@@ -46,13 +46,27 @@
 <div class="panel-group" style="width: 100%; overflow: hidden;">
 	<div id="map" class="view-city-map" style="float:left"></div>
 	<div class="panel panel-primary view-city-panel" style="float:right">
+	
+	
+	<!-- NUEVOOO -->
+		<div class="view-city-btn-panel" style="text-align:center;">
+			<input id="botonAtracciones" class="btn btn-ver btn-atracciones" type="button" value="Atracciones" />
+			
+			<form class="form-horizontal maxwid" id ="formAgregarAtraccion" name="formAgregarAtraccion" action="atraccionNuevo" method="post">
+				<input id="botonAgregarAtraccion" class="btn btn-agregar btn-nueva-atraccion" type="button" value="+" />
+			</form>
+			
+			<input id="botonRecorridos" class="btn btn-ver btn-recorridos" type="button" value="Recorridos" />
+			<input id="botonNuevoRecorrido" class="btn btn-agregar btn-nuevo-recorrido" type="button" value="+" />
+		</div>
+	
+	
 		<div class="panel-body">
 			<table id="tablita" class="display order-column view-city-board" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th></th>
 						<th>Nombre</th>
-						<th></th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -88,6 +102,11 @@
 <c:set var="longitud">
 	${ciudad.longitud}
 </c:set>
+
+
+
+
+
 
 <script>
 
@@ -164,6 +183,17 @@ $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
 });
+
+
+
+
+<!-- NUEVOOO -->
+$('#botonAgregarAtraccion').on('click', function(e) {
+	e.preventDefault();
+	document.getElementById("formAgregarAtraccion").submit();
+});
+
+
 </script>
 
 <!-- Imagen -->

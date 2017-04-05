@@ -132,3 +132,36 @@ body {
 	margin-top: 1rem;
 	margin-bottom: 3rem;
 }
+
+.btn-ver {
+	display:block;
+	float:left;
+	width: 41.48rem;
+	background-color: #F0F0F0;
+    border-radius: 2px;
+}
+
+.btn-agregar {
+	display:block;
+	float:left;
+	border-radius: 0px;
+}
+
+.atraction-label {
+	margin-top: 1rem;
+}
+
+.atraction-box {
+	width: 55rem;
+}
+
+.atraction-blueprints-box {
+	margin-top: 3rem;
+	height: 18.75rem;
+	width: 55rem;
+	background-color: #909090;
+}
+
+.atraction-new-form {
+	margin-left: 5rem;
+}
