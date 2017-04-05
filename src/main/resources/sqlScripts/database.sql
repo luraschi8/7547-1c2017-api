@@ -23,19 +23,37 @@ create table Ciudad (
     latitud float not null,
     longitud float not null,
     imagen mediumblob,
-    borrado boolean default false not null
+    borrado tinyint default 0 not null
 );
 
 create table Atraccion (
 	id bigint(10) primary key not null auto_increment,
 	nombre varchar(50) not null,
     idCiudad bigint(10) not null,
-    horarioVisitaComienzo time,
-    horarioVisitaFin time,
-    precio float,
+    horario varchar(50),
+    precio varchar(25),
     latitud float not null,
     longitud float not null,
-    borrado boolean default false not null,
-    imagen mediumblob,
+    borrado tinyint default 0 not null,
+    plano mediumblob,
+    audio_EN mediumblob,
+    audio_ES mediumblob,
+    video mediumblob,
+    recorrible tinyint default 0,
     foreign key (idCiudad) references Ciudad (id)
 );
+
+create table ImagenAtraccion (
+	id bigint(10) primary key not null auto_increment,
+    imagen mediumblob not null,
+    idAtraccion bigint(10) not null,
+    foreign key (idAtraccion) references Atraccion (id)
+);
+
+create table PuntoInteres (
+	id bigint(10) primary key not null auto_increment,
+    nombre varchar(50),
+    imagen mediumblob,
+    idAtraccion bigint(10),
+    foreign key (idAtraccion) references Atraccion (id)
+)
