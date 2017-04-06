@@ -31,7 +31,6 @@
 						<th>Cantidad de atracciones</th>
 						<th></th>
 						<th></th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody></tbody>
