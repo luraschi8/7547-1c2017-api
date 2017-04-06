@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.Ciudad;
 
 public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 
@@ -29,6 +30,17 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 		s.update(model);
 		s.getTransaction().commit();
 		s.close();
+	}
+
+	@Override
+	public boolean atraccionExistente(int idCiudad, String nombre) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Atraccion.class.getName() + " c WHERE c.nombre = '" + nombre + "'"
+						+ " AND c.ciudad.id = '" + idCiudad + "'";
+		@SuppressWarnings("unchecked")
+		List<Atraccion> lista = session.createQuery(query).list();
+		session.close();
+		return lista.size() != 0;
 	}
 	
 }

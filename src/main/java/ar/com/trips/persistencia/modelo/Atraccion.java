@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="Atraccion")
-public class Atraccion {
+public class Atraccion extends Modelo{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

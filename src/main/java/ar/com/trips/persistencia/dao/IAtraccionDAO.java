@@ -7,4 +7,6 @@ public interface IAtraccionDAO extends IDAO {
 	List listarPorCiudad(int idCiudad);
 
 	void borrar(long id);
+
+	boolean atraccionExistente(int idCiudad, String nombre);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
+import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Ciudad;
 
@@ -20,6 +21,9 @@ public class AtraccionControlador {
 	@Autowired
 	private IAtraccionDAO atraccionDao;
 	
+	@Autowired
+	private ICiudadDAO ciudadDao;
+	
 	@RequestMapping(path="/atracciones")
 	public ModelAndView listar() {
 		ModelAndView model = new ModelAndView("atracciones/atracciones");
@@ -29,9 +33,18 @@ public class AtraccionControlador {
 	}
 	
 	@RequestMapping("atraccionNuevo")
-	public ModelAndView nuevo() {
+	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad) {
 		ModelAndView model = new ModelAndView(ATRACCION_NUEVO_PATH);
-		model.addObject("atraccion", new Atraccion());
+		Atraccion atraccion = new Atraccion();
+		atraccion.setCiudad(ciudadDao.get(Ciudad.class, idCiudad));
+		model.addObject("atraccion", atraccion);
 		return model;
+	}
+	
+	@RequestMapping("atraccionNuevoValidar")
+	public ModelAndView nuevo(@ModelAttribute("atraccion") Atraccion atraccion) {
+		atraccion.setBorrado(0);
+		atraccionDao.guardar(atraccion);
+		return new ModelAndView("redirect:/ciudades");
 	}
 }

@@ -67,6 +67,9 @@
 	<bean name="ciudadValidacion"
 		class="ar.com.trips.presentacion.validacion.CiudadValidacion">
 	</bean>
+	<bean name="atraccionValidacion"
+		class="ar.com.trips.presentacion.validacion.AtraccionValidacion">
+	</bean>
 	
 	<!-- Imagen -->
 	
