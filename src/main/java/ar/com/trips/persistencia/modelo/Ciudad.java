@@ -42,6 +42,7 @@ public class Ciudad extends Modelo {
 	@Column(name="imagen")
 	@Lob
 	@Type(type="org.hibernate.type.ImageType")
+	@JsonBackReference(value="imagen")
 	private byte[] imagen;
 
 	@Column(name="borrado")
@@ -53,6 +54,9 @@ public class Ciudad extends Modelo {
 	
 	@Transient
 	private int cantAtracciones;
+	
+	@Transient
+	private String image;
 	
 	public Ciudad() {
 		
@@ -130,4 +134,12 @@ public class Ciudad extends Modelo {
 		this.borrado = borrado;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
 }

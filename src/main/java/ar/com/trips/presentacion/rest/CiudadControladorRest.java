@@ -3,6 +3,8 @@ package ar.com.trips.presentacion.rest;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.xml.bind.DatatypeConverter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ public class CiudadControladorRest {
 		List<Ciudad> listaAux = ciudadDao.listar(Ciudad.class);
 		for (Ciudad ciudad : listaAux) {
 			ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
+			ciudad.setImage(DatatypeConverter.printBase64Binary(ciudad.getImagen()));
 		}
 		lista.put(DATA, listaAux);
 		return lista;
