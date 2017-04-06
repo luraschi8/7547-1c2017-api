@@ -54,8 +54,8 @@
 <form class="form-horizontal maxwid" id ="formBorrar" name="formBorrar" action="ciudadBorrar" method="post">
 	<input id="id" name="id" type="hidden"> 
 </form>
-<form:form id="formVer" name="formVer" action="ciudadVer" method="post" commandName="ciudad">
-	<form:input id="id" path="id" type="hidden"/>
+<form:form id="formVer" name="formVer" action="ciudadVer" method="get" commandName="ciudad">
+	<input id="idCiudad" name="idCiudad" type="hidden"/>
 </form:form>
 <div class="wait"></div>
 
@@ -102,7 +102,8 @@ $(document).ready(function() {
 	$('#tablita tbody').on('click', '#ver', function (e) {
 		var data = table.row(this.closest("tr")).data();
 		e.preventDefault();
-		document.formVer.id.value = data["id"];
+		//window.location.href = 'ciudadVer/' + data["id"];
+		document.formVer.idCiudad.value = data["id"];
 		document.getElementById("formVer").submit();
 	});
 });

@@ -57,8 +57,8 @@
 				<div>
 					<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 					  	<div>
-						  	<input type="radio" name="recorrible" path="recorrible" value="si">Sí
-						  	<input type="radio" name="recorrible" path="recorrible" value="female" checked="checked">No
+						  	<input type="radio" name="recorrible" path="recorrible" value="1">Sí
+						  	<input type="radio" name="recorrible" path="recorrible" value="0" checked="checked">No
 						</div>
 					</form>
 				</div>
@@ -66,7 +66,7 @@
 	
 			<!-- Mapa -->
 			<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
-     		 		<div id="atraction-map"></div>
+			<div id="atraction-map"></div>
 
 			<!-- <div id="map" class="map-new-city" style="float:right"></div>   -->  
 		</div>
@@ -185,9 +185,12 @@ function validarAtraccionRepetida() {
 	if (hayError == 1) {
 		return;
 	} 
+	var ciudad = {
+		"id": document.formNuevo.idCiudad.value
+	}
 	var json = {
-		"nombre" : document.formNuevo.nombre.value,
-		"idCiudad": document.formNuevo.idCiudad.value,
+		"ciudad": ciudad,
+		"nombre": document.formNuevo.nombre.value,
 	};
 	$.ajax({
 		url : "validarAtraccion",

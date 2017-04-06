@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.ICiudadDAO;
@@ -36,15 +37,20 @@ public class AtraccionControlador {
 	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad) {
 		ModelAndView model = new ModelAndView(ATRACCION_NUEVO_PATH);
 		Atraccion atraccion = new Atraccion();
-		atraccion.setCiudad(ciudadDao.get(Ciudad.class, idCiudad));
+		Ciudad ciudad = new Ciudad();
+		ciudad.setId(idCiudad);
+		atraccion.setCiudad(ciudad);
 		model.addObject("atraccion", atraccion);
 		return model;
 	}
 	
 	@RequestMapping("atraccionNuevoValidar")
-	public ModelAndView nuevo(@ModelAttribute("atraccion") Atraccion atraccion) {
+	public String nuevo(@ModelAttribute("atraccion") Atraccion atraccion, @RequestParam("idCiudad") int idCiudad) {
+		Ciudad ciudad = new Ciudad();
+		ciudad.setId(idCiudad);
+		atraccion.setCiudad(ciudad);
 		atraccion.setBorrado(0);
 		atraccionDao.guardar(atraccion);
-		return new ModelAndView("redirect:/ciudades");
+		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
 }

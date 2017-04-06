@@ -15,12 +15,12 @@ public class AtraccionValidacion {
 	@Autowired
 	private IAtraccionDAO atraccionDao;
 	
-	public List<String> validar(int idCiudad, String nombre) {
+	public List<String> validar(Atraccion atraccion) {
 		List<String> listaErrores = new ArrayList<>();
-		if (nombre.equals("")) {
+		if (atraccion.getNombre().equals("")) {
 			listaErrores.add("El nombre de la atraccion no puede estar vacio");
 		}
-		if (atraccionDao.atraccionExistente(idCiudad,nombre)) {
+		if (atraccionDao.atraccionExistente(atraccion)) {
 			listaErrores.add("Esa atraccion ya se encuentra registrada");
 		}
 		return listaErrores;

@@ -3,7 +3,9 @@ package ar.com.trips.presentacion.controlador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -71,9 +73,9 @@ public class CiudadControlador {
 		return new ModelAndView("redirect:/ciudades");
 	}
 	
-	@RequestMapping("ciudadVer")
-	public ModelAndView ver(@RequestParam("id") int id) {
-		Ciudad ciudad = ciudadDao.get(Ciudad.class, id);
+	@RequestMapping(path="ciudadVer")
+	public ModelAndView ver(@RequestParam("idCiudad") int idCiudad) {
+		Ciudad ciudad = ciudadDao.get(Ciudad.class, idCiudad);
 		ModelAndView model = new ModelAndView("ciudades/ciudad");
 		model.addObject("ciudad",ciudad);		
 		return model;

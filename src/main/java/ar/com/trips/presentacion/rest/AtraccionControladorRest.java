@@ -37,17 +37,17 @@ public class AtraccionControladorRest {
 		return lista;
 	}
 	
-	@RequestMapping(path = "/atraccionesCiudadJson/{idCiudad}", method = RequestMethod.GET)
+	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}",method=RequestMethod.GET)
 	public HashMap<String, List> listarAtraccionesCiudad(@PathVariable int idCiudad) {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		lista.put(DATA, atraccionDao.listarPorCiudad(idCiudad));
 		return lista;
 	}
 	
-	@RequestMapping("/validarAtraccion")
-	public HashMap<String, Boolean> validarAtraccion(@RequestParam("idCiudad") int idCiudad, @RequestParam("nombre") String nombre) {
+	@RequestMapping(path="/validarAtraccion",method=RequestMethod.POST)
+	public HashMap<String, Boolean> validarAtraccion(@RequestBody Atraccion atraccion) {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-		List<String> listaErrores = atraccionValidacion.validar(idCiudad,nombre);
+		List<String> listaErrores = atraccionValidacion.validar(atraccion);
 		if (listaErrores.size() != 0) {
 			lista.put(EXISTE, true);
 		} else {
