@@ -1,5 +1,15 @@
 package ar.com.trips.presentacion.controlador;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,12 +55,33 @@ public class AtraccionControlador {
 	}
 	
 	@RequestMapping("atraccionNuevoValidar")
-	public String nuevo(@ModelAttribute("atraccion") Atraccion atraccion, @RequestParam("idCiudad") int idCiudad) {
+	public String nuevo(@ModelAttribute("atraccion") Atraccion atraccion, @RequestParam("idCiudad") int idCiudad,
+							@RequestParam("archivoAudioguia") MultipartFile audio) {
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		atraccion.setCiudad(ciudad);
+		/*try {
+			atraccion.setAudioEN(audio.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		guardarAudio(atraccion, audio);
 		atraccion.setBorrado(0);
 		atraccionDao.guardar(atraccion);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
+
+	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {
+		InputStream in;
+		try {
+			String ext = "." + FilenameUtils.getExtension(audio.getOriginalFilename());
+			File f = new File("./audio/" + audio.hashCode() + ext);
+			FileUtils.writeByteArrayToFile(f, audio.getBytes());
+			atraccion.setAudioEN(f.getAbsolutePath());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+	}
+
 }

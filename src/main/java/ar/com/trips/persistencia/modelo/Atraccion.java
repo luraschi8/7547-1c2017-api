@@ -56,9 +56,7 @@ public class Atraccion extends Modelo{
 	private byte[] plano;
 	
 	@Column(name="audioEN")
-	@Lob
-	@Type(type="org.hibernate.type.ImageType")
-	private byte[] audioEN;
+	private String audioEN;
 	
 	@Column(name="audioES")
 	@Lob
@@ -158,11 +156,11 @@ public class Atraccion extends Modelo{
 		this.plano = plano;
 	}
 
-	public byte[] getAudioEN() {
+	public String getAudioEN() {
 		return audioEN;
 	}
 
-	public void setAudioEN(byte[] audioEN) {
+	public void setAudioEN(String audioEN) {
 		this.audioEN = audioEN;
 	}
 

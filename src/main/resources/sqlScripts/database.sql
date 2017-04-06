@@ -37,7 +37,7 @@ create table Atraccion (
     longitud float not null,
     borrado tinyint default 0 not null,
     plano mediumblob,
-    audioEN mediumblob,
+    audioEN varchar(100),
     audioES mediumblob,
     video mediumblob,
     recorrible tinyint default 0,
