@@ -13,7 +13,7 @@ body {
     padding: 0;
 }
 
-#archivoImagenPiso {
+#archivoImagenPiso, #archivoAudioguia {
     display: none;
 }
 
