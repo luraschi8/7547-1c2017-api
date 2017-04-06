@@ -33,11 +33,21 @@
 				    <form:input id="nombre" class="atraction-box atraction-name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la atracción"/>
 				</div>
 				
+				<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para la atracción.
+				</div>
+				
 				<div>
 					<form:label class="atraction-label atraction-description-label" path="descripcion">Descripción</form:label>
 				</div>
 				<div>
 				    <form:input id="descripcion" class="atraction-box atraction-description-box" type="text" path="descripcion" required="required" placeholder="Ingrese la descripción de la atracción"/>
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
 				</div>
 				
 				<div>
@@ -85,21 +95,42 @@
 				</div>
 
 				<div class="alert-message">
+					<div class="alert alert-warning fade in" id="mensajePlanoNecesario" style="display: none;">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
+					</div>
 					<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
-					</div>
-					
-					<div class="alert alert-warning fade in" id="mensajeNombreRepetido" style="display: none;">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>Error!</strong> La atracción seleccionada ya se encuentra registrada, seleccione otra.
-					</div>
-					
-					<div class="alert alert-warning fade in" id="mensajeNombreVacio" style="display: none;">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>Error!</strong> No se ha seleccionado un nombre para la atracción.
+					 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 					</div>
 				</div>
+				
+				
+				
+				
+				
+				<!-- Galería -->
+				<div>
+				
+					<div>
+						<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
+					</div>
+					<div class="atraction-gallery-box" style="float:left">
+						<img class="atraction-gallery" id="atraction-gallery" style="width:100%; height:100%">
+						<button class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&#10094;</button>
+						<button class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
+					
+						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
+					        
+					    <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/>
+					</div>
+					
+				
+					
+				</div>
+				
+				
+				
 				
 				<!-- Audioguía -->
 				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
@@ -113,7 +144,7 @@
 					
 					<!-- Botón agregar audioguía -->
 					<div style="text-align:center; float:right;">
-						<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-get-file" value="Agregar audioguía">
+						<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Agregar audioguía">
 						<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
 					</div>
 				</div>
@@ -183,6 +214,11 @@
 			</div>				
 		</div>
 		
+		<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
+		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
+		</div>
+		
 	</div>
 </form:form>
 
@@ -193,6 +229,34 @@
 
 
 
+
+
+
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function nextGalleryItem(n) {
+    showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("atraction-gallery");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length} ;
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    x[slideIndex-1].style.display = "block";
+}
+</script>
+
+
+
+
+
+
 <script>
 $('#botonNuevo').on('click', function(e) {
 		e.preventDefault();
@@ -200,14 +264,24 @@ $('#botonNuevo').on('click', function(e) {
  	 	validarAtraccionRepetida();
 });
 
-function validarAtraccionRepetida() {
-	hayError = 0;
-	if (document.getElementById('nombre').value == '') {
-		document.getElementById("mensajeNombreVacio").style.display = 'block';
+function validarElemento(elemento, mensaje, hayError) {
+	if ((document.getElementById(elemento).value == '') && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
 		hayError = 1;
 	} else {
-		document.getElementById("mensajeNombreVacio").style.display = 'none';
+		document.getElementById(mensaje).style.display = 'none';
 	}
+	return hayError;
+}
+
+function validarAtraccionRepetida() {
+	hayError = 0;
+	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
+	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
+	/*if (document.getElementById('recorrible').value == '1') {
+		hayError = validarElemento('plano', 'mensajeDescripcionVacia', hayError);
+	}*/
+	
 	if (hayError == 1) {
 		return;
 	} 
@@ -241,6 +315,52 @@ function validarAtraccionRepetida() {
 
 
 
+<!-- Galería -->
+<script>
+var number_of_images = 0;
+var number_of_videos = 0;
+
+var number_of_files = number_of_images + number_of_videos;
+
+$(document).ready(function() {
+	document.getElementById('atraction-get-gallery-file').onclick = function() {
+		document.getElementById('archivoGaleria').addEventListener('change', readURL, true);
+		var fileButton = document.getElementById('archivoGaleria');
+		fileButton.click();
+	};
+	
+	$("#archivoGaleria").change(function() {
+	    var val = $(this).val();
+	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	    	case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
+	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	break;
+	        default:
+	            $(this).val('');
+				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+				document.getElementById('archivoGaleria').value = "" ;
+				document.getElementById('galeria').src = "" ;
+				break;
+	    }
+	});
+	
+	function readURL(){
+		var file = document.getElementById("archivoGaleria").files[0];
+		var reader = new FileReader();
+	    reader.onloadend = function(){
+			document.getElementById('galeria').src = reader.result;
+		}
+		if(file) {
+			reader.readAsDataURL(file);
+		} 
+	}
+});
+</script>
+
+
+
+
+<!-- Audioguía -->
 <script>
 $(document).ready(function() {
 	document.getElementById('atraction-get-audio-file').onclick = function() {
@@ -249,7 +369,7 @@ $(document).ready(function() {
 		fileButton.click();
 	};
 	
-	$("#audioguia").change(function() {
+	$("#archivoAudioguia").change(function() {
 	    var val = $(this).val();
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	        case 'mp3':

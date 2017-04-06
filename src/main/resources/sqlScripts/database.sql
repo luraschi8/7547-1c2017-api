@@ -31,7 +31,7 @@ create table Atraccion (
 	nombre varchar(50) not null,
     idCiudad bigint(10) not null,
     horario varchar(50),
-    descripcion varchar(50),
+    descripcion varchar(250),
     precio varchar(50),
     latitud float not null,
     longitud float not null,

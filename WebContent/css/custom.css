@@ -13,7 +13,7 @@ body {
     padding: 0;
 }
 
-#archivoImagenPiso, #archivoAudioguia {
+#archivoImagenPiso, #archivoAudioguia, #archivoGaleria {
     display: none;
 }
 
@@ -105,6 +105,15 @@ body {
     right:-1px;
 }
 
+.atraction-alert { 
+	margin-top: 1rem;
+	margin-bottom: -0.5rem;
+}
+
+.atraction-alert-already-exists {
+	margin-right: 5rem;
+}
+
 .alert-message{ 
 	margin-top: 20rem;
 }
@@ -155,7 +164,7 @@ body {
 	width: 50rem;
 }
 
-.atraction-blueprints-box {
+.atraction-blueprints-box, .atraction-gallery-box {
 	height: 18.75rem;
 	width: 50rem;
 	background-color: #909090;
@@ -227,4 +236,29 @@ body {
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
     width: 380px;
+}
+
+.btn-atraction-get-audio-file {
+	margin-top: -0.1rem;
+	margin-right: 0.1rem;
+}
+
+.atraction-gallery-box .atraction-gallery-slide-left {
+	position: relative;
+    top: -10.5rem;
+    left: 5rem;
+    background-color: Transparent;
+}
+
+.atraction-gallery-box .atraction-gallery-slide-right {
+	position: relative;
+    top: -10.5rem;
+    left: 40rem;
+    background-color: Transparent;
+}
+
+.atraction-gallery-box .btn-atraction-get-gallery-file {
+	position: relative;
+    top: -10.7rem;
+    left: 17.5rem;
 }
