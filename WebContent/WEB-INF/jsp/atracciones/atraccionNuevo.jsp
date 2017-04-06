@@ -57,8 +57,8 @@
 				<div>
 					<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 					  	<div>
-						  	<input type="radio" name="recorrible" path="recorrible" value="1">Sí
-						  	<input type="radio" name="recorrible" path="recorrible" value="0" checked="checked">No
+						  	<input type="radio" name="recorrible" path="recorrible" value="1" style="margin: 4px">Sí
+						  	<input type="radio" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;">No
 						</div>
 					</form>
 				</div>
@@ -100,7 +100,35 @@
 					 	<strong>Error!</strong> No se ha seleccionado un nombre para la atracción.
 					</div>
 				</div>
+				
+				<!-- Audioguía -->
+				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
+				<div>
+					<!-- Reproducir audioguía -->
+					<div style="float:left">
+						<audio id="audio" controls>
+						    <source type="audio/mpeg">
+						</audio> 
+					</div>
+					
+					<!-- Botón agregar audioguía -->
+					<div style="text-align:center; float:right;">
+						<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-get-file" value="Agregar audioguía">
+						<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
+					</div>
+				</div>
+				
+				
+				<div class="alert-message">
+					<div class="alert alert-warning fade in" id="mensajeAudioIncorrectoError" style="display: none;">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+					</div>
+				</div>
 			</div>
+			
+			
+
 					
 			<!-- Tabla puntos de interés y obras -->
 			<div class="panel panel-primary view-atraction-panel" style="float:right">
@@ -163,11 +191,9 @@
 	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
 </div>
 
-<!--
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places&callback=initMap" async defer></script>
--->
-<script>
 
+
+<script>
 $('#botonNuevo').on('click', function(e) {
 		e.preventDefault();
 		document.getElementById("mensajeNombreRepetido").style.display = 'none';
@@ -210,6 +236,54 @@ function validarAtraccionRepetida() {
 }
 
 </script>
+
+
+
+
+
+<script>
+$(document).ready(function() {
+	document.getElementById('atraction-get-audio-file').onclick = function() {
+		document.getElementById('archivoAudioguia').addEventListener('change', readURL, true);
+		var fileButton = document.getElementById('archivoAudioguia');
+		fileButton.click();
+	};
+	
+	$("#audioguia").change(function() {
+	    var val = $(this).val();
+	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	        case 'mp3':
+	        	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
+	        	break;
+	        default:
+	            $(this).val('');
+				document.getElementById("mensajeAudioIncorrectoError").style.display = 'block';
+				document.getElementById('archivoAudioguia').value = "" ;
+				document.getElementById('audio').src = "" ;
+				break;
+	    }
+	});
+	
+	function readURL(){
+		var file = document.getElementById("archivoAudioguia").files[0];
+		var reader = new FileReader();
+	    reader.onloadend = function(){
+			document.getElementById('audio').src = reader.result;
+		}
+		if(file) {
+			reader.readAsDataURL(file);
+		} 
+	}
+});
+</script>
+
+
+
+
+
+
+
+
 <!-- Mapa -->
 <script>
     function initMap() {
