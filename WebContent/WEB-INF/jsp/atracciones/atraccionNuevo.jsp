@@ -21,10 +21,12 @@
 	
 		<!-- Información principal y mapa -->
 		<div class="atraction-main-information-and-map" style="width: 100%; overflow: hidden;">	
-			
 			<!-- Información principal -->
 			<div class="atraction-main-information" style="float:left">
 				<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
+				<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
+				<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
+				<input type="hidden" id="id" name="id" value="${atraccion.id}"/>
 				
 				<div>
 					<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label>
@@ -75,8 +77,16 @@
 			</div>
 	
 			<!-- Mapa -->
-			<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
-			<div id="atraction-map"></div> 
+			<div style="float:right">
+				<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
+				<div id="atraction-map"></div> 
+				
+				<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
+				</div>
+				
+			</div>
 		</div>
 
 		<!-- Plano y tabla -->
@@ -219,6 +229,7 @@
 	</div>
 </form:form>
 
+<form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
 	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
@@ -239,6 +250,11 @@
 
 
 <script>
+$('#botonAtras').on('click', function(e) {
+	e.preventDefault();
+	document.getElementById("formAtras").submit();
+});
+
 $('#botonNuevo').on('click', function(e) {
 		e.preventDefault();
 		document.getElementById("mensajeNombreRepetido").style.display = 'none';
@@ -257,10 +273,25 @@ function validarElemento(elemento, mensaje, hayError) {
 	return hayError;
 }
 
+function validarUbicacion(hay_ubicacion, mensaje, hayError) {
+	if ((!hay_ubicacion) && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById(mensaje).style.display = 'none';
+	}
+	return hayError;
+}
+
+//Para validar si se ha o no elegido una ubicación
+var location_selected = false;
+
 function validarAtraccionRepetida() {
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
+	hayError = validarUbicacion(location_selected, "mensajeUbicacionVacia", hayError);
+	
 	if (document.getElementById('es-recorrible').checked) {
 		hayError = validarElemento('archivoPlano', 'mensajePlanoNecesario', hayError);
 	} else {
@@ -276,6 +307,8 @@ function validarAtraccionRepetida() {
 	var json = {
 		"ciudad": ciudad,
 		"nombre": document.formNuevo.nombre.value,
+		"latitud": document.formNuevo.latitud.value,
+		"longitud": document.formNuevo.longitud.value
 	};
 	$.ajax({
 		url : "validarAtraccion",
@@ -470,6 +503,7 @@ $(document).ready(function() {
             // Se guardan las coordenadas
             document.formNuevo.latitud.value = place.geometry.location.lat();
             document.formNuevo.longitud.value = place.geometry.location.lng();
+            location_selected = "true";
 
             var address = '';
             if (place.address_components) {
@@ -492,10 +526,13 @@ $(document).ready(function() {
 
 			// Se guardan las coordenadas
        	  	document.formNuevo.latitud.value = event.latLng.lat();
-           	document.formNuevo.longitud.value = event.latLng.lng(); 
+           	document.formNuevo.longitud.value = event.latLng.lng();
+           	location_selected = "true";
         });
     }
-</script>		
+</script>
+		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places&callback=initMap&language=es" async defer></script>
+
 </body>
 </html>

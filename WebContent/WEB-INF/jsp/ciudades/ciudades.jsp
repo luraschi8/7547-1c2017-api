@@ -40,7 +40,7 @@
 </div>
 
 <c:set var="value">
-	Desea borrar?
+	¿Desea borrar?
 </c:set>
 <input id="mensajeBorrar" type="hidden" value="${value}" />
 
@@ -51,7 +51,7 @@
 <c:set var="ver">
 	Ver
 </c:set>
-<form class="form-horizontal maxwid" id ="formBorrar" name="formBorrar" action="ciudadBorrar" method="post">
+<form class="form-horizontal maxwid" id="formBorrar" name="formBorrar" action="ciudadBorrar" method="post">
 	<input id="id" name="id" type="hidden"> 
 </form>
 <form:form id="formVer" name="formVer" action="ciudadVer" method="get" commandName="ciudad">

@@ -40,7 +40,7 @@
 </form:form>
 
 <h1 class="page-header">
-	${ciudad.nombre} , ${ciudad.pais}
+	${ciudad.nombre}, ${ciudad.pais}
 </h1>
 
 <div class="panel-group" style="width: 100%; overflow: hidden;">
@@ -86,17 +86,17 @@
 </c:set>
 
 <c:set var="value">
-	Desea borrar?
+ 	¿Desea borrar?
 </c:set>
 <input id="mensajeBorrar" type="hidden" value="${value}" />
-
+ 
 <form class="form-horizontal maxwid" id ="formBorrar" name="formBorrar" action="atraccionBorrar" method="post">
 	<input id="idAtraccion" name="idAtraccion" type="hidden">
 	<input id="idCiudadAtraccion" name="idCiudadAtraccion" value="${ciudad.id}" type="hidden"> 
 </form>
 
-<c:set var="ver">
-	Ver
+<c:set var="marcar">
+	Marcar
 </c:set>
 
 <c:set var="id">
@@ -112,8 +112,6 @@
 </c:set>
 
 <script>
-
-//$(document).ready(function() {
 var map;
 var markers = [];
 
@@ -135,7 +133,7 @@ var table = $('#tablita').DataTable( {
         },
         {data: "nombre" },
         {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
-        {defaultContent:'<button class="btn btn-warning" id="ver">${ver}</button>'}
+        {defaultContent:'<button class="btn btn-warning" id="marcar">${marcar}</button>'}
         ],
     select:true,
     paging:false,
@@ -144,7 +142,7 @@ var table = $('#tablita').DataTable( {
     bFilter: false
 });
 
-$('#tablita tbody').on('click', '#ver', function (e) {
+$('#tablita tbody').on('click', '#marcar', function (e) {
 	var data = table.row(this.closest("tr")).data();
 	e.preventDefault();
 	var latitud = data["latitud"];
@@ -200,17 +198,14 @@ $('#botonAtras').on('click', function(e) {
 	document.getElementById("formAtras").submit();
 });
 
-<!-- NUEVOOO -->
 $('#botonAgregarAtraccion').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAgregarAtraccion").submit();
 });
-
-
 </script>
 
-<!-- Imagen -->
 
+<!-- Imagen -->
 <script>
 $(document).ready(function() {
 	document.getElementById('get_file').onclick = function() {
