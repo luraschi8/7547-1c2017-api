@@ -230,6 +230,8 @@
 $('#botonNuevo').on('click', function(e) {
 		e.preventDefault();
 		document.getElementById("mensajeNombreRepetido").style.display = 'none';
+		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+		document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
  	 	validarAtraccionRepetida();
 });
 
@@ -249,6 +251,8 @@ function validarAtraccionRepetida() {
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
 	if (document.getElementById('es-recorrible').checked) {
 		hayError = validarElemento('archivoPlano', 'mensajePlanoNecesario', hayError);
+	} else {
+		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
 	
 	if (hayError == 1) {
