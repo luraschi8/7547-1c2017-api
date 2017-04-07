@@ -14,7 +14,7 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 	@Override
 	public List listarPorCiudad(int idCiudad) {
 		Session session = sessionFactory.openSession();
-		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.ciudad.id = " + idCiudad;
+		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.ciudad.id = " + idCiudad + " AND a.borrado = 0";
 		@SuppressWarnings("unchecked")
 		List<Atraccion> lista = session.createQuery(query).list();
 		session.close();

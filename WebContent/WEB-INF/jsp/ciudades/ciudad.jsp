@@ -85,6 +85,16 @@
 	Borrar
 </c:set>
 
+<c:set var="value">
+	Desea borrar?
+</c:set>
+<input id="mensajeBorrar" type="hidden" value="${value}" />
+
+<form class="form-horizontal maxwid" id ="formBorrar" name="formBorrar" action="atraccionBorrar" method="post">
+	<input id="idAtraccion" name="idAtraccion" type="hidden">
+	<input id="idCiudadAtraccion" name="idCiudadAtraccion" value="${ciudad.id}" type="hidden"> 
+</form>
+
 <c:set var="ver">
 	Ver
 </c:set>
@@ -100,11 +110,6 @@
 <c:set var="longitud">
 	${ciudad.longitud}
 </c:set>
-
-
-
-
-
 
 <script>
 
@@ -162,6 +167,19 @@ $('#tablita tbody').on('click', '#ver', function (e) {
 	markers.push(marker);
 });
 
+$('#tablita tbody').on('click', '#borrar', function (e) {
+	var data = table.row(this.closest("tr")).data();
+	var id = data["id"];
+	var mensaje = document.getElementById("mensajeBorrar").value;
+	e.preventDefault();
+	bootbox.confirm(mensaje, function (response) {
+		if (response) {
+			document.formBorrar.idAtraccion.value = id;
+			document.getElementById("formBorrar").submit();
+		}
+	});
+});
+
 $('#botonNuevo').on('click', function(e) {
 	e.preventDefault();
 	hayError = 0;
@@ -181,9 +199,6 @@ $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
 });
-
-
-
 
 <!-- NUEVOOO -->
 $('#botonAgregarAtraccion').on('click', function(e) {

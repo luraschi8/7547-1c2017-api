@@ -1,12 +1,7 @@
 package ar.com.trips.presentacion.controlador;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -17,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.ICiudadDAO;
@@ -72,7 +66,6 @@ public class AtraccionControlador {
 	}
 
 	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {
-		InputStream in;
 		try {
 			String ext = "." + FilenameUtils.getExtension(audio.getOriginalFilename());
 			File f = new File("./audio/" + audio.hashCode() + ext);
@@ -82,6 +75,12 @@ public class AtraccionControlador {
 			e.printStackTrace();
 			return;
 		}
+	}
+	
+	@RequestMapping("atraccionBorrar")
+	public ModelAndView borrar(@RequestParam("idAtraccion") int id,@RequestParam("idCiudadAtraccion") int idCiudad) {
+		atraccionDao.borrar(id);
+		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + idCiudad);
 	}
 
 }
