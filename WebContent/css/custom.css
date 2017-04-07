@@ -13,7 +13,7 @@ body {
     padding: 0;
 }
 
-#archivoImagenPiso, #archivoAudioguia, #archivoGaleria {
+#archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano {
     display: none;
 }
 
@@ -114,7 +114,11 @@ body {
 	margin-right: 5rem;
 }
 
-.alert-message{ 
+.atraction-alert-incorrect-audio {
+	margin-top: 4rem;
+}
+
+.alert-message { 
 	margin-top: 20rem;
 }
 

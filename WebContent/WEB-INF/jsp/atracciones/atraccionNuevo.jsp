@@ -67,8 +67,8 @@
 				<div>
 					<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 					  	<div>
-						  	<input type="radio" name="recorrible" path="recorrible" value="1" style="margin: 4px">Sí
-						  	<input type="radio" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;">No
+						  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px">Sí
+						  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;">No
 						</div>
 					</form>
 				</div>
@@ -76,9 +76,7 @@
 	
 			<!-- Mapa -->
 			<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
-			<div id="atraction-map"></div>
-
-			<!-- <div id="map" class="map-new-city" style="float:right"></div>   -->  
+			<div id="atraction-map"></div> 
 		</div>
 
 		<!-- Plano y tabla -->
@@ -90,8 +88,9 @@
 					<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
 				</div>
 				<div class="atraction-blueprints-box" style="float:left">
-					<img id="atraction-blueprints" style="width:100%; height:100%">
+					<img id="plano" style="width:100%; height:100%">
 					<input type="button" id="atraction-get-blueprints" class="btn btn-default atraction-get-blueprints" value="Editar">
+					<input type="file" name="archivoPlano" id="archivoPlano"/>
 				</div>
 
 				<div class="alert-message">
@@ -149,13 +148,11 @@
 					</div>
 				</div>
 				
-				
-				<div class="alert-message">
-					<div class="alert alert-warning fade in" id="mensajeAudioIncorrectoError" style="display: none;">
+				<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 					</div>
-				</div>
+					
 			</div>
 			
 			
@@ -229,34 +226,6 @@
 
 
 
-
-
-
-<script>
-var slideIndex = 1;
-showDivs(slideIndex);
-
-function nextGalleryItem(n) {
-    showDivs(slideIndex += n);
-}
-
-function showDivs(n) {
-    var i;
-    var x = document.getElementsByClassName("atraction-gallery");
-    if (n > x.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = x.length} ;
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    x[slideIndex-1].style.display = "block";
-}
-</script>
-
-
-
-
-
-
 <script>
 $('#botonNuevo').on('click', function(e) {
 		e.preventDefault();
@@ -278,9 +247,9 @@ function validarAtraccionRepetida() {
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
-	/*if (document.getElementById('recorrible').value == '1') {
-		hayError = validarElemento('plano', 'mensajeDescripcionVacia', hayError);
-	}*/
+	if (document.getElementById('es-recorrible').checked) {
+		hayError = validarElemento('archivoPlano', 'mensajePlanoNecesario', hayError);
+	}
 	
 	if (hayError == 1) {
 		return;
@@ -314,6 +283,38 @@ function validarAtraccionRepetida() {
 
 
 
+<!-- Plano -->
+<script>
+$(document).ready(function() {
+	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajeImagenIncorrectaError");
+});
+</script>
+
+
+
+
+
+
+<!-- Para el slide de Galería podría ser útil -->
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function nextGalleryItem(n) {
+    showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("atraction-gallery");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length} ;
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    x[slideIndex-1].style.display = "block";
+}
+</script>
 
 <!-- Galería -->
 <script>

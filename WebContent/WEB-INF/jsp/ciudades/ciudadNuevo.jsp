@@ -178,38 +178,8 @@ $(document).ready(function() {
 	    return false;
 	  }
 	});
-	
-	document.getElementById('get_file').onclick = function() {
-		document.getElementById('archivoImagenPiso').addEventListener('change', readURL, true);
-		var fileButton = document.getElementById('archivoImagenPiso');
-		fileButton.click();
-	};
-	
-	$("#archivoImagenPiso").change(function() {
-	    var val = $(this).val();
-	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
-	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
-	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
-	        	break;
-	        default:
-	            $(this).val('');
-				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-				document.getElementById('archivoImagenPiso').value = "" ;
-				document.getElementById('imagen').src = "" ;
-				break;
-	    }
-	});
-	
-	function readURL(){
-		var file = document.getElementById("archivoImagenPiso").files[0];
-		var reader = new FileReader();
-	    reader.onloadend = function(){
-			document.getElementById('imagen').src = reader.result;
-		}
-		if(file) {
-			reader.readAsDataURL(file);
-		} 
-	}
+
+	validateImage('get_file', 'archivoImagenPiso', 'imagen', "mensajeImagenIncorrectaError");
 	
 	$('#formNuevo').on('keyup keypress', function(e) {
 	  var keyCode = e.keyCode || e.which;
