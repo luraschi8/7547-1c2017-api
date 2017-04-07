@@ -225,6 +225,18 @@
 </div>
 
 
+<!-- Definición de constantes -->
+<script>
+	const MAX_NOMBRE = "50";
+	const MAX_DESCRIPCION = "250";
+	const MAX_HORARIO = "50";
+	const MAX_PRECIO = "50";
+	$("#nombre").attr("maxlength", MAX_NOMBRE);
+	$("#descripcion").attr("maxlength", MAX_DESCRIPCION);
+	$("#horario").attr("maxlength", MAX_HORARIO);
+	$("#precio").attr("maxlength", MAX_PRECIO);
+</script>
+
 
 <script>
 $('#botonNuevo').on('click', function(e) {
@@ -470,6 +482,17 @@ $(document).ready(function() {
 
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
             infowindow.open(map, marker);
+        });
+
+		// Al clickear en el mapa, se guardan las coordenadas y se dibuja la ubicación
+        google.maps.event.addListener(map, 'click', function( event ){
+       		marker.setVisible(false);
+       		marker.setPosition(event.latLng);
+            marker.setVisible(true);
+
+			// Se guardan las coordenadas
+       	  	document.formNuevo.latitud.value = event.latLng.lat();
+           	document.formNuevo.longitud.value = event.latLng.lng(); 
         });
     }
 </script>		
