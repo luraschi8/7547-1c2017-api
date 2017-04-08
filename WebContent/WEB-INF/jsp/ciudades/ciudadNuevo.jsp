@@ -70,6 +70,11 @@
 						 	<strong>¡Error!</strong> No se ha seleccionado ningún país.
 						</div>
 						
+						<div class="alert alert-warning fade in" id="mensajeUbicacionVacia" style="display: none">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
+						</div>
+				
 						<div class="alert alert-warning fade in" id="mensajeNombreIncorrecto" style="display: none;">
  						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
  						 	<strong>¡Error!</strong> La ciudad seleccionada es incorecta.
@@ -90,6 +95,8 @@
 <div class="wait"></div>
 	
 <script>
+	var location_selected = false;
+
 	function setValue(id, new_value) {
 		  var s = document.getElementById(id);
 		  s.innerHTML = new_value;
@@ -120,24 +127,32 @@
 	
 	function validarCiudadRepetida(city) {
 		hayError = 0;
-		if (document.getElementById('archivoImagenPiso').value == '') {
+		if ((document.getElementById('archivoImagenPiso').value == '') && (!hayError)) {
 			document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
 			hayError = 1;
 		} else {
 			document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 		}
-		if (document.getElementById('city').value == '') {
+		if ((document.getElementById('city').value == '') && (!hayError)) {
 			document.getElementById("mensajeNombreVacio").style.display = 'block';
 			hayError = 1;
 		} else {
 			document.getElementById("mensajeNombreVacio").style.display = 'none';
 		}
-		if (document.getElementById('pais').value == '') {
+		if ((document.getElementById('pais').value == '') && (!hayError)) {
 			document.getElementById("mensajePaisVacio").style.display = 'block';
 			hayError = 1;
 		} else {
 			document.getElementById("mensajePaisVacio").style.display = 'none';
 		}
+
+		if ((!location_selected) && (!hayError)) {
+ 	    	document.getElementById("mensajeUbicacionVacia").style.display = 'block';
+ 	       	hayError = 1;
+       	} else {
+       		document.getElementById("mensajeUbicacionVacia").style.display = 'none';
+        }
+		
 		if (hayError == 1) {
 			document.formNuevo.city.value = city;
 			return;
@@ -246,6 +261,7 @@ $(document).ready(function() {
             // Se guardan las coordenadas
             document.formNuevo.latitud.value = place.geometry.location.lat();
             document.formNuevo.longitud.value = place.geometry.location.lng();
+            location_selected = true;
 
             var address = '';
             if (place.address_components) {

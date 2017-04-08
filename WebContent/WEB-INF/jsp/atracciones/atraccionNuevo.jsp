@@ -503,7 +503,7 @@ $(document).ready(function() {
             // Se guardan las coordenadas
             document.formNuevo.latitud.value = place.geometry.location.lat();
             document.formNuevo.longitud.value = place.geometry.location.lng();
-            location_selected = "true";
+            location_selected = true;
 
             var address = '';
             if (place.address_components) {
@@ -527,7 +527,7 @@ $(document).ready(function() {
 			// Se guardan las coordenadas
        	  	document.formNuevo.latitud.value = event.latLng.lat();
            	document.formNuevo.longitud.value = event.latLng.lng();
-           	location_selected = "true";
+           	location_selected = true;
         });
     }
 </script>
