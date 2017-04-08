@@ -21,10 +21,16 @@
 		<div class="input-and-image-group" style="width: 100%; overflow: hidden;">	
 			<div class="input" style="float:left">
 				<div class="name-group">
-					<form:label class="name-label" path="nombre">Nombre de la ciudad</form:label>
-				    <form:input id="city" class="name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
+					<div>
+						<form:label class="name-label" path="nombre">Nombre</form:label>
+					    <form:input id="city" class="name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
+					</div>
 					
-					<form:input id="pais" type="hidden" name="pais" path="pais"/>
+					<div>
+						<form:label class="name-label" path="pais">País</form:label>
+						<form:input id="pais" class="name-box" type="text" name="pais" path="pais" required="required" placeholder="Ingrese el país al que pertenece"/>
+					</div>
+					
 					<form:input id="latitud" type="hidden" name="latitud" path="latitud"/>
 					<form:input id="longitud" type="hidden" name="longitud" path="longitud"/>
 				</div>
@@ -46,22 +52,27 @@
 					<div class="alert-message">
 						<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+						 	<strong>¡Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 						</div>
 						
 						<div class="alert alert-warning fade in" id="mensajeNombreRepetido" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>Error!</strong> La ciudad seleccionada ya se encuentra registrada, seleccione otra.
+						 	<strong>¡Error!</strong> La ciudad seleccionada ya se encuentra registrada, seleccione otra.
 						</div>
 						
 						<div class="alert alert-warning fade in" id="mensajeNombreVacio" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>Error!</strong> No se ha seleccionado ninguna ciudad.
+						 	<strong>¡Error!</strong> No se ha seleccionado ninguna ciudad.
+						</div>
+						
+						<div class="alert alert-warning fade in" id="mensajePaisVacio" style="display: none;">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>¡Error!</strong> No se ha seleccionado ningún país.
 						</div>
 						
 						<div class="alert alert-warning fade in" id="mensajeNombreIncorrecto" style="display: none;">
  						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
- 						 	<strong>Error!</strong> La ciudad seleccionada es incorecta.
+ 						 	<strong>¡Error!</strong> La ciudad seleccionada es incorecta.
  						</div>
 					</div>
 				</div>
@@ -94,27 +105,17 @@
 		document.getElementById("mensajeNombreRepetido").style.display = 'none';
 		document.getElementById("mensajeNombreIncorrecto").style.display = 'none';
 		var city = {
-			all: document.getElementById('city').value,
-			name: document.getElementById('city').value,
-			country: "Desconocido"
-		};
-		var geocoder = new google.maps.Geocoder();
-		geocoder.geocode({'address': city.name}, function(results, status){
- 	   	    if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
- 	       	    result = results[0].formatted_address;
- 	       	    if (result != city.name) {
- 	       	    	document.getElementById("mensajeNombreIncorrecto").style.display = 'block';
- 	       	    	return;
- 	       	    }
- 	       	    parseCity(city);
- 				document.formNuevo.nombre.value = city.name;
- 				document.formNuevo.pais.value = city.country;
- 				validarCiudadRepetida(city.all);
- 	       	} else {
- 	       		document.getElementById("mensajeNombreIncorrecto").style.display = 'block';
- 	       		return;
- 	       	}
- 	    });
+				all: document.getElementById('city').value,
+			};
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({'address': city.name}, function(results, status) {
+	 	   	    if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
+	 				validarCiudadRepetida(city.all);
+	 	       	} else {
+	 	       		document.getElementById("mensajeNombreIncorrecto").style.display = 'block';
+	 	       		return;
+	 	       	}
+	 	    });
 	});
 	
 	function validarCiudadRepetida(city) {
@@ -130,6 +131,12 @@
 			hayError = 1;
 		} else {
 			document.getElementById("mensajeNombreVacio").style.display = 'none';
+		}
+		if (document.getElementById('pais').value == '') {
+			document.getElementById("mensajePaisVacio").style.display = 'block';
+			hayError = 1;
+		} else {
+			document.getElementById("mensajePaisVacio").style.display = 'none';
 		}
 		if (hayError == 1) {
 			document.formNuevo.city.value = city;
@@ -251,11 +258,26 @@ $(document).ready(function() {
 
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
             infowindow.open(map, marker);
+
+           	var city = {
+       			all: document.getElementById('city').value,
+       			name: document.getElementById('city').value,
+       			country: "Desconocido"
+       		};
+       		var geocoder = new google.maps.Geocoder();
+       		geocoder.language
+       		geocoder.geocode({'address': city.name}, function(results, status) {
+       	   	    if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
+       	       	    parseCity(city);
+       				document.formNuevo.nombre.value = city.name;
+       				document.formNuevo.pais.value = city.country;
+       	       	}
+       	    });   
         });
     }
     </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places&callback=initMap&language=es" async defer></script>
 
 </body>
 </html>
