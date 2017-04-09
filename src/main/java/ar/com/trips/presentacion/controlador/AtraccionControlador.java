@@ -92,4 +92,19 @@ public class AtraccionControlador {
 		model.addObject("atraccion", atraccion);		
 		return model;
 	}
+	
+	@RequestMapping("atraccionModificar")
+	public ModelAndView modificar(@ModelAttribute("atraccion") Atraccion atraccionId) {
+		Atraccion atraccion = atraccionDao.get(Atraccion.class, atraccionId.getId());
+		/*if (imagenCambiada == 1) {
+			try {
+				byte[] bytes = imagen.getBytes();
+				ciudad.setImagen(bytes);
+			} catch (Exception e) {
+				
+			}
+		}*/
+		atraccionDao.modificar(atraccion);
+		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
+	}
 }

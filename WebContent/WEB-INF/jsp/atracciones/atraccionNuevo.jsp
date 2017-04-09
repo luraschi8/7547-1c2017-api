@@ -90,7 +90,7 @@
 				
 				<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
 				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
+				 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
 				</div>
 				
 			</div>
@@ -472,7 +472,7 @@ $(document).ready(function() {
 <script>
     function initMap() {
         var map = new google.maps.Map(document.getElementById('atraction-map'), {
-            center: {lat: -34.6036844, lng: -58.3815591}, //Buenos Aires coordinates
+            center: {lat: ${latitud_ciudad}, lng: ${longitud_ciudad}},
             zoom: 13
         });
         var input = (document.getElementById('atraction-map-input'));
