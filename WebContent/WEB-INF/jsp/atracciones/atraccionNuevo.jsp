@@ -121,33 +121,21 @@
 					</div>
 				</div>
 				
-				
-				
-				
-				
 				<!-- Galería -->
 				<div>
-				
 					<div>
 						<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
 					</div>
-					<div class="atraction-gallery-box" style="float:left">
-						<img class="atraction-gallery" id="atraction-gallery" style="width:100%; height:100%">
-						<button class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&#10094;</button>
-						<button class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
-					
+					<div id ="container" class="atraction-gallery-box" style="float:left">
+						<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%">
+						<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&lt;</button>
+						<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
 						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
-					        
-					    <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/>
+					    
+					    <!-- <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/> -->
 					</div>
-					
-				
-					
 				</div>
-				
-				
-				
-				
+
 				<!-- Audioguía -->
 				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
 				<div>
@@ -172,9 +160,6 @@
 					
 			</div>
 			
-			
-
-					
 			<!-- Tabla puntos de interés y obras -->
 			<div class="panel panel-primary view-atraction-panel" style="float:right">
 				<div style="text-align:center">
@@ -347,8 +332,15 @@ $(document).ready(function() {
 
 <!-- Para el slide de Galería podría ser útil -->
 <script>
+
+var imageNumber = 0;
+var videoNumber = 0;
+
+var filesNumber = imageNumber + videoNumber;
+
+var multimedia = [];
+
 var slideIndex = 1;
-showDivs(slideIndex);
 
 function nextGalleryItem(n) {
     showDivs(slideIndex += n);
@@ -356,35 +348,39 @@ function nextGalleryItem(n) {
 
 function showDivs(n) {
     var i;
-    var x = document.getElementsByClassName("atraction-gallery");
-    if (n > x.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = x.length} ;
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    x[slideIndex-1].style.display = "block";
+    if (n > filesNumber) {slideIndex = 1}
+    if (n < 1) {slideIndex = filesNumber} ;
+	document.getElementById('imagenGaleria').src = multimedia[slideIndex - 1].src;
 }
-</script>
 
 <!-- Galería -->
-<script>
-var number_of_images = 0;
-var number_of_videos = 0;
-
-var number_of_files = number_of_images + number_of_videos;
 
 $(document).ready(function() {
 	document.getElementById('atraction-get-gallery-file').onclick = function() {
+		input = document.createElement('input');
+		input.type='file';
+		input.id = 'archivoGaleria';
+		container = document.getElementById("container");
+		container.appendChild(input);
 		document.getElementById('archivoGaleria').addEventListener('change', readURL, true);
-		var fileButton = document.getElementById('archivoGaleria');
-		fileButton.click();
+		console.log("input");
+		console.log(input);
+		input.click();
 	};
 	
-	$("#archivoGaleria").change(function() {
-	    var val = $(this).val();
-	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	function readURL(){
+		var file = document.getElementById("archivoGaleria").files[0];
+		val = file.name;
+		container = document.getElementById("container");
+		var imageVideo = [];
+		switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	    	case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	tagImagen = document.createElement('img');
+	        	imageVideo.file = tagImagen;
+	        	imageNumber = imageNumber + 1;
+	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + filesNumber;
+				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
 	        	break;
 	        default:
 	            $(this).val('');
@@ -393,23 +389,19 @@ $(document).ready(function() {
 				document.getElementById('galeria').src = "" ;
 				break;
 	    }
-	});
-	
-	function readURL(){
-		var file = document.getElementById("archivoGaleria").files[0];
 		var reader = new FileReader();
 	    reader.onloadend = function(){
-			document.getElementById('galeria').src = reader.result;
+	    	imageVideo.src = reader.result;
+	    	multimedia.push(imageVideo);
+			document.getElementById('imagenGaleria').src = reader.result;
 		}
 		if(file) {
 			reader.readAsDataURL(file);
-		} 
+		}
+		filesNumber = imageNumber + videoNumber;
 	}
 });
 </script>
-
-
-
 
 <!-- Audioguía -->
 <script>

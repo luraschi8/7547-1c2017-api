@@ -15,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.ICiudadDAO;
+import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Ciudad;
+import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 
 @Controller
 public class AtraccionControlador {
@@ -27,7 +29,7 @@ public class AtraccionControlador {
 	private IAtraccionDAO atraccionDao;
 	
 	@Autowired
-	private ICiudadDAO ciudadDao;
+	private IImagenAtraccionDAO imagenAtraccionDao;
 	
 	@RequestMapping(path="/atracciones")
 	public ModelAndView listar() {
@@ -52,19 +54,43 @@ public class AtraccionControlador {
 	
 	@RequestMapping("atraccionNuevoValidar")
 	public String nuevo(@ModelAttribute("atraccion") Atraccion atraccion, @RequestParam("idCiudad") int idCiudad,
-							@RequestParam("archivoAudioguia") MultipartFile audio) {
+							@RequestParam(name="archivoAudioguia") MultipartFile audio,
+							@RequestParam(name="archivoGaleria0",required = false) MultipartFile galeria1,
+							@RequestParam(name="archivoGaleria1",required = false) MultipartFile galeria2,
+							@RequestParam(name="archivoGaleria2",required = false) MultipartFile galeria3,
+							@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
+							@RequestParam(name="archivoGaleria4",required = false) MultipartFile galeria5) {
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		atraccion.setCiudad(ciudad);
-		/*try {
-			atraccion.setAudioEN(audio.getBytes());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+		
 		guardarAudio(atraccion, audio);
 		atraccion.setBorrado(0);
 		atraccionDao.guardar(atraccion);
+		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
+	}
+
+	private void guardarMultimediaMultiple(Atraccion atraccion, MultipartFile galeria1, MultipartFile galeria2, MultipartFile galeria3,
+			MultipartFile galeria4, MultipartFile galeria5) {
+		guardarMultimediaSingle(atraccion, galeria1);
+		guardarMultimediaSingle(atraccion, galeria2);
+		guardarMultimediaSingle(atraccion, galeria3);
+		guardarMultimediaSingle(atraccion, galeria4);
+		guardarMultimediaSingle(atraccion, galeria5);
+	}
+
+	private void guardarMultimediaSingle(Atraccion atraccion, MultipartFile galeria) {
+		if (galeria != null) {
+			ImagenAtraccion imagen = new ImagenAtraccion();
+			imagen.setAtraccion(atraccion);
+			try {
+				imagen.setImagen(galeria.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			imagenAtraccionDao.guardar(imagen);
+		}
 	}
 
 	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {

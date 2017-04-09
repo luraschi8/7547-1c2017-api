@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="ImagenAtraccion")
-public class ImagenAtraccion {
+public class ImagenAtraccion extends Modelo {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
