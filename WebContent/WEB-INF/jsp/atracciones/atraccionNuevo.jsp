@@ -337,18 +337,12 @@ function validarAtraccionRepetida() {
 </script>
 
 
-
-
 <!-- Plano -->
 <script>
 $(document).ready(function() {
 	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajeImagenIncorrectaError");
 });
 </script>
-
-
-
-
 
 
 <!-- Para el slide de Galería podría ser útil -->
@@ -454,12 +448,6 @@ $(document).ready(function() {
 });
 </script>
 
-
-
-
-
-
-
 <c:set var="latitud_ciudad">
 	${atraccion.ciudad.latitud}
 </c:set>
@@ -472,7 +460,7 @@ $(document).ready(function() {
 <script>
     function initMap() {
         var map = new google.maps.Map(document.getElementById('atraction-map'), {
-            center: {lat: -34.6036844, lng: -58.3815591}, //Buenos Aires coordinates
+            center: {lat: ${latitud_ciudad}, lng: ${longitud_ciudad}},
             zoom: 13
         });
         var input = (document.getElementById('atraction-map-input'));

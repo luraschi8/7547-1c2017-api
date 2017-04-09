@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.ICiudadDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.presentacion.validacion.CiudadValidacion;
 
@@ -31,7 +32,13 @@ public class CiudadControladorRest {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		List<Ciudad> listaAux = ciudadDao.listar(Ciudad.class);
 		for (Ciudad ciudad : listaAux) {
-			ciudad.setCantAtracciones(ciudad.getListaAtracciones().size());
+			int size = 0;
+			for (Atraccion atraccion : ciudad.getListaAtracciones()) {
+				if (atraccion.getBorrado() == 0) {
+					++size;
+				}
+			}
+			ciudad.setCantAtracciones(size);
 			ciudad.setImage(DatatypeConverter.printBase64Binary(ciudad.getImagen()));
 		}
 		lista.put(DATA, listaAux);
