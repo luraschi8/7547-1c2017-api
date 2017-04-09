@@ -59,25 +59,38 @@ public class AtraccionControlador {
 							@RequestParam(name="archivoGaleria1",required = false) MultipartFile galeria2,
 							@RequestParam(name="archivoGaleria2",required = false) MultipartFile galeria3,
 							@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
-							@RequestParam(name="archivoGaleria4",required = false) MultipartFile galeria5) {
+							@RequestParam(name="unVideo",required = false) MultipartFile video) {
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		atraccion.setCiudad(ciudad);
-		
+		guardarVideo(atraccion,video);
 		guardarAudio(atraccion, audio);
 		atraccion.setBorrado(0);
 		atraccionDao.guardar(atraccion);
-		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
+		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
 
+	private void guardarVideo(Atraccion atraccion, MultipartFile video) {
+		if (video != null) {
+			try {
+				String ext = "." + FilenameUtils.getExtension(video.getOriginalFilename());
+				File f = new File("./video/" + video.hashCode() + ext);
+				FileUtils.writeByteArrayToFile(f, video.getBytes());
+				atraccion.setVideo(f.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 	private void guardarMultimediaMultiple(Atraccion atraccion, MultipartFile galeria1, MultipartFile galeria2, MultipartFile galeria3,
-			MultipartFile galeria4, MultipartFile galeria5) {
+			MultipartFile galeria4) {
 		guardarMultimediaSingle(atraccion, galeria1);
 		guardarMultimediaSingle(atraccion, galeria2);
 		guardarMultimediaSingle(atraccion, galeria3);
 		guardarMultimediaSingle(atraccion, galeria4);
-		guardarMultimediaSingle(atraccion, galeria5);
 	}
 
 	private void guardarMultimediaSingle(Atraccion atraccion, MultipartFile galeria) {
@@ -94,14 +107,16 @@ public class AtraccionControlador {
 	}
 
 	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {
-		try {
-			String ext = "." + FilenameUtils.getExtension(audio.getOriginalFilename());
-			File f = new File("./audio/" + audio.hashCode() + ext);
-			FileUtils.writeByteArrayToFile(f, audio.getBytes());
-			atraccion.setAudioEN(f.getAbsolutePath());
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
+		if (audio != null) {
+			try {
+				String ext = "." + FilenameUtils.getExtension(audio.getOriginalFilename());
+				File f = new File("./audio/" + audio.hashCode() + ext);
+				FileUtils.writeByteArrayToFile(f, audio.getBytes());
+				atraccion.setAudioEN(f.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+				return;
+			}
 		}
 	}
 	
