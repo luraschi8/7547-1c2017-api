@@ -127,9 +127,7 @@
 						<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
 					</div>
 					<div id ="container" class="atraction-gallery-box" style="float:left">
-						<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
-						<video id="videoGaleria" style="width:100%; height:100%;display:none" controls >
-						</video>
+						<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%">
 						<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&lt;</button>
 						<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
 						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
@@ -351,32 +349,11 @@ function nextGalleryItem(n) {
 function showDivs(n) {
     var i;
     if (n > filesNumber) {slideIndex = 1}
-    if (n < 1) {slideIndex = filesNumber};
-    multi = multimedia[slideIndex - 1];
-    console.log(multi);
-    if (multi.imagen == 1) {
-		hideGalleryVideo();
-		document.getElementById('imagenGaleria').src = multimedia[slideIndex - 1].src;
-		console.log("IMAGEN");
-	} else {
-		hideGalleryImage();
-		console.log("VIDEO");
-	}
+    if (n < 1) {slideIndex = filesNumber} ;
+	document.getElementById('imagenGaleria').src = multimedia[slideIndex - 1].src;
 }
 
-function hideGalleryImage() {
-	document.getElementById('imagenGaleria').style.display = 'none';
-	document.getElementById('videoGaleria').style.display = 'block';
-}
-
-function hideGalleryVideo() {
-	document.getElementById('imagenGaleria').style.display = 'block';
-	document.getElementById('videoGaleria').style.display = 'none';
-}
-
-
-
-/*--------Galería-----------*/
+<!-- Galería -->
 
 $(document).ready(function() {
 	document.getElementById('atraction-get-gallery-file').onclick = function() {
@@ -392,33 +369,18 @@ $(document).ready(function() {
 	};
 	
 	function readURL(){
-		document.getElementById('archivoGaleria').style.display = 'none';
 		var file = document.getElementById("archivoGaleria").files[0];
 		val = file.name;
 		container = document.getElementById("container");
 		var imageVideo = [];
-		isVideo = false;
-		videoType = '';
-		ext = val.substring(val.lastIndexOf('.') + 1).toLowerCase()
-		switch(ext){
+		switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	    	case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	        	tagImagen = document.createElement('img');
 	        	imageVideo.file = tagImagen;
-	        	document.getElementById('archivoGaleria').style.display = 'none';
-	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
-				document.getElementById('archivoGaleria').id = 'archivoGaleria' + imageNumber;
-				imageNumber = imageNumber + 1;
-	        	break;
-	        case 'mp4': case 'avi': 
-	        	isVideo = true;
-	        	if (ext == 'mp4') {
-	        		videoType='video/mp4';
-	        	} else {
-	        		videoType='video/avi';
-	        	}
-	        	document.getElementById('archivoGaleria').name = 'unVideo';
-	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;	        
+	        	imageNumber = imageNumber + 1;
+	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + filesNumber;
+				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
 	        	break;
 	        default:
 	            $(this).val('');
@@ -430,29 +392,13 @@ $(document).ready(function() {
 		var reader = new FileReader();
 	    reader.onloadend = function(){
 	    	imageVideo.src = reader.result;
-	    	if (!isVideo) {
-	    		imageVideo.imagen = 1;
-				document.getElementById('imagenGaleria').src = reader.result;
-				document.getElementById('imagenGaleria').style.display = 'block';
-				document.getElementById('videoGaleria').style.display = 'none';
-			} else {
-				imageVideo.imagen = 0;
-				videoNumber = 1;
-				document.getElementById('imagenGaleria').style.display = 'none';
-				video = document.getElementById('videoGaleria');
-				video.style.display = 'block';
-				var source = document.createElement('source');
-			    source.src = reader.result;
-			    source.type = videoType;
-				video.appendChild(source);
-			}
-			multimedia.push(imageVideo);
+	    	multimedia.push(imageVideo);
+			document.getElementById('imagenGaleria').src = reader.result;
 		}
 		if(file) {
 			reader.readAsDataURL(file);
 		}
 		filesNumber = imageNumber + videoNumber;
-		slideIndex = filesNumber - 1;
 	}
 });
 </script>

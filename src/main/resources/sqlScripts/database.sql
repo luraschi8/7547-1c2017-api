@@ -38,8 +38,8 @@ create table Atraccion (
     borrado tinyint default 0 not null,
     plano mediumblob,
     audioEN varchar(100),
-    audioES varchar(100),
-    video varchar(100),
+    audioES mediumblob,
+    video mediumblob,
     recorrible tinyint default 0,
     foreign key (idCiudad) references Ciudad (id)
 );

@@ -60,10 +60,14 @@ public class Atraccion extends Modelo{
 	private String audioEN;
 	
 	@Column(name="audioES")
-	private String audioES;
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
+	private byte[] audioES;
 	
 	@Column(name="video")
-	private String video;
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
+	private byte[] video;
 	
 	@Column(name="recorrible")
 	private int recorrible;
@@ -161,19 +165,19 @@ public class Atraccion extends Modelo{
 		this.audioEN = audioEN;
 	}
 
-	public String getAudioES() {
+	public byte[] getAudioES() {
 		return audioES;
 	}
 
-	public void setAudioES(String audioES) {
+	public void setAudioES(byte[] audioES) {
 		this.audioES = audioES;
 	}
 
-	public String getVideo() {
+	public byte[] getVideo() {
 		return video;
 	}
 
-	public void setVideo(String video) {
+	public void setVideo(byte[] video) {
 		this.video = video;
 	}
 
