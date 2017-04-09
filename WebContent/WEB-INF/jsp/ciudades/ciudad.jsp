@@ -69,6 +69,7 @@
 						<th>Nombre</th>
 						<th></th>
 						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -96,6 +97,14 @@
 	<input id="idAtraccion" name="idAtraccion" type="hidden">
 	<input id="idCiudadAtraccion" name="idCiudadAtraccion" value="${ciudad.id}" type="hidden"> 
 </form>
+
+<c:set var="ver">
+	Ver
+</c:set>
+
+<form:form id="formVer" name="formVer" action="atraccionVer" method="get" commandName="atraccion">
+	<input id="idAtraccion" name="idAtraccion" type="hidden"/>
+</form:form>
 
 <c:set var="marcar">
 	Marcar
@@ -135,6 +144,7 @@ var table = $('#tablita').DataTable( {
         },
         {data: "nombre" },
         {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
+        {defaultContent:'<button class="btn btn-warning" id="ver">${ver}</button>'},
         {defaultContent:'<button class="btn btn-warning" id="marcar">${marcar}</button>'}
         ],
     select:true,
@@ -178,6 +188,13 @@ $('#tablita tbody').on('click', '#borrar', function (e) {
 			document.getElementById("formBorrar").submit();
 		}
 	});
+});
+
+$('#tablita tbody').on('click', '#ver', function (e) {
+	var data = table.row(this.closest("tr")).data();
+	e.preventDefault();
+	document.formVer.idAtraccion.value = data["id"];
+	document.getElementById("formVer").submit();
 });
 
 $('#botonNuevo').on('click', function(e) {

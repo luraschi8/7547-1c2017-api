@@ -85,4 +85,11 @@ public class AtraccionControlador {
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + idCiudad);
 	}
 
+	@RequestMapping(path="atraccionVer")
+	public ModelAndView ver(@RequestParam("idAtraccion") int id) {
+		Atraccion atraccion = atraccionDao.get(Atraccion.class, id);
+		ModelAndView model = new ModelAndView("atracciones/atraccion");
+		model.addObject("atraccion", atraccion);		
+		return model;
+	}
 }
