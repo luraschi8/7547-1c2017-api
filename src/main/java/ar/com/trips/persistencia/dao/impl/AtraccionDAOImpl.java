@@ -35,8 +35,8 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 	@Override
 	public boolean atraccionExistente(Atraccion atraccion) {
 		Session session = sessionFactory.openSession();
-		String query = "FROM " + Atraccion.class.getName() + " c WHERE c.nombre = '" + atraccion.getNombre() + "'"
-						+ " AND c.ciudad.id = '" + atraccion.getCiudad().getId() + "'";
+		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.nombre = '" + atraccion.getNombre() + "'"
+						+ " AND a.ciudad.id = '" + atraccion.getCiudad().getId() + "' AND a.borrado = 0";
 		@SuppressWarnings("unchecked")
 		List<Atraccion> lista = session.createQuery(query).list();
 		session.close();
