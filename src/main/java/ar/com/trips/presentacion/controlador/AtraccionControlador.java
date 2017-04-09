@@ -38,11 +38,13 @@ public class AtraccionControlador {
 	}
 	
 	@RequestMapping("atraccionNuevo")
-	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad) {
+	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad, @RequestParam("latitudCiudad") float latitudCiudad, @RequestParam("longitudCiudad") float longitudCiudad) {
 		ModelAndView model = new ModelAndView(ATRACCION_NUEVO_PATH);
 		Atraccion atraccion = new Atraccion();
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
+		ciudad.setLatitud(latitudCiudad);
+		ciudad.setLongitud(longitudCiudad);
 		atraccion.setCiudad(ciudad);
 		model.addObject("atraccion", atraccion);
 		return model;

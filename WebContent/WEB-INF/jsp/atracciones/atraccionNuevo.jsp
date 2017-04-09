@@ -24,6 +24,8 @@
 			<!-- Información principal -->
 			<div class="atraction-main-information" style="float:left">
 				<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
+				<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.latitud}"/>
+
 				<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
 				<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
 				<input type="hidden" id="id" name="id" value="${atraccion.id}"/>
@@ -84,6 +86,11 @@
 				<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
 				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 				 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
 				</div>
 				
 			</div>
@@ -302,7 +309,7 @@ function validarAtraccionRepetida() {
 		return;
 	} 
 	var ciudad = {
-		"id": document.formNuevo.idCiudad.value
+		"id": document.formNuevo.idCiudad.value,
 	}
 	var json = {
 		"ciudad": ciudad,
@@ -453,6 +460,13 @@ $(document).ready(function() {
 
 
 
+<c:set var="latitud_ciudad">
+	${atraccion.ciudad.latitud}
+</c:set>
+
+<c:set var="longitud_ciudad">
+	${atraccion.ciudad.longitud}
+</c:set>
 
 <!-- Mapa -->
 <script>
@@ -528,11 +542,19 @@ $(document).ready(function() {
        	  	document.formNuevo.latitud.value = event.latLng.lat();
            	document.formNuevo.longitud.value = event.latLng.lng();
            	location_selected = true;
+
+           	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
+           	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
+        	if (google.maps.geometry.spherical.computeDistanceBetween(event.latLng, city_coordinates) < 15000) {
+        		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+            } else {
+            	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
+            }
         });
     }
 </script>
 		
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places&callback=initMap&language=es" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>
 
 </body>
 </html>

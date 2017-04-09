@@ -53,6 +53,8 @@
 			<form class="form-horizontal maxwid" id="formAgregarAtraccion" name="formAgregarAtraccion" action="atraccionNuevo" method="post">
 				<input id="botonAgregarAtraccion" class="btn btn-agregar btn-nueva-atraccion" type="button" value="+" />
 				<input id="idCiudad" name="idCiudad" type="hidden" value="${ciudad.id}"/>
+				<input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${ciudad.latitud}"/>
+				<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${ciudad.longitud}"/>
 			</form>
 			
 			<input id="botonRecorridos" class="btn btn-ver btn-recorridos" type="button" value="Recorridos" />
