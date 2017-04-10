@@ -313,6 +313,7 @@ function validarAtraccionRepetida() {
 		contentType : "application/json",
 		success: function (data) {
 			if (data.existe == false) {
+				document.formNuevo.recorrible.value = $("input[name='recorrible']:checked").val();
 				document.getElementById("formNuevo").submit();
 			} else {
 				document.getElementById("mensajeNombreRepetido").style.display = 'block';
@@ -353,11 +354,14 @@ function showDivs(n) {
     if (n > filesNumber) {slideIndex = 1}
     if (n < 1) {slideIndex = filesNumber};
     multi = multimedia[slideIndex - 1];
+    console.log(multi);
     if (multi.imagen == 1) {
 		hideGalleryVideo();
 		document.getElementById('imagenGaleria').src = multimedia[slideIndex - 1].src;
+		console.log("IMAGEN");
 	} else {
 		hideGalleryImage();
+		console.log("VIDEO");
 	}
 }
 
@@ -383,6 +387,8 @@ $(document).ready(function() {
 		container = document.getElementById("container");
 		container.appendChild(input);
 		document.getElementById('archivoGaleria').addEventListener('change', readURL, true);
+		console.log("input");
+		console.log(input);
 		input.click();
 	};
 	
@@ -442,12 +448,12 @@ $(document).ready(function() {
 				video.appendChild(source);
 			}
 			multimedia.push(imageVideo);
-			filesNumber = imageNumber + videoNumber;
-			slideIndex = filesNumber - 1;
 		}
 		if(file) {
 			reader.readAsDataURL(file);
 		}
+		filesNumber = imageNumber + videoNumber;
+		slideIndex = filesNumber - 1;
 	}
 });
 </script>

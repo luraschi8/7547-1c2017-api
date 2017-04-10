@@ -33,7 +33,7 @@
 	
 					<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
 					<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
-					<input type="hidden" id="id" name="id" value="${atraccion.id}"/>
+					<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
 					
 					<div>
 						<form:label class="atraction-label atraction-main-information-label" path="nombre">Nombre</form:label>
@@ -90,10 +90,10 @@
 					</div>
 					
 					<div>
-						<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
+						<form:label id="recorrible" name="recorrible" class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
 							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px">Sí
-							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;">No
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" style="margin: 4px; margin-left: 15px;">No
 							</div>
 						</form>
 					</div>
@@ -278,6 +278,12 @@
 	$("#descripcion").attr("maxlength", MAX_DESCRIPCION);
 	$("#horario").attr("maxlength", MAX_HORARIO);
 	$("#precio").attr("maxlength", MAX_PRECIO);
+
+	if (${atraccion.recorrible}) {
+		$("#es-recorrible").attr("checked", "checked");
+	} else {
+		$("#no-es-recorrible").attr("checked", "checked");
+	}
 </script>
 
 <script>
@@ -321,6 +327,14 @@ function cancelField(field, ok, cancel) {
 	$(field).attr("contenteditable", "false");
 }
 
+function updateForm() {
+	document.formModificar.nombre.value = $('#nombreEditado').html();
+	document.formModificar.descripcion.value = $('#descripcionEditada').html();
+	document.formModificar.horario.value = $('#horarioEditado').html();
+	document.formModificar.precio.value = $('#precioEditado').html();
+	document.formModificar.recorrible.value = $("input[name='recorrible']:checked").val();
+}
+
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
@@ -331,6 +345,8 @@ $('#botonNuevo').on('click', function(e) {
 	document.getElementById("mensajeNombreRepetido").style.display = 'none';
 	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
+	updateForm();
+	updateCoordinatesForm();
 	validarAtraccionRepetida();
 	//document.getElementById("formModificar").submit();
 });
@@ -512,30 +528,37 @@ $(document).ready(function() {
 
 <!-- Mapa -->
 <script>
-var map, marker, autocomplete, infowindow, input, map_lat, map_lng;
+var map, marker, autocomplete, infowindow, input, aux_lat, aux_lng,
+	map_lat = document.formModificar.latitud.value,
+	map_lng = document.formModificar.longitud.value;
+
+function updateCoordinatesForm() {
+	document.formModificar.latitud.value = map_lat;
+	document.formModificar.longitud.value = map_lng;
+}
 
 function hideOkAndCancelButtonsForCoordinates() {
 	document.getElementById('ok-coordinates').style.display = "none";
     document.getElementById('cancel-coordinates').style.display = "none";
 }
 
-function setPosition() {
-	var position = new google.maps.LatLng(document.formModificar.latitud.value, document.formModificar.longitud.value);
+function setPosition(lat, lng) {
+	var position = new google.maps.LatLng(lat, lng);
 	marker.setPosition(position);
 	hideOkAndCancelButtonsForCoordinates();
 }
 
 function saveCoordinates() {
 	google.maps.event.clearInstanceListeners(map);
-	document.formModificar.latitud.value = map_lat;
-	document.formModificar.longitud.value = map_lng;
-	setPosition();
+	map_lat = aux_lat;
+	map_lng = aux_lng;
+	setPosition(map_lat, map_lng);
 	hideOkAndCancelButtonsForCoordinates();
 }
 
 function cancelEditingCoordinates() {
 	google.maps.event.clearInstanceListeners(map);
-	setPosition();
+	setPosition(map_lat, map_lng);
 }
 
 function editCoordinates() {
@@ -568,8 +591,8 @@ function editCoordinates() {
 	    marker.setVisible(true);
 	
 	    // Se guardan las coordenadas
-	    map_lat = place.geometry.location.lat();
-	    map_lng = place.geometry.location.lng();
+	    aux_lat = place.geometry.location.lat();
+	    aux_lng = place.geometry.location.lng();
 	
 	    var address = '';
 	    if (place.address_components) {
@@ -591,8 +614,8 @@ function editCoordinates() {
 	    marker.setVisible(true);
 	
 		// Se guardan las coordenadas
-		map_lat = event.latLng.lat();
-		map_lng = event.latLng.lng();
+		aux_lat = event.latLng.lat();
+		aux_lng = event.latLng.lng();
 	   	
 	   	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
 	   	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});

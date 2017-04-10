@@ -59,13 +59,15 @@ public class AtraccionControlador {
 							@RequestParam(name="archivoGaleria1",required = false) MultipartFile galeria2,
 							@RequestParam(name="archivoGaleria2",required = false) MultipartFile galeria3,
 							@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
-							@RequestParam(name="unVideo",required = false) MultipartFile video) {
+							@RequestParam(name="unVideo",required = false) MultipartFile video,
+							@RequestParam("recorrible") int recorrible) {
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		atraccion.setCiudad(ciudad);
 		guardarVideo(atraccion,video);
 		guardarAudio(atraccion, audio);
 		atraccion.setBorrado(0);
+		atraccion.setRecorrible(recorrible);
 		atraccionDao.guardar(atraccion);
 		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
@@ -136,7 +138,13 @@ public class AtraccionControlador {
 	
 	@RequestMapping("atraccionModificar")
 	public ModelAndView modificar(@ModelAttribute("atraccion") Atraccion atraccionId,
-									@RequestParam("nombre") String nombreModificado) {
+									@RequestParam("nombre") String nombreModificado,
+									@RequestParam("descripcion") String descripcionModificada,
+									@RequestParam("horario") String horarioModificado,
+									@RequestParam("precio") String precioModificado,
+									@RequestParam("latitud") float latitudModificada,
+									@RequestParam("longitud") float longitudModificada,
+									@RequestParam("recorrible") int recorribleModificado) {
 		Atraccion atraccion = atraccionDao.get(Atraccion.class, atraccionId.getId());
 		/*if (imagenCambiada == 1) {
 			try {
@@ -147,6 +155,12 @@ public class AtraccionControlador {
 			}
 		}*/
 		atraccion.setNombre(nombreModificado);
+		atraccion.setDescripcion(descripcionModificada);
+		atraccion.setHorario(horarioModificado);
+		atraccion.setPrecio(precioModificado);
+		atraccion.setLatitud(latitudModificada);
+		atraccion.setLongitud(longitudModificada);
+		atraccion.setRecorrible(recorribleModificado);
 		atraccionDao.modificar(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
 	}
