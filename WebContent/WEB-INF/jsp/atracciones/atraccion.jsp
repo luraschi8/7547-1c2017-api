@@ -374,11 +374,36 @@ function validarAtraccionRepetida() {
 	} else {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
-	
+
 	if (hayError == 1) {
 		return;
 	} 
-	document.getElementById("formModificar").submit();
+
+	var ciudad = {
+		"id": document.formModificar.idCiudad.value,
+	}
+	var json = {
+		"ciudad": ciudad,
+		"id": document.formModificar.id.value,
+		"nombre": document.formModificar.nombre.value
+	};
+	
+	$.ajax({
+		url : "validarAtraccion",
+		type : "POST",
+		data : JSON.stringify(json),
+		processData : false,
+		dataType: "json",
+		contentType : "application/json",
+		success: function (data) {
+			if (data.existe == false) {
+				document.formModificar.recorrible.value = $("input[name='recorrible']:checked").val();
+				document.getElementById("formModificar").submit();
+			} else {
+				document.getElementById("mensajeNombreRepetido").style.display = 'block';
+			}
+		}
+	});
 }
 </script>
 
