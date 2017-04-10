@@ -161,16 +161,19 @@ public class AtraccionControlador {
 									@RequestParam("precio") String precioModificado,
 									@RequestParam("latitud") float latitudModificada,
 									@RequestParam("longitud") float longitudModificada,
-									@RequestParam("recorrible") int recorribleModificado/*,
-									@RequestParam("plano") MultipartFile planoModificado*/) {
+									@RequestParam("recorrible") int recorribleModificado,
+									@RequestParam("planoCambiado") int planoCambiado,
+									@RequestParam("archivoPlano") MultipartFile imagen) {
 		Atraccion atraccion = atraccionDao.get(Atraccion.class, atraccionId.getId());
 		
-		/*try {
-			byte[] bytes = planoModificado.getBytes();
-			atraccion.setPlano(bytes);
-		} catch (Exception e) {
-			
-		}*/
+		if (planoCambiado == 1) {
+			try {
+				byte[] bytes = imagen.getBytes();
+				atraccion.setPlano(bytes);
+			} catch (Exception e) {
+				
+			}
+		}
 		atraccion.setNombre(nombreModificado);
 		atraccion.setDescripcion(descripcionModificada);
 		atraccion.setHorario(horarioModificado);
