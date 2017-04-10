@@ -137,7 +137,26 @@
 					    <!-- <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/> -->
 					</div>
 				</div>
-
+				<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
+				</div>
+				
 				<!-- Audioguía -->
 				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
 				<div>
@@ -403,7 +422,21 @@ $(document).ready(function() {
 		ext = val.substring(val.lastIndexOf('.') + 1).toLowerCase()
 		switch(ext){
 	    	case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
+	        	if (filesNumber == 5) {
+	        		document.getElementById('mensajeCincoArchivos').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	if (file.size > (50 * 1024)) {
+	        		document.getElementById('mensajeTamanoImagen').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	document.getElementById('mensajeHayVideo').style.display = 'none';
 	        	tagImagen = document.createElement('img');
 	        	imageVideo.file = tagImagen;
 	        	document.getElementById('archivoGaleria').style.display = 'none';
@@ -412,6 +445,25 @@ $(document).ready(function() {
 				imageNumber = imageNumber + 1;
 	        	break;
 	        case 'mp4': case 'avi': 
+	        	if (videoNumber == 1) {
+	        		document.getElementById('mensajeHayVideo').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	if (fileNumber == 5) {
+	        		document.getElementById('mensajeCincoArchivos').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	if (file.size > (10 * 1024 * 1024)) {
+	        		document.getElementById('mensajeTamanoVideo').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	document.getElementById('mensajeHayVideo').style.display = 'none';
 	        	isVideo = true;
 	        	if (ext == 'mp4') {
 	        		videoType='video/mp4';
