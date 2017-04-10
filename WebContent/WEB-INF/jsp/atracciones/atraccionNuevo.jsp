@@ -451,7 +451,7 @@ $(document).ready(function() {
 	        		elem.parentNode.removeChild(elem);
 	        		return;
 	        	}
-	        	if (fileNumber == 5) {
+	        	if (filesNumber == 5) {
 	        		document.getElementById('mensajeCincoArchivos').style.display = 'block';
 	        		elem = document.getElementById('archivoGaleria');
 	        		elem.parentNode.removeChild(elem);
