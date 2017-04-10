@@ -274,10 +274,10 @@
 	const MAX_DESCRIPCION = "250";
 	const MAX_HORARIO = "50";
 	const MAX_PRECIO = "50";
-	$("#nombre").attr("maxlength", MAX_NOMBRE);
-	$("#descripcion").attr("maxlength", MAX_DESCRIPCION);
-	$("#horario").attr("maxlength", MAX_HORARIO);
-	$("#precio").attr("maxlength", MAX_PRECIO);
+	$("#nombreEditado").attr("maxlength", MAX_NOMBRE);
+	$("#descripcionEditada").attr("maxlength", MAX_DESCRIPCION);
+	$("#horarioEditado").attr("maxlength", MAX_HORARIO);
+	$("#precioEditado").attr("maxlength", MAX_PRECIO);
 
 	if (${atraccion.recorrible}) {
 		$("#es-recorrible").attr("checked", "checked");
@@ -318,6 +318,10 @@ function saveField(field, ok, cancel, vacio, obligatorio) {
 			$(field).html($(field).val());
 		}
 	}
+	var max = $(field).attr("maxlength");
+	$(field).text(function(index, currentText) {
+	    return currentText.substr(0, max);
+	});
 	$(field).attr("contenteditable", "false");
 }
 
@@ -348,16 +352,7 @@ $('#botonNuevo').on('click', function(e) {
 	updateForm();
 	updateCoordinatesForm();
 	validarAtraccionRepetida();
-	//document.getElementById("formModificar").submit();
 });
-
-/*$('#botonNuevo').on('click', function(e) {
-		e.preventDefault();
-		document.getElementById("mensajeNombreRepetido").style.display = 'none';
-		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
-		document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
- 	 	validarAtraccionRepetida();
-});*/
 
 function validarElemento(elemento, mensaje, hayError) {
 	if ((document.getElementById(elemento).value == '') && (!hayError)) {
@@ -385,7 +380,6 @@ function validarAtraccionRepetida() {
 	} 
 	document.getElementById("formModificar").submit();
 }
-
 </script>
 
 
@@ -660,9 +654,6 @@ function editCoordinates() {
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>
-
-
-
 
 </body>
 </html>
