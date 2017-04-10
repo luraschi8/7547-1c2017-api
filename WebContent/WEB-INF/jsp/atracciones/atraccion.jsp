@@ -16,11 +16,14 @@
 
 <body>
 
-
-
 	<h1 class="page-header atraction-new-page-header">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
 	
 	<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
+		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
+		
+		<!-- <input type="file" name="archivoImagenPlano" id="archivoImagenPlano"/>
+		<input id="planoCambiado" name="planoCambiado" type="hidden" value="0"> -->
+		
 		<div  class="atraction-new-form"> 
 		
 			<!-- Información principal y mapa -->
@@ -33,7 +36,7 @@
 	
 					<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
 					<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
-					<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
+					<!--<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>--->
 					
 					<div>
 						<form:label class="atraction-label atraction-main-information-label" path="nombre">Nombre</form:label>
@@ -130,7 +133,7 @@
 						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
 					</div>
 					<div class="atraction-blueprints-box" style="float:left">
-						<img id="plano" style="width:100%; height:100%">
+						<img id="plano" src="/Trips/planoAtraccion?id=${atraccion.id}" style="width:100%; height:100%">
 						<input type="button" id="atraction-get-blueprints" class="btn btn-default atraction-get-blueprints" value="Editar">
 						<input type="file" name="archivoPlano" id="archivoPlano"/>
 					</div>
@@ -278,6 +281,13 @@
 	$("#descripcionEditada").attr("maxlength", MAX_DESCRIPCION);
 	$("#horarioEditado").attr("maxlength", MAX_HORARIO);
 	$("#precioEditado").attr("maxlength", MAX_PRECIO);
+	//document.formModificar.plano.value = ${atraccion.plano};
+	alert("Hola");
+	alert($("#archivoPlano").val());
+	alert(${atraccion.id});
+	//alert(${atraccion.plano});
+	//$("#archivoPlano").val(${atraccion.plano});
+	//alert($("#archivoPlano").val());*/
 
 	if (${atraccion.recorrible}) {
 		$("#es-recorrible").attr("checked", "checked");

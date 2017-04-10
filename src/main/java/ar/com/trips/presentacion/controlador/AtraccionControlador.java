@@ -3,12 +3,17 @@ package ar.com.trips.presentacion.controlador;
 import java.io.File;
 import java.io.IOException;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,6 +59,7 @@ public class AtraccionControlador {
 	
 	@RequestMapping("atraccionNuevoValidar")
 	public String nuevo(@ModelAttribute("atraccion") Atraccion atraccion, @RequestParam("idCiudad") int idCiudad,
+							@RequestParam("archivoPlano") MultipartFile plano,
 							@RequestParam(name="archivoAudioguia") MultipartFile audio,
 							@RequestParam(name="archivoGaleria0",required = false) MultipartFile galeria1,
 							@RequestParam(name="archivoGaleria1",required = false) MultipartFile galeria2,
@@ -66,6 +72,14 @@ public class AtraccionControlador {
 		atraccion.setCiudad(ciudad);
 		guardarVideo(atraccion,video);
 		guardarAudio(atraccion, audio);
+		
+		try {
+			byte[] bytes = plano.getBytes();
+			atraccion.setPlano(bytes);
+		} catch (Exception e) {
+			
+		}
+		
 		atraccion.setBorrado(0);
 		atraccion.setRecorrible(recorrible);
 		atraccionDao.guardar(atraccion);
@@ -166,5 +180,15 @@ public class AtraccionControlador {
 		atraccion.setRecorrible(recorribleModificado);
 		atraccionDao.modificar(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
+	}
+	
+	@RequestMapping(path="/planoAtraccion", method=RequestMethod.GET)
+	public void planoAtraccion(@RequestParam("id") Integer id, HttpServletResponse response,HttpServletRequest request) 
+	          throws ServletException, IOException {
+		Atraccion atraccion = atraccionDao.get(Atraccion.class, id);
+		byte[] planoAtraccion = atraccion.getPlano();       
+	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+	    response.getOutputStream().write(planoAtraccion);
+	    response.getOutputStream().close();
 	}
 }

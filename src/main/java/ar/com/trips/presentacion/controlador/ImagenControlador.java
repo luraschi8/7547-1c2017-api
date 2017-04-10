@@ -48,5 +48,4 @@ public class ImagenControlador {
 	    response.getOutputStream().write(imagenAtraccion.getImagen());
 	    response.getOutputStream().close();
 	}
-	
 }
