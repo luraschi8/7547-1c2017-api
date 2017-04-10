@@ -558,7 +558,7 @@ $(document).ready(function() {
 		videoNumber = 1;
 		video = document.getElementById('videoGaleria');
 		var source = document.createElement('source');
-	    source.src = "/Trips/videoAtraccion?id=" + '${atraccion.id}';
+	    source.src = "${pageContext.request.contextPath}/videoAtraccion?id=" + '${atraccion.id}';
 	    source.type = "video/mp4";
 		video.appendChild(source);
 	</c:if>
