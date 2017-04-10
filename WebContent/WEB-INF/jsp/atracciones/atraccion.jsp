@@ -156,20 +156,47 @@
 						<div>
 							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
 						</div>
-						<div class="atraction-gallery-box" style="float:left">
-							<img class="atraction-gallery" id="atraction-gallery" style="width:100%; height:100%">
-							<button class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&#10094;</button>
-							<button class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
+						<div id ="container" class="atraction-gallery-box" style="float:left">
+							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
+							<video id="videoGaleria" style="width:100%; height:100%;display:none" controls>
+							</video>
+							<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&#10094;</button>
+							<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
 						
 							<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
 						        
-						    <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/>
+						    <!--<input type="file" multiple name="archivoGaleria" id="archivoGaleria"/>-->
 						</div>
 						
 					
 						
 					</div>
 					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
+					</div>
+						
 					
 					
 					
@@ -445,23 +472,144 @@ function showDivs(n) {
 
 <!-- Galería -->
 <script>
-var number_of_images = 0;
-var number_of_videos = 0;
+var imageNumber = 0;
+var videoNumber = 0;
 
-var number_of_files = number_of_images + number_of_videos;
+var filesNumber = imageNumber + videoNumber;
+
+var multimedia = [];
+
+var slideIndex = 1;
+
+function nextGalleryItem(n) {
+    showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+    var i;
+    if (n > filesNumber) {slideIndex = 1}
+    if (n < 1) {slideIndex = filesNumber};
+    multi = multimedia[slideIndex - 1];
+    if (multi.imagen == 1) {
+		hideGalleryVideo();
+		document.getElementById('imagenGaleria').src = multimedia[slideIndex - 1].src;
+	} else {
+		hideGalleryImage();
+	}
+}
+
+function hideGalleryImage() {
+	document.getElementById('imagenGaleria').style.display = 'none';
+	document.getElementById('videoGaleria').style.display = 'block';
+}
+
+function hideGalleryVideo() {
+	document.getElementById('imagenGaleria').style.display = 'block';
+	document.getElementById('videoGaleria').style.display = 'none';
+}
+
+/*--------Galería-----------*/
 
 $(document).ready(function() {
+	<c:forEach items="${atraccion.listaImagenes}" var="imagenAtraccion">
+	    var imAt = new Object();
+	    imAt.src = "/Trips/imagenAtraccion?id=" + '${imagenAtraccion.id}';
+	    imAt.imagen = 1;
+	    multimedia.push(imAt);
+	    imageNumber += 1;
+	</c:forEach>
+	
+	<c:if test="${atraccion.video != null}">
+		var imAt = new Object();
+	    imAt.src = "/Trips/videoAtraccion?id=" + '${atraccion.id}';
+	    imAt.imagen = 0;
+	    multimedia.push(imAt);
+		videoNumber = 1;
+		video = document.getElementById('videoGaleria');
+		var source = document.createElement('source');
+	    source.src = "/Trips/videoAtraccion?id=" + '${atraccion.id}';
+	    source.type = "video/mp4";
+		video.appendChild(source);
+	</c:if>
+	
+	filesNumber = imageNumber + videoNumber;
+	nextGalleryItem(0);
+	
 	document.getElementById('atraction-get-gallery-file').onclick = function() {
+		console.log("CLICK");
+		input = document.createElement('input');
+		input.type='file';
+		input.id = 'archivoGaleria';
+		container = document.getElementById("container");
+		container.appendChild(input);
 		document.getElementById('archivoGaleria').addEventListener('change', readURL, true);
-		var fileButton = document.getElementById('archivoGaleria');
-		fileButton.click();
+		input.click();
 	};
 	
-	$("#archivoGaleria").change(function() {
-	    var val = $(this).val();
-	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	function readURL(){
+		console.log("READ");
+		document.getElementById('archivoGaleria').style.display = 'none';
+		var file = document.getElementById("archivoGaleria").files[0];
+		val = file.name;
+		container = document.getElementById("container");
+		var imageVideo = [];
+		isVideo = false;
+		videoType = '';
+		ext = val.substring(val.lastIndexOf('.') + 1).toLowerCase()
+		switch(ext){
 	    	case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
+	        	if (filesNumber == 5) {
+	        		document.getElementById('mensajeCincoArchivos').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	if (file.size > (50 * 1024)) {
+	        		document.getElementById('mensajeTamanoImagen').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	document.getElementById('mensajeHayVideo').style.display = 'none';
+	        	document.getElementById("mensajeUnaImagen").style.display = 'none';
+	        	document.getElementById('mensajeTamanoImagen').style.display = 'none';
+	        	tagImagen = document.createElement('img');
+	        	imageVideo.file = tagImagen;
+	        	document.getElementById('archivoGaleria').style.display = 'none';
+	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
+				document.getElementById('archivoGaleria').id = 'archivoGaleria' + imageNumber;
+				imageNumber = imageNumber + 1;
+	        	break;
+	        case 'mp4': case 'avi': 
+	        	if (videoNumber == 1) {
+	        		document.getElementById('mensajeHayVideo').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	if (filesNumber == 5) {
+	        		document.getElementById('mensajeCincoArchivos').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	if (file.size > (10 * 1024 * 1024)) {
+	        		document.getElementById('mensajeTamanoVideo').style.display = 'block';
+	        		elem = document.getElementById('archivoGaleria');
+	        		elem.parentNode.removeChild(elem);
+	        		return;
+	        	}
+	        	document.getElementById('mensajeHayVideo').style.display = 'none';
+	        	isVideo = true;
+	        	if (ext == 'mp4') {
+	        		videoType='video/mp4';
+	        	} else {
+	        		videoType='video/avi';
+	        	}
+	        	document.getElementById('archivoGaleria').name = 'unVideo';
+	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;	        
 	        	break;
 	        default:
 	            $(this).val('');
@@ -470,17 +618,32 @@ $(document).ready(function() {
 				document.getElementById('galeria').src = "" ;
 				break;
 	    }
-	});
-	
-	function readURL(){
-		var file = document.getElementById("archivoGaleria").files[0];
 		var reader = new FileReader();
 	    reader.onloadend = function(){
-			document.getElementById('galeria').src = reader.result;
+	    	imageVideo.src = reader.result;
+	    	if (!isVideo) {
+	    		imageVideo.imagen = 1;
+				document.getElementById('imagenGaleria').src = reader.result;
+				document.getElementById('imagenGaleria').style.display = 'block';
+				document.getElementById('videoGaleria').style.display = 'none';
+			} else {
+				imageVideo.imagen = 0;
+				videoNumber = 1;
+				document.getElementById('imagenGaleria').style.display = 'none';
+				video = document.getElementById('videoGaleria');
+				video.style.display = 'block';
+				var source = document.createElement('source');
+			    source.src = reader.result;
+			    source.type = videoType;
+				video.appendChild(source);
+			}
+			multimedia.push(imageVideo);
 		}
 		if(file) {
 			reader.readAsDataURL(file);
-		} 
+		}
+		filesNumber = imageNumber + videoNumber;
+		slideIndex = filesNumber - 1;
 	}
 });
 </script>
@@ -644,7 +807,6 @@ function editCoordinates() {
 	    	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
 	    }
 	});
-
 
 }
 

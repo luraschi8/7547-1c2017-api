@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
-import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Ciudad;
@@ -147,7 +146,12 @@ public class AtraccionControlador {
 									@RequestParam("precio") String precioModificado,
 									@RequestParam("latitud") float latitudModificada,
 									@RequestParam("longitud") float longitudModificada,
-									@RequestParam("recorrible") int recorribleModificado) {
+									@RequestParam("recorrible") int recorribleModificado,
+									@RequestParam(name="archivoGaleria0",required = false) MultipartFile galeria1,
+									@RequestParam(name="archivoGaleria1",required = false) MultipartFile galeria2,
+									@RequestParam(name="archivoGaleria2",required = false) MultipartFile galeria3,
+									@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
+									@RequestParam(name="unVideo",required = false) MultipartFile video) {
 		Atraccion atraccion = atraccionDao.get(Atraccion.class, atraccionId.getId());
 		/*if (imagenCambiada == 1) {
 			try {
@@ -164,6 +168,8 @@ public class AtraccionControlador {
 		atraccion.setLatitud(latitudModificada);
 		atraccion.setLongitud(longitudModificada);
 		atraccion.setRecorrible(recorribleModificado);
+		guardarVideo(atraccion,video);
+		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4);
 		atraccionDao.modificar(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
 	}
