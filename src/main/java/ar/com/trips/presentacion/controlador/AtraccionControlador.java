@@ -77,6 +77,9 @@ public class AtraccionControlador {
 		if (video != null) {
 			try {
 				String ext = "." + FilenameUtils.getExtension(video.getOriginalFilename());
+				if (ext.equals(".")) {
+					return;
+				}
 				File f = new File("./video/" + video.hashCode() + ext);
 				FileUtils.writeByteArrayToFile(f, video.getBytes());
 				atraccion.setVideo(f.getAbsolutePath());

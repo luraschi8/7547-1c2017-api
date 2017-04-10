@@ -16,6 +16,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -54,15 +55,19 @@ public class Atraccion extends Modelo{
 	@Column(name="plano")
 	@Lob
 	@Type(type="org.hibernate.type.ImageType")
+	@JsonBackReference(value="plano")
 	private byte[] plano;
 	
 	@Column(name="audioEN")
+	@JsonBackReference(value="audioEN")
 	private String audioEN;
 	
 	@Column(name="audioES")
+	@JsonBackReference(value="audioES")
 	private String audioES;
 	
 	@Column(name="video")
+	@JsonBackReference(value="video")
 	private String video;
 	
 	@Column(name="recorrible")
@@ -75,7 +80,16 @@ public class Atraccion extends Modelo{
 	
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaImagenes")
-	private List<ImagenAtraccion> listaImagenes = new ArrayList<>();	
+	private List<ImagenAtraccion> listaImagenes = new ArrayList<>();
+	
+	@Transient
+	private byte[] imagen;
+	
+	@Transient
+	private List<byte[]> imagenes;
+	
+	@Transient
+	private byte[] plan;
 
 	public Atraccion() {
 		
@@ -199,6 +213,14 @@ public class Atraccion extends Modelo{
 
 	public void setListaImagenes(List<ImagenAtraccion> listaImagenes) {
 		this.listaImagenes = listaImagenes;
+	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
 	}
 	
 }
