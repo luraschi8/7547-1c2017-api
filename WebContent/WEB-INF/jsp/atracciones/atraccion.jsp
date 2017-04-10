@@ -16,11 +16,11 @@
 
 <body>
 
-
-
 	<h1 class="page-header atraction-new-page-header">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
 	
 	<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
+		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
+		
 		<div  class="atraction-new-form"> 
 		
 			<!-- Información principal y mapa -->
@@ -33,7 +33,6 @@
 	
 					<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
 					<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
-					<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
 					
 					<div>
 						<form:label class="atraction-label atraction-main-information-label" path="nombre">Nombre</form:label>
@@ -130,8 +129,9 @@
 						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
 					</div>
 					<div class="atraction-blueprints-box" style="float:left">
-						<img id="plano" style="width:100%; height:100%">
+						<img id="plano" src="/Trips/planoAtraccion?id=${atraccion.id}" style="width:100%; height:100%">
 						<input type="button" id="atraction-get-blueprints" class="btn btn-default atraction-get-blueprints" value="Editar">
+						<input id="planoCambiado" name="planoCambiado" type="hidden" value="0">
 						<input type="file" name="archivoPlano" id="archivoPlano"/>
 					</div>
 	
@@ -440,7 +440,38 @@ function validarAtraccionRepetida() {
 <!-- Plano -->
 <script>
 $(document).ready(function() {
-	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajeImagenIncorrectaError");
+	document.getElementById('atraction-get-blueprints').onclick = function() {
+		document.getElementById('archivoPlano').addEventListener('change', readURL, true);
+		var fileButton = document.getElementById('archivoPlano');
+		fileButton.click();
+	};
+	
+	$("#archivoPlano").change(function() {
+	    var val = $(this).val();
+	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
+	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	break;
+	        default:
+	            $(this).val('');
+				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+				document.getElementById('archivoPlano').value = "" ;
+				document.getElementById('plano').src = "" ;
+				break;
+	    }
+	});
+	
+	function readURL(){
+		document.getElementById("planoCambiado").value = "1";
+		var file = document.getElementById("archivoPlano").files[0];
+		var reader = new FileReader();
+	    reader.onloadend = function(){
+			document.getElementById('plano').src = reader.result ;        
+			}
+		if(file){
+			reader.readAsDataURL(file);
+		} 
+	}
 });
 </script>
 
