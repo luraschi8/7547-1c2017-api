@@ -135,7 +135,8 @@ public class AtraccionControlador {
 	}
 	
 	@RequestMapping("atraccionModificar")
-	public ModelAndView modificar(@ModelAttribute("atraccion") Atraccion atraccionId) {
+	public ModelAndView modificar(@ModelAttribute("atraccion") Atraccion atraccionId,
+									@RequestParam("nombre") String nombreModificado) {
 		Atraccion atraccion = atraccionDao.get(Atraccion.class, atraccionId.getId());
 		/*if (imagenCambiada == 1) {
 			try {
@@ -145,6 +146,7 @@ public class AtraccionControlador {
 				
 			}
 		}*/
+		atraccion.setNombre(nombreModificado);
 		atraccionDao.modificar(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
 	}
