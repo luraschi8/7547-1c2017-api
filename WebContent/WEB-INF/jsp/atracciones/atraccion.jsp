@@ -129,7 +129,7 @@
 						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
 					</div>
 					<div class="atraction-blueprints-box" style="float:left">
-						<img id="plano" src="/Trips/planoAtraccion?id=${atraccion.id}" style="width:100%; height:100%">
+						<img id="plano" src="${pageContext.request.contextPath}/planoAtraccion?id=${atraccion.id}" style="width:100%; height:100%">
 						<input type="button" id="atraction-get-blueprints" class="btn btn-default atraction-get-blueprints" value="Editar">
 						<input id="planoCambiado" name="planoCambiado" type="hidden" value="0">
 						<input type="file" name="archivoPlano" id="archivoPlano"/>
@@ -544,7 +544,7 @@ function hideGalleryVideo() {
 $(document).ready(function() {
 	<c:forEach items="${atraccion.listaImagenes}" var="imagenAtraccion">
 	    var imAt = new Object();
-	    imAt.src = "/Trips/imagenAtraccion?id=" + '${imagenAtraccion.id}';
+	    imAt.src = "${pageContext.request.contextPath}/imagenAtraccion?id=" + '${imagenAtraccion.id}';
 	    imAt.imagen = 1;
 	    multimedia.push(imAt);
 	    imageNumber += 1;
@@ -552,7 +552,7 @@ $(document).ready(function() {
 	
 	<c:if test="${atraccion.video != null}">
 		var imAt = new Object();
-	    imAt.src = "/Trips/videoAtraccion?id=" + '${atraccion.id}';
+	    imAt.src = "${pageContext.request.contextPath}/videoAtraccion?id=" + '${atraccion.id}';
 	    imAt.imagen = 0;
 	    multimedia.push(imAt);
 		videoNumber = 1;
