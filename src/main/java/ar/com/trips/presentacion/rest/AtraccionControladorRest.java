@@ -52,7 +52,9 @@ public class AtraccionControladorRest {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);
 		for (Atraccion a : list) {
-			a.setImagen(a.getListaImagenes().get(0).getImagen());
+			if (a.getListaImagenes().size() > 0) {
+				a.setImagen(a.getListaImagenes().get(0).getImagen());
+			}
 		}
 		lista.put(DATA, list);
 		return lista;
