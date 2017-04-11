@@ -6,27 +6,29 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<jsp:include page="../template/importacion.jsp"></jsp:include>
+
 <html>
 
 <head>
+<jsp:include page="../template/importacion.jsp"></jsp:include>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Trips - ${atraccion.nombre}</title>
 </head>
 
 <body>
 
-	<h1 class="page-header atraction-new-page-header">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
+	<h1 class="page-header atraction-new-page-header" style="margin-left:2.5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
 	
 	<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
 		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
 		
-		<div  class="atraction-new-form"> 
+		<div  class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
 		
-			<!-- Información principal y mapa -->
-			<div class="atraction-main-information-and-map" style="width: 100%; overflow: hidden;">	
+			<!-- Bloque izquierdo (Información principal, Plano, Galería y Audioguia) -->
+			<!-- Información principal -->
+			<div style="float:left">	
 				<!-- Información principal -->
-				<div class="atraction-main-information" style="float:left">
+				<div class="atraction-main-information">
 					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
 					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.latitud}"/>
 					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.longitud}"/>
@@ -37,12 +39,18 @@
 					<div>
 						<form:label class="atraction-label atraction-main-information-label" path="nombre">Nombre</form:label>
 						<input type="hidden" id="nombre" name="nombre" value="${atraccion.nombre}"/>
-						<input type="button" id="edit-name" class="btn-edit-main-information" onclick="editField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)" value="Editar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-name" onclick="editField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 					</div>
 					<div>
 						<p id="nombreEditado" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
-						<input type="button" style="display:none;" id="ok-nombre" class="btn-edit-main-information"  onclick="saveField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)" value="Aceptar">
-						<input type="button" style="display:none;" id="cancel-nombre" class="btn-edit-main-information" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')" value="Cancelar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-nombre" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-nombre" onclick="saveField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
@@ -53,12 +61,18 @@
 					<div>
 						<form:label class="atraction-label atraction-description-label" path="descripcion">Descripción</form:label>
 						<input type="hidden" id="descripcion" name="descripcion" value="${atraccion.descripcion}"/>
-						<input type="button" id="edit-description" class="btn-edit-main-information" onclick="editField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)" value="Editar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-description" onclick="editField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 					</div>
 					<div>
 					    <p id="descripcionEditada" class="atraction-box atraction-name-box" path="descripcion" contenteditable="false" value="${atraccion.descripcion}">${atraccion.descripcion}</p>
-						<input type="button" style="display:none;" id="ok-descripcion" class="btn-edit-main-information"  onclick="saveField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)" value="Aceptar">
-						<input type="button" style="display:none;" id="cancel-descripcion" class="btn-edit-main-information" onclick="cancelField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion')" value="Cancelar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-descripcion" onclick="cancelField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion')">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-descripcion" onclick="saveField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
@@ -69,62 +83,49 @@
 					<div>
 						<form:label class="atraction-label atraction-schedule-label" path="horario">Horario</form:label>
 						<input type="hidden" id="horario" name="horario" value="${atraccion.horario}"/>
-						<input type="button" id="edit-horario" class="btn-edit-main-information" onclick="editField('#horarioEditado', 'ok-horario', 'cancel-horario', null, false)" value="Editar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-horario" onclick="editField('#horarioEditado', 'ok-horario', 'cancel-horario', null, false)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 					</div>
 					<div>
 						<p id="horarioEditado" class="atraction-box atraction-name-box" path="horario" contenteditable="false" value="${atraccion.horario}">${atraccion.horario}</p>
-						<input type="button" style="display:none;" id="ok-horario" class="btn-edit-main-information"  onclick="saveField('#horarioEditado', 'ok-horario', 'cancel-horario', null, false)" value="Aceptar">
-						<input type="button" style="display:none;" id="cancel-horario" class="btn-edit-main-information" onclick="cancelField('#horarioEditado', 'ok-horario', 'cancel-horario')" value="Cancelar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-horario" onclick="cancelField('#horarioEditado', 'ok-horario', 'cancel-horario')">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-horario" onclick="saveField('#horarioEditado', 'ok-horario', 'cancel-horario', null, false)">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					
 					<div>
 						<form:label class="atraction-label atraction-cost-label" path="precio">Precio</form:label>
 						<input type="hidden" id="precio" name="precio" value="${atraccion.precio}"/>
-						<input type="button" id="edit-precio" class="btn-edit-main-information" onclick="editField('#precioEditado', 'ok-precio', 'cancel-precio', null, false)" value="Editar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-precio" onclick="editField('#precioEditado', 'ok-precio', 'cancel-precio', null, false)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 					</div>
 					<div>
 						<p id="precioEditado" class="atraction-box atraction-name-box" path="precio" contenteditable="false" value="${atraccion.precio}">${atraccion.precio}</p>
-						<input type="button" style="display:none;" id="ok-precio" class="btn-edit-main-information"  onclick="saveField('#precioEditado', 'ok-precio', 'cancel-precio', null, false)" value="Aceptar">
-						<input type="button" style="display:none;" id="cancel-precio" class="btn-edit-main-information" onclick="cancelField('#precioEditado', 'ok-precio', 'cancel-precio')" value="Cancelar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-precio" onclick="cancelField('#precioEditado', 'ok-precio', 'cancel-precio')">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-precio" onclick="saveField('#precioEditado', 'ok-precio', 'cancel-precio', null, false)">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					
 					<div>
 						<form:label id="recorrible" name="recorrible" class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
-							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px">Sí
-							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" style="margin: 4px; margin-left: 15px;">No
+							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show();">Sí
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide();">No
 							</div>
 						</form>
 					</div>
 				</div>
-		
-				<!-- Mapa -->
-				<div style="float:right">
-					<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
-					<div id="atraction-map"></div> 
-					
-					<input type="button" id="edit-coordinates" class="btn-edit-main-information" onclick="editCoordinates()" value="Editar ubicación">
-					<input type="button" style="display:none;" id="ok-coordinates" class="btn-edit-main-information"  onclick="saveCoordinates()" value="Aceptar">
-					<input type="button" style="display:none;" id="cancel-coordinates" class="btn-edit-main-information" onclick="cancelEditingCoordinates()" value="Cancelar">
-					
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
-					</div>
-					
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
-					</div>
-					
-				</div>
-			</div>
-	
-			<!-- Plano y tabla -->
-			<div class="atraction-bluprints-and-chart" style="width: 100%; overflow: hidden;">
 			
 				<!-- Plano -->
-				<div class="atraction-blueprints-group" style="float:left">
+				<div id="blueprints">
 					<div>
 						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
 					</div>
@@ -145,31 +146,23 @@
 						 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 						</div>
 					</div>
-					
-					
-					
-					
-					
-					<!-- Galería -->
+				</div>
+				
+				<!-- Galería -->
+				<div>
 					<div>
+						<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
+					</div>
+					<div id ="container" class="atraction-gallery-box" style="float:left">
+						<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
+						<video id="videoGaleria" style="width:100%; height:100%;display:none" controls>
+						</video>
+						<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&#10094;</button>
+						<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
 					
-						<div>
-							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
-						</div>
-						<div id ="container" class="atraction-gallery-box" style="float:left">
-							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
-							<video id="videoGaleria" style="width:100%; height:100%;display:none" controls>
-							</video>
-							<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&#10094;</button>
-							<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
-						
-							<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
-						        
-						    <!--<input type="file" multiple name="archivoGaleria" id="archivoGaleria"/>-->
-						</div>
-						
-					
-						
+						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
+					        
+					    <!--<input type="file" multiple name="archivoGaleria" id="archivoGaleria"/>-->
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
@@ -196,39 +189,72 @@
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
 					</div>
+				</div>
+				
+				<!-- Audioguía -->
+				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
+				<div>
+					<!-- Reproducir audioguía -->
+					<div style="float:left">
+						<audio id="audio" controls>
+						    <source type="audio/mpeg">
+						</audio> 
+					</div>
+					
+					<!-- Botón agregar audioguía -->
+					<div style="text-align:center; float:right;">
+						<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Editar audioguía">
+						<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
+					</div>
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+				</div>			
+			</div>
 						
+			<!-- Bloque derecho (Mapa, Puntos de interés y Reseñas) -->
+			<div class="atraction-right-block" style="float:right">
+				<!-- Mapa -->
+				<div class="view-atraction-map-group">
+					<div style="float:left">
+						<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
+						<div id="atraction-map"></div>
+					</div>
 					
-					
-					
-					<!-- Audioguía -->
-					<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
-					<div>
-						<!-- Reproducir audioguía -->
-						<div style="float:left">
-							<audio id="audio" controls>
-							    <source type="audio/mpeg">
-							</audio> 
+					<div class="atraction-map-editing-buttons" style="float:left">
+						<div>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-coordinates" onclick="editCoordinates()">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
 						</div>
 						
-						<!-- Botón agregar audioguía -->
-						<div style="text-align:center; float:right;">
-							<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Editar audioguía">
-							<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
+						<div>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-coordinates" onclick="cancelEditingCoordinates()">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-coordinates" onclick="saveCoordinates()">
+								<span class="glyphicon glyphicon-ok"></span>
+							</button>
 						</div>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
+					
+				</div>
+				<div>
+					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+						 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 						</div>
 						
+						<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
+						</div>
 				</div>
 				
-				
-	
-						
-				<!-- Tabla puntos de interés y obras -->
-				<div class="panel panel-primary view-atraction-panel" style="float:right">
+				<div class="panel panel-primary view-atraction-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés" />
 						
@@ -259,7 +285,7 @@
 				</div>
 				
 				<!-- Tabla reseñas (comentarios) -->
-				<div class="panel panel-primary view-atraction-panel" style="float:right">
+				<div class="panel panel-primary view-atraction-panel">
 					<div style="text-align:center; font-size:110%">
 						<p>Reseñas</p>
 					</div>
@@ -290,8 +316,8 @@
 
 <form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
-	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
-	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
+	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
+	<input id="botonNuevo" class="btn btn-default" type="button" value="Aceptar" />
 </div>
 
 
@@ -308,8 +334,10 @@
 
 	if (${atraccion.recorrible}) {
 		$("#es-recorrible").attr("checked", "checked");
+		$("#blueprints").show();
 	} else {
 		$("#no-es-recorrible").attr("checked", "checked");
+		$("#blueprints").hide();
 	}
 </script>
 
