@@ -120,8 +120,12 @@ body {
 }
 
 .atraction-alert-no-location {
+	/*margin-top: 1rem;
+	margin-right: 13rem;*/
+}
+
+.view-atraction-map-group-error-messages {
 	margin-top: 1rem;
-	margin-right: 13rem;
 }
 
 .alert-message { 
@@ -194,6 +198,10 @@ body {
 	width: 70rem;
 }
 
+.atraction-right-block {
+	margin-right: 5rem;
+}
+
 .atraction-blueprints-box .atraction-get-blueprints {
 	position: relative;
     top: -18rem;
@@ -221,8 +229,7 @@ body {
 #atraction-map {
     width: 54rem;
     height: 30rem;
-    margin-top: 1rem;
-    margin-right: 13rem;
+    margin-left: 7.5rem;
 }
 
 .atraction-map-controls {
@@ -270,4 +277,17 @@ body {
 	position: relative;
     top: -10.7rem;
     left: 17.5rem;
+}
+
+.view-atraction-map-group {
+	margin-top: 1rem;
+	margin-left: 0.6rem;
+}
+
+#edit-coordinates {
+	margin-bottom: 0.5rem;
+}
+
+.atraction-map-editing-buttons {
+	margin-left: 1rem;
 }

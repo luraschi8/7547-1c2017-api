@@ -157,6 +157,11 @@
 				 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
 				</div>
 				
+				<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
+				</div>
+				
 				<!-- Audioguía -->
 				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
 				<div>
@@ -310,7 +315,10 @@ function validarAtraccionRepetida() {
 	} else {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
-	
+	if (imageNumber == 0) {
+		document.getElementById("mensajeUnaImagen").style.display = 'block';
+		hayError = 1;
+	}
 	if (hayError == 1) {
 		return;
 	} 
@@ -437,6 +445,8 @@ $(document).ready(function() {
 	        	
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	        	document.getElementById('mensajeHayVideo').style.display = 'none';
+	        	document.getElementById("mensajeUnaImagen").style.display = 'none';
+	        	document.getElementById('mensajeTamanoImagen').style.display = 'none';
 	        	tagImagen = document.createElement('img');
 	        	imageVideo.file = tagImagen;
 	        	document.getElementById('archivoGaleria').style.display = 'none';
@@ -451,7 +461,7 @@ $(document).ready(function() {
 	        		elem.parentNode.removeChild(elem);
 	        		return;
 	        	}
-	        	if (fileNumber == 5) {
+	        	if (filesNumber == 5) {
 	        		document.getElementById('mensajeCincoArchivos').style.display = 'block';
 	        		elem = document.getElementById('archivoGaleria');
 	        		elem.parentNode.removeChild(elem);
