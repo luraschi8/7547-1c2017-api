@@ -45,8 +45,8 @@
 					</div>
 					<div>
 						<div>
-							<p id="nombreEditado" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
-							<textarea style="display:none" id="nombreEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.nombre}">${atraccion.nombre}</textarea>
+							<p id="nombreEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
+							<textarea onkeydown="calculateMaxLength('#nombreEditadoTextarea', MAX_NOMBRE)" style="display:none" rows="5" id="nombreEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.nombre}">${atraccion.nombre}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-nombre" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -70,8 +70,8 @@
 					</div>
 					<div>
 						<div>
-						    <p id="descripcionEditada" class="atraction-box atraction-name-box" path="descripcion" contenteditable="false" value="${atraccion.descripcion}">${atraccion.descripcion}</p>
-							<textarea style="display:none" id="descripcionEditadaTextarea" class="atraction-box atraction-name-box" value="${atraccion.descripcion}">${atraccion.descripcion}</textarea>
+						    <p id="descripcionEditada" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="descripcion" contenteditable="false" value="${atraccion.descripcion}">${atraccion.descripcion}</p>
+							<textarea onkeydown="calculateMaxLength('#descripcionEditadaTextarea', MAX_DESCRIPCION)" style="display:none" rows="5" id="descripcionEditadaTextarea" class="atraction-box atraction-name-box" value="${atraccion.descripcion}">${atraccion.descripcion}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-descripcion" onclick="cancelField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -81,7 +81,7 @@
 						</button>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none; width:54rem">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> La descripción no puede estar vacía. Se ha dejado la última descripción válida.
 					</div>
@@ -95,8 +95,8 @@
 					</div>
 					<div>
 						<div>
-							<p id="horarioEditado" class="atraction-box atraction-name-box" path="horario" contenteditable="false" value="${atraccion.horario}">${atraccion.horario}</p>
-							<textarea style="display:none" id="horarioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.horario}">${atraccion.horario}</textarea>
+							<p id="horarioEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="horario" contenteditable="false" value="${atraccion.horario}">${atraccion.horario}</p>
+							<textarea onkeydown="calculateMaxLength('#horarioEditadoTextarea', MAX_HORARIO)" style="display:none" rows="5" id="horarioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.horario}">${atraccion.horario}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-horario" onclick="cancelField('#horarioEditado', 'ok-horario', 'cancel-horario')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -115,8 +115,8 @@
 					</div>
 					<div>
 						<div>
-							<p id="precioEditado" class="atraction-box atraction-name-box" path="precio" contenteditable="false" value="${atraccion.precio}">${atraccion.precio}</p>
-							<textarea style="display:none" id="precioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.precio}">${atraccion.precio}</textarea>
+							<p id="precioEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="precio" contenteditable="false" value="${atraccion.precio}">${atraccion.precio}</p>
+							<textarea onkeydown="calculateMaxLength('#precioEditadoTextarea', MAX_PRECIO)" style="display:none" rows="5" id="precioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.precio}">${atraccion.precio}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-precio" onclick="cancelField('#precioEditado', 'ok-precio', 'cancel-precio')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -142,8 +142,10 @@
 						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
 					</div>
 					<div class="atraction-blueprints-box" style="float:left">
-						<img id="plano" src="${pageContext.request.contextPath}/planoAtraccion?id=${atraccion.id}" style="width:100%; height:100%">
-						<input type="button" id="atraction-get-blueprints" class="btn btn-default atraction-get-blueprints" value="Editar">
+						<img id="plano" style="width:100%; height:100%">
+						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="atraction-get-blueprints">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 						<input id="planoCambiado" name="planoCambiado" type="hidden" value="0">
 						<input type="file" name="archivoPlano" id="archivoPlano"/>
 					</div>
@@ -340,10 +342,10 @@
 	const MAX_DESCRIPCION = "250";
 	const MAX_HORARIO = "50";
 	const MAX_PRECIO = "50";
-	$("#nombreEditado").attr("maxlength", MAX_NOMBRE);
-	$("#descripcionEditada").attr("maxlength", MAX_DESCRIPCION);
-	$("#horarioEditado").attr("maxlength", MAX_HORARIO);
-	$("#precioEditado").attr("maxlength", MAX_PRECIO);
+	$("#nombreEditadoTextarea").attr("maxlength", MAX_NOMBRE);
+	$("#descripcionEditadaTextarea").attr("maxlength", MAX_DESCRIPCION);
+	$("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO);
+	$("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO);
 
 	if (${atraccion.recorrible}) {
 		$("#es-recorrible").attr("checked", "checked");
@@ -355,6 +357,16 @@
 </script>
 
 <script>
+function calculateMaxLength(field, max) {
+	var count = 0;
+	for (var i = 0; i < max; i++) {
+		if ($(field).val()[i] == '\n') {
+			count++;
+		}
+	}
+	$(field).attr("maxlength", max - count);
+}
+
 function editField(field, ok, cancel, vacio, obligatorio) {
 	$(field).hide();
 	var new_field = $(field).attr("id") + "Textarea";
@@ -366,7 +378,6 @@ function editField(field, ok, cancel, vacio, obligatorio) {
 	if (!$(field).val()) {
 		$(field).val($(field).html());
 	}
-    $(field).attr("contenteditable", "true").focus();
     displayOkAndCancelButtons(ok, cancel);
 }
 
@@ -385,35 +396,27 @@ function hideOkAndCancelButtons(ok, cancel) {
     document.getElementById(cancel).style.display = "none";
 }
 
-function hide(field, ok, cancel) {
+function hideEdition(field, ok, cancel) {
 	hideTextarea(field);
 	hideOkAndCancelButtons(ok, cancel);
 }
 
 function saveField(field, ok, cancel, vacio, obligatorio) {
-	hide(field, ok, cancel);
+	hideEdition(field, ok, cancel);
 	var new_field = "#" + $(field).attr("id") + "Textarea";
-	//document.getElementById(new_field).style.display = "inline-block";
 	if (($(new_field).val()) || (!obligatorio)) {
 		$(field).html($(new_field).val());
 	} else {
 		if (obligatorio) {
 			document.getElementById(vacio).style.display = "block";
-			//$(field).html($(new_field).val());
 		}
 	}
-	var max = $(field).attr("maxlength");
-	$(field).text(function(index, currentText) {
-	    return currentText.substr(0, max);
-	});
-	$(field).attr("contenteditable", "false");
 	$(field).show();
 }
 
 function cancelField(field, ok, cancel) {
-	hide(field, ok, cancel);
+	hideEdition(field, ok, cancel);
     $(field).html($(field).val());
-	$(field).attr("contenteditable", "false");
 	$(field).show();
 }
 
@@ -450,17 +453,27 @@ function validarElemento(elemento, mensaje, hayError) {
 	return hayError;
 }
 
+function validarPlano(plano, mensaje, hayError) {
+	if ((document.getElementById(plano).src == "http://:0/") && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById(mensaje).style.display = 'none';
+	}
+	return hayError;
+}
+
 function validarAtraccionRepetida() {
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
 	
 	if (document.getElementById('es-recorrible').checked) {
-		hayError = validarElemento('archivoPlano', 'mensajePlanoNecesario', hayError);
+		hayError = validarPlano('plano', 'mensajePlanoNecesario', hayError);
 	} else {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
-
+	
 	if (hayError == 1) {
 		return;
 	} 
@@ -473,7 +486,6 @@ function validarAtraccionRepetida() {
 		"id": document.formModificar.id.value,
 		"nombre": document.formModificar.nombre.value
 	};
-	
 	$.ajax({
 		url : "validarAtraccion",
 		type : "POST",
@@ -484,6 +496,11 @@ function validarAtraccionRepetida() {
 		success: function (data) {
 			if (data.existe == false) {
 				document.formModificar.recorrible.value = $("input[name='recorrible']:checked").val();
+				if (document.formModificar.recorrible.value == 0) {
+					document.getElementById("archivoPlano").src = "//:0";
+					document.getElementById("plano").src = "//:0";
+					document.getElementById("planoCambiado").value = "1";
+				}
 				document.getElementById("formModificar").submit();
 			} else {
 				document.getElementById("mensajeNombreRepetido").style.display = 'block';
@@ -494,16 +511,22 @@ function validarAtraccionRepetida() {
 </script>
 
 
-
-
 <!-- Plano -->
 <script>
 $(document).ready(function() {
 	document.getElementById('atraction-get-blueprints').onclick = function() {
 		document.getElementById('archivoPlano').addEventListener('change', readURL, true);
+		document.getElementById('archivoPlano').src = "//:0";
 		var fileButton = document.getElementById('archivoPlano');
 		fileButton.click();
 	};
+
+	if (document.getElementById('es-recorrible').checked) {
+		document.getElementById('plano').src = "${pageContext.request.contextPath}/planoAtraccion?id=${atraccion.id}";
+	} else {
+		document.getElementById('plano').src = "//:0";
+		document.getElementById('archivoPlano').src = "//:0";
+	}
 	
 	$("#archivoPlano").change(function() {
 	    var val = $(this).val();
@@ -514,29 +537,25 @@ $(document).ready(function() {
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-				document.getElementById('archivoPlano').value = "" ;
-				document.getElementById('plano').src = "" ;
+				document.getElementById('archivoPlano').src = "";
+				document.getElementById('plano').src = "";
 				break;
 	    }
 	});
 	
-	function readURL(){
+	function readURL() {
 		document.getElementById("planoCambiado").value = "1";
 		var file = document.getElementById("archivoPlano").files[0];
 		var reader = new FileReader();
-	    reader.onloadend = function(){
+	    reader.onloadend = function() {
 			document.getElementById('plano').src = reader.result ;        
 			}
-		if(file){
+		if(file) {
 			reader.readAsDataURL(file);
 		} 
 	}
 });
 </script>
-
-
-
-
 
 
 <!-- Para el slide de Galería podría ser útil -->
@@ -777,8 +796,6 @@ $(document).ready(function() {
 	}
 });
 </script>
-
-
 
 
 

@@ -175,7 +175,7 @@ public class AtraccionControlador {
 				byte[] bytes = imagen.getBytes();
 				atraccion.setPlano(bytes);
 			} catch (Exception e) {
-				
+				atraccion.setPlano(null);
 			}
 		}
 		atraccion.setNombre(nombreModificado);
