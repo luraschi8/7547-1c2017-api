@@ -14,217 +14,219 @@
 	<title>Trips - Nueva atracción</title>
 </head>
 <body>
+
 	<h1 class="page-header atraction-new-page-header">Nueva atracción</h1>
 	
 	<form:form class="form-horizontal maxwid" id ="formNuevo" name="formNuevo" action="atraccionNuevoValidar" method="post" commandName="atraccion" enctype="multipart/form-data">
-	<div  class="atraction-new-form"> 
 	
-		<!-- Información principal y mapa -->
-		<div class="atraction-main-information-and-map" style="width: 100%; overflow: hidden;">	
-			<!-- Información principal -->
-			<div class="atraction-main-information" style="float:left">
-				<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
-				<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.latitud}"/>
-
-				<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
-				<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
-				<input type="hidden" id="id" name="id" value="${atraccion.id}"/>
-				
-				<div>
-					<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label>
-				</div>
-				<div>
-					<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="2" id="nombre" path="nombre" name="nombre" class="atraction-box atraction-name-box"  placeholder="Ingrese el nombre de la atracción" required></textarea>
-				</div>
-				
-				<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para la atracción.
-				</div>
-				
-				<div>
-					<form:label class="atraction-label atraction-description-label" path="descripcion">Descripción</form:label>
-				</div>
-				<div>
-					<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_ATRACCION)" rows="5" id="descripcion" path="descripcion" name="descripcion" class="atraction-box atraction-descripcion-box"  placeholder="Ingrese la descripcion de la atracción" required></textarea>
-				</div>
-				
-				<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
-				</div>
-				
-				<div>
-					<form:label class="atraction-label atraction-schedule-label" path="horario">Horario</form:label>
-				</div>
-				<div>
-					<textarea onkeydown="calculateMaxLength('#horario', MAX_HORARIO_ATRACCION)" rows="3" id="horario" path="horario" name="horario" class="atraction-box atraction-schedule-box"  placeholder="Ingrese el horario de la atracción"></textarea>
-				</div>
-				
-				<div>
-					<form:label class="atraction-label atraction-cost-label" path="precio">Precio</form:label>
-				</div>
-				<div>
-					<textarea onkeydown="calculateMaxLength('#precio', MAX_PRECIO_ATRACCION)" rows="3" id="precio" path="precio" name="precio" class="atraction-box atraction-cost-box"  placeholder="Ingrese el costo de la atracción"></textarea>
-				</div>
-				
-				<div>
-					<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
-					  	<div>
-						  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show();">Sí
-						  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide();">No
-						</div>
-					</form>
-				</div>
-			</div>
-	
-			<!-- Mapa -->
-			<div style="float:right">
-				<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
-				<div id="atraction-map"></div> 
-				
-				<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
-				</div>
-				
-				<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
-				</div>
-				
-			</div>
-		</div>
-
-		<!-- Plano y tabla -->
-		<div class="atraction-bluprints-and-chart" style="width: 100%; overflow: hidden;">
+		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
 		
-			<!-- Plano -->
-			<div class="atraction-blueprints-group" style="float:left">
-				<!-- Plano -->
-				<div id="blueprints" style="display: none;">
-					<div>
-						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
-					</div>
-					<div class="atraction-blueprints-box" style="float:left">
-						<img id="plano" style="width:100%; height:100%">
-						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="atraction-get-blueprints">
-							<span class="glyphicon glyphicon-pencil"></span>
-						</button>
-						<input id="planoCambiado" name="planoCambiado" type="hidden" value="0">
-						<input type="file" name="archivoPlano" id="archivoPlano"/>
-					</div>
+			<!-- Bloque izquierdo -->
+			<div class="atraction-main-information-and-map" style="float:left">
 	
-					<div class="alert-message">
-						<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
-						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
-						</div>
-						<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
-						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
-						</div>
-					</div>
-				</div>
-				
-				<!-- Galería -->
-				<div>
+				<!-- Información principal -->
+				<div class="atraction-main-information">
+					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
+					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.latitud}"/>
+	
+					<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
+					<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
+					<input type="hidden" id="id" name="id" value="${atraccion.id}"/>
+					
 					<div>
-						<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
+						<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label>
 					</div>
-					<div id ="container" class="atraction-gallery-box" style="float:left">
-						<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
-						<video id="videoGaleria" style="width:100%; height:100%;display:none" controls >
-						</video>
-						<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&lt;</button>
-						<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
-						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
-					    
-					    <!-- <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/> -->
-					</div>
-				</div>
-				<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
-				</div>
-				
-				<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
-				</div>
-				
-				<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
-				</div>
-				
-				<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
-				</div>
-				
-				<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
-				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
-				</div>
-				
-				<!-- Audioguía -->
-				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
-				<div>
-					<!-- Reproducir audioguía -->
-					<div style="float:left">
-						<audio id="audio" controls>
-						    <source type="audio/mpeg">
-						</audio> 
+					<div>
+						<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="1" id="nombre" path="nombre" name="nombre" class="atraction-box atraction-name-box"  placeholder="Ingrese el nombre de la atracción" required></textarea>
 					</div>
 					
-					<!-- Botón agregar audioguía -->
-					<div style="text-align:center; float:right;">
-						<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Agregar audioguía">
-						<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para la atracción.
+					</div>
+					
+					<div>
+						<form:label class="atraction-label atraction-description-label" path="descripcion">Descripción</form:label>
+					</div>
+					<div>
+						<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_ATRACCION)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="atraction-box atraction-descripcion-box"  placeholder="Ingrese la descripcion de la atracción" required></textarea>
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
+					</div>
+					
+					<div>
+						<form:label class="atraction-label atraction-schedule-label" path="horario">Horario</form:label>
+					</div>
+					<div>
+						<textarea onkeydown="calculateMaxLength('#horario', MAX_HORARIO_ATRACCION)" rows="3" id="horario" path="horario" name="horario" class="atraction-box atraction-schedule-box"  placeholder="Ingrese el horario de la atracción"></textarea>
+					</div>
+					
+					<div>
+						<form:label class="atraction-label atraction-cost-label" path="precio">Precio</form:label>
+					</div>
+					<div>
+						<textarea onkeydown="calculateMaxLength('#precio', MAX_PRECIO_ATRACCION)" rows="3" id="precio" path="precio" name="precio" class="atraction-box atraction-cost-box"  placeholder="Ingrese el costo de la atracción"></textarea>
+					</div>
+					
+					<div>
+						<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
+						  	<div>
+							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show();">Sí
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide();">No
+							</div>
+						</form>
 					</div>
 				</div>
-				
-				<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
+			
+				<!-- Plano -->
+				<div class="atraction-blueprints-group">
+					<!-- Plano -->
+					<div id="blueprints" style="display: none;style="float:left"">
+						<div>
+							<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
+						</div>
+						<div class="atraction-blueprints-box" style="float:left">
+							<img id="plano" style="width:100%; height:100%">
+							<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="atraction-get-blueprints">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+							<input id="planoCambiado" name="planoCambiado" type="hidden" value="0">
+							<input type="file" name="archivoPlano" id="archivoPlano"/>
+						</div>
+		
+						<div class="alert-message">
+							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
+							 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+							 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
+							</div>
+							<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
+							 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+							 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+							</div>
+						</div>
+					</div>
+					
+					<!-- Galería -->
+					<div>
+						<div>
+							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
+						</div>
+						<div id ="container" class="atraction-gallery-box">
+							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
+							<video id="videoGaleria" style="width:100%; height:100%;display:none" controls >
+							</video>
+							<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&lt;</button>
+							<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
+							<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
+						    
+						    <!-- <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/> -->
+						</div>
+					</div>
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
+					</div>
+					
+					<!-- Audioguía -->
+					<div class="new-atraction-audio-group">
+						<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
+						<div>
+							<!-- Reproducir audioguía -->
+							<div style="float:left">
+								<audio id="audio" controls>
+								    <source type="audio/mpeg">
+								</audio> 
+							</div>
+							
+							<!-- Botón agregar audioguía -->
+							<div style="text-align:center; float:right;">
+								<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Agregar audioguía">
+								<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
+							</div>
+						</div>
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 					</div>
-					
+				</div>
 			</div>
 			
-			<!-- Tabla puntos de interés y obras -->
-			<div class="panel panel-primary view-atraction-panel" style="float:right">
-				<div style="text-align:center">
-					<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
+			<!-- Bloque derecho -->
+			<div class="atraction-right-block" style="float:right">
+			
+				<!-- Mapa -->
+				<div>
+					<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
+					<div id="atraction-map"></div> 
 					
-					<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
-						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" />
-					</form>
+					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
+					</div>	
 				</div>
 				
-				<div class="panel-body atraction-points-of-interest">
-					<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th></th> <!-- Imagen -->
-								<th></th> <!-- Nombre -->
-								<th></th> <!-- Borrar -->
-								<th></th> <!-- Ver -->
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-				</div>
-			</div>		
+				<!-- Tabla puntos de interés y obras -->
+				<div class="panel panel-primary view-atraction-panel">
+					<div style="text-align:center">
+						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
+						
+						<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
+							<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" />
+						</form>
+					</div>
+					
+					<div class="panel-body atraction-points-of-interest">
+						<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th></th> <!-- Imagen -->
+									<th></th> <!-- Nombre -->
+									<th></th> <!-- Borrar -->
+									<th></th> <!-- Ver -->
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>		
+			</div>
 		</div>
-		
+	
 		<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
-		</div>
-		
-	</div>
-</form:form>
+		</div>	
+	</form:form>
 
 <form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
@@ -285,7 +287,7 @@ function validarUbicacion(hay_ubicacion, mensaje, hayError) {
 var location_selected = false;
 
 function validarPlano(plano, mensaje, hayError) {
-	if ((document.getElementById(plano).src == "http://:0/") && (!hayError)) {
+	if ((document.getElementById(plano).src == "") && (!hayError)) {
 		document.getElementById(mensaje).style.display = 'block';
 		hayError = 1;
 	} else {
@@ -312,16 +314,19 @@ function validarAtraccionRepetida() {
 	}
 	if (hayError == 1) {
 		return;
-	} 
+	}
+	
 	var ciudad = {
 		"id": document.formNuevo.idCiudad.value,
 	}
+	
 	var json = {
 		"ciudad": ciudad,
 		"nombre": document.formNuevo.nombre.value,
 		"latitud": document.formNuevo.latitud.value,
 		"longitud": document.formNuevo.longitud.value
 	};
+	
 	$.ajax({
 		url : "validarAtraccion",
 		type : "POST",

@@ -121,6 +121,7 @@ body {
 
 .atraction-alert-already-exists {
 	margin-top: 3rem;
+	margin-left: 5rem;
 	margin-right: 5rem;
 }
 
@@ -208,7 +209,16 @@ body {
 
 .view-atraction-panel {
 	margin-right: 5rem;
+	margin-top: 5rem;
 	width: 70rem;
+}
+
+.new-atraction-right-block {
+	margin-top: 2rem;
+}
+
+.new-atraction-audio-group {
+	margin-top: 1rem;
 }
 
 .view-atraction-points-of-interest-panel {

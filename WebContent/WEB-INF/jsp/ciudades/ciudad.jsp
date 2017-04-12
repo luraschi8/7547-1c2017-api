@@ -68,7 +68,7 @@
 				<thead>
 					<tr>
 						<th></th>
-						<th>Nombre</th>
+						<th></th>
 						<th></th>
 						<th></th>
 						<th></th>
