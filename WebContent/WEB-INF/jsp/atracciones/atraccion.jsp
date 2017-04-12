@@ -46,7 +46,7 @@
 					<div>
 						<div>
 							<p id="nombreEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
-							<textarea onkeydown="calculateMaxLength('#nombreEditadoTextarea', MAX_NOMBRE)" style="display:none" rows="5" id="nombreEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.nombre}">${atraccion.nombre}</textarea>
+							<textarea onkeydown="calculateMaxLength('#nombreEditadoTextarea', MAX_NOMBRE_ATRACCION)" style="display:none" rows="5" id="nombreEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.nombre}">${atraccion.nombre}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-nombre" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -71,7 +71,7 @@
 					<div>
 						<div>
 						    <p id="descripcionEditada" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="descripcion" contenteditable="false" value="${atraccion.descripcion}">${atraccion.descripcion}</p>
-							<textarea onkeydown="calculateMaxLength('#descripcionEditadaTextarea', MAX_DESCRIPCION)" style="display:none" rows="5" id="descripcionEditadaTextarea" class="atraction-box atraction-name-box" value="${atraccion.descripcion}">${atraccion.descripcion}</textarea>
+							<textarea onkeydown="calculateMaxLength('#descripcionEditadaTextarea', MAX_DESCRIPCION_ATRACCION)" style="display:none" rows="5" id="descripcionEditadaTextarea" class="atraction-box atraction-name-box" value="${atraccion.descripcion}">${atraccion.descripcion}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-descripcion" onclick="cancelField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -96,7 +96,7 @@
 					<div>
 						<div>
 							<p id="horarioEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="horario" contenteditable="false" value="${atraccion.horario}">${atraccion.horario}</p>
-							<textarea onkeydown="calculateMaxLength('#horarioEditadoTextarea', MAX_HORARIO)" style="display:none" rows="5" id="horarioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.horario}">${atraccion.horario}</textarea>
+							<textarea onkeydown="calculateMaxLength('#horarioEditadoTextarea', MAX_HORARIO_ATRACCION)" style="display:none" rows="5" id="horarioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.horario}">${atraccion.horario}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-horario" onclick="cancelField('#horarioEditado', 'ok-horario', 'cancel-horario')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -116,7 +116,7 @@
 					<div>
 						<div>
 							<p id="precioEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="precio" contenteditable="false" value="${atraccion.precio}">${atraccion.precio}</p>
-							<textarea onkeydown="calculateMaxLength('#precioEditadoTextarea', MAX_PRECIO)" style="display:none" rows="5" id="precioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.precio}">${atraccion.precio}</textarea>
+							<textarea onkeydown="calculateMaxLength('#precioEditadoTextarea', MAX_PRECIO_ATRACCION)" style="display:none" rows="5" id="precioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.precio}">${atraccion.precio}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-precio" onclick="cancelField('#precioEditado', 'ok-precio', 'cancel-precio')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -151,11 +151,11 @@
 					</div>
 	
 					<div class="alert-message">
-						<div class="alert alert-warning fade in" id="mensajePlanoNecesario" style="display: none;">
+						<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
 						</div>
-						<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
+						<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 						</div>
@@ -324,28 +324,28 @@
 <form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
-	<input id="botonNuevo" class="btn btn-default" type="button" value="Aceptar" />
+	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 </div>
 
 
 <!-- Definición de constantes -->
 <script>
-	const MAX_NOMBRE = "50";
-	const MAX_DESCRIPCION = "250";
-	const MAX_HORARIO = "50";
-	const MAX_PRECIO = "50";
-	$("#nombreEditadoTextarea").attr("maxlength", MAX_NOMBRE);
-	$("#descripcionEditadaTextarea").attr("maxlength", MAX_DESCRIPCION);
-	$("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO);
-	$("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO);
+const MAX_NOMBRE_ATRACCION = "50";
+const MAX_DESCRIPCION_ATRACCION = "250";
+const MAX_HORARIO_ATRACCION = "50";
+const MAX_PRECIO_ATRACCION = "50";
+$("#nombreEditadoTextarea").attr("maxlength", MAX_NOMBRE_ATRACCION);
+$("#descripcionEditadaTextarea").attr("maxlength", MAX_DESCRIPCION_ATRACCION);
+$("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO_ATRACCION);
+$("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
 
-	if (${atraccion.recorrible}) {
-		$("#es-recorrible").attr("checked", "checked");
-		$("#blueprints").show();
-	} else {
-		$("#no-es-recorrible").attr("checked", "checked");
-		$("#blueprints").hide();
-	}
+if (${atraccion.recorrible}) {
+	$("#es-recorrible").attr("checked", "checked");
+	$("#blueprints").show();
+} else {
+	$("#no-es-recorrible").attr("checked", "checked");
+	$("#blueprints").hide();
+}
 </script>
 
 <script>
@@ -856,9 +856,6 @@ function setPosition(lat, lng) {
 	var position = new google.maps.LatLng(lat, lng);
 	marker.setPosition(position);
 	hideOkAndCancelButtonsForCoordinates();
-	if (out_of_range) {
-		far_away = true;
-	}
 }
 
 function saveCoordinates() {
@@ -866,6 +863,9 @@ function saveCoordinates() {
 	map_lat = aux_lat;
 	map_lng = aux_lng;
 	setPosition(map_lat, map_lng);
+	if (out_of_range) {
+		far_away = true;
+	}
 	hideOkAndCancelButtonsForCoordinates();
 }
 
@@ -940,37 +940,35 @@ function editCoordinates() {
 	    	out_of_range = true;
 	    }
 	});
-
 }
 
+function initMap() {
+   	map = new google.maps.Map(document.getElementById('atraction-map'), {
+   	    center: {lat: ${latitud_atraccion}, lng: ${longitud_atraccion}},
+   	    zoom: 13
+   	});
+   	
+    input = (document.getElementById('atraction-map-input'));
+   	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-    function initMap() {
-    	map = new google.maps.Map(document.getElementById('atraction-map'), {
-    	    center: {lat: ${latitud_atraccion}, lng: ${longitud_atraccion}},
-    	    zoom: 13
-    	});
-    	
-        input = (document.getElementById('atraction-map-input'));
-    	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+   	autocomplete = new google.maps.places.Autocomplete(input, {types: []});
+   	autocomplete.bindTo('bounds', map);
+   	
+   	infowindow = new google.maps.InfoWindow();
+   	marker = new google.maps.Marker({
+   	    map: map,
+   	    anchorPoint: new google.maps.Point(0, -29)
+   	});
 
-    	autocomplete = new google.maps.places.Autocomplete(input, {types: []});
-    	autocomplete.bindTo('bounds', map);
-    	
-    	infowindow = new google.maps.InfoWindow();
-    	marker = new google.maps.Marker({
-    	    map: map,
-    	    anchorPoint: new google.maps.Point(0, -29)
-    	});
-
-    	marker.setIcon(({
-	        size: new google.maps.Size(71, 71),
-	        origin: new google.maps.Point(0, 0),
-	        anchor: new google.maps.Point(17, 34),
-	        scaledSize: new google.maps.Size(35, 35)
-	    }));
-	    marker.setPosition(map.center);
-    	marker.setVisible(true);
-    }
+   	marker.setIcon(({
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(35, 35)
+    }));
+    marker.setPosition(map.center);
+   	marker.setVisible(true);
+}
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>

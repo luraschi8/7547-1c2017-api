@@ -27,7 +27,9 @@
 	<div class="view-city-image">
 		<div class="panel panel-primary view-city-image-box sobreBoton">
 			<img id="imagen" src="${pageContext.request.contextPath}/imagenCiudad?id=${ciudad.id}" style="width:100%; height:100%"/>
-           	<input type="button" id="get_file" class="btn btn-default btn-get-file" value="Editar">
+			<button type="button" class="btn btn-default btn-sm btn-get-file" id="get_file" onclick="editCoordinates()">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</button>
 		</div>
 	</div>
 	
@@ -39,7 +41,7 @@
 	</div>
 </form:form>
 
-<h1 class="page-header">
+<h1 class="view-city-page-header">
 	${ciudad.nombre}, ${ciudad.pais}
 </h1>
 
@@ -80,8 +82,8 @@
 
 <form:form id="formAtras" action="ciudades" method="post"></form:form>
 <div class="view-city-btn-final" style="text-align:center;">
-	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
-	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
+	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
+	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 </div>
 
 <c:set var="borrar">
@@ -145,7 +147,7 @@ var table = $('#tablita').DataTable( {
         {data: "nombre" },
         {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
         {defaultContent:'<button class="btn btn-warning" id="ver">${ver}</button>'},
-        {defaultContent:'<button class="btn btn-warning" id="marcar">${marcar}</button>'}
+        {defaultContent:'<button class="btn btn-info" id="marcar">${marcar}</button>'}
         ],
     select:true,
     paging:false,

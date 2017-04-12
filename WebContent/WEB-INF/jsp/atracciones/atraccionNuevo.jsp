@@ -34,7 +34,7 @@
 					<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label>
 				</div>
 				<div>
-				    <form:input id="nombre" class="atraction-box atraction-name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la atracción"/>
+					<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="2" id="nombre" path="nombre" name="nombre" class="atraction-box atraction-name-box"  placeholder="Ingrese el nombre de la atracción" required></textarea>
 				</div>
 				
 				<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
@@ -46,7 +46,7 @@
 					<form:label class="atraction-label atraction-description-label" path="descripcion">Descripción</form:label>
 				</div>
 				<div>
-				    <form:input id="descripcion" class="atraction-box atraction-description-box" type="text" path="descripcion" required="required" placeholder="Ingrese la descripción de la atracción"/>
+					<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_ATRACCION)" rows="5" id="descripcion" path="descripcion" name="descripcion" class="atraction-box atraction-descripcion-box"  placeholder="Ingrese la descripcion de la atracción" required></textarea>
 				</div>
 				
 				<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
@@ -58,21 +58,21 @@
 					<form:label class="atraction-label atraction-schedule-label" path="horario">Horario</form:label>
 				</div>
 				<div>
-					<form:input id="horario" class="atraction-box atraction-schedule-box" type="text" path="horario" placeholder="Ingrese el horario de visita de la atracción"/>
+					<textarea onkeydown="calculateMaxLength('#horario', MAX_HORARIO_ATRACCION)" rows="3" id="horario" path="horario" name="horario" class="atraction-box atraction-schedule-box"  placeholder="Ingrese el horario de la atracción"></textarea>
 				</div>
 				
 				<div>
 					<form:label class="atraction-label atraction-cost-label" path="precio">Precio</form:label>
 				</div>
 				<div>
-					<form:input id="precio" class="atraction-box atraction-cost-box" type="text" path="precio" placeholder="Ingrese el costo de la atracción"/>
+					<textarea onkeydown="calculateMaxLength('#precio', MAX_PRECIO_ATRACCION)" rows="3" id="precio" path="precio" name="precio" class="atraction-box atraction-cost-box"  placeholder="Ingrese el costo de la atracción"></textarea>
 				</div>
 				
 				<div>
 					<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 					  	<div>
-						  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px">Sí
-						  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;">No
+						  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show();">Sí
+						  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide();">No
 						</div>
 					</form>
 				</div>
@@ -101,23 +101,29 @@
 		
 			<!-- Plano -->
 			<div class="atraction-blueprints-group" style="float:left">
-				<div>
-					<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
-				</div>
-				<div class="atraction-blueprints-box" style="float:left">
-					<img id="plano" style="width:100%; height:100%">
-					<input type="button" id="atraction-get-blueprints" class="btn btn-default atraction-get-blueprints" value="Editar">
-					<input type="file" name="archivoPlano" id="archivoPlano"/>
-				</div>
-
-				<div class="alert-message">
-					<div class="alert alert-warning fade in" id="mensajePlanoNecesario" style="display: none;">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
+				<!-- Plano -->
+				<div id="blueprints" style="display: none;">
+					<div>
+						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
 					</div>
-					<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+					<div class="atraction-blueprints-box" style="float:left">
+						<img id="plano" style="width:100%; height:100%">
+						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="atraction-get-blueprints">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+						<input id="planoCambiado" name="planoCambiado" type="hidden" value="0">
+						<input type="file" name="archivoPlano" id="archivoPlano"/>
+					</div>
+	
+					<div class="alert-message">
+						<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
+						</div>
+						<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+						</div>
 					</div>
 				</div>
 				
@@ -189,16 +195,10 @@
 			<!-- Tabla puntos de interés y obras -->
 			<div class="panel panel-primary view-atraction-panel" style="float:right">
 				<div style="text-align:center">
-					<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés" />
+					<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
 					
 					<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
 						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" />
-					</form>
-					
-					<input id="botonObras" class="btn btn-ver-puntos-y-obras btn-obras" type="button" value="Obras" />
-					
-					<form class="form-horizontal maxwid" id ="formAgregarObra" name="formAgregarObra" action="obraNuevo" method="post">
-						<input id="botonAgregarObra" class="btn btn-agregar-puntos-y-obras btn-nueva-obra" type="button" value="+" />
 					</form>
 				</div>
 				
@@ -215,28 +215,7 @@
 						<tbody></tbody>
 					</table>
 				</div>
-			</div>
-			
-			<!-- Tabla reseñas (comentarios) -->
-			<div class="panel panel-primary view-atraction-panel" style="float:right">
-				<div style="text-align:center; font-size:110%">
-					<p>Reseñas</p>
-				</div>
-				
-				<div class="panel-body atraction-comments">
-					<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th></th> <!-- Usuario -->
-								<th></th> <!-- Comentario -->
-								<th></th> <!-- Borrar -->
-								<th></th> <!-- Editar -->
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-				</div>
-			</div>				
+			</div>		
 		</div>
 		
 		<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
@@ -250,20 +229,21 @@
 <form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
-	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
+	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Guardar" />
 </div>
 
 
 <!-- Definición de constantes -->
 <script>
-	const MAX_NOMBRE = "50";
-	const MAX_DESCRIPCION = "250";
-	const MAX_HORARIO = "50";
-	const MAX_PRECIO = "50";
-	$("#nombre").attr("maxlength", MAX_NOMBRE);
-	$("#descripcion").attr("maxlength", MAX_DESCRIPCION);
-	$("#horario").attr("maxlength", MAX_HORARIO);
-	$("#precio").attr("maxlength", MAX_PRECIO);
+const MAX_NOMBRE_ATRACCION = "50";
+const MAX_DESCRIPCION_ATRACCION = "250";
+const MAX_HORARIO_ATRACCION = "50";
+const MAX_PRECIO_ATRACCION = "50";
+
+$("#nombre").attr("maxlength", MAX_NOMBRE_ATRACCION);
+$("#descripcion").attr("maxlength", MAX_DESCRIPCION_ATRACCION);
+$("#horario").attr("maxlength", MAX_HORARIO_ATRACCION);
+$("#precio").attr("maxlength", MAX_PRECIO_ATRACCION);
 </script>
 
 
@@ -304,6 +284,16 @@ function validarUbicacion(hay_ubicacion, mensaje, hayError) {
 //Para validar si se ha o no elegido una ubicación
 var location_selected = false;
 
+function validarPlano(plano, mensaje, hayError) {
+	if ((document.getElementById(plano).src == "http://:0/") && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById(mensaje).style.display = 'none';
+	}
+	return hayError;
+}
+
 function validarAtraccionRepetida() {
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
@@ -311,10 +301,11 @@ function validarAtraccionRepetida() {
 	hayError = validarUbicacion(location_selected, "mensajeUbicacionVacia", hayError);
 	
 	if (document.getElementById('es-recorrible').checked) {
-		hayError = validarElemento('archivoPlano', 'mensajePlanoNecesario', hayError);
+		hayError = validarPlano('plano', 'mensajePlanoNecesario', hayError);
 	} else {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
+	
 	if (imageNumber == 0) {
 		document.getElementById("mensajeUnaImagen").style.display = 'block';
 		hayError = 1;

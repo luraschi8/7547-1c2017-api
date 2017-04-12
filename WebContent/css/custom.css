@@ -17,8 +17,13 @@ body {
     display: none;
 }
 
-.page-header {
-	 margin-left: 2rem;
+.-page-header {
+	 margin-left: 5rem;
+}
+
+.view-city-page-header {
+	 margin-top: -15rem;
+	 margin-bottom: 2rem;
 }
 
 .input-and-image-group {
@@ -86,7 +91,6 @@ body {
 	margin-left: 1.8rem;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
-	width: 14rem;
 }
 
 .btn-final {
@@ -108,11 +112,11 @@ body {
 .atraction-alert { 
 	margin-top: 1rem;
 	margin-bottom: -0.5rem;
+	width: 50rem;
 }
 
 .atraction-gallery-alert {
 	margin-top: 20rem;
-	width: 50rem;
 }
 
 .atraction-alert-already-exists {
@@ -147,7 +151,6 @@ body {
     display: block;
     margin: 0 auto;
     margin-top: 3rem;
-    margin-bottom: -19rem;
 	height: 18.75rem;
 	width: 90%;
 	background-color: #909090;
@@ -309,4 +312,10 @@ body {
 
 .atraction-map-editing-buttons {
 	margin-left: 1rem;
+}
+
+.view-city-image-box .btn-get-file {
+	position: relative;
+    top: -19rem;
+    left: 115rem;
 }
