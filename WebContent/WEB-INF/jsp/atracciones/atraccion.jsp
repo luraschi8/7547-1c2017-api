@@ -44,7 +44,10 @@
 						</button>
 					</div>
 					<div>
-						<p id="nombreEditado" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
+						<div>
+							<p id="nombreEditado" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
+							<textarea style="display:none" id="nombreEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.nombre}">${atraccion.nombre}</textarea>
+						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-nombre" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')">
 							<span class="glyphicon glyphicon-remove"></span>
 						</button>
@@ -66,7 +69,10 @@
 						</button>
 					</div>
 					<div>
-					    <p id="descripcionEditada" class="atraction-box atraction-name-box" path="descripcion" contenteditable="false" value="${atraccion.descripcion}">${atraccion.descripcion}</p>
+						<div>
+						    <p id="descripcionEditada" class="atraction-box atraction-name-box" path="descripcion" contenteditable="false" value="${atraccion.descripcion}">${atraccion.descripcion}</p>
+							<textarea style="display:none" id="descripcionEditadaTextarea" class="atraction-box atraction-name-box" value="${atraccion.descripcion}">${atraccion.descripcion}</textarea>
+						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-descripcion" onclick="cancelField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion')">
 							<span class="glyphicon glyphicon-remove"></span>
 						</button>
@@ -88,7 +94,10 @@
 						</button>
 					</div>
 					<div>
-						<p id="horarioEditado" class="atraction-box atraction-name-box" path="horario" contenteditable="false" value="${atraccion.horario}">${atraccion.horario}</p>
+						<div>
+							<p id="horarioEditado" class="atraction-box atraction-name-box" path="horario" contenteditable="false" value="${atraccion.horario}">${atraccion.horario}</p>
+							<textarea style="display:none" id="horarioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.horario}">${atraccion.horario}</textarea>
+						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-horario" onclick="cancelField('#horarioEditado', 'ok-horario', 'cancel-horario')">
 							<span class="glyphicon glyphicon-remove"></span>
 						</button>
@@ -105,7 +114,10 @@
 						</button>
 					</div>
 					<div>
-						<p id="precioEditado" class="atraction-box atraction-name-box" path="precio" contenteditable="false" value="${atraccion.precio}">${atraccion.precio}</p>
+						<div>
+							<p id="precioEditado" class="atraction-box atraction-name-box" path="precio" contenteditable="false" value="${atraccion.precio}">${atraccion.precio}</p>
+							<textarea style="display:none" id="precioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.precio}">${atraccion.precio}</textarea>
+						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-precio" onclick="cancelField('#precioEditado', 'ok-precio', 'cancel-precio')">
 							<span class="glyphicon glyphicon-remove"></span>
 						</button>
@@ -242,6 +254,7 @@
 					
 					
 				</div>
+				
 				<div>
 					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
@@ -343,6 +356,10 @@
 
 <script>
 function editField(field, ok, cancel, vacio, obligatorio) {
+	$(field).hide();
+	var new_field = $(field).attr("id") + "Textarea";
+	document.getElementById(new_field).style.display = "inline-block";
+	document.getElementById(new_field).value = $(field).html();
 	if (obligatorio) {
 		document.getElementById(vacio).style.display = "none";
 	}
@@ -358,19 +375,31 @@ function displayOkAndCancelButtons(ok, cancel) {
     document.getElementById(cancel).style.display = "inline-block";
 }
 
+function hideTextarea(field) {
+    var new_field = $(field).attr("id") + "Textarea";
+	document.getElementById(new_field).style.display = "none";
+}
+
 function hideOkAndCancelButtons(ok, cancel) {
 	document.getElementById(ok).style.display = "none";
     document.getElementById(cancel).style.display = "none";
 }
 
-function saveField(field, ok, cancel, vacio, obligatorio) {
+function hide(field, ok, cancel) {
+	hideTextarea(field);
 	hideOkAndCancelButtons(ok, cancel);
-	if (($(field).html()) || (!obligatorio)) {
-		$(field).val($(field).html());
+}
+
+function saveField(field, ok, cancel, vacio, obligatorio) {
+	hide(field, ok, cancel);
+	var new_field = "#" + $(field).attr("id") + "Textarea";
+	//document.getElementById(new_field).style.display = "inline-block";
+	if (($(new_field).val()) || (!obligatorio)) {
+		$(field).html($(new_field).val());
 	} else {
 		if (obligatorio) {
 			document.getElementById(vacio).style.display = "block";
-			$(field).html($(field).val());
+			//$(field).html($(new_field).val());
 		}
 	}
 	var max = $(field).attr("maxlength");
@@ -378,12 +407,14 @@ function saveField(field, ok, cancel, vacio, obligatorio) {
 	    return currentText.substr(0, max);
 	});
 	$(field).attr("contenteditable", "false");
+	$(field).show();
 }
 
 function cancelField(field, ok, cancel) {
-	hideOkAndCancelButtons(ok, cancel);
+	hide(field, ok, cancel);
     $(field).html($(field).val());
 	$(field).attr("contenteditable", "false");
+	$(field).show();
 }
 
 function updateForm() {
