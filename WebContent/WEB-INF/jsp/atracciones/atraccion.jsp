@@ -175,31 +175,29 @@
 						<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
 					
 						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
-					        
-					    <!--<input type="file" multiple name="archivoGaleria" id="archivoGaleria"/>-->
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeHayVideo" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
+					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente. Sólo se puede seleccionar uno.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeCincoArchivos" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
+					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar más.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoImagen" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
+					 	<strong>&iexclError!</strong> La imagen no puede pesar más de 50KB.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoVideo" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
+					 	<strong>&iexclError!</strong> El video no puede pesar más de 10MB.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeUnaImagen" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
 					</div>
@@ -269,18 +267,12 @@
 						</div>
 				</div>
 				
-				<div class="panel panel-primary view-atraction-panel">
+				<div class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
-						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés" />
+						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
 						
 						<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
 							<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" />
-						</form>
-						
-						<input id="botonObras" class="btn btn-ver-puntos-y-obras btn-obras" type="button" value="Obras" />
-						
-						<form class="form-horizontal maxwid" id ="formAgregarObra" name="formAgregarObra" action="obraNuevo" method="post">
-							<input id="botonAgregarObra" class="btn btn-agregar-puntos-y-obras btn-nueva-obra" type="button" value="+" />
 						</form>
 					</div>
 					
@@ -300,7 +292,7 @@
 				</div>
 				
 				<!-- Tabla reseñas (comentarios) -->
-				<div class="panel panel-primary view-atraction-panel">
+				<div class="panel panel-primary view-atraction-panel view-atraction-comments-panel">
 					<div style="text-align:center; font-size:110%">
 						<p>Reseñas</p>
 					</div>
@@ -617,6 +609,14 @@ function hideGalleryVideo() {
 	document.getElementById('videoGaleria').style.display = 'none';
 }
 
+function hideGalleryErrorMessages() {
+	document.getElementById('mensajeHayVideo').style.display = 'none';
+	document.getElementById('mensajeCincoArchivos').style.display = 'none';
+	document.getElementById('mensajeTamanoImagen').style.display = 'none';
+	document.getElementById('mensajeTamanoVideo').style.display = 'none';
+	document.getElementById('mensajeUnaImagen').style.display = 'none';
+}
+
 /*--------Galería-----------*/
 
 $(document).ready(function() {
@@ -655,7 +655,8 @@ $(document).ready(function() {
 		input.click();
 	};
 	
-	function readURL(){
+	function readURL() {
+		hideGalleryErrorMessages();
 		console.log("READ");
 		document.getElementById('archivoGaleria').style.display = 'none';
 		var file = document.getElementById("archivoGaleria").files[0];

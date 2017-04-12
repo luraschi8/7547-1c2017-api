@@ -110,6 +110,11 @@ body {
 	margin-bottom: -0.5rem;
 }
 
+.atraction-gallery-alert {
+	margin-top: 20rem;
+	width: 50rem;
+}
+
 .atraction-alert-already-exists {
 	margin-top: 3rem;
 	margin-right: 5rem;
@@ -193,9 +198,16 @@ body {
 }
 
 .view-atraction-panel {
-	margin-top: 3.4rem;
 	margin-right: 5rem;
 	width: 70rem;
+}
+
+.view-atraction-points-of-interest-panel {
+	margin-top: 33rem;
+}
+
+.view-atraction-comments-panel {
+	margin-top: 3.4rem;
 }
 
 .atraction-right-block {
@@ -215,7 +227,7 @@ body {
 .btn-ver-puntos-y-obras {
 	display: block;
 	float: left;
-	width: 31.5rem;
+	width: 66.4rem;
 	background-color: #F0F0F0;
     border-radius: 2px;
 }
