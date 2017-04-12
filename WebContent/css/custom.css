@@ -125,8 +125,14 @@ body {
 }
 
 .atraction-alert-no-location {
-	/*margin-top: 1rem;
-	margin-right: 13rem;*/
+	margin-top: 1rem;
+	margin-left: 8rem;
+	width: 54rem;
+}
+
+.atraction-alert-far-location {
+	margin-left: 8rem;
+	width: 54rem;
 }
 
 .view-atraction-map-group-error-messages {
@@ -203,7 +209,7 @@ body {
 }
 
 .view-atraction-points-of-interest-panel {
-	margin-top: 33rem;
+	margin-top: 1rem;
 }
 
 .view-atraction-comments-panel {
@@ -294,6 +300,7 @@ body {
 .view-atraction-map-group {
 	margin-top: 1rem;
 	margin-left: 0.6rem;
+	margin-bottom: 33rem;
 }
 
 #edit-coordinates {

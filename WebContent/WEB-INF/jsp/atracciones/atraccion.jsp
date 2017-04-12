@@ -261,7 +261,7 @@
 						 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 						</div>
 						
-						<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
+						<div class="alert alert-warning fade in atraction-alert-far-location" id="mensajeUbicacionLejana" style="display: none">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
 						</div>
@@ -349,6 +349,7 @@
 </script>
 
 <script>
+var far_away = false;
 function calculateMaxLength(field, max) {
 	var count = 0;
 	for (var i = 0; i < max; i++) {
@@ -468,7 +469,7 @@ function validarAtraccionRepetida() {
 	
 	if (hayError == 1) {
 		return;
-	} 
+	}
 
 	var ciudad = {
 		"id": document.formModificar.idCiudad.value,
@@ -493,7 +494,26 @@ function validarAtraccionRepetida() {
 					document.getElementById("plano").src = "//:0";
 					document.getElementById("planoCambiado").value = "1";
 				}
-				document.getElementById("formModificar").submit();
+				if (far_away) {
+				    bootbox.confirm({
+			    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
+			    	    buttons: {
+			    	        confirm: {
+			    	            label: 'Sí'
+			    	        },
+			    	        cancel: {
+			    	            label: 'No'
+			    	        }
+			    	    },
+			    	    callback: function(result) {
+					        if (result) {
+					        	document.getElementById("formModificar").submit();
+					        }
+			    	    }
+				    });
+			  	} else {
+			  		document.getElementById("formModificar").submit();
+				}
 			} else {
 				document.getElementById("mensajeNombreRepetido").style.display = 'block';
 			}
@@ -818,7 +838,7 @@ $(document).ready(function() {
 
 <!-- Mapa -->
 <script>
-var map, marker, autocomplete, infowindow, input, aux_lat, aux_lng,
+var out_of_range = false, map, marker, autocomplete, infowindow, input, aux_lat, aux_lng,
 	map_lat = document.formModificar.latitud.value,
 	map_lng = document.formModificar.longitud.value;
 
@@ -836,6 +856,9 @@ function setPosition(lat, lng) {
 	var position = new google.maps.LatLng(lat, lng);
 	marker.setPosition(position);
 	hideOkAndCancelButtonsForCoordinates();
+	if (out_of_range) {
+		far_away = true;
+	}
 }
 
 function saveCoordinates() {
@@ -911,8 +934,10 @@ function editCoordinates() {
 	   	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
 		if (google.maps.geometry.spherical.computeDistanceBetween(event.latLng, city_coordinates) < 15000) {
 			document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+			out_of_range = false;
 	    } else {
 	    	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
+	    	out_of_range = true;
 	    }
 	});
 
