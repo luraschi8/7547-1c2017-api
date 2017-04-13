@@ -17,7 +17,7 @@
 
 <body>
 
-	<h1 class="page-header atraction-new-page-header" style="margin-left:2.5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
+	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
 	
 	<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
 		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
@@ -778,8 +778,6 @@ $(document).ready(function() {
 </script>
 
 
-
-
 <!-- Audioguía -->
 <script>
 $(document).ready(function() {
@@ -816,7 +814,6 @@ $(document).ready(function() {
 	}
 });
 </script>
-
 
 
 <c:set var="latitud_atraccion">
@@ -892,13 +889,6 @@ function editCoordinates() {
 	        map.setCenter(place.geometry.location);
 	        map.setZoom(17);  // Why 17? Because it looks good.
 	    }
-	    marker.setIcon(/** @type {google.maps.Icon} */({
-	        url: place.icon,
-	        size: new google.maps.Size(71, 71),
-	        origin: new google.maps.Point(0, 0),
-	        anchor: new google.maps.Point(17, 34),
-	        scaledSize: new google.maps.Size(35, 35)
-	    }));
 	    marker.setPosition(place.geometry.location);
 	    marker.setVisible(true);
 	
@@ -955,16 +945,9 @@ function initMap() {
    	
    	infowindow = new google.maps.InfoWindow();
    	marker = new google.maps.Marker({
-   	    map: map,
-   	    anchorPoint: new google.maps.Point(0, -29)
+   	    map: map
    	});
 
-   	marker.setIcon(({
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(35, 35)
-    }));
     marker.setPosition(map.center);
    	marker.setVisible(true);
 }

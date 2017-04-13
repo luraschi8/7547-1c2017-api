@@ -171,8 +171,7 @@ $('#tablita tbody').on('click', '#marcar', function (e) {
 		}
 	}
 	var marker = new google.maps.Marker({
-         position: myLatlng,
-         title: 'Hello World!'
+         position: myLatlng
        });
        marker.setMap(map);
 	map.setCenter(marker.getPosition());

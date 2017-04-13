@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<h1 class="page-header atraction-new-page-header">Nueva atracción</h1>
+	<h1 class="page-header atraction-new-page-header" style="margin-left: 5rem">Nueva atracción</h1>
 	
 	<form:form class="form-horizontal maxwid" id ="formNuevo" name="formNuevo" action="atraccionNuevoValidar" method="post" commandName="atraccion" enctype="multipart/form-data">
 	
@@ -573,7 +573,6 @@ $(document).ready(function() {
         var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
             map: map,
-            anchorPoint: new google.maps.Point(0, -29)
         });
 
         autocomplete.addListener('place_changed', function() {
@@ -592,13 +591,6 @@ $(document).ready(function() {
                 map.setCenter(place.geometry.location);
                 map.setZoom(17);  // Why 17? Because it looks good.
             }
-            marker.setIcon(/** @type {google.maps.Icon} */({
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(35, 35)
-            }));
             marker.setPosition(place.geometry.location);
             marker.setVisible(true);
 

@@ -17,13 +17,19 @@ body {
     display: none;
 }
 
-.-page-header {
+.page-header {
 	 margin-left: 5rem;
+}
+
+.panel-group {
+	margin-left: 5rem;
+	margin-right: 5rem;
 }
 
 .view-city-page-header {
 	 margin-top: -15rem;
 	 margin-bottom: 2rem;
+	 margin-left: 5rem;
 }
 
 .input-and-image-group {
@@ -199,10 +205,6 @@ body {
 	background-color: #909090;
 }
 
-.atraction-new-page-header {
-	margin-left: 5rem;
-}
-
 .atraction-new-form {
 	margin-left: 5rem;
 }
@@ -214,7 +216,7 @@ body {
 }
 
 .new-atraction-right-block {
-	margin-top: 2rem;
+	margin-top: 4rem;
 }
 
 .new-atraction-audio-group {
