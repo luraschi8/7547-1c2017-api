@@ -23,12 +23,12 @@
 				<div class="name-group">
 					<div>
 						<form:label class="name-label" path="nombre">Nombre</form:label>
-					    <form:input id="city" class="name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
+					    <form:input id="city" maxlength="50" class="name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
 					</div>
 					
 					<div>
 						<form:label class="name-label" path="pais">País</form:label>
-						<form:input id="pais" class="name-box" type="text" name="pais" path="pais" required="required" placeholder="Ingrese el país al que pertenece"/>
+						<form:input id="pais" maxlength="50" class="name-box" type="text" name="pais" path="pais" required="required" placeholder="Ingrese el país al que pertenece"/>
 					</div>
 					
 					<form:input id="latitud" type="hidden" name="latitud" path="latitud"/>
