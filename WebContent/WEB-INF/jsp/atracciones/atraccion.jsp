@@ -25,7 +25,7 @@
 		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
 			
 			<!-- Bloque izquierdo (Información principal, Plano, Galería y Audioguia) -->	
-			<div style="float:left">
+			<div style="float:left; margin-top:-0.8rem">
 				
 				<!-- Información principal -->
 				<div class="atraction-main-information">

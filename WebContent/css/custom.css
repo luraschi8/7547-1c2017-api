@@ -21,9 +21,18 @@ body {
 	 margin-left: 5rem;
 }
 
-.panel-group {
+.cities-panel-group {
 	margin-left: 5rem;
 	margin-right: 5rem;
+}
+
+.panel-group {
+	margin-right: 5rem;
+}
+
+.new-city-alert-message {
+	width: 50rem;
+	margin-left: 17.4rem;
 }
 
 .view-city-page-header {
@@ -84,8 +93,8 @@ body {
 }
 
 #map {
-    width: 27rem;
-    height: 27rem;
+    width: 27.7rem;
+    height: 27.7rem;
 }
 
 .map-new-city {
@@ -154,12 +163,25 @@ body {
 	margin-top: 20rem;
 }
 
+.view-city-image {
+	margin-bottom: 1rem;
+}
+
+.view-city-information-block {
+	margin-top: 18rem;
+}
+
+.view-city-wrong-image {
+	margin-left: 5rem;
+	margin-right: 5rem;
+}
+
 .view-city-image-box {
     display: block;
-    margin: 0 auto;
     margin-top: 3rem;
+    margin-left: 5rem;
+	margin-right: 5rem;
 	height: 18.75rem;
-	width: 90%;
 	background-color: #909090;
 }
 
@@ -170,6 +192,8 @@ body {
 
 .view-city-map {
 	margin-left: 5rem;
+	height: 33rem;
+	width: 33rem;
 }
 
 .view-city-btn-final {
@@ -329,5 +353,5 @@ body {
 .view-city-image-box .btn-get-file {
 	position: relative;
     top: -19rem;
-    left: 115rem;
+    left: 117.5rem;
 }

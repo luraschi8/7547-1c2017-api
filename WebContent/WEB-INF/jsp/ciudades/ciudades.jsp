@@ -20,7 +20,7 @@
 		Ciudades
 	</h1>
 
-<div class="panel-group">
+<div class="cities-panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-body">
 			<table id="tablita" class="display order-column" cellspacing="0" width="100%">
