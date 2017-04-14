@@ -170,14 +170,4 @@ public class AtraccionControlador {
 		atraccionDao.modificar(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
 	}
-	
-	@RequestMapping(path="/planoAtraccion", method=RequestMethod.GET)
-	public void planoAtraccion(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) 
-	          throws ServletException, IOException {
-		Atraccion atraccion = atraccionDao.get(id);
-		byte[] planoAtraccion = atraccion.getPlano();       
-	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-	    response.getOutputStream().write(planoAtraccion);
-	    response.getOutputStream().close();
-	}
 }

@@ -28,7 +28,7 @@ import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 
 @Controller
-public class ImagenControlador {
+public class MultimediaControlador {
 
 	@Autowired
 	private ICiudadDAO ciudadDao;
@@ -45,6 +45,14 @@ public class ImagenControlador {
 		Ciudad ciudad = ciudadDao.get(id);        
 	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 	    response.getOutputStream().write(ciudad.getImagen());
+	    response.getOutputStream().close();
+	}
+	
+	@RequestMapping(path="/planoAtraccion", method=RequestMethod.GET)
+	public void planoAtraccion(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) 
+	          throws ServletException, IOException {        
+	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+	    response.getOutputStream().write(atraccionDao.get(id).getPlano());
 	    response.getOutputStream().close();
 	}
 	

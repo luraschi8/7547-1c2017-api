@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.io.IOUtils;
@@ -61,9 +63,17 @@ public class AtraccionControladorRest {
 	}
 	
 	@RequestMapping(path="/atraccion/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, AtraccionDTO> getAtraccion(@PathVariable long idAtraccion) {
+	public HashMap<String, AtraccionDTO> getAtraccion(HttpServletRequest request, HttpServletResponse response,
+								@PathVariable long idAtraccion) {
 		HashMap<String, AtraccionDTO> lista = new HashMap<String, AtraccionDTO>();
 		Atraccion a = atraccionDao.get(idAtraccion);
+		System.out.println("HEELLLOOOOOOOOOOOOOOOOOOOOO");
+		System.out.println(request.getContextPath());
+		System.out.println(request.getLocalAddr());
+		System.out.println(request.getRequestURL());
+		String url = request.getRequestURL().toString();
+		System.out.println("IS THIS IT: " + url.substring(0, url.indexOf("atraccion")));
+		url = url.substring(0, url.indexOf("atraccion"));
 		AtraccionDTO dto = new AtraccionDTO();
 		dto.setNombre(a.getNombre());
 		dto.setHorario(a.getHorario());
@@ -72,16 +82,20 @@ public class AtraccionControladorRest {
 		dto.setLatitud(a.getLatitud());
 		dto.setLongitud(a.getLongitud());
 		dto.setRecorrible(a.getRecorrible());
-		dto.setAudioEN(DatatypeConverter.printBase64Binary(a.getAudioEN()));
-		dto.setAudioES(DatatypeConverter.printBase64Binary(a.getAudioES()));
+		if (a.getAudioEN() != null) {
+			dto.setAudioEN(url + "audioAtraccion?id=" + a.getId());
+		}
 		if (a.getPlano() != null) {
-			dto.setPlano(DatatypeConverter.printBase64Binary(a.getPlano()));
+			dto.setPlano(url + "planoAtraccion?id=" + a.getId());
 		}
 		List<String> imagenes = new ArrayList<>();
 		for (ImagenAtraccion i : a.getListaImagenes()) {
-			imagenes.add(DatatypeConverter.printBase64Binary(i.getImagen()));
+			imagenes.add(url + "imagenAtraccion?id=" + i.getId());
 		}
 		dto.setListaImagenes(imagenes);
+		if (a.getVideo() != null) {
+			dto.setVideo(url + "videoAtraccion?id=" + a.getId());
+		}
 		lista.put(DATA, dto);
 		return lista;
 	}
