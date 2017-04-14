@@ -2,6 +2,7 @@
 
  html {
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     font-size: 10px;
@@ -9,6 +10,7 @@
 
 body {
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
 }
@@ -21,24 +23,44 @@ body {
 	 margin-left: 5rem;
 }
 
+.view-city-page-header {
+	margin-left: 3%;
+	margin-bottom: 2%;
+}
+
+.form-horizontal {
+	height: 27%;
+	width: 100%;
+}
+
 .cities-panel-group {
-	margin-left: 5rem;
-	margin-right: 5rem;
+	margin-left: 3%;
+	margin-right: 3%;
+	overflow: hidden;
 }
 
 .panel-group {
-	margin-right: 5rem;
+	width: 100%;
+	height: 100%;
+	display:inline-block;
+	overflow: auto;
+}
+
+.city-panel-buttons {
+	text-align:center;
+	display: block;
+	width: 100%;
+	height: 0%;
+}
+
+.panel-body {
+	width: 100%;
+	height: 100%;
 }
 
 .new-city-alert-message {
 	width: 50rem;
 	margin-left: 17.4rem;
-}
-
-.view-city-page-header {
-	 margin-top: -15rem;
-	 margin-bottom: 2rem;
-	 margin-left: 5rem;
 }
 
 .input-and-image-group {
@@ -68,7 +90,7 @@ body {
 .image-group {
 	margin-top: 3rem;
 	display: inline-block;	
-  		vertical-align: top;
+  	vertical-align: top;
 }
 
 .image-label {
@@ -163,48 +185,56 @@ body {
 	margin-top: 20rem;
 }
 
-.view-city-image {
-	margin-bottom: 1rem;
-}
-
 .view-city-information-block {
-	margin-top: 18rem;
+	height: 50%;
+	width: 100%;
 }
 
 .view-city-wrong-image {
-	margin-left: 5rem;
-	margin-right: 5rem;
+	margin-top: 1%;
+	margin-left: 3%;
+	margin-right: 3%;
 }
 
 .view-city-image-box {
     display: block;
-    margin-top: 3rem;
-    margin-left: 5rem;
-	margin-right: 5rem;
-	height: 18.75rem;
+    margin-top: 3%;
+    margin-left: 3%;
+	margin-right: 3%;
+	height: 100%;
+	width: 94%;
 	background-color: #909090;
 }
 
 .view-city-panel {
-	margin-right: 5rem;
-	width: 90rem;
+	float: right;
+	width: 66%;
+	margin-left: 0%;
+	margin-right: 3%;
+	left: 0;
+	right: 0;
+}
+
+.view-city-board {
+	width: 100%;
+	height: 100%;
 }
 
 .view-city-map {
-	margin-left: 5rem;
-	height: 33rem;
-	width: 33rem;
+	float:left;
+	height: 100%;
+	width: 25%;
 }
 
 .view-city-btn-final {
-	margin-top: 1rem;
-	margin-bottom: 3rem;
+	margin-top: 7%;
+	margin-bottom: 1.5%;
 }
 
 .btn-ver {
 	display: block;
 	float: left;
-	width: 41.48rem;
+	width: 46%;
 	background-color: #F0F0F0;
     border-radius: 2px;
 }
@@ -212,7 +242,13 @@ body {
 .btn-agregar {
 	display: block;
 	float: left;
+	width: 4%;
 	border-radius: 2px;
+}
+
+.form-city-add-atraction {
+	width: 100%;
+	height: 100%;
 }
 
 .atraction-label {
@@ -352,8 +388,8 @@ body {
 
 .view-city-image-box .btn-get-file {
 	position: relative;
-    top: -19rem;
-    left: 117.5rem;
+    top: -100%;
+    left: 94.75%;
 }
 
 .atraction-popup-close {
