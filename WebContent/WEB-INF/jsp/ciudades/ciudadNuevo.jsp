@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<h1 class="page-header">Nueva ciudad</h1>
+	<h1 class="page-header" style="margin-left:5rem">Nueva ciudad</h1>
 
 	<form:form class="form-horizontal maxwid" id ="formNuevo" name="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad" enctype="multipart/form-data">
 		<div class="input-and-image-group" style="width: 100%; overflow: hidden;">	
@@ -23,12 +23,12 @@
 				<div class="name-group">
 					<div>
 						<form:label class="name-label" path="nombre">Nombre</form:label>
-					    <form:input id="city" class="name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
+					    <form:input id="city" maxlength="50" class="name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
 					</div>
 					
 					<div>
 						<form:label class="name-label" path="pais">País</form:label>
-						<form:input id="pais" class="name-box" type="text" name="pais" path="pais" required="required" placeholder="Ingrese el país al que pertenece"/>
+						<form:input id="pais" maxlength="50" class="name-box" type="text" name="pais" path="pais" required="required" placeholder="Ingrese el país al que pertenece"/>
 					</div>
 					
 					<form:input id="latitud" type="hidden" name="latitud" path="latitud"/>
@@ -50,32 +50,32 @@
 					</div>
 					
 					<div class="alert-message">
-						<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
+						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeImagenIncorrectaError" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 						</div>
 						
-						<div class="alert alert-warning fade in" id="mensajeNombreRepetido" style="display: none;">
+						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeNombreRepetido" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> La ciudad seleccionada ya se encuentra registrada, seleccione otra.
 						</div>
 						
-						<div class="alert alert-warning fade in" id="mensajeNombreVacio" style="display: none;">
+						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeNombreVacio" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> No se ha seleccionado ninguna ciudad.
 						</div>
 						
-						<div class="alert alert-warning fade in" id="mensajePaisVacio" style="display: none;">
+						<div class="alert alert-warning fade in new-city-alert-message" id="mensajePaisVacio" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> No se ha seleccionado ningún país.
 						</div>
 						
-						<div class="alert alert-warning fade in" id="mensajeUbicacionVacia" style="display: none">
+						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeUbicacionVacia" style="display: none">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 						</div>
 				
-						<div class="alert alert-warning fade in" id="mensajeNombreIncorrecto" style="display: none;">
+						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeNombreIncorrecto" style="display: none;">
  						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
  						 	<strong>¡Error!</strong> La ciudad seleccionada es incorecta.
  						</div>
@@ -90,7 +90,7 @@
 <form:form id="formAtras" action="ciudades" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
-	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
+	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Guardar" />
 </div>
 <div class="wait"></div>
 	

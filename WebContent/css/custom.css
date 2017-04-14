@@ -18,7 +18,27 @@ body {
 }
 
 .page-header {
-	 margin-left: 2rem;
+	 margin-left: 5rem;
+}
+
+.cities-panel-group {
+	margin-left: 5rem;
+	margin-right: 5rem;
+}
+
+.panel-group {
+	margin-right: 5rem;
+}
+
+.new-city-alert-message {
+	width: 50rem;
+	margin-left: 17.4rem;
+}
+
+.view-city-page-header {
+	 margin-top: -15rem;
+	 margin-bottom: 2rem;
+	 margin-left: 5rem;
 }
 
 .input-and-image-group {
@@ -73,8 +93,8 @@ body {
 }
 
 #map {
-    width: 27rem;
-    height: 27rem;
+    width: 27.7rem;
+    height: 27.7rem;
 }
 
 .map-new-city {
@@ -86,7 +106,6 @@ body {
 	margin-left: 1.8rem;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
-	width: 14rem;
 }
 
 .btn-final {
@@ -108,10 +127,16 @@ body {
 .atraction-alert { 
 	margin-top: 1rem;
 	margin-bottom: -0.5rem;
+	width: 50rem;
+}
+
+.atraction-gallery-alert {
+	margin-top: 20rem;
 }
 
 .atraction-alert-already-exists {
 	margin-top: 3rem;
+	margin-left: 5rem;
 	margin-right: 5rem;
 }
 
@@ -121,20 +146,42 @@ body {
 
 .atraction-alert-no-location {
 	margin-top: 1rem;
-	margin-right: 13rem;
+	margin-left: 8rem;
+	width: 54rem;
+}
+
+.atraction-alert-far-location {
+	margin-left: 8rem;
+	width: 54rem;
+}
+
+.view-atraction-map-group-error-messages {
+	margin-top: 1rem;
 }
 
 .alert-message { 
 	margin-top: 20rem;
 }
 
+.view-city-image {
+	margin-bottom: 1rem;
+}
+
+.view-city-information-block {
+	margin-top: 18rem;
+}
+
+.view-city-wrong-image {
+	margin-left: 5rem;
+	margin-right: 5rem;
+}
+
 .view-city-image-box {
     display: block;
-    margin: 0 auto;
     margin-top: 3rem;
-    margin-bottom: -19rem;
+    margin-left: 5rem;
+	margin-right: 5rem;
 	height: 18.75rem;
-	width: 90%;
 	background-color: #909090;
 }
 
@@ -145,6 +192,8 @@ body {
 
 .view-city-map {
 	margin-left: 5rem;
+	height: 33rem;
+	width: 33rem;
 }
 
 .view-city-btn-final {
@@ -180,24 +229,40 @@ body {
 	background-color: #909090;
 }
 
-.atraction-new-page-header {
-	margin-left: 5rem;
-}
-
 .atraction-new-form {
 	margin-left: 5rem;
 }
 
 .view-atraction-panel {
-	margin-top: 3.4rem;
 	margin-right: 5rem;
+	margin-top: 5rem;
 	width: 70rem;
+}
+
+.new-atraction-right-block {
+	margin-top: 4rem;
+}
+
+.new-atraction-audio-group {
+	margin-top: 1rem;
+}
+
+.view-atraction-points-of-interest-panel {
+	margin-top: 1rem;
+}
+
+.view-atraction-comments-panel {
+	margin-top: 3.4rem;
+}
+
+.atraction-right-block {
+	margin-right: 5rem;
 }
 
 .atraction-blueprints-box .atraction-get-blueprints {
 	position: relative;
     top: -18rem;
-    left: 43rem;
+    left: 45rem;
 }
 
 .atraction-bluprints-and-chart {
@@ -207,7 +272,7 @@ body {
 .btn-ver-puntos-y-obras {
 	display: block;
 	float: left;
-	width: 31.5rem;
+	width: 66.4rem;
 	background-color: #F0F0F0;
     border-radius: 2px;
 }
@@ -221,8 +286,7 @@ body {
 #atraction-map {
     width: 54rem;
     height: 30rem;
-    margin-top: 1rem;
-    margin-right: 13rem;
+    margin-left: 7.5rem;
 }
 
 .atraction-map-controls {
@@ -270,4 +334,24 @@ body {
 	position: relative;
     top: -10.7rem;
     left: 17.5rem;
+}
+
+.view-atraction-map-group {
+	margin-top: 1rem;
+	margin-left: 0.6rem;
+	margin-bottom: 33rem;
+}
+
+#edit-coordinates {
+	margin-bottom: 0.5rem;
+}
+
+.atraction-map-editing-buttons {
+	margin-left: 1rem;
+}
+
+.view-city-image-box .btn-get-file {
+	position: relative;
+    top: -19rem;
+    left: 117.5rem;
 }

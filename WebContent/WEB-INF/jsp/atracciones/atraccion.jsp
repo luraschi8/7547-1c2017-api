@@ -6,27 +6,29 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<jsp:include page="../template/importacion.jsp"></jsp:include>
+
 <html>
 
 <head>
+<jsp:include page="../template/importacion.jsp"></jsp:include>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Trips - ${atraccion.nombre}</title>
 </head>
 
 <body>
 
-	<h1 class="page-header atraction-new-page-header">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
+	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
 	
 	<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
 		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
 		
-		<div  class="atraction-new-form"> 
-		
-			<!-- Información principal y mapa -->
-			<div class="atraction-main-information-and-map" style="width: 100%; overflow: hidden;">	
+		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
+			
+			<!-- Bloque izquierdo (Información principal, Plano, Galería y Audioguia) -->	
+			<div style="float:left; margin-top:-0.8rem">
+				
 				<!-- Información principal -->
-				<div class="atraction-main-information" style="float:left">
+				<div class="atraction-main-information">
 					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
 					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.latitud}"/>
 					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.longitud}"/>
@@ -37,12 +39,21 @@
 					<div>
 						<form:label class="atraction-label atraction-main-information-label" path="nombre">Nombre</form:label>
 						<input type="hidden" id="nombre" name="nombre" value="${atraccion.nombre}"/>
-						<input type="button" id="edit-name" class="btn-edit-main-information" onclick="editField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)" value="Editar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-name" onclick="editField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 					</div>
 					<div>
-						<p id="nombreEditado" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
-						<input type="button" style="display:none;" id="ok-nombre" class="btn-edit-main-information"  onclick="saveField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)" value="Aceptar">
-						<input type="button" style="display:none;" id="cancel-nombre" class="btn-edit-main-information" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')" value="Cancelar">
+						<div>
+							<p id="nombreEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
+							<textarea onkeydown="calculateMaxLength('#nombreEditadoTextarea', MAX_NOMBRE_ATRACCION)" style="display:none" rows="1" id="nombreEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.nombre}">${atraccion.nombre}</textarea>
+						</div>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-nombre" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-nombre" onclick="saveField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
@@ -53,15 +64,24 @@
 					<div>
 						<form:label class="atraction-label atraction-description-label" path="descripcion">Descripción</form:label>
 						<input type="hidden" id="descripcion" name="descripcion" value="${atraccion.descripcion}"/>
-						<input type="button" id="edit-description" class="btn-edit-main-information" onclick="editField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)" value="Editar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-description" onclick="editField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 					</div>
 					<div>
-					    <p id="descripcionEditada" class="atraction-box atraction-name-box" path="descripcion" contenteditable="false" value="${atraccion.descripcion}">${atraccion.descripcion}</p>
-						<input type="button" style="display:none;" id="ok-descripcion" class="btn-edit-main-information"  onclick="saveField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)" value="Aceptar">
-						<input type="button" style="display:none;" id="cancel-descripcion" class="btn-edit-main-information" onclick="cancelField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion')" value="Cancelar">
+						<div>
+						    <p id="descripcionEditada" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="descripcion" contenteditable="false" value="${atraccion.descripcion}">${atraccion.descripcion}</p>
+							<textarea onkeydown="calculateMaxLength('#descripcionEditadaTextarea', MAX_DESCRIPCION_ATRACCION)" style="display:none" rows="4" id="descripcionEditadaTextarea" class="atraction-box atraction-name-box" value="${atraccion.descripcion}">${atraccion.descripcion}</textarea>
+						</div>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-descripcion" onclick="cancelField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion')">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-descripcion" onclick="saveField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none; width:54rem">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> La descripción no puede estar vacía. Se ha dejado la última descripción válida.
 					</div>
@@ -69,177 +89,190 @@
 					<div>
 						<form:label class="atraction-label atraction-schedule-label" path="horario">Horario</form:label>
 						<input type="hidden" id="horario" name="horario" value="${atraccion.horario}"/>
-						<input type="button" id="edit-horario" class="btn-edit-main-information" onclick="editField('#horarioEditado', 'ok-horario', 'cancel-horario', null, false)" value="Editar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-horario" onclick="editField('#horarioEditado', 'ok-horario', 'cancel-horario', null, false)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 					</div>
 					<div>
-						<p id="horarioEditado" class="atraction-box atraction-name-box" path="horario" contenteditable="false" value="${atraccion.horario}">${atraccion.horario}</p>
-						<input type="button" style="display:none;" id="ok-horario" class="btn-edit-main-information"  onclick="saveField('#horarioEditado', 'ok-horario', 'cancel-horario', null, false)" value="Aceptar">
-						<input type="button" style="display:none;" id="cancel-horario" class="btn-edit-main-information" onclick="cancelField('#horarioEditado', 'ok-horario', 'cancel-horario')" value="Cancelar">
+						<div>
+							<p id="horarioEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="horario" contenteditable="false" value="${atraccion.horario}">${atraccion.horario}</p>
+							<textarea onkeydown="calculateMaxLength('#horarioEditadoTextarea', MAX_HORARIO_ATRACCION)" style="display:none" rows="3" id="horarioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.horario}">${atraccion.horario}</textarea>
+						</div>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-horario" onclick="cancelField('#horarioEditado', 'ok-horario', 'cancel-horario')">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-horario" onclick="saveField('#horarioEditado', 'ok-horario', 'cancel-horario', null, false)">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					
 					<div>
 						<form:label class="atraction-label atraction-cost-label" path="precio">Precio</form:label>
 						<input type="hidden" id="precio" name="precio" value="${atraccion.precio}"/>
-						<input type="button" id="edit-precio" class="btn-edit-main-information" onclick="editField('#precioEditado', 'ok-precio', 'cancel-precio', null, false)" value="Editar">
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-precio" onclick="editField('#precioEditado', 'ok-precio', 'cancel-precio', null, false)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 					</div>
 					<div>
-						<p id="precioEditado" class="atraction-box atraction-name-box" path="precio" contenteditable="false" value="${atraccion.precio}">${atraccion.precio}</p>
-						<input type="button" style="display:none;" id="ok-precio" class="btn-edit-main-information"  onclick="saveField('#precioEditado', 'ok-precio', 'cancel-precio', null, false)" value="Aceptar">
-						<input type="button" style="display:none;" id="cancel-precio" class="btn-edit-main-information" onclick="cancelField('#precioEditado', 'ok-precio', 'cancel-precio')" value="Cancelar">
+						<div>
+							<p id="precioEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="precio" contenteditable="false" value="${atraccion.precio}">${atraccion.precio}</p>
+							<textarea onkeydown="calculateMaxLength('#precioEditadoTextarea', MAX_PRECIO_ATRACCION)" style="display:none" rows="3" id="precioEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.precio}">${atraccion.precio}</textarea>
+						</div>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-precio" onclick="cancelField('#precioEditado', 'ok-precio', 'cancel-precio')">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-precio" onclick="saveField('#precioEditado', 'ok-precio', 'cancel-precio', null, false)">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					
 					<div>
 						<form:label id="recorrible" name="recorrible" class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
-							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px">Sí
-							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" style="margin: 4px; margin-left: 15px;">No
+							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show();">Sí
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide();">No
 							</div>
 						</form>
 					</div>
 				</div>
-		
-				<!-- Mapa -->
-				<div style="float:right">
-					<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
-					<div id="atraction-map"></div> 
-					
-					<input type="button" id="edit-coordinates" class="btn-edit-main-information" onclick="editCoordinates()" value="Editar ubicación">
-					<input type="button" style="display:none;" id="ok-coordinates" class="btn-edit-main-information"  onclick="saveCoordinates()" value="Aceptar">
-					<input type="button" style="display:none;" id="cancel-coordinates" class="btn-edit-main-information" onclick="cancelEditingCoordinates()" value="Cancelar">
-					
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
-					</div>
-					
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
-					</div>
-					
-				</div>
-			</div>
-	
-			<!-- Plano y tabla -->
-			<div class="atraction-bluprints-and-chart" style="width: 100%; overflow: hidden;">
 			
 				<!-- Plano -->
-				<div class="atraction-blueprints-group" style="float:left">
+				<div id="blueprints">
 					<div>
 						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
 					</div>
 					<div class="atraction-blueprints-box" style="float:left">
-						<img id="plano" src="${pageContext.request.contextPath}/planoAtraccion?id=${atraccion.id}" style="width:100%; height:100%">
-						<input type="button" id="atraction-get-blueprints" class="btn btn-default atraction-get-blueprints" value="Editar">
+						<img id="plano" style="width:100%; height:100%">
+						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="atraction-get-blueprints">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
 						<input id="planoCambiado" name="planoCambiado" type="hidden" value="0">
 						<input type="file" name="archivoPlano" id="archivoPlano"/>
 					</div>
 	
 					<div class="alert-message">
-						<div class="alert alert-warning fade in" id="mensajePlanoNecesario" style="display: none;">
+						<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
 						</div>
-						<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
+						<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 						</div>
 					</div>
-					
-					
-					
-					
-					
-					<!-- Galería -->
+				</div>
+				
+				<!-- Galería -->
+				<div>
 					<div>
+						<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
+					</div>
+					<div id ="container" class="atraction-gallery-box" style="float:left">
+						<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
+						<video id="videoGaleria" style="width:100%; height:100%;display:none" controls>
+						</video>
+						<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&#10094;</button>
+						<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
 					
-						<div>
-							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
-						</div>
-						<div id ="container" class="atraction-gallery-box" style="float:left">
-							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
-							<video id="videoGaleria" style="width:100%; height:100%;display:none" controls>
-							</video>
-							<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&#10094;</button>
-							<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
-						
-							<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
-						        
-						    <!--<input type="file" multiple name="archivoGaleria" id="archivoGaleria"/>-->
-						</div>
-						
-					
-						
+						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeHayVideo" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
+					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente. Sólo se puede seleccionar uno.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeCincoArchivos" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
+					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar más.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoImagen" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
+					 	<strong>&iexclError!</strong> La imagen no puede pesar más de 50KB.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoVideo" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
+					 	<strong>&iexclError!</strong> El video no puede pesar más de 10MB.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
+					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeUnaImagen" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
 					</div>
+				</div>
+				
+				<!-- Audioguía -->
+				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
+				<div>
+					<!-- Reproducir audioguía -->
+					<div style="float:left">
+						<audio id="audio" controls>
+						    <source type="audio/mpeg">
+						</audio> 
+					</div>
+					
+					<!-- Botón agregar audioguía -->
+					<div style="text-align:center; float:right;">
+						<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Editar audioguía">
+						<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
+					</div>
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+				</div>			
+			</div>
 						
+			<!-- Bloque derecho (Mapa, Puntos de interés y Reseñas) -->
+			<div class="atraction-right-block" style="float:right">
+				<!-- Mapa -->
+				<div class="view-atraction-map-group">
+					<div style="float:left">
+						<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
+						<div id="atraction-map"></div>
+					</div>
 					
-					
-					
-					<!-- Audioguía -->
-					<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
-					<div>
-						<!-- Reproducir audioguía -->
-						<div style="float:left">
-							<audio id="audio" controls>
-							    <source type="audio/mpeg">
-							</audio> 
+					<div class="atraction-map-editing-buttons" style="float:left">
+						<div>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-coordinates" onclick="editCoordinates()">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
 						</div>
 						
-						<!-- Botón agregar audioguía -->
-						<div style="text-align:center; float:right;">
-							<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Editar audioguía">
-							<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
+						<div>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-coordinates" onclick="cancelEditingCoordinates()">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-coordinates" onclick="saveCoordinates()">
+								<span class="glyphicon glyphicon-ok"></span>
+							</button>
 						</div>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
-						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
-						</div>
-						
+					
 				</div>
 				
-				
-	
+				<div>
+					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
+						</div>
 						
-				<!-- Tabla puntos de interés y obras -->
-				<div class="panel panel-primary view-atraction-panel" style="float:right">
+						<div class="alert alert-warning fade in atraction-alert-far-location" id="mensajeUbicacionLejana" style="display: none">
+						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
+						</div>
+				</div>
+				
+				<div class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
-						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés" />
+						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
 						
 						<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
 							<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" />
-						</form>
-						
-						<input id="botonObras" class="btn btn-ver-puntos-y-obras btn-obras" type="button" value="Obras" />
-						
-						<form class="form-horizontal maxwid" id ="formAgregarObra" name="formAgregarObra" action="obraNuevo" method="post">
-							<input id="botonAgregarObra" class="btn btn-agregar-puntos-y-obras btn-nueva-obra" type="button" value="+" />
 						</form>
 					</div>
 					
@@ -259,7 +292,7 @@
 				</div>
 				
 				<!-- Tabla reseñas (comentarios) -->
-				<div class="panel panel-primary view-atraction-panel" style="float:right">
+				<div class="panel panel-primary view-atraction-panel view-atraction-comments-panel">
 					<div style="text-align:center; font-size:110%">
 						<p>Reseñas</p>
 					</div>
@@ -279,49 +312,64 @@
 					</div>
 				</div>				
 			</div>
+		</div>
 			
-			<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
-			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
-			</div>
-			
+		<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
+		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
 		</div>
 	</form:form>
 
 <form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
-	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
-	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
+	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
+	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 </div>
 
 
 <!-- Definición de constantes -->
 <script>
-	const MAX_NOMBRE = "50";
-	const MAX_DESCRIPCION = "250";
-	const MAX_HORARIO = "50";
-	const MAX_PRECIO = "50";
-	$("#nombreEditado").attr("maxlength", MAX_NOMBRE);
-	$("#descripcionEditada").attr("maxlength", MAX_DESCRIPCION);
-	$("#horarioEditado").attr("maxlength", MAX_HORARIO);
-	$("#precioEditado").attr("maxlength", MAX_PRECIO);
+const MAX_NOMBRE_ATRACCION = "50";
+const MAX_DESCRIPCION_ATRACCION = "250";
+const MAX_HORARIO_ATRACCION = "50";
+const MAX_PRECIO_ATRACCION = "50";
+$("#nombreEditadoTextarea").attr("maxlength", MAX_NOMBRE_ATRACCION);
+$("#descripcionEditadaTextarea").attr("maxlength", MAX_DESCRIPCION_ATRACCION);
+$("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO_ATRACCION);
+$("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
 
-	if (${atraccion.recorrible}) {
-		$("#es-recorrible").attr("checked", "checked");
-	} else {
-		$("#no-es-recorrible").attr("checked", "checked");
-	}
+if (${atraccion.recorrible}) {
+	$("#es-recorrible").attr("checked", "checked");
+	$("#blueprints").show();
+} else {
+	$("#no-es-recorrible").attr("checked", "checked");
+	$("#blueprints").hide();
+}
 </script>
 
 <script>
+var far_away = false;
+function calculateMaxLength(field, max) {
+	var count = 0;
+	for (var i = 0; i < max; i++) {
+		if ($(field).val()[i] == '\n') {
+			count++;
+		}
+	}
+	$(field).attr("maxlength", max - count);
+}
+
 function editField(field, ok, cancel, vacio, obligatorio) {
+	$(field).hide();
+	var new_field = $(field).attr("id") + "Textarea";
+	document.getElementById(new_field).style.display = "inline-block";
+	document.getElementById(new_field).value = $(field).html();
 	if (obligatorio) {
 		document.getElementById(vacio).style.display = "none";
 	}
 	if (!$(field).val()) {
 		$(field).val($(field).html());
 	}
-    $(field).attr("contenteditable", "true").focus();
     displayOkAndCancelButtons(ok, cancel);
 }
 
@@ -330,32 +378,38 @@ function displayOkAndCancelButtons(ok, cancel) {
     document.getElementById(cancel).style.display = "inline-block";
 }
 
+function hideTextarea(field) {
+    var new_field = $(field).attr("id") + "Textarea";
+	document.getElementById(new_field).style.display = "none";
+}
+
 function hideOkAndCancelButtons(ok, cancel) {
 	document.getElementById(ok).style.display = "none";
     document.getElementById(cancel).style.display = "none";
 }
 
-function saveField(field, ok, cancel, vacio, obligatorio) {
+function hideEdition(field, ok, cancel) {
+	hideTextarea(field);
 	hideOkAndCancelButtons(ok, cancel);
-	if (($(field).html()) || (!obligatorio)) {
-		$(field).val($(field).html());
+}
+
+function saveField(field, ok, cancel, vacio, obligatorio) {
+	hideEdition(field, ok, cancel);
+	var new_field = "#" + $(field).attr("id") + "Textarea";
+	if (($(new_field).val()) || (!obligatorio)) {
+		$(field).html($(new_field).val());
 	} else {
 		if (obligatorio) {
 			document.getElementById(vacio).style.display = "block";
-			$(field).html($(field).val());
 		}
 	}
-	var max = $(field).attr("maxlength");
-	$(field).text(function(index, currentText) {
-	    return currentText.substr(0, max);
-	});
-	$(field).attr("contenteditable", "false");
+	$(field).show();
 }
 
 function cancelField(field, ok, cancel) {
-	hideOkAndCancelButtons(ok, cancel);
+	hideEdition(field, ok, cancel);
     $(field).html($(field).val());
-	$(field).attr("contenteditable", "false");
+	$(field).show();
 }
 
 function updateForm() {
@@ -391,20 +445,30 @@ function validarElemento(elemento, mensaje, hayError) {
 	return hayError;
 }
 
+function validarPlano(plano, mensaje, hayError) {
+	if ((document.getElementById(plano).src == "http://:0/") && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById(mensaje).style.display = 'none';
+	}
+	return hayError;
+}
+
 function validarAtraccionRepetida() {
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
 	
 	if (document.getElementById('es-recorrible').checked) {
-		hayError = validarElemento('archivoPlano', 'mensajePlanoNecesario', hayError);
+		hayError = validarPlano('plano', 'mensajePlanoNecesario', hayError);
 	} else {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
-
+	
 	if (hayError == 1) {
 		return;
-	} 
+	}
 
 	var ciudad = {
 		"id": document.formModificar.idCiudad.value,
@@ -414,7 +478,6 @@ function validarAtraccionRepetida() {
 		"id": document.formModificar.id.value,
 		"nombre": document.formModificar.nombre.value
 	};
-	
 	$.ajax({
 		url : "validarAtraccion",
 		type : "POST",
@@ -425,7 +488,31 @@ function validarAtraccionRepetida() {
 		success: function (data) {
 			if (data.existe == false) {
 				document.formModificar.recorrible.value = $("input[name='recorrible']:checked").val();
-				document.getElementById("formModificar").submit();
+				if (document.formModificar.recorrible.value == 0) {
+					document.getElementById("archivoPlano").src = "//:0";
+					document.getElementById("plano").src = "//:0";
+					document.getElementById("planoCambiado").value = "1";
+				}
+				if (far_away) {
+				    bootbox.confirm({
+			    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
+			    	    buttons: {
+			    	        confirm: {
+			    	            label: 'Sí'
+			    	        },
+			    	        cancel: {
+			    	            label: 'No'
+			    	        }
+			    	    },
+			    	    callback: function(result) {
+					        if (result) {
+					        	document.getElementById("formModificar").submit();
+					        }
+			    	    }
+				    });
+			  	} else {
+			  		document.getElementById("formModificar").submit();
+				}
 			} else {
 				document.getElementById("mensajeNombreRepetido").style.display = 'block';
 			}
@@ -435,16 +522,22 @@ function validarAtraccionRepetida() {
 </script>
 
 
-
-
 <!-- Plano -->
 <script>
 $(document).ready(function() {
 	document.getElementById('atraction-get-blueprints').onclick = function() {
 		document.getElementById('archivoPlano').addEventListener('change', readURL, true);
+		document.getElementById('archivoPlano').src = "//:0";
 		var fileButton = document.getElementById('archivoPlano');
 		fileButton.click();
 	};
+
+	if (document.getElementById('es-recorrible').checked) {
+		document.getElementById('plano').src = "${pageContext.request.contextPath}/planoAtraccion?id=${atraccion.id}";
+	} else {
+		document.getElementById('plano').src = "//:0";
+		document.getElementById('archivoPlano').src = "//:0";
+	}
 	
 	$("#archivoPlano").change(function() {
 	    var val = $(this).val();
@@ -455,29 +548,25 @@ $(document).ready(function() {
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-				document.getElementById('archivoPlano').value = "" ;
-				document.getElementById('plano').src = "" ;
+				document.getElementById('archivoPlano').src = "";
+				document.getElementById('plano').src = "";
 				break;
 	    }
 	});
 	
-	function readURL(){
+	function readURL() {
 		document.getElementById("planoCambiado").value = "1";
 		var file = document.getElementById("archivoPlano").files[0];
 		var reader = new FileReader();
-	    reader.onloadend = function(){
+	    reader.onloadend = function() {
 			document.getElementById('plano').src = reader.result ;        
 			}
-		if(file){
+		if(file) {
 			reader.readAsDataURL(file);
 		} 
 	}
 });
 </script>
-
-
-
-
 
 
 <!-- Para el slide de Galería podría ser útil -->
@@ -539,6 +628,14 @@ function hideGalleryVideo() {
 	document.getElementById('videoGaleria').style.display = 'none';
 }
 
+function hideGalleryErrorMessages() {
+	document.getElementById('mensajeHayVideo').style.display = 'none';
+	document.getElementById('mensajeCincoArchivos').style.display = 'none';
+	document.getElementById('mensajeTamanoImagen').style.display = 'none';
+	document.getElementById('mensajeTamanoVideo').style.display = 'none';
+	document.getElementById('mensajeUnaImagen').style.display = 'none';
+}
+
 /*--------Galería-----------*/
 
 $(document).ready(function() {
@@ -563,6 +660,11 @@ $(document).ready(function() {
 		video.appendChild(source);
 	</c:if>
 	
+	<c:if test="${atraccion.audioEN != null}">
+		var audio = document.getElementById('audio');
+	    audio.src = "${pageContext.request.contextPath}/audioAtraccion?id=" + '${atraccion.id}';
+	</c:if>
+	
 	filesNumber = imageNumber + videoNumber;
 	nextGalleryItem(0);
 	
@@ -577,7 +679,8 @@ $(document).ready(function() {
 		input.click();
 	};
 	
-	function readURL(){
+	function readURL() {
+		hideGalleryErrorMessages();
 		console.log("READ");
 		document.getElementById('archivoGaleria').style.display = 'none';
 		var file = document.getElementById("archivoGaleria").files[0];
@@ -680,8 +783,6 @@ $(document).ready(function() {
 </script>
 
 
-
-
 <!-- Audioguía -->
 <script>
 $(document).ready(function() {
@@ -720,9 +821,6 @@ $(document).ready(function() {
 </script>
 
 
-
-
-
 <c:set var="latitud_atraccion">
 	${atraccion.latitud}
 </c:set>
@@ -741,7 +839,7 @@ $(document).ready(function() {
 
 <!-- Mapa -->
 <script>
-var map, marker, autocomplete, infowindow, input, aux_lat, aux_lng,
+var out_of_range = false, map, marker, autocomplete, infowindow, input, aux_lat, aux_lng,
 	map_lat = document.formModificar.latitud.value,
 	map_lng = document.formModificar.longitud.value;
 
@@ -766,6 +864,9 @@ function saveCoordinates() {
 	map_lat = aux_lat;
 	map_lng = aux_lng;
 	setPosition(map_lat, map_lng);
+	if (out_of_range) {
+		far_away = true;
+	}
 	hideOkAndCancelButtonsForCoordinates();
 }
 
@@ -793,13 +894,6 @@ function editCoordinates() {
 	        map.setCenter(place.geometry.location);
 	        map.setZoom(17);  // Why 17? Because it looks good.
 	    }
-	    marker.setIcon(/** @type {google.maps.Icon} */({
-	        url: place.icon,
-	        size: new google.maps.Size(71, 71),
-	        origin: new google.maps.Point(0, 0),
-	        anchor: new google.maps.Point(17, 34),
-	        scaledSize: new google.maps.Size(35, 35)
-	    }));
 	    marker.setPosition(place.geometry.location);
 	    marker.setVisible(true);
 	
@@ -834,41 +928,34 @@ function editCoordinates() {
 	   	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
 		if (google.maps.geometry.spherical.computeDistanceBetween(event.latLng, city_coordinates) < 15000) {
 			document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+			out_of_range = false;
 	    } else {
 	    	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
+	    	out_of_range = true;
 	    }
 	});
-
 }
 
+function initMap() {
+   	map = new google.maps.Map(document.getElementById('atraction-map'), {
+   	    center: {lat: ${latitud_atraccion}, lng: ${longitud_atraccion}},
+   	    zoom: 13
+   	});
+   	
+    input = (document.getElementById('atraction-map-input'));
+   	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-    function initMap() {
-    	map = new google.maps.Map(document.getElementById('atraction-map'), {
-    	    center: {lat: ${latitud_atraccion}, lng: ${longitud_atraccion}},
-    	    zoom: 13
-    	});
-    	
-        input = (document.getElementById('atraction-map-input'));
-    	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+   	autocomplete = new google.maps.places.Autocomplete(input, {types: []});
+   	autocomplete.bindTo('bounds', map);
+   	
+   	infowindow = new google.maps.InfoWindow();
+   	marker = new google.maps.Marker({
+   	    map: map
+   	});
 
-    	autocomplete = new google.maps.places.Autocomplete(input, {types: []});
-    	autocomplete.bindTo('bounds', map);
-    	
-    	infowindow = new google.maps.InfoWindow();
-    	marker = new google.maps.Marker({
-    	    map: map,
-    	    anchorPoint: new google.maps.Point(0, -29)
-    	});
-
-    	marker.setIcon(({
-	        size: new google.maps.Size(71, 71),
-	        origin: new google.maps.Point(0, 0),
-	        anchor: new google.maps.Point(17, 34),
-	        scaledSize: new google.maps.Size(35, 35)
-	    }));
-	    marker.setPosition(map.center);
-    	marker.setVisible(true);
-    }
+    marker.setPosition(map.center);
+   	marker.setVisible(true);
+}
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>

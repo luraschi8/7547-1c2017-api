@@ -61,9 +61,9 @@ public class AtraccionControladorRest {
 	}
 	
 	@RequestMapping(path="/atraccion/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, AtraccionDTO> getAtraccion(@PathVariable int idAtraccion) {
+	public HashMap<String, AtraccionDTO> getAtraccion(@PathVariable long idAtraccion) {
 		HashMap<String, AtraccionDTO> lista = new HashMap<String, AtraccionDTO>();
-		Atraccion a = atraccionDao.get(Atraccion.class,idAtraccion);
+		Atraccion a = atraccionDao.get(idAtraccion);
 		AtraccionDTO dto = new AtraccionDTO();
 		dto.setNombre(a.getNombre());
 		dto.setHorario(a.getHorario());

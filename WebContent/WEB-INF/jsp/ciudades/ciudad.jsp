@@ -27,61 +27,65 @@
 	<div class="view-city-image">
 		<div class="panel panel-primary view-city-image-box sobreBoton">
 			<img id="imagen" src="${pageContext.request.contextPath}/imagenCiudad?id=${ciudad.id}" style="width:100%; height:100%"/>
-           	<input type="button" id="get_file" class="btn btn-default btn-get-file" value="Editar">
+			<button type="button" class="btn btn-default btn-sm btn-get-file" id="get_file" onclick="editCoordinates()">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</button>
 		</div>
 	</div>
 	
-	<div class="alert-message">
-		<div class="alert alert-warning fade in" id="mensajeImagenIncorrectaError" style="display: none;">
+	<div>
+		<div class="alert alert-warning fade in view-city-wrong-image" id="mensajeImagenIncorrectaError" style="display: none;">
 		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 		</div>
 	</div>
 </form:form>
 
-<h1 class="page-header">
-	${ciudad.nombre}, ${ciudad.pais}
-</h1>
-
-<div class="panel-group" style="width: 100%; overflow: hidden;">
-	<div id="map" class="view-city-map" style="float:left"></div>
+<div class="view-city-information-block">
+	<h1 class="view-city-page-header">
+		${ciudad.nombre}, ${ciudad.pais}
+	</h1>
 	
-	<div class="panel panel-primary view-city-panel" style="float:right">
-		<div style="text-align:center;">
-			<input id="botonAtracciones" class="btn btn-ver btn-atracciones" type="button" value="Atracciones" />
-			
-			<form class="form-horizontal maxwid" id="formAgregarAtraccion" name="formAgregarAtraccion" action="atraccionNuevo" method="post">
-				<input id="botonAgregarAtraccion" class="btn btn-agregar btn-nueva-atraccion" type="button" value="+" />
-				<input id="idCiudad" name="idCiudad" type="hidden" value="${ciudad.id}"/>
-				<input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${ciudad.latitud}"/>
-				<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${ciudad.longitud}"/>
-			</form>
-			
-			<input id="botonRecorridos" class="btn btn-ver btn-recorridos" type="button" value="Recorridos" />
-			<input id="botonAgregarRecorrido" class="btn btn-agregar btn-nuevo-recorrido" type="button" value="+" />
-		</div>
-	
-		<div class="panel-body">
-			<table id="tablita" class="display order-column view-city-board" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Nombre</th>
-						<th></th>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
+	<div class="panel-group" style="width: 100%; overflow: hidden;">
+		<div id="view-city-map" class="view-city-map" style="float:left"></div>
+		
+		<div class="panel panel-primary view-city-panel" style="float:right">
+			<div style="text-align:center;">
+				<input id="botonAtracciones" class="btn btn-ver btn-atracciones" type="button" value="Atracciones" />
+				
+				<form class="form-horizontal maxwid" id="formAgregarAtraccion" name="formAgregarAtraccion" action="atraccionNuevo" method="post">
+					<input id="botonAgregarAtraccion" class="btn btn-agregar btn-nueva-atraccion" type="button" value="+" />
+					<input id="idCiudad" name="idCiudad" type="hidden" value="${ciudad.id}"/>
+					<input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${ciudad.latitud}"/>
+					<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${ciudad.longitud}"/>
+				</form>
+				
+				<input id="botonRecorridos" class="btn btn-ver btn-recorridos" type="button" value="Recorridos" />
+				<input id="botonAgregarRecorrido" class="btn btn-agregar btn-nuevo-recorrido" type="button" value="+" />
+			</div>
+		
+			<div class="panel-body">
+				<table id="tablita" class="display order-column view-city-board" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
 
 <form:form id="formAtras" action="ciudades" method="post"></form:form>
 <div class="view-city-btn-final" style="text-align:center;">
-	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
-	<input id="botonNuevo" class="btn btn-default" type="button" value="Guardar" />
+	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
+	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 </div>
 
 <c:set var="borrar">
@@ -127,7 +131,7 @@ var map;
 var markers = [];
 
 function initMap() {
-	map = new google.maps.Map(document.getElementById('map'), {
+	map = new google.maps.Map(document.getElementById('view-city-map'), {
 	    center: {lat: ${latitud}, lng: ${longitud}}, //Buenos Aires coordinates
 	    zoom: 13
 	});
@@ -139,13 +143,13 @@ var table = $('#tablita').DataTable( {
     columns: [
         {	data: "id",
         	render: function (data,type,row) {
-        		return '<div align="center"><img src="/Trips/imagenAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        		return '<div align="center"><img src="/Trips/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
         	}
         },
         {data: "nombre" },
         {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
         {defaultContent:'<button class="btn btn-warning" id="ver">${ver}</button>'},
-        {defaultContent:'<button class="btn btn-warning" id="marcar">${marcar}</button>'}
+        {defaultContent:'<button class="btn btn-info" id="marcar">${marcar}</button>'}
         ],
     select:true,
     paging:false,
@@ -169,8 +173,7 @@ $('#tablita tbody').on('click', '#marcar', function (e) {
 		}
 	}
 	var marker = new google.maps.Marker({
-         position: myLatlng,
-         title: 'Hello World!'
+         position: myLatlng
        });
        marker.setMap(map);
 	map.setCenter(marker.getPosition());

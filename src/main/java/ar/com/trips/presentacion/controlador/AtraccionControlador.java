@@ -1,14 +1,11 @@
 package ar.com.trips.presentacion.controlador;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -64,6 +61,7 @@ public class AtraccionControlador {
 							@RequestParam(name="archivoGaleria1",required = false) MultipartFile galeria2,
 							@RequestParam(name="archivoGaleria2",required = false) MultipartFile galeria3,
 							@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
+							@RequestParam(name="archivoGaleria4",required = false) MultipartFile galeria5,
 							@RequestParam(name="unVideo",required = false) MultipartFile video,
 							@RequestParam("recorrible") int recorrible) {
 		Ciudad ciudad = new Ciudad();
@@ -73,24 +71,35 @@ public class AtraccionControlador {
 		try {
 			byte[] bytes = plano.getBytes();
 			atraccion.setPlano(bytes);
-			atraccion.setVideo(video.getBytes());
-			atraccion.setAudioEN(audio.getBytes());
 		} catch (Exception e) {
 			
+		}
+		try {
+			atraccion.setVideo(video.getBytes());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			atraccion.setAudioEN(audio.getBytes());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		atraccion.setBorrado(0);
 		atraccion.setRecorrible(recorrible);
 		atraccionDao.guardar(atraccion);
-		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4);
+		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
 
 	private void guardarMultimediaMultiple(Atraccion atraccion, MultipartFile galeria1, MultipartFile galeria2, MultipartFile galeria3,
-			MultipartFile galeria4) {
+			MultipartFile galeria4, MultipartFile galeria5) {
 		guardarMultimediaSingle(atraccion, galeria1);
 		guardarMultimediaSingle(atraccion, galeria2);
 		guardarMultimediaSingle(atraccion, galeria3);
 		guardarMultimediaSingle(atraccion, galeria4);
+		guardarMultimediaSingle(atraccion, galeria5);
 	}
 
 	private void guardarMultimediaSingle(Atraccion atraccion, MultipartFile galeria) {
@@ -113,8 +122,8 @@ public class AtraccionControlador {
 	}
 
 	@RequestMapping(path="atraccionVer")
-	public ModelAndView ver(@RequestParam("idAtraccion") int id) {
-		Atraccion atraccion = atraccionDao.get(Atraccion.class, id);
+	public ModelAndView ver(@RequestParam("idAtraccion") long id) {
+		Atraccion atraccion = atraccionDao.get(id);
 		ModelAndView model = new ModelAndView("atracciones/atraccion");
 		model.addObject("atraccion", atraccion);		
 		return model;
@@ -133,17 +142,18 @@ public class AtraccionControlador {
 									@RequestParam(name="archivoGaleria1",required = false) MultipartFile galeria2,
 									@RequestParam(name="archivoGaleria2",required = false) MultipartFile galeria3,
 									@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
+									@RequestParam(name="archivoGaleria4",required = false) MultipartFile galeria5,
 									@RequestParam(name="unVideo",required = false) MultipartFile video,
 									@RequestParam("planoCambiado") int planoCambiado,
 									@RequestParam("archivoPlano") MultipartFile imagen) throws IOException {
-		Atraccion atraccion = atraccionDao.get(Atraccion.class, atraccionId.getId());
+		Atraccion atraccion = atraccionDao.get(atraccionId.getId());
 		
 		if (planoCambiado == 1) {
 			try {
 				byte[] bytes = imagen.getBytes();
 				atraccion.setPlano(bytes);
 			} catch (Exception e) {
-				
+				atraccion.setPlano(null);
 			}
 		}
 		atraccion.setNombre(nombreModificado);
@@ -156,15 +166,15 @@ public class AtraccionControlador {
 		if (video != null) {
 			atraccion.setVideo(video.getBytes());
 		}
-		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4);
+		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
 		atraccionDao.modificar(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
 	}
 	
 	@RequestMapping(path="/planoAtraccion", method=RequestMethod.GET)
-	public void planoAtraccion(@RequestParam("id") Integer id, HttpServletResponse response,HttpServletRequest request) 
+	public void planoAtraccion(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) 
 	          throws ServletException, IOException {
-		Atraccion atraccion = atraccionDao.get(Atraccion.class, id);
+		Atraccion atraccion = atraccionDao.get(id);
 		byte[] planoAtraccion = atraccion.getPlano();       
 	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 	    response.getOutputStream().write(planoAtraccion);
