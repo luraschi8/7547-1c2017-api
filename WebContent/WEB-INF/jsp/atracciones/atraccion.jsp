@@ -177,6 +177,7 @@
 					
 						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
 					</div>
+					<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarAtraccion"> </button>
 					
 					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeHayVideo" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
@@ -723,28 +724,11 @@ $(document).ready(function() {
 
 
 <!-- Para el slide de Galería podría ser útil -->
+<!-- Galería -->
 <script>
 var slideIndex = 1;
 showDivs(slideIndex);
 
-function nextGalleryItem(n) {
-    showDivs(slideIndex += n);
-}
-
-function showDivs(n) {
-    var i;
-    var x = document.getElementsByClassName("atraction-gallery");
-    if (n > x.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = x.length} ;
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    x[slideIndex-1].style.display = "block";
-}
-</script>
-
-<!-- Galería -->
-<script>
 var imageNumber = 0;
 var videoNumber = 0;
 
@@ -812,7 +796,7 @@ $(document).ready(function() {
 	    source.type = "video/mp4";
 		video.appendChild(source);
 	</c:if>
-	
+
 	<c:if test="${atraccion.audioEN != null}">
 		var audio = document.getElementById('audio');
 	    audio.src = "${pageContext.request.contextPath}/audioAtraccion?id=" + '${atraccion.id}';
@@ -821,8 +805,15 @@ $(document).ready(function() {
 	filesNumber = imageNumber + videoNumber;
 	nextGalleryItem(0);
 	
+	document.getElementById('eliminarAtraccion').onclick = function() {
+		unArchivo = multimedia[slideIndex - 1];
+		var element = document.getElementById(unArchivo.id);
+		element.parentNode.removeChild(element);
+		slideIndex -=1;
+		nextGalleryItem(slideIndex);
+	}
+	
 	document.getElementById('atraction-get-gallery-file').onclick = function() {
-		console.log("CLICK");
 		input = document.createElement('input');
 		input.type='file';
 		input.id = 'archivoGaleria';
@@ -857,7 +848,6 @@ $(document).ready(function() {
 	        		elem.parentNode.removeChild(elem);
 	        		return;
 	        	}
-	        	
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	        	document.getElementById('mensajeHayVideo').style.display = 'none';
 	        	document.getElementById("mensajeUnaImagen").style.display = 'none';
@@ -866,7 +856,8 @@ $(document).ready(function() {
 	        	imageVideo.file = tagImagen;
 	        	document.getElementById('archivoGaleria').style.display = 'none';
 	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
-				document.getElementById('archivoGaleria').id = 'archivoGaleria' + imageNumber;
+				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
+				imageVideo.id = 'archivoGaleria' + filesNumber;
 				imageNumber = imageNumber + 1;
 	        	break;
 	        case 'mp4': case 'avi': 
@@ -896,7 +887,8 @@ $(document).ready(function() {
 	        		videoType='video/avi';
 	        	}
 	        	document.getElementById('archivoGaleria').name = 'unVideo';
-	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;	        
+	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
+	        	imageVideo.id = 'archivoGaleria' + filesNumber;	        
 	        	break;
 	        default:
 	            $(this).val('');
@@ -925,12 +917,12 @@ $(document).ready(function() {
 				video.appendChild(source);
 			}
 			multimedia.push(imageVideo);
+			filesNumber = imageNumber + videoNumber;
+			slideIndex = filesNumber - 1;
 		}
 		if(file) {
 			reader.readAsDataURL(file);
 		}
-		filesNumber = imageNumber + videoNumber;
-		slideIndex = filesNumber - 1;
 	}
 });
 </script>
