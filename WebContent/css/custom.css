@@ -355,3 +355,51 @@ body {
     top: -19rem;
     left: 117.5rem;
 }
+
+.atraction-popup-close {
+	margin-right: 5px;
+}
+
+#atraction-point-of-interest-popup-form {
+	display: none;
+	position:absolute;
+	z-index: 1;
+	background-color: #fefefe;
+	border: 1px solid #888;
+    width: 50%;
+    height: 600px;
+    top: 0%;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.atraction-new-point-of-interest {
+	margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.btn-final-pdi-form {
+	margin-top: 20px;
+}
+
+.disable-buttons {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.atraction-point-of-interes-image-box {
+	height: 18.75rem;
+	width: 50rem;
+	background-color: #909090;
+}
+
+.atraction-point-of-interes-image-box .atraction-poi-get-image {
+	position: relative;
+    top: -18rem;
+    left: 45rem;
+}
