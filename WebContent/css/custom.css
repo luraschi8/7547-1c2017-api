@@ -362,7 +362,7 @@ body {
 
 #atraction-point-of-interest-popup-form {
 	display: none;
-	position:absolute;
+	position: absolute;
 	z-index: 1;
 	background-color: #fefefe;
 	border: 1px solid #888;
@@ -377,8 +377,13 @@ body {
     overflow: auto;
 }
 
-.atraction-new-point-of-interest {
-	margin-left: 8.5rem;
+#atraction-point-of-interest-popup-form .atraction-new-point-of-interest {
+	position: relative;
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
 }
 
 .btn-final-pdi-form {
@@ -391,18 +396,15 @@ body {
     opacity: 0.4;
 }
 
-.atraction-point-of-interes-image-box {
+.atraction-point-of-interest-image-box {
 	height: 18.75rem;
 	width: 50rem;
 	background-color: #909090;
+	margin-bottom: 2rem;
 }
 
-.atraction-point-of-interes-image-box .atraction-poi-get-image {
+.atraction-point-of-interest-image-box .atraction-poi-get-image {
 	position: relative;
     top: -18rem;
     left: 45rem;
-}
-
-.atraction-point-of-interes-image-box {
-	margin-bottom: 2rem;
 }

@@ -370,7 +370,7 @@
 		<div>
 			<label class="atraction-label" path="imagen">Imagen</label>
 		</div>
-		<div class="atraction-point-of-interes-image-box">
+		<div class="atraction-point-of-interest-image-box">
 			<img id="pdi-imagen" style="width:100%; height:100%">
 			<button type="button" class="btn btn-default btn-sm atraction-poi-get-image" id="atraction-poi-get-image">
 				<span class="glyphicon glyphicon-pencil"></span>
