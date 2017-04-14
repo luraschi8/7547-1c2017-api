@@ -124,7 +124,9 @@
 						    
 						    <!-- <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/> -->
 						</div>
-						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarImagen"> </button>
+						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarImagen">
+							<span class="glyphicon glyphicon-pencil"></span>
+						 </button>
 					</div>
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
