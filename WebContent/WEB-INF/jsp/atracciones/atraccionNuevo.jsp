@@ -124,6 +124,7 @@
 						    
 						    <!-- <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/> -->
 						</div>
+						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarImagen"> </button>
 					</div>
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
@@ -248,8 +249,17 @@ $("#horario").attr("maxlength", MAX_HORARIO_ATRACCION);
 $("#precio").attr("maxlength", MAX_PRECIO_ATRACCION);
 </script>
 
-
 <script>
+function calculateMaxLength(field, max) {
+	var count = 0;
+	for (var i = 0; i < max; i++) {
+		if ($(field).val()[i] == '\n') {
+			count++;
+		}
+	}
+	$(field).attr("maxlength", max - count);
+}
+
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
@@ -366,7 +376,7 @@ var filesNumber = imageNumber + videoNumber;
 
 var multimedia = [];
 
-var slideIndex = 1;
+var slideIndex = 0;
 
 function nextGalleryItem(n) {
     showDivs(slideIndex += n);
@@ -374,12 +384,18 @@ function nextGalleryItem(n) {
 
 function showDivs(n) {
     var i;
-    if (n > filesNumber) {slideIndex = 1}
-    if (n < 1) {slideIndex = filesNumber};
-    multi = multimedia[slideIndex - 1];
+    if (n >= filesNumber) {slideIndex = 0}
+    if (n < 0) {slideIndex = filesNumber - 1};
+    console.log("INDEXX: " + slideIndex);
+    if (multimedia.length == 0) {
+    	document.getElementById('imagenGaleria').src = '';
+    	hideGalleryVideo();
+    	return;
+    }
+    multi = multimedia[slideIndex];
     if (multi.imagen == 1) {
 		hideGalleryVideo();
-		document.getElementById('imagenGaleria').src = multimedia[slideIndex - 1].src;
+		document.getElementById('imagenGaleria').src = multi.src;
 	} else {
 		hideGalleryImage();
 	}
@@ -400,6 +416,29 @@ function hideGalleryVideo() {
 /*--------Galería-----------*/
 
 $(document).ready(function() {
+	
+	document.getElementById('eliminarImagen').onclick = function() {
+		if (filesNumber == 0) {
+			return;
+		}
+		unArchivo = multimedia[slideIndex];
+		if (unArchivo.imagen == 1) {
+			imageNumber -= 1;
+		} else {
+			videoNumber = 0;
+			var eliminado = unArchivo.file;
+			eliminado.parentNode.removeChild(eliminado);
+		}
+		filesNumber -= 1;
+		var element = document.getElementById(unArchivo.id);
+		element.parentNode.removeChild(element);
+		multimedia.splice(slideIndex, 1);
+		slideIndex -=1;
+		filesNumber = imageNumber + videoNumber;
+		nextGalleryItem(slideIndex);
+	}
+	
+	
 	document.getElementById('atraction-get-gallery-file').onclick = function() {
 		input = document.createElement('input');
 		input.type='file';
@@ -433,7 +472,6 @@ $(document).ready(function() {
 	        		elem.parentNode.removeChild(elem);
 	        		return;
 	        	}
-	        	
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	        	document.getElementById('mensajeHayVideo').style.display = 'none';
 	        	document.getElementById("mensajeUnaImagen").style.display = 'none';
@@ -442,7 +480,8 @@ $(document).ready(function() {
 	        	imageVideo.file = tagImagen;
 	        	document.getElementById('archivoGaleria').style.display = 'none';
 	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
-				document.getElementById('archivoGaleria').id = 'archivoGaleria' + imageNumber;
+				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
+				imageVideo.id = 'archivoGaleria' + filesNumber;
 				imageNumber = imageNumber + 1;
 	        	break;
 	        case 'mp4': case 'avi': 
@@ -472,7 +511,8 @@ $(document).ready(function() {
 	        		videoType='video/avi';
 	        	}
 	        	document.getElementById('archivoGaleria').name = 'unVideo';
-	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;	        
+	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
+	        	imageVideo.id = 'archivoGaleria' + filesNumber;
 	        	break;
 	        default:
 	            $(this).val('');
@@ -498,6 +538,7 @@ $(document).ready(function() {
 				var source = document.createElement('source');
 			    source.src = reader.result;
 			    source.type = videoType;
+			    imageVideo.file = source;
 				video.appendChild(source);
 			}
 			multimedia.push(imageVideo);
