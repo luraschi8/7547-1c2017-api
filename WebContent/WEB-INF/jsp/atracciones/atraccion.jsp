@@ -18,7 +18,8 @@
 <body>
 
 	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
-	
+
+<div id="atraction-form">
 	<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
 		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
 		
@@ -157,7 +158,7 @@
 						</div>
 						<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
 						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+						 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 						</div>
 					</div>
 				</div>
@@ -270,10 +271,7 @@
 				<div class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
-						
-						<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
-							<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" />
-						</form>
+						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="showPopUpForm()"/>
 					</div>
 					
 					<div class="panel-body atraction-points-of-interest">
@@ -319,12 +317,164 @@
 		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
 		</div>
 	</form:form>
+</div>
+
+	
+<div id="atraction-point-of-interest-popup-form">
+	<form:form class="form-horizontal maxwid atraction-new-point-of-interest" id ="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
+		<h2>Nuevo punto de interés</h2>
+		
+		<div>
+			<div>
+				<label class="atraction-label" path="nombre">Nombre</label>
+			</div>
+			<div>
+				<input maxlength="50" id="pdi-nombre" path="nombre" name="pdi-nombre" class="atraction-box"  placeholder="Ingrese el nombre del punto de interés" required="required"></textarea>
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
+			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
+			</div>
+		</div>
+		
+		<div>
+			<div>
+				<label class="atraction-label" path="descripcion">Descripción</label>
+			</div>
+			<div>
+				<textarea onkeydown="calculateMaxLength('#pdi-descripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="pdi-descripcion" path="descripcion" name="pdi-descripcion" class="atraction-box"  placeholder="Ingrese la descripción del punto de interés" required="required"></textarea>
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
+			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
+			</div>
+		</div>
+		
+		<div>
+			<div>
+				<label class="atraction-label" path="orden">Orden</label>
+			</div>
+			<div>
+				<input maxlength="20" id="pdi-orden" path="orden" name="pdi-orden" class="atraction-box"  placeholder="Ingrese el orden del punto de interés" required="required"></textarea>
+				<!--<select class="order-list" id="pdi-orden" path="orden" name="pdi-orden"></select>-->
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-alert" id="mensajeOrdenVacioPuntoDeInteresError" style="display: none;">
+			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El orden no puede estar vacío.
+			</div>
+		</div>
+		
+		<div>
+			<label class="atraction-label" path="imagen">Imagen</label>
+		</div>
+		<div class="atraction-point-of-interest-image-box">
+			<img id="pdi-imagen" style="width:100%; height:100%">
+			<button type="button" class="btn btn-default btn-sm atraction-poi-get-image" id="atraction-poi-get-image">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</button>
+			<input id="pdi-imagen-cambiada" name="pdi-imagen-cambiada" type="hidden" value="0">
+			<input type="file" name="pdi-archivo-imagen" id="pdi-archivo-imagen" style="display: none"/>
+		</div>
+		
+		<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
+		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+		 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
+		</div>
+	</form:form>
+		
+	<div class="btn-final-pdi-form" style="text-align:center;">
+		<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closePopUpForm();"/>
+		<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+	</div>
+</div>
 
 <form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
 	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 </div>
+
+
+<script>
+function disableAtractionPage() {
+	$("#atraction-form").addClass("disable-buttons");
+	$(".btn-final").addClass("disable-buttons");
+	$(".atraction-new-page-header").addClass("disable-buttons");
+}
+
+function showPopUpForm() {
+	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'block';
+	document.getElementById('atraction-point-of-interest-popup-form').focus();
+	document.getElementById('atraction-form').blur();
+	disableAtractionPage();
+}
+
+function enableAtractionPage() {
+	$("#atraction-form").removeClass("disable-buttons");
+	$(".btn-final").removeClass("disable-buttons");
+	$(".atraction-new-page-header").removeClass("disable-buttons");
+}
+
+function closePopUpForm() {
+	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'none';
+	document.getElementById('pdi-nombre').value = '';
+	document.getElementById('pdi-descripcion').value = '';
+	document.getElementById('pdi-orden').value = '';
+	document.getElementById('pdi-imagen').src = '//:0';
+	enableAtractionPage();
+}
+
+$(document).ready(function() {
+	validateImage("atraction-poi-get-image", "pdi-archivo-imagen", "pdi-imagen", "mensajeImagenIncorrectaPuntoDeInteresError");
+});
+
+/*$(document).ready(function() {
+	document.getElementById('atraction-pdi-get-image').onclick = function() {
+		document.getElementById('pdi-archivo-imagen').addEventListener('change', readURL, true);
+		var fileButton = document.getElementById('pdi-archivo-imagen');
+		fileButton.click();
+	};
+	
+	$("#pdi-archivo-imagen").change(function() {
+	    var val = $(this).val();
+	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
+	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	break;
+	        default:
+	            $(this).val('');
+				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+				document.getElementById('pdi-archivo-imagen').src = "";
+				document.getElementById('pdi-imagen').src = "";
+				break;
+	    }
+	});
+	
+	function readURL() {
+		document.getElementById("pdi-imagen-cambiada").value = "1";
+		var file = document.getElementById("pdi-archivo-imagen").files[0];
+		var reader = new FileReader();
+	    reader.onloadend = function() {
+			document.getElementById('pdi-imagen').src = reader.result ;        
+			}
+		if(file) {
+			reader.readAsDataURL(file);
+		} 
+	}
+});*/
+
+/* Para hacer un dropdown
+$(function() {
+    var $select = $(".order-list");
+    for (i = 1 ; i <= 30; i++) {
+        $select.append($('<option></option>').val(i).html(i));
+    }
+});*/
+
+</script>
 
 
 <!-- Definición de constantes -->
@@ -337,6 +487,9 @@ $("#nombreEditadoTextarea").attr("maxlength", MAX_NOMBRE_ATRACCION);
 $("#descripcionEditadaTextarea").attr("maxlength", MAX_DESCRIPCION_ATRACCION);
 $("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO_ATRACCION);
 $("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
+
+const MAX_DESCRIPCION_PUNTO_DE_INTERES = "250";
+$("#pid-descripcion").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 
 if (${atraccion.recorrible}) {
 	$("#es-recorrible").attr("checked", "checked");
