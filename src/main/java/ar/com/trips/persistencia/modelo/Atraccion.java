@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -59,16 +58,22 @@ public class Atraccion extends Modelo{
 	private byte[] plano;
 	
 	@Column(name="audioEN")
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
 	@JsonBackReference(value="audioEN")
-	private String audioEN;
+	private byte[] audioEN;
 	
 	@Column(name="audioES")
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
 	@JsonBackReference(value="audioES")
-	private String audioES;
+	private byte[] audioES;
 	
 	@Column(name="video")
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
 	@JsonBackReference(value="video")
-	private String video;
+	private byte[] video;
 	
 	@Column(name="recorrible")
 	private int recorrible;
@@ -167,28 +172,44 @@ public class Atraccion extends Modelo{
 		this.plano = plano;
 	}
 
-	public String getAudioEN() {
+	public byte[] getAudioEN() {
 		return audioEN;
 	}
 
-	public void setAudioEN(String audioEN) {
+	public void setAudioEN(byte[] audioEN) {
 		this.audioEN = audioEN;
 	}
 
-	public String getAudioES() {
+	public byte[] getAudioES() {
 		return audioES;
 	}
 
-	public void setAudioES(String audioES) {
+	public void setAudioES(byte[] audioES) {
 		this.audioES = audioES;
 	}
 
-	public String getVideo() {
+	public byte[] getVideo() {
 		return video;
 	}
 
-	public void setVideo(String video) {
+	public void setVideo(byte[] video) {
 		this.video = video;
+	}
+
+	public List<byte[]> getImagenes() {
+		return imagenes;
+	}
+
+	public void setImagenes(List<byte[]> imagenes) {
+		this.imagenes = imagenes;
+	}
+
+	public byte[] getPlan() {
+		return plan;
+	}
+
+	public void setPlan(byte[] plan) {
+		this.plan = plan;
 	}
 
 	public int getRecorrible() {

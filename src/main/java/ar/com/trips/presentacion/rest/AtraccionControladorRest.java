@@ -72,9 +72,8 @@ public class AtraccionControladorRest {
 		dto.setLatitud(a.getLatitud());
 		dto.setLongitud(a.getLongitud());
 		dto.setRecorrible(a.getRecorrible());
-		dto.setAudioEN(pathToString(a.getAudioEN()));
-		dto.setAudioES(pathToString(a.getAudioES()));
-		//dto.setVideo(pathToString(a.getVideo()));
+		dto.setAudioEN(DatatypeConverter.printBase64Binary(a.getAudioEN()));
+		dto.setAudioES(DatatypeConverter.printBase64Binary(a.getAudioES()));
 		if (a.getPlano() != null) {
 			dto.setPlano(DatatypeConverter.printBase64Binary(a.getPlano()));
 		}
@@ -85,26 +84,6 @@ public class AtraccionControladorRest {
 		dto.setListaImagenes(imagenes);
 		lista.put(DATA, dto);
 		return lista;
-	}
-	
-	private String pathToString(String path) {
-		if (path == null) {
-			return null;
-		}
-		File f = new File(path);
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(f);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		}
-		try {
-			return DatatypeConverter.printBase64Binary(IOUtils.toByteArray(fis));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
 	@RequestMapping(path="/validarAtraccion",method=RequestMethod.POST)

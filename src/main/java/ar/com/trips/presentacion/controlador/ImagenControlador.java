@@ -1,5 +1,6 @@
 package ar.com.trips.presentacion.controlador;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -59,16 +60,17 @@ public class ImagenControlador {
 	@RequestMapping(value = "/videoAtraccion", method = RequestMethod.GET)
 	@ResponseBody public void getPreview2(@RequestParam("id") Long id, HttpServletResponse response) {
 	    try {
-	        String path = atraccionDao.get(Atraccion.class, id).getVideo();
-	        File file = new File(path);
+	        Atraccion atraccion = atraccionDao.get(Atraccion.class, id);
 	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-	        response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
-	        InputStream iStream = new FileInputStream(file);
+	        //response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
+	        ByteArrayInputStream iStream = new ByteArrayInputStream(atraccion.getVideo());
 	        IOUtils.copy(iStream, response.getOutputStream());
 	        response.flushBuffer();
 	    } catch (java.nio.file.NoSuchFileException e) {
-	        response.setStatus(HttpStatus.NOT_FOUND.value());
+	        e.printStackTrace();
+	    	response.setStatus(HttpStatus.NOT_FOUND.value());
 	    } catch (Exception e) {
+	    	e.printStackTrace();
 	        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 	    }
 	}

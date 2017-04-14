@@ -69,38 +69,20 @@ public class AtraccionControlador {
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		atraccion.setCiudad(ciudad);
-		guardarVideo(atraccion,video);
-		guardarAudio(atraccion, audio);
 		
 		try {
 			byte[] bytes = plano.getBytes();
 			atraccion.setPlano(bytes);
+			atraccion.setVideo(video.getBytes());
+			atraccion.setAudioEN(audio.getBytes());
 		} catch (Exception e) {
 			
 		}
-		
 		atraccion.setBorrado(0);
 		atraccion.setRecorrible(recorrible);
 		atraccionDao.guardar(atraccion);
 		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
-	}
-
-	private void guardarVideo(Atraccion atraccion, MultipartFile video) {
-		if (video != null) {
-			try {
-				String ext = "." + FilenameUtils.getExtension(video.getOriginalFilename());
-				if (ext.equals(".")) {
-					return;
-				}
-				File f = new File("./video/" + video.hashCode() + ext);
-				FileUtils.writeByteArrayToFile(f, video.getBytes());
-				atraccion.setVideo(f.getAbsolutePath());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
 	}
 
 	private void guardarMultimediaMultiple(Atraccion atraccion, MultipartFile galeria1, MultipartFile galeria2, MultipartFile galeria3,
@@ -121,20 +103,6 @@ public class AtraccionControlador {
 				e.printStackTrace();
 			}
 			imagenAtraccionDao.guardar(imagen);
-		}
-	}
-
-	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {
-		if (audio != null) {
-			try {
-				String ext = "." + FilenameUtils.getExtension(audio.getOriginalFilename());
-				File f = new File("./audio/" + audio.hashCode() + ext);
-				FileUtils.writeByteArrayToFile(f, audio.getBytes());
-				atraccion.setAudioEN(f.getAbsolutePath());
-			} catch (IOException e) {
-				e.printStackTrace();
-				return;
-			}
 		}
 	}
 	
@@ -167,7 +135,7 @@ public class AtraccionControlador {
 									@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
 									@RequestParam(name="unVideo",required = false) MultipartFile video,
 									@RequestParam("planoCambiado") int planoCambiado,
-									@RequestParam("archivoPlano") MultipartFile imagen) {
+									@RequestParam("archivoPlano") MultipartFile imagen) throws IOException {
 		Atraccion atraccion = atraccionDao.get(Atraccion.class, atraccionId.getId());
 		
 		if (planoCambiado == 1) {
@@ -185,7 +153,9 @@ public class AtraccionControlador {
 		atraccion.setLatitud(latitudModificada);
 		atraccion.setLongitud(longitudModificada);
 		atraccion.setRecorrible(recorribleModificado);
-		guardarVideo(atraccion,video);
+		if (video != null) {
+			atraccion.setVideo(video.getBytes());
+		}
 		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4);
 		atraccionDao.modificar(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
