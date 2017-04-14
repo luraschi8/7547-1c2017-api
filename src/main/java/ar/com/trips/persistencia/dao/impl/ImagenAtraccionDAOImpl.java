@@ -16,9 +16,24 @@ public class ImagenAtraccionDAOImpl extends DAOImpl implements IImagenAtraccionD
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + ImagenAtraccion.class.getName() + " a WHERE a.atraccion.id = " + idAtraccion;
 		@SuppressWarnings("unchecked")
-		List<Atraccion> lista = session.createQuery(query).list();
+		List<ImagenAtraccion> lista = session.createQuery(query).list();
 		session.close();
 		return lista;
+	}
+
+	@Override
+	public ImagenAtraccion getImagenPrincipal(Integer idAtraccion) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + ImagenAtraccion.class.getName() + " a WHERE a.atraccion.id = " + idAtraccion;
+		@SuppressWarnings("unchecked")
+		List<ImagenAtraccion> lista = session.createQuery(query).list();
+		session.close();
+		return lista.get(0);
+	}
+
+	@Override
+	public ImagenAtraccion get(Long id) {
+		return get(ImagenAtraccion.class,id);
 	}
 
 }

@@ -321,32 +321,50 @@
 
 	
 <div id="atraction-point-of-interest-popup-form">
-	<span onclick="closePopUpForm()" class="close atraction-popup-close">&times;</span>
-	
-
 	<form:form class="form-horizontal maxwid atraction-new-point-of-interest" id ="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
 		<h2>Nuevo punto de interés</h2>
 		
 		<div>
-			<label class="atraction-label" path="nombre">Nombre</label>
-		</div>
-		<div>
-			<input maxlength="50" id="pdi-nombre" path="nombre" name="pdi-nombre" class="atraction-box"  placeholder="Ingrese el nombre del punto de interés" required="required"></textarea>
+			<div>
+				<label class="atraction-label" path="nombre">Nombre</label>
+			</div>
+			<div>
+				<input maxlength="50" id="pdi-nombre" path="nombre" name="pdi-nombre" class="atraction-box"  placeholder="Ingrese el nombre del punto de interés" required="required"></textarea>
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
+			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
+			</div>
 		</div>
 		
 		<div>
-			<label class="atraction-label" path="descripcion">Descripción</label>
-		</div>
-		<div>
-			<textarea onkeydown="calculateMaxLength('#pdi-descripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="pdi-descripcion" path="descripcion" name="pdi-descripcion" class="atraction-box"  placeholder="Ingrese la descripción del punto de interés" required="required"></textarea>
+			<div>
+				<label class="atraction-label" path="descripcion">Descripción</label>
+			</div>
+			<div>
+				<textarea onkeydown="calculateMaxLength('#pdi-descripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="pdi-descripcion" path="descripcion" name="pdi-descripcion" class="atraction-box"  placeholder="Ingrese la descripción del punto de interés" required="required"></textarea>
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
+			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
+			</div>
 		</div>
 		
 		<div>
-			<label class="atraction-label" path="orden">Orden</label>
-		</div>
-		<div>
-			<input maxlength="20" id="pdi-orden" path="orden" name="pdi-orden" class="atraction-box"  placeholder="Ingrese el orden del punto de interés" required="required"></textarea>
-			<!--<select class="order-list" id="pdi-orden" path="orden" name="pdi-orden"></select>-->
+			<div>
+				<label class="atraction-label" path="orden">Orden</label>
+			</div>
+			<div>
+				<input maxlength="20" id="pdi-orden" path="orden" name="pdi-orden" class="atraction-box"  placeholder="Ingrese el orden del punto de interés" required="required"></textarea>
+				<!--<select class="order-list" id="pdi-orden" path="orden" name="pdi-orden"></select>-->
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-alert" id="mensajeOrdenVacioPuntoDeInteresError" style="display: none;">
+			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El orden no puede estar vacío.
+			</div>
 		</div>
 		
 		<div>
@@ -358,19 +376,19 @@
 				<span class="glyphicon glyphicon-pencil"></span>
 			</button>
 			<input id="pdi-imagen-cambiada" name="pdi-imagen-cambiada" type="hidden" value="0">
-			<input type="file" name="pdi-archivo-imagen" id="pdi-archivo-imagen"/>
-			
-			<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
-			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
-			</div>
+			<input type="file" name="pdi-archivo-imagen" id="pdi-archivo-imagen" style="display: none"/>
 		</div>
 		
-		<div class="btn-final-pdi-form" style="text-align:center;">
-			<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Atrás" onclick="closePopUpForm();"/>
-			<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Aceptar"/>
+		<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
+		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+		 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 		</div>
 	</form:form>
+		
+	<div class="btn-final-pdi-form" style="text-align:center;">
+		<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closePopUpForm();"/>
+		<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+	</div>
 </div>
 
 <form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
@@ -793,6 +811,11 @@ $(document).ready(function() {
 	    source.src = "${pageContext.request.contextPath}/videoAtraccion?id=" + '${atraccion.id}';
 	    source.type = "video/mp4";
 		video.appendChild(source);
+	</c:if>
+	
+	<c:if test="${atraccion.audioEN != null}">
+		var audio = document.getElementById('audio');
+	    audio.src = "${pageContext.request.contextPath}/audioAtraccion?id=" + '${atraccion.id}';
 	</c:if>
 	
 	filesNumber = imageNumber + videoNumber;

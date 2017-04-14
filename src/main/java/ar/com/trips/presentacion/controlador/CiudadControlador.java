@@ -54,7 +54,7 @@ public class CiudadControlador {
 	public ModelAndView modificar(@ModelAttribute("ciudad") Ciudad ciudadId,
 									@RequestParam("imagenCambiada") int imagenCambiada,
 									@RequestParam("archivoImagenPiso") MultipartFile imagen) {
-		Ciudad ciudad = ciudadDao.get(Ciudad.class, ciudadId.getId());
+		Ciudad ciudad = ciudadDao.get(ciudadId.getId());
 		if (imagenCambiada == 1) {
 			try {
 				byte[] bytes = imagen.getBytes();
@@ -74,8 +74,8 @@ public class CiudadControlador {
 	}
 	
 	@RequestMapping(path="ciudadVer")
-	public ModelAndView ver(@RequestParam("idCiudad") int idCiudad) {
-		Ciudad ciudad = ciudadDao.get(Ciudad.class, idCiudad);
+	public ModelAndView ver(@RequestParam("idCiudad") long idCiudad) {
+		Ciudad ciudad = ciudadDao.get(idCiudad);
 		ModelAndView model = new ModelAndView("ciudades/ciudad");
 		model.addObject("ciudad",ciudad);		
 		return model;

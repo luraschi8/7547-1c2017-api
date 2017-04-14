@@ -374,17 +374,16 @@ body {
     margin-right: auto;
     left: 0;
     right: 0;
+    overflow: auto;
 }
 
 .atraction-new-point-of-interest {
-	margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
+	margin-left: 8.5rem;
 }
 
 .btn-final-pdi-form {
-	margin-top: 20px;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
 }
 
 .disable-buttons {
@@ -402,4 +401,8 @@ body {
 	position: relative;
     top: -18rem;
     left: 45rem;
+}
+
+.atraction-point-of-interes-image-box {
+	margin-bottom: 2rem;
 }

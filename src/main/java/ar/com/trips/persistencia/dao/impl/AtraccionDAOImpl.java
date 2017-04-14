@@ -43,5 +43,10 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 		session.close();
 		return lista.size() != 0;
 	}
+
+	@Override
+	public Atraccion get(Long id) {
+		return this.get(Atraccion.class, id);
+	}
 	
 }

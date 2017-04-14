@@ -1,5 +1,6 @@
 package ar.com.trips.presentacion.controlador;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -39,36 +40,64 @@ public class ImagenControlador {
 	private IImagenAtraccionDAO imagenAtraccionDao;
 	
 	@RequestMapping(path="/imagenCiudad", method=RequestMethod.GET)
-	public void imagenCiudad(@RequestParam("id") Integer id, HttpServletResponse response,HttpServletRequest request) 
+	public void imagenCiudad(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) 
 	          throws ServletException, IOException {
-		Ciudad ciudad = ciudadDao.get(Ciudad.class, id);        
+		Ciudad ciudad = ciudadDao.get(id);        
 	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 	    response.getOutputStream().write(ciudad.getImagen());
 	    response.getOutputStream().close();
 	}
 	
 	@RequestMapping(path="/imagenAtraccion", method=RequestMethod.GET)
-	public void imagenAtraccion(@RequestParam("id") Integer id, HttpServletResponse response,HttpServletRequest request) 
+	public void imagenAtraccion(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) 
 	          throws ServletException, IOException {
-		ImagenAtraccion imagenAtraccion = imagenAtraccionDao.get(ImagenAtraccion.class, id);        
+		ImagenAtraccion imagenAtraccion = imagenAtraccionDao.get(id);        
+	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+	    response.getOutputStream().write(imagenAtraccion.getImagen());
+	    response.getOutputStream().close();
+	}
+	
+	@RequestMapping(path="/imagenPrincipalAtraccion", method=RequestMethod.GET)
+	public void imagenPrincipalAtraccion(@RequestParam("id") Integer id, HttpServletResponse response,HttpServletRequest request) 
+	          throws ServletException, IOException {
+		ImagenAtraccion imagenAtraccion = imagenAtraccionDao.getImagenPrincipal(id);        
 	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 	    response.getOutputStream().write(imagenAtraccion.getImagen());
 	    response.getOutputStream().close();
 	}
 	
 	@RequestMapping(value = "/videoAtraccion", method = RequestMethod.GET)
-	@ResponseBody public void getPreview2(@RequestParam("id") Long id, HttpServletResponse response) {
+	@ResponseBody public void getVideo(@RequestParam("id") Long id, HttpServletResponse response) {
 	    try {
-	        String path = atraccionDao.get(Atraccion.class, id).getVideo();
-	        File file = new File(path);
+	        Atraccion atraccion = atraccionDao.get(id);
 	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-	        response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
-	        InputStream iStream = new FileInputStream(file);
+	        //response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
+	        ByteArrayInputStream iStream = new ByteArrayInputStream(atraccion.getVideo());
 	        IOUtils.copy(iStream, response.getOutputStream());
 	        response.flushBuffer();
 	    } catch (java.nio.file.NoSuchFileException e) {
-	        response.setStatus(HttpStatus.NOT_FOUND.value());
+	        e.printStackTrace();
+	    	response.setStatus(HttpStatus.NOT_FOUND.value());
 	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+	    }
+	}
+	
+	@RequestMapping(value = "/audioAtraccion", method = RequestMethod.GET)
+	@ResponseBody public void getAudio(@RequestParam("id") Long id, HttpServletResponse response) {
+	    try {
+	        Atraccion atraccion = atraccionDao.get(id);
+	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+	        //response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
+	        ByteArrayInputStream iStream = new ByteArrayInputStream(atraccion.getAudioEN());
+	        IOUtils.copy(iStream, response.getOutputStream());
+	        response.flushBuffer();
+	    } catch (java.nio.file.NoSuchFileException e) {
+	        e.printStackTrace();
+	    	response.setStatus(HttpStatus.NOT_FOUND.value());
+	    } catch (Exception e) {
+	    	e.printStackTrace();
 	        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 	    }
 	}

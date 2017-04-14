@@ -143,7 +143,7 @@ var table = $('#tablita').DataTable( {
     columns: [
         {	data: "id",
         	render: function (data,type,row) {
-        		return '<div align="center"><img src="/Trips/imagenAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        		return '<div align="center"><img src="/Trips/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
         	}
         },
         {data: "nombre" },
