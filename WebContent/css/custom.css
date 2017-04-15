@@ -301,6 +301,12 @@ body {
     left: 45rem;
 }
 
+.atraction-gallery-box .atraction-erase-multimedia {
+	position: relative;
+    top: -18rem;
+    left: 35rem;
+}
+
 .atraction-bluprints-and-chart {
 	margin-top: 1rem;
 }

@@ -179,10 +179,11 @@
 						<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
 					
 						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
+						
+						<button type="button" class="btn btn-default btn-sm atraction-erase-multimedia" id="eliminarImagen">
+							<span class="glyphicon glyphicon-erase"></span>
+						 </button>
 					</div>
-					<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarImagen">
-						<span class="glyphicon glyphicon-erase"></span>
-					 </button>
 					
 					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeHayVideo" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
@@ -438,6 +439,7 @@ function disableAtractionPage() {
 }
 
 function openNewPointOfInterestForm() {
+	hideAllAtractionErrorMessages();
 	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'block';
 	document.getElementById('atraction-point-of-interest-popup-form').focus();
 	document.getElementById('atraction-form').blur();
@@ -445,6 +447,7 @@ function openNewPointOfInterestForm() {
 }
 
 function openViewCommentPopUp() {
+	hideAllAtractionErrorMessages();
 	document.getElementById('atraction-comment-popup').style.display = 'block';
 	document.getElementById('atraction-comment-popup').focus();
 	document.getElementById('atraction-form').blur();
@@ -516,6 +519,7 @@ function calculateMaxLength(field, max) {
 }
 
 function editField(field, ok, cancel, vacio, obligatorio) {
+	hideAllAtractionErrorMessages();
 	$(field).hide();
 	var new_field = $(field).attr("id") + "Textarea";
 	document.getElementById(new_field).style.display = "inline-block";
@@ -568,6 +572,29 @@ function cancelField(field, ok, cancel) {
 	$(field).show();
 }
 
+function hideAllAtractionErrorMessages() {
+	document.getElementById("mensajeNombreVacio").style.display = "none";
+	document.getElementById("mensajeDescripcionVacia").style.display = 'none';
+	document.getElementById("mensajePlanoNecesario").style.display = 'none';
+	document.getElementById("mensajeImagenIncorrectaError").style.display = "none";
+	document.getElementById("mensajeHayVideo").style.display = 'none';
+	document.getElementById("mensajeCincoArchivos").style.display = 'none';
+	document.getElementById("mensajeTamanoImagen").style.display = "none";
+	document.getElementById("mensajeTamanoVideo").style.display = 'none';
+	document.getElementById("mensajeUnaImagen").style.display = 'none';
+	document.getElementById("mensajeAudioIncorrectoError").style.display = "none";
+	document.getElementById("mensajeUbicacionVacia").style.display = 'none';
+	document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+	document.getElementById("mensajeNombreRepetido").style.display = "none";
+}
+
+function hideAllPointOfInterestErrorMessages() {
+	document.getElementById("mensajeNombreVacioPuntoDeInteresError").style.display = 'none';
+	document.getElementById("mensajeDescripcionVaciaPuntoDeInteresError").style.display = 'none';
+	document.getElementById("mensajeOrdenVacioPuntoDeInteresError").style.display = 'none';
+	document.getElementById("mensajeImagenIncorrectaPuntoDeInteresError").style.display = 'none';
+}
+
 function updateForm() {
 	document.formModificar.nombre.value = $('#nombreEditado').html();
 	document.formModificar.descripcion.value = $('#descripcionEditada').html();
@@ -612,6 +639,7 @@ function validarPlano(plano, mensaje, hayError) {
 }
 
 function validarAtraccionRepetida() {
+	hideAllAtractionErrorMessages();
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
@@ -621,7 +649,7 @@ function validarAtraccionRepetida() {
 	} else {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
-	if (imageNumber == 0) {
+	if ((imageNumber == 0) && (!hayError)) {
 		document.getElementById("mensajeUnaImagen").style.display = 'block';
 		hayError = 1;
 	}
@@ -685,6 +713,7 @@ function validarAtraccionRepetida() {
 <script>
 $(document).ready(function() {
 	document.getElementById('atraction-get-blueprints').onclick = function() {
+		hideAllAtractionErrorMessages();
 		document.getElementById('archivoPlano').addEventListener('change', readURL, true);
 		document.getElementById('archivoPlano').src = "//:0";
 		var fileButton = document.getElementById('archivoPlano');
@@ -818,6 +847,7 @@ $(document).ready(function() {
 	var posiblesId = [0,1,2,3,4]; 
 
 	document.getElementById('eliminarImagen').onclick = function() {
+		hideAllAtractionErrorMessages();
 		if (filesNumber == 0) {
 			return;
 		}
@@ -849,6 +879,7 @@ $(document).ready(function() {
 	}
 	
 	document.getElementById('atraction-get-gallery-file').onclick = function() {
+		hideAllAtractionErrorMessages();
 		input = document.createElement('input');
 		input.type='file';
 		input.id = 'archivoGaleria';
@@ -972,6 +1003,7 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
 	document.getElementById('atraction-get-audio-file').onclick = function() {
+		hideAllAtractionErrorMessages();
 		document.getElementById('archivoAudioguia').addEventListener('change', readURL, true);
 		var fileButton = document.getElementById('archivoAudioguia');
 		fileButton.click();
@@ -1061,6 +1093,7 @@ function cancelEditingCoordinates() {
 }
 
 function editCoordinates() {
+	hideAllAtractionErrorMessages();
 	document.getElementById('ok-coordinates').style.display = "inline-block";
     document.getElementById('cancel-coordinates').style.display = "inline-block";
 	autocomplete.addListener('place_changed', function() {

@@ -96,13 +96,19 @@ public class Atraccion extends Modelo{
 	@Transient
 	private byte[] plan;
 	
-	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
+	/*@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaPuntosDeInteres")
 	private List<PuntoDeInteres> listaPuntosDeInteres = new ArrayList<>();
+	
+	@Transient
+	private int cantPuntosDeInteres;
 	
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaResenias")
 	private List<Resenia> listaResenias = new ArrayList<>();
+	
+	@Transient
+	private int cantResenias;*/
 
 	public Atraccion() {
 		
@@ -252,12 +258,20 @@ public class Atraccion extends Modelo{
 		this.imagen = imagen;
 	}
 	
-	public List<PuntoDeInteres> getListaPuntosDeInteres() {
+	/*public List<PuntoDeInteres> getListaPuntosDeInteres() {
 		return listaPuntosDeInteres;
 	}
 
 	public void setListaPuntosDeInteres(List<PuntoDeInteres> listaPuntosDeInteres) {
 		this.listaPuntosDeInteres = listaPuntosDeInteres;
+	}
+	
+	public int getCantPuntosDeInteres() {
+		return cantPuntosDeInteres;
+	}
+
+	public void setCantPuntosDeInteres(int cantPuntosDeInteres) {
+		this.cantPuntosDeInteres = cantPuntosDeInteres;
 	}
 	
 	public List<Resenia> getListaResenias() {
@@ -267,4 +281,12 @@ public class Atraccion extends Modelo{
 	public void setListaResenias(List<Resenia> listaResenias) {
 		this.listaResenias = listaResenias;
 	}
+	
+	public int getCantResenias() {
+		return cantResenias;
+	}
+
+	public void setCantResenias(int cantResenias) {
+		this.cantResenias = cantResenias;
+	}*/
 }

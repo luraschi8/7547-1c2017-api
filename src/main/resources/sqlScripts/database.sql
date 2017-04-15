@@ -51,10 +51,12 @@ create table ImagenAtraccion (
     foreign key (idAtraccion) references Atraccion (id)
 );
 
-create table PuntoInteres (
+create table PuntoDeInteres (
 	id bigint(10) primary key not null auto_increment,
     nombre varchar(50),
+    descripcion varchar(250),
+    orden varchar(20),
     imagen mediumblob,
-    idAtraccion bigint(10),
+    idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
-)	
+)

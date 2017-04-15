@@ -122,11 +122,10 @@
 							<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
 							<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
 						    
-						    <!-- <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/> -->
+						    <button type="button" class="btn btn-default btn-sm atraction-erase-multimedia" id="eliminarImagen">
+								<span class="glyphicon glyphicon-erase"></span>
+							 </button>
 						</div>
-						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarImagen">
-							<span class="glyphicon glyphicon-erase"></span>
-						 </button>
 					</div>
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
@@ -320,7 +319,7 @@ function validarAtraccionRepetida() {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
 	
-	if (imageNumber == 0) {
+	if ((imageNumber == 0) && (!hayError)) {
 		document.getElementById("mensajeUnaImagen").style.display = 'block';
 		hayError = 1;
 	}
