@@ -97,6 +97,10 @@ public class Atraccion extends Modelo{
 	private byte[] plan;
 	
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
+	@JsonBackReference(value="listaPuntosDeInteres")
+	private List<PuntoDeInteres> listaPuntosDeInteres = new ArrayList<>();
+	
+	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaResenias")
 	private List<Resenia> listaResenias = new ArrayList<>();
 
@@ -246,6 +250,14 @@ public class Atraccion extends Modelo{
 
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
+	}
+	
+	public List<PuntoDeInteres> getListaPuntosDeInteres() {
+		return listaPuntosDeInteres;
+	}
+
+	public void setListaPuntosDeInteres(List<PuntoDeInteres> listaPuntosDeInteres) {
+		this.listaPuntosDeInteres = listaPuntosDeInteres;
 	}
 	
 	public List<Resenia> getListaResenias() {
