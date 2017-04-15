@@ -322,7 +322,7 @@
 
 	
 <div id="atraction-point-of-interest-popup-form">
-	<form:form class="form-horizontal maxwid atraction-new-point-of-interest" id ="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
+	<form:form class="atraction-new-point-of-interest" id ="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
 		<h2>Nuevo punto de interés</h2>
 		
 		<div>
@@ -392,54 +392,29 @@
 	</div>
 </div>
 
-<div id="atraction-comment-popup" style="display: none">
+<div id="atraction-comment-popup">
 	<div class="atraction-view-comment" id ="atraction-view-comment" name="atraction-view-comment">
-		<h2>Ver reseña</h2>
+		<h2>Edición reseña</h2>
 		
-		<div>
-			<div style="float: left">
-				<label class="atraction-label">Usuario: </label>
-				<p id="comentario-nombre-usuario"><!-- TODO Acá iría el nombre del usuario ${comentario.usuario.nombre} --></p>
+		<div class="atraction-comment-group">
+			<div style="float: left; margin-top: 4.5rem;">
+				<img src="${pageContext.request.contextPath}/imagenAtraccion?id=1" style="width:7.5rem; height:7.5rem"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
+				<p id="comentario-nombre-usuario">Pepe<!-- TODO Acá iría el nombre del usuario ${comentario.usuario.nombre} --></p>
 			</div>
 			
-			<div style="float: right">
-			 	<img src="" style="width:100%; height:100%"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
+			<div style="float: right;">
+			 	<div>
+					<label class="atraction-label">Enviado el día... </label><!-- TODO Acá habría que agregar la fecha y la hora del comentario ${comentario.fecha} ${comentario.hora} --></p>
+					<textarea onkeydown="calculateMaxLength('#atraction-comment', MAX_COMENTARIO)" id="atraction-comment" path="comentario" name="atraction-comment" class="atraction-box" required="required" rows="5"></textarea>
+				</div>
 			</div>
-		</div>
-		
-		<div>
-			<label class="atraction-label">Fecha: </label>
-			<p id="comentario-fecha"><!-- TODO Acá iría la fecha del comentario ${comentario.fecha} --></p>
-		</div>
-		
-		<div>
-			<label class="atraction-label">Hora: </label>
-			<p id="comentario-hora"><!-- TODO Acá iría la hora del comentario ${comentario.hora} --></p>
-		</div>
-		
-		<div>
-			<div>
-				<label class="atraction-label">Comentario: </label>
-				<p id="comentario-mensaje"><!-- TODO Acá iría el comentario ${comentario.mensaje} --></p>
-			</div>
-			
-			<!--
-			<div>
-				<!-- TODO cambiar pdi... 
-				<textarea onkeydown="calculateMaxLength('#pdi-descripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="pdi-descripcion" path="descripcion" name="pdi-descripcion" class="atraction-box"  placeholder="Ingrese la descripción del punto de interés" required="required"></textarea>
-			</div>
-			
-			<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
-			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
-			</div>
-			-->
 		</div>
 	</div>
-		
-	<div class="btn-final-pdi-form" style="text-align:center;">
-		<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closePopUpForm();"/>
-		<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+	
+	<form:form id="formGuardarEdicionComentario" action="atraccionVer?idAtraccion=${atraccion.id}" method="post"></form:form>
+	<div class="btn-final-edicion-comentario-popup" style="text-align:center; clear: right;">
+		<input id="botonCancelarComentario" class="btn btn-default" type="button" value="Cancelar" onclick="closeViewCommentPopUp();"/>
+		<input id="botonAceptarComentario" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 	</div>
 </div>
 
@@ -464,6 +439,13 @@ function openNewPointOfInterestForm() {
 	disableAtractionPage();
 }
 
+function openViewCommentPopUp() {
+	document.getElementById('atraction-comment-popup').style.display = 'block';
+	document.getElementById('atraction-comment-popup').focus();
+	document.getElementById('atraction-form').blur();
+	disableAtractionPage();
+}
+
 function enableAtractionPage() {
 	$("#atraction-form").removeClass("disable-buttons");
 	$(".btn-final").removeClass("disable-buttons");
@@ -476,6 +458,11 @@ function closeNewPointOfInterestForm() {
 	document.getElementById('pdi-descripcion').value = '';
 	document.getElementById('pdi-orden').value = '';
 	document.getElementById('pdi-imagen').src = '//:0';
+	enableAtractionPage();
+}
+
+function closeViewCommentPopUp() {
+	document.getElementById('atraction-comment-popup').style.display = 'none';
 	enableAtractionPage();
 }
 
@@ -498,6 +485,9 @@ $("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
 
 const MAX_DESCRIPCION_PUNTO_DE_INTERES = "250";
 $("#pid-descripcion").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
+
+const MAX_COMENTARIO = "500";
+$(atraction-comment").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 
 if (${atraccion.recorrible}) {
 	$("#es-recorrible").attr("checked", "checked");
