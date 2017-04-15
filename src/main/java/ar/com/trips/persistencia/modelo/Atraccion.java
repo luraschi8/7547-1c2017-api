@@ -95,6 +95,10 @@ public class Atraccion extends Modelo{
 	
 	@Transient
 	private byte[] plan;
+	
+	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
+	@JsonBackReference(value="listaResenias")
+	private List<Resenia> listaResenias = new ArrayList<>();
 
 	public Atraccion() {
 		
@@ -244,4 +248,11 @@ public class Atraccion extends Modelo{
 		this.imagen = imagen;
 	}
 	
+	public List<Resenia> getListaResenias() {
+		return listaResenias;
+	}
+
+	public void setListaResenias(List<Resenia> listaResenias) {
+		this.listaResenias = listaResenias;
+	}
 }
