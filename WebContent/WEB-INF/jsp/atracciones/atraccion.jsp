@@ -20,7 +20,7 @@
 	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
 
 <div id="atraction-form">
-	<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
+	<form:form id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
 		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
 		
 		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
@@ -272,7 +272,7 @@
 				<div class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
-						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="showPopUpForm()"/>
+						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm()"/>
 					</div>
 					
 					<div class="panel-body atraction-points-of-interest">
@@ -322,7 +322,7 @@
 
 	
 <div id="atraction-point-of-interest-popup-form">
-	<form:form class="form-horizontal maxwid atraction-new-point-of-interest" id ="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
+	<form:form class="atraction-new-point-of-interest" id ="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
 		<h2>Nuevo punto de interés</h2>
 		
 		<div>
@@ -387,8 +387,34 @@
 	</form:form>
 		
 	<div class="btn-final-pdi-form" style="text-align:center;">
-		<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closePopUpForm();"/>
+		<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
 		<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+	</div>
+</div>
+
+<div id="atraction-comment-popup">
+	<div class="atraction-view-comment" id ="atraction-view-comment" name="atraction-view-comment">
+		<h2>Edición reseña</h2>
+		
+		<div class="atraction-comment-group">
+			<div style="float: left; margin-top: 4.5rem;">
+				<img src="${pageContext.request.contextPath}/imagenAtraccion?id=1" style="width:7.5rem; height:7.5rem"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
+				<p id="comentario-nombre-usuario">Pepe<!-- TODO Acá iría el nombre del usuario ${comentario.usuario.nombre} --></p>
+			</div>
+			
+			<div style="float: right;">
+			 	<div>
+					<label class="atraction-label">Enviado el día... </label><!-- TODO Acá habría que agregar la fecha y la hora del comentario ${comentario.fecha} ${comentario.hora} --></p>
+					<textarea onkeydown="calculateMaxLength('#atraction-comment', MAX_COMENTARIO)" id="atraction-comment" path="comentario" name="atraction-comment" class="atraction-box" required="required" rows="5"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<form:form id="formGuardarEdicionComentario" action="atraccionVer?idAtraccion=${atraccion.id}" method="post"></form:form>
+	<div class="btn-final-edicion-comentario-popup" style="text-align:center; clear: right;">
+		<input id="botonCancelarComentario" class="btn btn-default" type="button" value="Cancelar" onclick="closeViewCommentPopUp();"/>
+		<input id="botonAceptarComentario" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 	</div>
 </div>
 
@@ -406,9 +432,16 @@ function disableAtractionPage() {
 	$(".atraction-new-page-header").addClass("disable-buttons");
 }
 
-function showPopUpForm() {
+function openNewPointOfInterestForm() {
 	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'block';
 	document.getElementById('atraction-point-of-interest-popup-form').focus();
+	document.getElementById('atraction-form').blur();
+	disableAtractionPage();
+}
+
+function openViewCommentPopUp() {
+	document.getElementById('atraction-comment-popup').style.display = 'block';
+	document.getElementById('atraction-comment-popup').focus();
 	document.getElementById('atraction-form').blur();
 	disableAtractionPage();
 }
@@ -419,7 +452,7 @@ function enableAtractionPage() {
 	$(".atraction-new-page-header").removeClass("disable-buttons");
 }
 
-function closePopUpForm() {
+function closeNewPointOfInterestForm() {
 	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'none';
 	document.getElementById('pdi-nombre').value = '';
 	document.getElementById('pdi-descripcion').value = '';
@@ -428,53 +461,14 @@ function closePopUpForm() {
 	enableAtractionPage();
 }
 
+function closeViewCommentPopUp() {
+	document.getElementById('atraction-comment-popup').style.display = 'none';
+	enableAtractionPage();
+}
+
 $(document).ready(function() {
 	validateImage("atraction-poi-get-image", "pdi-archivo-imagen", "pdi-imagen", "mensajeImagenIncorrectaPuntoDeInteresError");
 });
-
-/*$(document).ready(function() {
-	document.getElementById('atraction-pdi-get-image').onclick = function() {
-		document.getElementById('pdi-archivo-imagen').addEventListener('change', readURL, true);
-		var fileButton = document.getElementById('pdi-archivo-imagen');
-		fileButton.click();
-	};
-	
-	$("#pdi-archivo-imagen").change(function() {
-	    var val = $(this).val();
-	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
-	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
-	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
-	        	break;
-	        default:
-	            $(this).val('');
-				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-				document.getElementById('pdi-archivo-imagen').src = "";
-				document.getElementById('pdi-imagen').src = "";
-				break;
-	    }
-	});
-	
-	function readURL() {
-		document.getElementById("pdi-imagen-cambiada").value = "1";
-		var file = document.getElementById("pdi-archivo-imagen").files[0];
-		var reader = new FileReader();
-	    reader.onloadend = function() {
-			document.getElementById('pdi-imagen').src = reader.result ;        
-			}
-		if(file) {
-			reader.readAsDataURL(file);
-		} 
-	}
-});*/
-
-/* Para hacer un dropdown
-$(function() {
-    var $select = $(".order-list");
-    for (i = 1 ; i <= 30; i++) {
-        $select.append($('<option></option>').val(i).html(i));
-    }
-});*/
-
 </script>
 
 
@@ -482,8 +476,8 @@ $(function() {
 <script>
 const MAX_NOMBRE_ATRACCION = "50";
 const MAX_DESCRIPCION_ATRACCION = "250";
-const MAX_HORARIO_ATRACCION = "50";
-const MAX_PRECIO_ATRACCION = "50";
+const MAX_HORARIO_ATRACCION = "100";
+const MAX_PRECIO_ATRACCION = "100";
 $("#nombreEditadoTextarea").attr("maxlength", MAX_NOMBRE_ATRACCION);
 $("#descripcionEditadaTextarea").attr("maxlength", MAX_DESCRIPCION_ATRACCION);
 $("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO_ATRACCION);
@@ -491,6 +485,9 @@ $("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
 
 const MAX_DESCRIPCION_PUNTO_DE_INTERES = "250";
 $("#pid-descripcion").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
+
+const MAX_COMENTARIO = "500";
+$(atraction-comment").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 
 if (${atraccion.recorrible}) {
 	$("#es-recorrible").attr("checked", "checked");
@@ -723,8 +720,7 @@ $(document).ready(function() {
 </script>
 
 
-<!-- Para el slide de Galería podría ser útil -->
-<!-- Galería -->
+<!-- Gallery -->
 <script>
 var slideIndex = 1;
 showDivs(slideIndex);
@@ -796,7 +792,7 @@ $(document).ready(function() {
 	    source.type = "video/mp4";
 		video.appendChild(source);
 	</c:if>
-
+	
 	<c:if test="${atraccion.audioEN != null}">
 		var audio = document.getElementById('audio');
 	    audio.src = "${pageContext.request.contextPath}/audioAtraccion?id=" + '${atraccion.id}';
@@ -804,7 +800,7 @@ $(document).ready(function() {
 	
 	filesNumber = imageNumber + videoNumber;
 	nextGalleryItem(0);
-	
+
 	document.getElementById('eliminarAtraccion').onclick = function() {
 		unArchivo = multimedia[slideIndex - 1];
 		var element = document.getElementById(unArchivo.id);
@@ -848,6 +844,7 @@ $(document).ready(function() {
 	        		elem.parentNode.removeChild(elem);
 	        		return;
 	        	}
+	        	
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	        	document.getElementById('mensajeHayVideo').style.display = 'none';
 	        	document.getElementById("mensajeUnaImagen").style.display = 'none';
@@ -857,7 +854,6 @@ $(document).ready(function() {
 	        	document.getElementById('archivoGaleria').style.display = 'none';
 	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
 				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
-				imageVideo.id = 'archivoGaleria' + filesNumber;
 				imageNumber = imageNumber + 1;
 	        	break;
 	        case 'mp4': case 'avi': 
@@ -887,8 +883,8 @@ $(document).ready(function() {
 	        		videoType='video/avi';
 	        	}
 	        	document.getElementById('archivoGaleria').name = 'unVideo';
-	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
-	        	imageVideo.id = 'archivoGaleria' + filesNumber;	        
+	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;	
+	        	imageVideo.id = 'archivoGaleria' + filesNumber;        
 	        	break;
 	        default:
 	            $(this).val('');

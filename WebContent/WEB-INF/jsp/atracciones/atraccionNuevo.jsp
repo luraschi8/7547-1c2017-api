@@ -17,7 +17,7 @@
 
 	<h1 class="page-header atraction-new-page-header" style="margin-left: 5rem">Nueva atracción</h1>
 	
-	<form:form class="form-horizontal maxwid" id ="formNuevo" name="formNuevo" action="atraccionNuevoValidar" method="post" commandName="atraccion" enctype="multipart/form-data">
+	<form:form id ="formNuevo" name="formNuevo" action="atraccionNuevoValidar" method="post" commandName="atraccion" enctype="multipart/form-data">
 	
 		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
 		
@@ -125,7 +125,7 @@
 						    <!-- <input type="file" multiple name="archivoGaleria" id="archivoGaleria"/> -->
 						</div>
 						<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarImagen">
-							<span class="glyphicon glyphicon-pencil"></span>
+							<span class="glyphicon glyphicon-erase"></span>
 						 </button>
 					</div>
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">

@@ -17,15 +17,15 @@
 
 <body>
 
-<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="ciudadModificar" method="post" commandName="ciudad" enctype="multipart/form-data">
+<form:form class="form-horizontal" id ="formModificar" name="formModificar" action="ciudadModificar" method="post" commandName="ciudad" enctype="multipart/form-data">
 	<form:input id="id" type="hidden" name="id" path="id" value="${ciudad.id}"/>
 
 
 	<input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
 	<input id="imagenCambiada" name="imagenCambiada" type="hidden" value="0">
 	
-	<div class="view-city-image">
-		<div class="panel panel-primary view-city-image-box sobreBoton">
+	<div style="width: 100%; height: 100%">
+		<div class="view-city-image-box sobreBoton">
 			<img id="imagen" src="${pageContext.request.contextPath}/imagenCiudad?id=${ciudad.id}" style="width:100%; height:100%"/>
 			<button type="button" class="btn btn-default btn-sm btn-get-file" id="get_file" onclick="editCoordinates()">
 				<span class="glyphicon glyphicon-pencil"></span>
@@ -36,7 +36,7 @@
 	<div>
 		<div class="alert alert-warning fade in view-city-wrong-image" id="mensajeImagenIncorrectaError" style="display: none;">
 		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-		 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+		 	<strong>¡Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 		</div>
 	</div>
 </form:form>
@@ -46,26 +46,19 @@
 		${ciudad.nombre}, ${ciudad.pais}
 	</h1>
 	
-	<div class="panel-group" style="width: 100%; overflow: hidden;">
-		<div id="view-city-map" class="view-city-map" style="float:left"></div>
+	<div class="panel-group">
+		<div id="view-city-map" class="view-city-map" style="margin-left: 3%;"></div>
 		
-		<div class="panel panel-primary view-city-panel" style="float:right">
-			<div style="text-align:center;">
-				<input id="botonAtracciones" class="btn btn-ver btn-atracciones" type="button" value="Atracciones" />
-				
-				<form class="form-horizontal maxwid" id="formAgregarAtraccion" name="formAgregarAtraccion" action="atraccionNuevo" method="post">
-					<input id="botonAgregarAtraccion" class="btn btn-agregar btn-nueva-atraccion" type="button" value="+" />
-					<input id="idCiudad" name="idCiudad" type="hidden" value="${ciudad.id}"/>
-					<input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${ciudad.latitud}"/>
-					<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${ciudad.longitud}"/>
-				</form>
-				
-				<input id="botonRecorridos" class="btn btn-ver btn-recorridos" type="button" value="Recorridos" />
-				<input id="botonAgregarRecorrido" class="btn btn-agregar btn-nuevo-recorrido" type="button" value="+" />
+		<div class="panel panel-primary view-city-panel">
+			<div class="city-panel-buttons">
+				<input id="botonAtracciones" class="btn btn-ver" type="button" value="Atracciones"/>
+				<input id="botonAgregarAtraccion" class="btn btn-agregar btn-nueva-atraccion" type="button" value="+"/>
+				<input id="botonRecorridos" class="btn btn-ver" type="button" value="Recorridos"/>
+				<input id="botonAgregarRecorrido" class="btn btn-agregar" type="button" value="+"/>
 			</div>
 		
 			<div class="panel-body">
-				<table id="tablita" class="display order-column view-city-board" cellspacing="0" width="100%">
+				<table id="tablita" class="display order-column view-city-board" cellspacing="0">
 					<thead>
 						<tr>
 							<th></th>
@@ -82,6 +75,13 @@
 	</div>
 </div>
 
+
+<form style="display: none" class="form-city-add-atraction" id="formAgregarAtraccion" name="formAgregarAtraccion" action="atraccionNuevo" method="post">
+	<input id="idCiudad" name="idCiudad" type="hidden" value="${ciudad.id}"/>
+	<input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${ciudad.latitud}"/>
+	<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${ciudad.longitud}"/>
+</form>
+
 <form:form id="formAtras" action="ciudades" method="post"></form:form>
 <div class="view-city-btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
@@ -93,11 +93,11 @@
 </c:set>
 
 <c:set var="value">
- 	¿Desea borrar?
+ 	¿Desea borrar la atracción?
 </c:set>
 <input id="mensajeBorrar" type="hidden" value="${value}" />
  
-<form class="form-horizontal maxwid" id ="formBorrar" name="formBorrar" action="atraccionBorrar" method="post">
+<form id ="formBorrar" name="formBorrar" action="atraccionBorrar" method="post">
 	<input id="idAtraccion" name="idAtraccion" type="hidden">
 	<input id="idCiudadAtraccion" name="idCiudadAtraccion" value="${ciudad.id}" type="hidden"> 
 </form>
@@ -143,7 +143,7 @@ var table = $('#tablita').DataTable( {
     columns: [
         {	data: "id",
         	render: function (data,type,row) {
-        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        		return '<div align="center"><img src="/Trips/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
         	}
         },
         {data: "nombre" },
@@ -205,9 +205,11 @@ $('#botonNuevo').on('click', function(e) {
 	hayError = 0;
 	if (document.getElementById("imagenCambiada").value == "1" && document.getElementById('archivoImagenPiso').value == '') {
 		document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+		$('.form-horizontal').css('margin-bottom', '8rem');
 		hayError = 1;
 	} else {
 		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+		$('.form-horizontal').css('margin-bottom', '0');
 	}
 	if (hayError == 1) {
 		return;
@@ -241,10 +243,12 @@ $(document).ready(function() {
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	$('.form-horizontal').css('margin-bottom', '0');
 	        	break;
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+				$('.form-horizontal').css('margin-bottom', '8rem');
 				document.getElementById('archivoImagenPiso').value = "" ;
 				document.getElementById('imagen').src = "" ;
 				break;

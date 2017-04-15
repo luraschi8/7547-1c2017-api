@@ -17,7 +17,7 @@
 
 	<h1 class="page-header" style="margin-left:5rem">Nueva ciudad</h1>
 
-	<form:form class="form-horizontal maxwid" id ="formNuevo" name="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad" enctype="multipart/form-data">
+	<form:form id ="formNuevo" name="formNuevo" action="ciudadNuevoValidar" method="post" commandName="ciudad" enctype="multipart/form-data">
 		<div class="input-and-image-group" style="width: 100%; overflow: hidden;">	
 			<div class="input" style="float:left">
 				<div class="name-group">

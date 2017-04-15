@@ -16,7 +16,7 @@
 </head>
 <body>
 
-	<h1 class="page-header" style="margin-left: 5rem">
+	<h1 class="page-header" style="margin-left: 3%">
 		Ciudades
 	</h1>
 
