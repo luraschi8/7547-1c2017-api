@@ -8,4 +8,6 @@ public interface IImagenAtraccionDAO extends IDAO {
 	
 	ImagenAtraccion getImagenPrincipal(Integer idAtraccion);
 	
+	void borrar(long id);
+	
 }

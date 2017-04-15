@@ -36,4 +36,14 @@ public class ImagenAtraccionDAOImpl extends DAOImpl implements IImagenAtraccionD
 		return get(ImagenAtraccion.class,id);
 	}
 
+	@Override
+	@Transactional
+	public void borrar(long id) {
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		s.delete(get(id));
+		s.getTransaction().commit();
+		s.close();
+	}
+
 }

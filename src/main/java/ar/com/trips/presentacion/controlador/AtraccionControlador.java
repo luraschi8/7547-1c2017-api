@@ -144,6 +144,8 @@ public class AtraccionControlador {
 									@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
 									@RequestParam(name="archivoGaleria4",required = false) MultipartFile galeria5,
 									@RequestParam(name="unVideo",required = false) MultipartFile video,
+									@RequestParam(name="imagenesCambiadas") String imagenesCambiadas,
+									@RequestParam(name="videoCambiado") int videoCambiado,
 									@RequestParam("planoCambiado") int planoCambiado,
 									@RequestParam("archivoPlano") MultipartFile imagen) throws IOException {
 		Atraccion atraccion = atraccionDao.get(atraccionId.getId());
@@ -156,6 +158,10 @@ public class AtraccionControlador {
 				atraccion.setPlano(null);
 			}
 		}
+		if (videoCambiado == 1) {
+			atraccion.setVideo(null);
+		}
+		eliminarImagenes(imagenesCambiadas);
 		atraccion.setNombre(nombreModificado);
 		atraccion.setDescripcion(descripcionModificada);
 		atraccion.setHorario(horarioModificado);
@@ -169,5 +175,15 @@ public class AtraccionControlador {
 		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
 		atraccionDao.modificar(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
+	}
+
+	private void eliminarImagenes(String imagenesCambiadas) {
+		if (imagenesCambiadas == null || imagenesCambiadas.equals("")) {
+			return;
+		}
+		String[] ids = imagenesCambiadas.split(";");
+		for (String id : ids) {
+			imagenAtraccionDao.borrar(Long.parseLong(id));
+		}
 	}
 }

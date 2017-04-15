@@ -388,7 +388,6 @@ function showDivs(n) {
     var i;
     if (n >= filesNumber) {slideIndex = 0}
     if (n < 0) {slideIndex = filesNumber - 1};
-    console.log("INDEXX: " + slideIndex);
     if (multimedia.length == 0) {
     	document.getElementById('imagenGaleria').src = '';
     	hideGalleryVideo();
@@ -544,12 +543,12 @@ $(document).ready(function() {
 				video.appendChild(source);
 			}
 			multimedia.push(imageVideo);
+			filesNumber = imageNumber + videoNumber;
+			slideIndex = filesNumber - 1;
 		}
 		if(file) {
 			reader.readAsDataURL(file);
 		}
-		filesNumber = imageNumber + videoNumber;
-		slideIndex = filesNumber - 1;
 	}
 });
 </script>

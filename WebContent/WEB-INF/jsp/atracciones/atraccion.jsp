@@ -165,6 +165,9 @@
 				
 				<!-- Galería -->
 				<div>
+					<input type="hidden" id="imagenesCambiadas" name="imagenesCambiadas">
+					<input type="hidden" id="videoCambiado" name="videoCambiado" value=0>					
+					
 					<div>
 						<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
 					</div>
@@ -177,7 +180,9 @@
 					
 						<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
 					</div>
-					<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarAtraccion"> </button>
+					<button type="button" class="btn btn-default btn-sm atraction-get-blueprints" id="eliminarImagen">
+						<span class="glyphicon glyphicon-erase"></span>
+					 </button>
 					
 					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeHayVideo" style="display: none;">
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
@@ -398,7 +403,7 @@
 		
 		<div class="atraction-comment-group">
 			<div style="float: left; margin-top: 4.5rem;">
-				<img src="${pageContext.request.contextPath}/imagenAtraccion?id=1" style="width:7.5rem; height:7.5rem"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
+				<!-- <img src="${pageContext.request.contextPath}/imagenAtraccion?id=1" style="width:7.5rem; height:7.5rem"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
 				<p id="comentario-nombre-usuario">Pepe<!-- TODO Acá iría el nombre del usuario ${comentario.usuario.nombre} --></p>
 			</div>
 			
@@ -487,7 +492,7 @@ const MAX_DESCRIPCION_PUNTO_DE_INTERES = "250";
 $("#pid-descripcion").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 
 const MAX_COMENTARIO = "500";
-$(atraction-comment").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
+$("atraction-comment").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 
 if (${atraccion.recorrible}) {
 	$("#es-recorrible").attr("checked", "checked");
@@ -616,7 +621,10 @@ function validarAtraccionRepetida() {
 	} else {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
-	
+	if (imageNumber == 0) {
+		document.getElementById("mensajeUnaImagen").style.display = 'block';
+		hayError = 1;
+	}
 	if (hayError == 1) {
 		return;
 	}
@@ -723,7 +731,6 @@ $(document).ready(function() {
 <!-- Gallery -->
 <script>
 var slideIndex = 1;
-showDivs(slideIndex);
 
 var imageNumber = 0;
 var videoNumber = 0;
@@ -732,7 +739,8 @@ var filesNumber = imageNumber + videoNumber;
 
 var multimedia = [];
 
-var slideIndex = 1;
+var slideIndex = 0;
+showDivs(slideIndex);
 
 function nextGalleryItem(n) {
     showDivs(slideIndex += n);
@@ -740,12 +748,17 @@ function nextGalleryItem(n) {
 
 function showDivs(n) {
     var i;
-    if (n > filesNumber) {slideIndex = 1}
-    if (n < 1) {slideIndex = filesNumber};
-    multi = multimedia[slideIndex - 1];
+    if (n >= filesNumber) {slideIndex = 0}
+    if (n < 0) {slideIndex = filesNumber - 1};
+    if (multimedia.length == 0) {
+    	document.getElementById('imagenGaleria').src = '';
+    	hideGalleryVideo();
+    	return;
+    }
+    multi = multimedia[slideIndex];
     if (multi.imagen == 1) {
 		hideGalleryVideo();
-		document.getElementById('imagenGaleria').src = multimedia[slideIndex - 1].src;
+		document.getElementById('imagenGaleria').src = multi.src;
 	} else {
 		hideGalleryImage();
 	}
@@ -776,10 +789,11 @@ $(document).ready(function() {
 	    var imAt = new Object();
 	    imAt.src = "${pageContext.request.contextPath}/imagenAtraccion?id=" + '${imagenAtraccion.id}';
 	    imAt.imagen = 1;
+	    imAt.idImagen = ${imagenAtraccion.id};
 	    multimedia.push(imAt);
 	    imageNumber += 1;
 	</c:forEach>
-	
+
 	<c:if test="${atraccion.video != null}">
 		var imAt = new Object();
 	    imAt.src = "${pageContext.request.contextPath}/videoAtraccion?id=" + '${atraccion.id}';
@@ -801,11 +815,36 @@ $(document).ready(function() {
 	filesNumber = imageNumber + videoNumber;
 	nextGalleryItem(0);
 
-	document.getElementById('eliminarAtraccion').onclick = function() {
-		unArchivo = multimedia[slideIndex - 1];
-		var element = document.getElementById(unArchivo.id);
-		element.parentNode.removeChild(element);
+	var posiblesId = [0,1,2,3,4]; 
+
+	document.getElementById('eliminarImagen').onclick = function() {
+		if (filesNumber == 0) {
+			return;
+		}
+		unArchivo = multimedia[slideIndex];
+		if (unArchivo.idImagen != null) {
+			console.log("IMAGEN MODIFICADA");
+			document.getElementById('imagenesCambiadas').value += unArchivo.idImagen + ';';
+		}
+		if (unArchivo.imagen == 1) {
+			imageNumber -= 1;
+		} else {
+			videoNumber = 0;
+			if (unArchivo.file != null) {
+				var eliminado = unArchivo.file;
+				eliminado.parentNode.removeChild(eliminado);
+			}
+			document.getElementById('videoCambiado').value = 1;
+		}
+		if (unArchivo.idNumero != null) {
+			posiblesId.push(unArchivo.idNumero);
+			var element = document.getElementById(unArchivo.id);
+			element.parentNode.removeChild(element);
+		}
+		filesNumber -= 1;
+		multimedia.splice(slideIndex, 1);
 		slideIndex -=1;
+		filesNumber = imageNumber + videoNumber;
 		nextGalleryItem(slideIndex);
 	}
 	
@@ -852,8 +891,9 @@ $(document).ready(function() {
 	        	tagImagen = document.createElement('img');
 	        	imageVideo.file = tagImagen;
 	        	document.getElementById('archivoGaleria').style.display = 'none';
-	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
-				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
+	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + posiblesId[0];
+				document.getElementById('archivoGaleria').id = 'archivoGaleria' + posiblesId[0];
+				imageVideo.id = 'archivoGaleria' + posiblesId[0];
 				imageNumber = imageNumber + 1;
 	        	break;
 	        case 'mp4': case 'avi': 
@@ -883,8 +923,8 @@ $(document).ready(function() {
 	        		videoType='video/avi';
 	        	}
 	        	document.getElementById('archivoGaleria').name = 'unVideo';
-	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;	
-	        	imageVideo.id = 'archivoGaleria' + filesNumber;        
+	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + posiblesId[0];	
+	        	imageVideo.id = 'archivoGaleria' + posiblesId[0];        
 	        	break;
 	        default:
 	            $(this).val('');
@@ -910,9 +950,13 @@ $(document).ready(function() {
 				var source = document.createElement('source');
 			    source.src = reader.result;
 			    source.type = videoType;
+			    imageVideo.file = source;
 				video.appendChild(source);
 			}
+			imageVideo.idNumero = posiblesId[0];
+			console.log("ID USADO: " + imageVideo.id);
 			multimedia.push(imageVideo);
+			posiblesId.splice(0,1);
 			filesNumber = imageNumber + videoNumber;
 			slideIndex = filesNumber - 1;
 		}
