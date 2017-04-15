@@ -1,9 +1,5 @@
 package ar.com.trips.presentacion.rest;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,22 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
-import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 import ar.com.trips.presentacion.dto.AtraccionDTO;
 import ar.com.trips.presentacion.validacion.AtraccionValidacion;
-import ar.com.trips.presentacion.validacion.CiudadValidacion;
 
 @RestController
 public class AtraccionControladorRest {
@@ -67,12 +59,7 @@ public class AtraccionControladorRest {
 								@PathVariable long idAtraccion) {
 		HashMap<String, AtraccionDTO> lista = new HashMap<String, AtraccionDTO>();
 		Atraccion a = atraccionDao.get(idAtraccion);
-		System.out.println("HEELLLOOOOOOOOOOOOOOOOOOOOO");
-		System.out.println(request.getContextPath());
-		System.out.println(request.getLocalAddr());
-		System.out.println(request.getRequestURL());
 		String url = request.getRequestURL().toString();
-		System.out.println("IS THIS IT: " + url.substring(0, url.indexOf("atraccion")));
 		url = url.substring(0, url.indexOf("atraccion"));
 		AtraccionDTO dto = new AtraccionDTO();
 		dto.setNombre(a.getNombre());
@@ -90,7 +77,7 @@ public class AtraccionControladorRest {
 		}
 		List<String> imagenes = new ArrayList<>();
 		for (ImagenAtraccion i : a.getListaImagenes()) {
-			imagenes.add(url + "imagenAtraccion?id=" + i.getId());
+			imagenes.add(DatatypeConverter.printBase64Binary(i.getImagen()));
 		}
 		dto.setListaImagenes(imagenes);
 		if (a.getVideo() != null) {
