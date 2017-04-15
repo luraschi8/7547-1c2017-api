@@ -508,92 +508,6 @@ if (${atraccion.recorrible}) {
 
 <script>
 var far_away = false;
-function calculateMaxLength(field, max) {
-	var count = 0;
-	for (var i = 0; i < max; i++) {
-		if ($(field).val()[i] == '\n') {
-			count++;
-		}
-	}
-	$(field).attr("maxlength", max - count);
-}
-
-function editField(field, ok, cancel, vacio, obligatorio) {
-	hideAllAtractionErrorMessages();
-	$(field).hide();
-	var new_field = $(field).attr("id") + "Textarea";
-	document.getElementById(new_field).style.display = "inline-block";
-	document.getElementById(new_field).value = $(field).html();
-	if (obligatorio) {
-		document.getElementById(vacio).style.display = "none";
-	}
-	if (!$(field).val()) {
-		$(field).val($(field).html());
-	}
-    displayOkAndCancelButtons(ok, cancel);
-}
-
-function displayOkAndCancelButtons(ok, cancel) {
-	document.getElementById(ok).style.display = "inline-block";
-    document.getElementById(cancel).style.display = "inline-block";
-}
-
-function hideTextarea(field) {
-    var new_field = $(field).attr("id") + "Textarea";
-	document.getElementById(new_field).style.display = "none";
-}
-
-function hideOkAndCancelButtons(ok, cancel) {
-	document.getElementById(ok).style.display = "none";
-    document.getElementById(cancel).style.display = "none";
-}
-
-function hideEdition(field, ok, cancel) {
-	hideTextarea(field);
-	hideOkAndCancelButtons(ok, cancel);
-}
-
-function saveField(field, ok, cancel, vacio, obligatorio) {
-	hideEdition(field, ok, cancel);
-	var new_field = "#" + $(field).attr("id") + "Textarea";
-	if (($(new_field).val()) || (!obligatorio)) {
-		$(field).html($(new_field).val());
-	} else {
-		if (obligatorio) {
-			document.getElementById(vacio).style.display = "block";
-		}
-	}
-	$(field).show();
-}
-
-function cancelField(field, ok, cancel) {
-	hideEdition(field, ok, cancel);
-    $(field).html($(field).val());
-	$(field).show();
-}
-
-function hideAllAtractionErrorMessages() {
-	document.getElementById("mensajeNombreVacio").style.display = "none";
-	document.getElementById("mensajeDescripcionVacia").style.display = 'none';
-	document.getElementById("mensajePlanoNecesario").style.display = 'none';
-	document.getElementById("mensajeImagenIncorrectaError").style.display = "none";
-	document.getElementById("mensajeHayVideo").style.display = 'none';
-	document.getElementById("mensajeCincoArchivos").style.display = 'none';
-	document.getElementById("mensajeTamanoImagen").style.display = "none";
-	document.getElementById("mensajeTamanoVideo").style.display = 'none';
-	document.getElementById("mensajeUnaImagen").style.display = 'none';
-	document.getElementById("mensajeAudioIncorrectoError").style.display = "none";
-	document.getElementById("mensajeUbicacionVacia").style.display = 'none';
-	document.getElementById("mensajeUbicacionLejana").style.display = 'none';
-	document.getElementById("mensajeNombreRepetido").style.display = "none";
-}
-
-function hideAllPointOfInterestErrorMessages() {
-	document.getElementById("mensajeNombreVacioPuntoDeInteresError").style.display = 'none';
-	document.getElementById("mensajeDescripcionVaciaPuntoDeInteresError").style.display = 'none';
-	document.getElementById("mensajeOrdenVacioPuntoDeInteresError").style.display = 'none';
-	document.getElementById("mensajeImagenIncorrectaPuntoDeInteresError").style.display = 'none';
-}
 
 function updateForm() {
 	document.formModificar.nombre.value = $('#nombreEditado').html();
@@ -1058,7 +972,8 @@ $(document).ready(function() {
 <script>
 var out_of_range = false, map, marker, autocomplete, infowindow, input, aux_lat, aux_lng,
 	map_lat = document.formModificar.latitud.value,
-	map_lng = document.formModificar.longitud.value;
+	map_lng = document.formModificar.longitud.value,
+	hubo_click = false;
 
 function updateCoordinatesForm() {
 	document.formModificar.latitud.value = map_lat;
@@ -1078,21 +993,26 @@ function setPosition(lat, lng) {
 
 function saveCoordinates() {
 	google.maps.event.clearInstanceListeners(map);
-	map_lat = aux_lat;
-	map_lng = aux_lng;
+	if (hubo_click) {
+		map_lat = aux_lat;
+		map_lng = aux_lng;
+	}
 	setPosition(map_lat, map_lng);
 	if (out_of_range) {
 		far_away = true;
 	}
 	hideOkAndCancelButtonsForCoordinates();
+	hideAllAtractionErrorMessages();
 }
 
 function cancelEditingCoordinates() {
 	google.maps.event.clearInstanceListeners(map);
 	setPosition(map_lat, map_lng);
+	hideAllAtractionErrorMessages();
 }
 
 function editCoordinates() {
+	hubo_click = false;
 	hideAllAtractionErrorMessages();
 	document.getElementById('ok-coordinates').style.display = "inline-block";
     document.getElementById('cancel-coordinates').style.display = "inline-block";
@@ -1137,7 +1057,7 @@ function editCoordinates() {
 		marker.setVisible(false);
 		marker.setPosition(event.latLng);
 	    marker.setVisible(true);
-	
+
 		// Se guardan las coordenadas
 		aux_lat = event.latLng.lat();
 		aux_lng = event.latLng.lng();
@@ -1151,6 +1071,7 @@ function editCoordinates() {
 	    	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
 	    	out_of_range = true;
 	    }
+		hubo_click = true;
 	});
 }
 

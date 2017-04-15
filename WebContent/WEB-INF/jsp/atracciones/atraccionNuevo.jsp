@@ -251,16 +251,6 @@ $("#precio").attr("maxlength", MAX_PRECIO_ATRACCION);
 </script>
 
 <script>
-function calculateMaxLength(field, max) {
-	var count = 0;
-	for (var i = 0; i < max; i++) {
-		if ($(field).val()[i] == '\n') {
-			count++;
-		}
-	}
-	$(field).attr("maxlength", max - count);
-}
-
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
@@ -355,7 +345,6 @@ function validarAtraccionRepetida() {
 		}
 	});
 }
-
 </script>
 
 

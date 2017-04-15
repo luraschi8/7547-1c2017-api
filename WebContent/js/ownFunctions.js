@@ -33,3 +33,92 @@ function validateImage(button_id, file_id, image_id, message_id) {
 		} 
 	}
 }
+
+function hideAllAtractionErrorMessages() {
+	document.getElementById("mensajeNombreVacio").style.display = "none";
+	document.getElementById("mensajeDescripcionVacia").style.display = 'none';
+	document.getElementById("mensajePlanoNecesario").style.display = 'none';
+	document.getElementById("mensajeImagenIncorrectaError").style.display = "none";
+	document.getElementById("mensajeHayVideo").style.display = 'none';
+	document.getElementById("mensajeCincoArchivos").style.display = 'none';
+	document.getElementById("mensajeTamanoImagen").style.display = "none";
+	document.getElementById("mensajeTamanoVideo").style.display = 'none';
+	document.getElementById("mensajeUnaImagen").style.display = 'none';
+	document.getElementById("mensajeAudioIncorrectoError").style.display = "none";
+	document.getElementById("mensajeUbicacionVacia").style.display = 'none';
+	document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+	document.getElementById("mensajeNombreRepetido").style.display = "none";
+}
+
+function saveField(field, ok, cancel, vacio, obligatorio) {
+	hideAllAtractionErrorMessages();
+	hideEdition(field, ok, cancel);
+	var new_field = "#" + $(field).attr("id") + "Textarea";
+	if (($(new_field).val()) || (!obligatorio)) {
+		$(field).html($(new_field).val());
+	} else {
+		if (obligatorio) {
+			document.getElementById(vacio).style.display = "block";
+		}
+	}
+	$(field).show();
+}
+
+function cancelField(field, ok, cancel) {
+	hideAllAtractionErrorMessages();
+	hideEdition(field, ok, cancel);
+    $(field).html($(field).val());
+	$(field).show();
+}
+
+function calculateMaxLength(field, max) {
+	var count = 0;
+	for (var i = 0; i < max; i++) {
+		if ($(field).val()[i] == '\n') {
+			count++;
+		}
+	}
+	$(field).attr("maxlength", max - count);
+}
+
+function editField(field, ok, cancel, vacio, obligatorio) {
+	hideAllAtractionErrorMessages();
+	$(field).hide();
+	var new_field = $(field).attr("id") + "Textarea";
+	document.getElementById(new_field).style.display = "inline-block";
+	document.getElementById(new_field).value = $(field).html();
+	if (obligatorio) {
+		document.getElementById(vacio).style.display = "none";
+	}
+	if (!$(field).val()) {
+		$(field).val($(field).html());
+	}
+    displayOkAndCancelButtons(ok, cancel);
+}
+
+function displayOkAndCancelButtons(ok, cancel) {
+	document.getElementById(ok).style.display = "inline-block";
+    document.getElementById(cancel).style.display = "inline-block";
+}
+
+function hideTextarea(field) {
+    var new_field = $(field).attr("id") + "Textarea";
+	document.getElementById(new_field).style.display = "none";
+}
+
+function hideOkAndCancelButtons(ok, cancel) {
+	document.getElementById(ok).style.display = "none";
+    document.getElementById(cancel).style.display = "none";
+}
+
+function hideEdition(field, ok, cancel) {
+	hideTextarea(field);
+	hideOkAndCancelButtons(ok, cancel);
+}
+
+function hideAllPointOfInterestErrorMessages() {
+	document.getElementById("mensajeNombreVacioPuntoDeInteresError").style.display = 'none';
+	document.getElementById("mensajeDescripcionVaciaPuntoDeInteresError").style.display = 'none';
+	document.getElementById("mensajeOrdenVacioPuntoDeInteresError").style.display = 'none';
+	document.getElementById("mensajeImagenIncorrectaPuntoDeInteresError").style.display = 'none';
+}
