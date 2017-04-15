@@ -36,7 +36,7 @@
 	<div>
 		<div class="alert alert-warning fade in view-city-wrong-image" id="mensajeImagenIncorrectaError" style="display: none;">
 		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-		 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+		 	<strong>¡Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 		</div>
 	</div>
 </form:form>
@@ -205,9 +205,11 @@ $('#botonNuevo').on('click', function(e) {
 	hayError = 0;
 	if (document.getElementById("imagenCambiada").value == "1" && document.getElementById('archivoImagenPiso').value == '') {
 		document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+		$('.form-horizontal').css('margin-bottom', '8rem');
 		hayError = 1;
 	} else {
 		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+		$('.form-horizontal').css('margin-bottom', '0');
 	}
 	if (hayError == 1) {
 		return;
@@ -241,10 +243,12 @@ $(document).ready(function() {
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	$('.form-horizontal').css('margin-bottom', '0');
 	        	break;
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+				$('.form-horizontal').css('margin-bottom', '8rem');
 				document.getElementById('archivoImagenPiso').value = "" ;
 				document.getElementById('imagen').src = "" ;
 				break;

@@ -20,7 +20,7 @@
 	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
 
 <div id="atraction-form">
-	<form:form class="form-horizontal maxwid" id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
+	<form:form id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
 		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
 		
 		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
@@ -272,7 +272,7 @@
 				<div class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
-						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="showPopUpForm()"/>
+						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm()"/>
 					</div>
 					
 					<div class="panel-body atraction-points-of-interest">
@@ -387,6 +387,57 @@
 	</form:form>
 		
 	<div class="btn-final-pdi-form" style="text-align:center;">
+		<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
+		<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+	</div>
+</div>
+
+<div id="atraction-comment-popup" style="display: none">
+	<div class="atraction-view-comment" id ="atraction-view-comment" name="atraction-view-comment">
+		<h2>Ver reseña</h2>
+		
+		<div>
+			<div style="float: left">
+				<label class="atraction-label">Usuario: </label>
+				<p id="comentario-nombre-usuario"><!-- TODO Acá iría el nombre del usuario ${comentario.usuario.nombre} --></p>
+			</div>
+			
+			<div style="float: right">
+			 	<img src="" style="width:100%; height:100%"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
+			</div>
+		</div>
+		
+		<div>
+			<label class="atraction-label">Fecha: </label>
+			<p id="comentario-fecha"><!-- TODO Acá iría la fecha del comentario ${comentario.fecha} --></p>
+		</div>
+		
+		<div>
+			<label class="atraction-label">Hora: </label>
+			<p id="comentario-hora"><!-- TODO Acá iría la hora del comentario ${comentario.hora} --></p>
+		</div>
+		
+		<div>
+			<div>
+				<label class="atraction-label">Comentario: </label>
+				<p id="comentario-mensaje"><!-- TODO Acá iría el comentario ${comentario.mensaje} --></p>
+			</div>
+			
+			<!--
+			<div>
+				<!-- TODO cambiar pdi... 
+				<textarea onkeydown="calculateMaxLength('#pdi-descripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="pdi-descripcion" path="descripcion" name="pdi-descripcion" class="atraction-box"  placeholder="Ingrese la descripción del punto de interés" required="required"></textarea>
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
+			 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
+			</div>
+			-->
+		</div>
+	</div>
+		
+	<div class="btn-final-pdi-form" style="text-align:center;">
 		<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closePopUpForm();"/>
 		<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 	</div>
@@ -406,7 +457,7 @@ function disableAtractionPage() {
 	$(".atraction-new-page-header").addClass("disable-buttons");
 }
 
-function showPopUpForm() {
+function openNewPointOfInterestForm() {
 	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'block';
 	document.getElementById('atraction-point-of-interest-popup-form').focus();
 	document.getElementById('atraction-form').blur();
@@ -419,7 +470,7 @@ function enableAtractionPage() {
 	$(".atraction-new-page-header").removeClass("disable-buttons");
 }
 
-function closePopUpForm() {
+function closeNewPointOfInterestForm() {
 	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'none';
 	document.getElementById('pdi-nombre').value = '';
 	document.getElementById('pdi-descripcion').value = '';
@@ -431,50 +482,6 @@ function closePopUpForm() {
 $(document).ready(function() {
 	validateImage("atraction-poi-get-image", "pdi-archivo-imagen", "pdi-imagen", "mensajeImagenIncorrectaPuntoDeInteresError");
 });
-
-/*$(document).ready(function() {
-	document.getElementById('atraction-pdi-get-image').onclick = function() {
-		document.getElementById('pdi-archivo-imagen').addEventListener('change', readURL, true);
-		var fileButton = document.getElementById('pdi-archivo-imagen');
-		fileButton.click();
-	};
-	
-	$("#pdi-archivo-imagen").change(function() {
-	    var val = $(this).val();
-	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
-	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
-	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
-	        	break;
-	        default:
-	            $(this).val('');
-				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-				document.getElementById('pdi-archivo-imagen').src = "";
-				document.getElementById('pdi-imagen').src = "";
-				break;
-	    }
-	});
-	
-	function readURL() {
-		document.getElementById("pdi-imagen-cambiada").value = "1";
-		var file = document.getElementById("pdi-archivo-imagen").files[0];
-		var reader = new FileReader();
-	    reader.onloadend = function() {
-			document.getElementById('pdi-imagen').src = reader.result ;        
-			}
-		if(file) {
-			reader.readAsDataURL(file);
-		} 
-	}
-});*/
-
-/* Para hacer un dropdown
-$(function() {
-    var $select = $(".order-list");
-    for (i = 1 ; i <= 30; i++) {
-        $select.append($('<option></option>').val(i).html(i));
-    }
-});*/
-
 </script>
 
 
@@ -482,8 +489,8 @@ $(function() {
 <script>
 const MAX_NOMBRE_ATRACCION = "50";
 const MAX_DESCRIPCION_ATRACCION = "250";
-const MAX_HORARIO_ATRACCION = "50";
-const MAX_PRECIO_ATRACCION = "50";
+const MAX_HORARIO_ATRACCION = "100";
+const MAX_PRECIO_ATRACCION = "100";
 $("#nombreEditadoTextarea").attr("maxlength", MAX_NOMBRE_ATRACCION);
 $("#descripcionEditadaTextarea").attr("maxlength", MAX_DESCRIPCION_ATRACCION);
 $("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO_ATRACCION);
@@ -723,8 +730,7 @@ $(document).ready(function() {
 </script>
 
 
-<!-- Para el slide de Galería podría ser útil -->
-<!-- Galería -->
+<!-- Gallery -->
 <script>
 var slideIndex = 1;
 showDivs(slideIndex);
@@ -796,7 +802,7 @@ $(document).ready(function() {
 	    source.type = "video/mp4";
 		video.appendChild(source);
 	</c:if>
-
+	
 	<c:if test="${atraccion.audioEN != null}">
 		var audio = document.getElementById('audio');
 	    audio.src = "${pageContext.request.contextPath}/audioAtraccion?id=" + '${atraccion.id}';
@@ -804,7 +810,7 @@ $(document).ready(function() {
 	
 	filesNumber = imageNumber + videoNumber;
 	nextGalleryItem(0);
-	
+
 	document.getElementById('eliminarAtraccion').onclick = function() {
 		unArchivo = multimedia[slideIndex - 1];
 		var element = document.getElementById(unArchivo.id);
@@ -848,6 +854,7 @@ $(document).ready(function() {
 	        		elem.parentNode.removeChild(elem);
 	        		return;
 	        	}
+	        	
 	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 	        	document.getElementById('mensajeHayVideo').style.display = 'none';
 	        	document.getElementById("mensajeUnaImagen").style.display = 'none';
@@ -857,7 +864,6 @@ $(document).ready(function() {
 	        	document.getElementById('archivoGaleria').style.display = 'none';
 	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
 				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
-				imageVideo.id = 'archivoGaleria' + filesNumber;
 				imageNumber = imageNumber + 1;
 	        	break;
 	        case 'mp4': case 'avi': 
@@ -887,8 +893,8 @@ $(document).ready(function() {
 	        		videoType='video/avi';
 	        	}
 	        	document.getElementById('archivoGaleria').name = 'unVideo';
-	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
-	        	imageVideo.id = 'archivoGaleria' + filesNumber;	        
+	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;	
+	        	imageVideo.id = 'archivoGaleria' + filesNumber;        
 	        	break;
 	        default:
 	            $(this).val('');
