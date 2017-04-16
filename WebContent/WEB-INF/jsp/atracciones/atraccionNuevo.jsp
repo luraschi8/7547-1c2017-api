@@ -165,7 +165,15 @@
 							
 							<!-- Botón agregar audioguía -->
 							<div style="text-align:center; float:right;">
-								<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Agregar audioguía">
+							
+								<button type="button" class="btn btn-default btn-sm btn-atraction-get-audio-file" id="atraction-get-audio-file">
+									<span class="glyphicon glyphicon-pencil"></span>
+								 </button>
+							
+								<button type="button" class="btn btn-default btn-sm btn-atraction-erase-audio-file" id="atraction-erase-audio-file">
+									<span class="glyphicon glyphicon-erase"></span>
+								 </button>
+
 								<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
 							</div>
 						</div>
@@ -200,7 +208,7 @@
 				<!-- Tabla puntos de interés y obras -->
 				<div class="panel panel-primary view-atraction-panel">
 					<div style="text-align:center">
-						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
+						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras" type="button" value="Puntos de interés y obras" />
 						
 						<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
 							<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" />

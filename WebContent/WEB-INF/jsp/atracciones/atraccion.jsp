@@ -224,7 +224,14 @@
 					
 					<!-- Botón agregar audioguía -->
 					<div style="text-align:center; float:right;">
-						<input type="button" id="atraction-get-audio-file" class="btn btn-default btn-atraction-get-audio-file" value="Editar audioguía">
+						<button type="button" class="btn btn-default btn-sm btn-atraction-get-audio-file" id="atraction-get-audio-file">
+							<span class="glyphicon glyphicon-pencil"></span>
+						 </button>
+					
+						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-audio-file" id="atraction-erase-audio-file">
+							<span class="glyphicon glyphicon-erase"></span>
+						 </button>
+
 						<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
 					</div>
 				</div>

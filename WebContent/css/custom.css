@@ -314,7 +314,7 @@ body {
 .btn-ver-puntos-y-obras {
 	display: block;
 	float: left;
-	width: 66.4rem;
+	width: 66.3rem;
 	background-color: #F0F0F0;
     border-radius: 2px;
 }
@@ -476,4 +476,8 @@ body {
 	margin-right: auto;
 	left: 0;
 	right: 0;
+}
+
+#audio {
+	width: 40rem;
 }
