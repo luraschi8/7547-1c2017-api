@@ -93,7 +93,7 @@
 </c:set>
 
 <c:set var="value">
- 	¿Desea borrar la atracción?
+ 	Se borrará la atracción junto a todo el contenido asociado a la misma. ¿Desea continuar?
 </c:set>
 <input id="mensajeBorrar" type="hidden" value="${value}" />
  

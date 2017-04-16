@@ -2,11 +2,10 @@
 
 drop table Usuario;
 drop table Permiso;
+drop table ImagenAtraccion;
+drop table PuntoDeInteres;
 drop table Atraccion;
 drop table Ciudad;
-drop table ImagenAtraccion;
-drop table PuntoInteres;
-
 
 create table Usuario (
 	id serial primary key not null,
@@ -35,7 +34,7 @@ create table Atraccion (
 	nombre varchar(50) not null,
     idCiudad bigint not null,
     horario varchar(50),
-    descripcion varchar(50),
+    descripcion varchar(250),
     precio varchar(50),
     latitud float not null,
     longitud float not null,
@@ -55,10 +54,12 @@ create table ImagenAtraccion (
     foreign key (idAtraccion) references Atraccion (id)
 );
 
-create table PuntoInteres (
+create table PuntoDeInteres (
 	id serial primary key not null,
     nombre varchar(50),
+    descripcion varchar(250),
+    orden varchar(20),
     imagen bytea,
-    idAtraccion bigint,
+    idAtraccion bigint not null,
     foreign key (idAtraccion) references Atraccion (id)
 )
