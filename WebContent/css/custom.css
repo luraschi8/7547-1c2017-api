@@ -452,7 +452,7 @@ body {
 }
 
 #atraction-comment-popup {
-	display: none;
+	/*display: none;*/
 	position: absolute;
 	z-index: 1;
 	background-color: #fefefe;
@@ -465,7 +465,7 @@ body {
     margin-right: auto;
     left: 0;
     right: 0;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #atraction-comment-popup .atraction-view-comment {
