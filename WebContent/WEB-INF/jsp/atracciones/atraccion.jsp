@@ -228,7 +228,7 @@
 							<span class="glyphicon glyphicon-pencil"></span>
 						 </button>
 					
-						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-audio-file" id="atraction-erase-audio-file">
+						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-audio-file" id="borrarAudio">
 							<span class="glyphicon glyphicon-erase"></span>
 						 </button>
 
@@ -927,6 +927,12 @@ $(document).ready(function() {
 <!-- Audioguía -->
 <script>
 $(document).ready(function() {
+	document.getElementById('borrarAudio').onclick = function() {
+		document.getElementById('archivoAudioguia').value = "" ;
+		document.getElementById('audio').src = "" ;
+		document.getElementById('audioCambiado').value = 1;
+	};
+	
 	document.getElementById('atraction-get-audio-file').onclick = function() {
 		hideAllAtractionErrorMessages();
 		document.getElementById('archivoAudioguia').addEventListener('change', readURL, true);
@@ -935,18 +941,17 @@ $(document).ready(function() {
 	};
 	
 	$("#archivoAudioguia").change(function() {
+       	document.getElementById('audioCambiado').value = 1;
 	    var val = $(this).val();
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	        case 'mp3':
 	        	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
-	        	document.getElementById('audioCambiado').value = 1;
 	        	break;
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeAudioIncorrectoError").style.display = 'block';
 				document.getElementById('archivoAudioguia').value = "" ;
 				document.getElementById('audio').src = "" ;
-				document.getElementById('audioCambiado').value = 1;
 				break;
 	    }
 	});
