@@ -228,7 +228,7 @@
 							<span class="glyphicon glyphicon-pencil"></span>
 						 </button>
 					
-						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-audio-file" id="atraction-erase-audio-file">
+						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-audio-file" id="borrarAudio">
 							<span class="glyphicon glyphicon-erase"></span>
 						 </button>
 
@@ -239,6 +239,11 @@
 				<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
 				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 				 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
+				 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
 				</div>			
 			</div>
 						
@@ -803,7 +808,6 @@ $(document).ready(function() {
 		}
 		unArchivo = multimedia[slideIndex];
 		if (unArchivo.idImagen != null) {
-			console.log("IMAGEN MODIFICADA");
 			document.getElementById('imagenesCambiadas').value += unArchivo.idImagen + ';';
 		}
 		if (unArchivo.imagen == 1) {
@@ -841,7 +845,6 @@ $(document).ready(function() {
 	
 	function readURL() {
 		hideGalleryErrorMessages();
-		console.log("READ");
 		document.getElementById('archivoGaleria').style.display = 'none';
 		var file = document.getElementById("archivoGaleria").files[0];
 		val = file.name;
@@ -935,7 +938,6 @@ $(document).ready(function() {
 				video.appendChild(source);
 			}
 			imageVideo.idNumero = posiblesId[0];
-			console.log("ID USADO: " + imageVideo.id);
 			multimedia.push(imageVideo);
 			posiblesId.splice(0,1);
 			filesNumber = imageNumber + videoNumber;
@@ -952,6 +954,12 @@ $(document).ready(function() {
 <!-- Audioguía -->
 <script>
 $(document).ready(function() {
+	document.getElementById('borrarAudio').onclick = function() {
+		document.getElementById('archivoAudioguia').value = "" ;
+		document.getElementById('audio').src = "" ;
+		document.getElementById('audioCambiado').value = 1;
+	};
+	
 	document.getElementById('atraction-get-audio-file').onclick = function() {
 		hideAllAtractionErrorMessages();
 		document.getElementById('archivoAudioguia').addEventListener('change', readURL, true);
@@ -960,18 +968,24 @@ $(document).ready(function() {
 	};
 	
 	$("#archivoAudioguia").change(function() {
+       	document.getElementById('audioCambiado').value = 1;
+       	var file = document.getElementById("archivoAudioguia").files[0];
 	    var val = $(this).val();
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	        case 'mp3':
+	        	if (file.size > (3 * 1024 * 1024)) {
+	        		document.getElementById('mensajeAudioTamano').style.display = 'block';
+	        		document.getElementById('archivoAudioguia').value = "" ;
+					document.getElementById('audio').src = "" ;
+	        		return;
+	        	}
 	        	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
-	        	document.getElementById('audioCambiado').value = 1;
 	        	break;
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeAudioIncorrectoError").style.display = 'block';
 				document.getElementById('archivoAudioguia').value = "" ;
 				document.getElementById('audio').src = "" ;
-				document.getElementById('audioCambiado').value = 1;
 				break;
 	    }
 	});

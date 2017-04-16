@@ -183,6 +183,12 @@
 					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
+					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
+					</div>
+					
 				</div>
 			</div>
 			
@@ -553,15 +559,23 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
 	document.getElementById('atraction-get-audio-file').onclick = function() {
+		hideAllAtractionErrorMessages();
 		document.getElementById('archivoAudioguia').addEventListener('change', readURL, true);
 		var fileButton = document.getElementById('archivoAudioguia');
 		fileButton.click();
 	};
 	
 	$("#archivoAudioguia").change(function() {
+	    var file = document.getElementById("archivoAudioguia").files[0];
 	    var val = $(this).val();
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	        case 'mp3':
+	        	if (file.size > (3 * 1024 * 1024)) {
+	        		document.getElementById('mensajeAudioTamano').style.display = 'block';
+	        		document.getElementById('archivoAudioguia').value = "" ;
+					document.getElementById('audio').src = "" ;
+	        		return;
+	        	}
 	        	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
 	        	break;
 	        default:
