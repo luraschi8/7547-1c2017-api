@@ -56,6 +56,7 @@ create table PuntoDeInteres (
     nombre varchar(50),
     descripcion varchar(250),
     orden varchar(20),
+    borrado tinyint default 0 not null,
     imagen mediumblob,
     idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
