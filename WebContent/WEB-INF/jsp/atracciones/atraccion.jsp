@@ -213,6 +213,7 @@
 				
 				<!-- Audioguía -->
 				<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
+				<input type="hidden" id="audioCambiado" name="audioCambiado" value=0>
 				<div>
 					<!-- Reproducir audioguía -->
 					<div style="float:left">
@@ -507,119 +508,122 @@ if (${atraccion.recorrible}) {
 </script>
 
 <script>
-var far_away = false;
+$(document).ready(function() {
 
-function updateForm() {
-	document.formModificar.nombre.value = $('#nombreEditado').html();
-	document.formModificar.descripcion.value = $('#descripcionEditada').html();
-	document.formModificar.horario.value = $('#horarioEditado').html();
-	document.formModificar.precio.value = $('#precioEditado').html();
-	document.formModificar.recorrible.value = $("input[name='recorrible']:checked").val();
-}
-
-$('#botonAtras').on('click', function(e) {
-	e.preventDefault();
-	document.getElementById("formAtras").submit();
-});
-
-$('#botonNuevo').on('click', function(e) {
-	e.preventDefault();
-	document.getElementById("mensajeNombreRepetido").style.display = 'none';
-	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
-	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
-	updateForm();
-	updateCoordinatesForm();
-	validarAtraccionRepetida();
-});
-
-function validarElemento(elemento, mensaje, hayError) {
-	if ((document.getElementById(elemento).value == '') && (!hayError)) {
-		document.getElementById(mensaje).style.display = 'block';
-		hayError = 1;
-	} else {
-		document.getElementById(mensaje).style.display = 'none';
-	}
-	return hayError;
-}
-
-function validarPlano(plano, mensaje, hayError) {
-	if ((document.getElementById(plano).src == "http://:0/") && (!hayError)) {
-		document.getElementById(mensaje).style.display = 'block';
-		hayError = 1;
-	} else {
-		document.getElementById(mensaje).style.display = 'none';
-	}
-	return hayError;
-}
-
-function validarAtraccionRepetida() {
-	hideAllAtractionErrorMessages();
-	hayError = 0;
-	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
-	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
+	var far_away = false;
 	
-	if (document.getElementById('es-recorrible').checked) {
-		hayError = validarPlano('plano', 'mensajePlanoNecesario', hayError);
-	} else {
-		document.getElementById("mensajePlanoNecesario").style.display = 'none';
+	function updateForm() {
+		document.formModificar.nombre.value = $('#nombreEditado').html();
+		document.formModificar.descripcion.value = $('#descripcionEditada').html();
+		document.formModificar.horario.value = $('#horarioEditado').html();
+		document.formModificar.precio.value = $('#precioEditado').html();
+		document.formModificar.recorrible.value = $("input[name='recorrible']:checked").val();
 	}
-	if ((imageNumber == 0) && (!hayError)) {
-		document.getElementById("mensajeUnaImagen").style.display = 'block';
-		hayError = 1;
-	}
-	if (hayError == 1) {
-		return;
-	}
-
-	var ciudad = {
-		"id": document.formModificar.idCiudad.value,
-	}
-	var json = {
-		"ciudad": ciudad,
-		"id": document.formModificar.id.value,
-		"nombre": document.formModificar.nombre.value
-	};
-	$.ajax({
-		url : "validarAtraccion",
-		type : "POST",
-		data : JSON.stringify(json),
-		processData : false,
-		dataType: "json",
-		contentType : "application/json",
-		success: function (data) {
-			if (data.existe == false) {
-				document.formModificar.recorrible.value = $("input[name='recorrible']:checked").val();
-				if (document.formModificar.recorrible.value == 0) {
-					document.getElementById("archivoPlano").src = "//:0";
-					document.getElementById("plano").src = "//:0";
-					document.getElementById("planoCambiado").value = "1";
-				}
-				if (far_away) {
-				    bootbox.confirm({
-			    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
-			    	    buttons: {
-			    	        confirm: {
-			    	            label: 'Sí'
-			    	        },
-			    	        cancel: {
-			    	            label: 'No'
-			    	        }
-			    	    },
-			    	    callback: function(result) {
-					        if (result) {
-					        	document.getElementById("formModificar").submit();
-					        }
-			    	    }
-				    });
-			  	} else {
-			  		document.getElementById("formModificar").submit();
-				}
-			} else {
-				document.getElementById("mensajeNombreRepetido").style.display = 'block';
-			}
-		}
+	
+	$('#botonAtras').on('click', function(e) {
+		e.preventDefault();
+		document.getElementById("formAtras").submit();
 	});
-}
+	
+	$('#botonNuevo').on('click', function(e) {
+		e.preventDefault();
+		document.getElementById("mensajeNombreRepetido").style.display = 'none';
+		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+		document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
+		updateForm();
+		updateCoordinatesForm();
+		validarAtraccionRepetida();
+	});
+	
+	function validarElemento(elemento, mensaje, hayError) {
+		if ((document.getElementById(elemento).value == '') && (!hayError)) {
+			document.getElementById(mensaje).style.display = 'block';
+			hayError = 1;
+		} else {
+			document.getElementById(mensaje).style.display = 'none';
+		}
+		return hayError;
+	}
+	
+	function validarPlano(plano, mensaje, hayError) {
+		if ((document.getElementById(plano).src == "http://:0/") && (!hayError)) {
+			document.getElementById(mensaje).style.display = 'block';
+			hayError = 1;
+		} else {
+			document.getElementById(mensaje).style.display = 'none';
+		}
+		return hayError;
+	}
+	
+	function validarAtraccionRepetida() {
+		hideAllAtractionErrorMessages();
+		hayError = 0;
+		hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
+		hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
+		
+		if (document.getElementById('es-recorrible').checked) {
+			hayError = validarPlano('plano', 'mensajePlanoNecesario', hayError);
+		} else {
+			document.getElementById("mensajePlanoNecesario").style.display = 'none';
+		}
+		if ((imageNumber == 0) && (!hayError)) {
+			document.getElementById("mensajeUnaImagen").style.display = 'block';
+			hayError = 1;
+		}
+		if (hayError == 1) {
+			return;
+		}
+	
+		var ciudad = {
+			"id": document.formModificar.idCiudad.value,
+		}
+		var json = {
+			"ciudad": ciudad,
+			"id": document.formModificar.id.value,
+			"nombre": document.formModificar.nombre.value
+		};
+		$.ajax({
+			url : "validarAtraccion",
+			type : "POST",
+			data : JSON.stringify(json),
+			processData : false,
+			dataType: "json",
+			contentType : "application/json",
+			success: function (data) {
+				if (data.existe == false) {
+					document.formModificar.recorrible.value = $("input[name='recorrible']:checked").val();
+					if (document.formModificar.recorrible.value == 0) {
+						document.getElementById("archivoPlano").src = "//:0";
+						document.getElementById("plano").src = "//:0";
+						document.getElementById("planoCambiado").value = "1";
+					}
+					if (far_away) {
+					    bootbox.confirm({
+				    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
+				    	    buttons: {
+				    	        confirm: {
+				    	            label: 'Sí'
+				    	        },
+				    	        cancel: {
+				    	            label: 'No'
+				    	        }
+				    	    },
+				    	    callback: function(result) {
+						        if (result) {
+						        	document.getElementById("formModificar").submit();
+						        }
+				    	    }
+					    });
+				  	} else {
+				  		document.getElementById("formModificar").submit();
+					}
+				} else {
+					document.getElementById("mensajeNombreRepetido").style.display = 'block';
+				}
+			}
+		});
+	}
+});
 </script>
 
 
@@ -928,12 +932,14 @@ $(document).ready(function() {
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	        case 'mp3':
 	        	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
+	        	document.getElementById('audioCambiado').value = 1;
 	        	break;
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeAudioIncorrectoError").style.display = 'block';
 				document.getElementById('archivoAudioguia').value = "" ;
 				document.getElementById('audio').src = "" ;
+				document.getElementById('audioCambiado').value = 1;
 				break;
 	    }
 	});

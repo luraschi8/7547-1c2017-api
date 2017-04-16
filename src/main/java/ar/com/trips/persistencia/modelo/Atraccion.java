@@ -96,13 +96,13 @@ public class Atraccion extends Modelo{
 	@Transient
 	private byte[] plan;
 	
-	/*@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaPuntosDeInteres")
 	private List<PuntoDeInteres> listaPuntosDeInteres = new ArrayList<>();
 	
 	@Transient
 	private int cantPuntosDeInteres;
-	
+	/*
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaResenias")
 	private List<Resenia> listaResenias = new ArrayList<>();

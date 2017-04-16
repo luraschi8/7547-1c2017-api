@@ -35,6 +35,8 @@
 				</value>
 				<value>ar.com.trips.persistencia.modelo.ImagenAtraccion
 				</value>
+				<value>ar.com.trips.persistencia.modelo.PuntoDeInteres
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -61,6 +63,8 @@
 		class="ar.com.trips.persistencia.dao.impl.UsuarioDAOImpl" />
 	<bean id="imagenAtraccionDAO"
 		class="ar.com.trips.persistencia.dao.impl.ImagenAtraccionDAOImpl" />
+	<bean id="puntoDeInteresDAO"
+		class="ar.com.trips.persistencia.dao.impl.PuntoDeInteresDAOImpl" />
 	
 	
 	<!-- Validaciones -->
