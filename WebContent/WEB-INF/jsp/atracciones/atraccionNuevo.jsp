@@ -154,7 +154,7 @@
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+					 	<strong>&iexclError!</strong> El archivo no es una imagen/video. Por favor, introduzca otra.
 					</div>
 					
 					<!-- Audioguía -->
