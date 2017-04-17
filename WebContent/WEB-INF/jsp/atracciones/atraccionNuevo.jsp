@@ -447,6 +447,7 @@ $(document).ready(function() {
 	var posiblesId = [0,1,2,3,4];
 	
 	document.getElementById('eliminarImagen').onclick = function() {
+		hideAllAtractionErrorMessages();
 		if (filesNumber == 0) {
 			return;
 		}
