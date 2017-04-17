@@ -522,14 +522,6 @@ if (${atraccion.recorrible}) {
 <script>
 $(document).ready(function() {
 
-	$('#formModificar').on('keyup keypress', function(e) {
-	  var keyCode = e.keyCode || e.which;
-	  if (keyCode === 13) { 
-	    e.preventDefault();
-	    return false;
-	  }
-	});
-
 	var far_away = false;
 	
 	function updateForm() {
@@ -1121,6 +1113,12 @@ function initMap() {
 
    	autocomplete = new google.maps.places.Autocomplete(input, {types: []});
    	autocomplete.bindTo('bounds', map);
+   	
+   	google.maps.event.addDomListener(input, 'keydown', function(e) { 
+		if (e.keyCode == 13) { 
+			e.preventDefault(); 
+		}
+	});
    	
    	infowindow = new google.maps.InfoWindow();
    	marker = new google.maps.Marker({

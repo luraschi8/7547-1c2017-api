@@ -629,6 +629,12 @@ $(document).ready(function() {
 
         var autocomplete = new google.maps.places.Autocomplete(input, {types: []});
         autocomplete.bindTo('bounds', map);
+        
+        google.maps.event.addDomListener(input, 'keydown', function(e) { 
+			if (e.keyCode == 13) { 
+				e.preventDefault(); 
+			}
+		});
 
         var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
