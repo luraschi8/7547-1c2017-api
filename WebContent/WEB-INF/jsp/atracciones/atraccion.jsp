@@ -522,6 +522,14 @@ if (${atraccion.recorrible}) {
 <script>
 $(document).ready(function() {
 
+	$('#formModificar').on('keyup keypress', function(e) {
+	  var keyCode = e.keyCode || e.which;
+	  if (keyCode === 13) { 
+	    e.preventDefault();
+	    return false;
+	  }
+	});
+
 	var far_away = false;
 	
 	function updateForm() {

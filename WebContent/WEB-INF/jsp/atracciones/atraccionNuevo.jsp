@@ -265,6 +265,14 @@ $("#precio").attr("maxlength", MAX_PRECIO_ATRACCION);
 </script>
 
 <script>
+$('#formNuevo').on('keyup keypress', function(e) {
+  var keyCode = e.keyCode || e.which;
+  if (keyCode === 13) { 
+    e.preventDefault();
+    return false;
+  }
+});
+
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
