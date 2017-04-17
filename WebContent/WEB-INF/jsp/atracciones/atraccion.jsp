@@ -522,7 +522,7 @@ if (${atraccion.recorrible}) {
 <script>
 $(document).ready(function() {
 
-	var far_away = false;
+	far_away = false;
 	
 	function updateForm() {
 		document.formModificar.nombre.value = $('#nombreEditado').html();

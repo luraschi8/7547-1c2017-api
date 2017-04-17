@@ -352,7 +352,26 @@ function validarAtraccionRepetida() {
 		success: function (data) {
 			if (data.existe == false) {
 				document.formNuevo.recorrible.value = $("input[name='recorrible']:checked").val();
-				document.getElementById("formNuevo").submit();
+				if (far_away) {
+				    bootbox.confirm({
+			    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
+			    	    buttons: {
+			    	        confirm: {
+			    	            label: 'Sí'
+			    	        },
+			    	        cancel: {
+			    	            label: 'No'
+			    	        }
+			    	    },
+			    	    callback: function(result) {
+					        if (result) {
+					        	document.getElementById("formNuevo").submit();
+					        }
+			    	    }
+				    });
+			  	} else {
+			  		document.getElementById("formNuevo").submit();
+				}
 			} else {
 				document.getElementById("mensajeNombreRepetido").style.display = 'block';
 			}
@@ -610,6 +629,7 @@ $(document).ready(function() {
 
 <!-- Mapa -->
 <script>
+	far_away = false;
     function initMap() {
         var map = new google.maps.Map(document.getElementById('atraction-map'), {
             center: {lat: ${latitud_ciudad}, lng: ${longitud_ciudad}},
@@ -690,8 +710,10 @@ $(document).ready(function() {
        	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
     	if (google.maps.geometry.spherical.computeDistanceBetween(coordinates, city_coordinates) < 15000) {
     		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+    		far_away = false;
         } else {
         	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
+        	far_away = true;
         }
 	}
 </script>
