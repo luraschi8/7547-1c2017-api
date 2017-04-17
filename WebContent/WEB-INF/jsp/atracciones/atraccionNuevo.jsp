@@ -102,7 +102,7 @@
 							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
 							</div>
-							<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
+							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoIncorrectaError" style="display: none;">
 							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 							</div>
@@ -150,6 +150,11 @@
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 					</div>
 					
 					<!-- Audioguía -->
@@ -384,7 +389,7 @@ function validarAtraccionRepetida() {
 <!-- Plano -->
 <script>
 $(document).ready(function() {
-	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajeImagenIncorrectaError");
+	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajePlanoIncorrectaError");
 });
 </script>
 
@@ -542,8 +547,9 @@ $(document).ready(function() {
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-				document.getElementById('archivoGaleria').value = "" ;
-				document.getElementById('galeria').src = "" ;
+				elem = document.getElementById('archivoGaleria');
+	        	elem.parentNode.removeChild(elem);
+	        	return;
 				break;
 	    }
 		var reader = new FileReader();
