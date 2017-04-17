@@ -439,6 +439,8 @@ function hideGalleryVideo() {
 
 $(document).ready(function() {
 	
+	var posiblesId = [0,1,2,3,4];
+	
 	document.getElementById('eliminarImagen').onclick = function() {
 		if (filesNumber == 0) {
 			return;
@@ -452,6 +454,7 @@ $(document).ready(function() {
 			eliminado.parentNode.removeChild(eliminado);
 		}
 		filesNumber -= 1;
+		posiblesId.push(unArchivo.idNumero);
 		var element = document.getElementById(unArchivo.id);
 		element.parentNode.removeChild(element);
 		multimedia.splice(slideIndex, 1);
@@ -501,9 +504,9 @@ $(document).ready(function() {
 	        	tagImagen = document.createElement('img');
 	        	imageVideo.file = tagImagen;
 	        	document.getElementById('archivoGaleria').style.display = 'none';
-	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
-				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
-				imageVideo.id = 'archivoGaleria' + filesNumber;
+	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + posiblesId[0];
+				document.getElementById('archivoGaleria').id = 'archivoGaleria' + posiblesId[0];
+				imageVideo.id = 'archivoGaleria' + posiblesId[0];
 				imageNumber = imageNumber + 1;
 	        	break;
 	        case 'mp4': case 'avi': 
@@ -533,8 +536,8 @@ $(document).ready(function() {
 	        		videoType='video/avi';
 	        	}
 	        	document.getElementById('archivoGaleria').name = 'unVideo';
-	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
-	        	imageVideo.id = 'archivoGaleria' + filesNumber;
+	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + posiblesId[0];
+	        	imageVideo.id = 'archivoGaleria' + posiblesId[0];
 	        	break;
 	        default:
 	            $(this).val('');
@@ -563,7 +566,9 @@ $(document).ready(function() {
 			    imageVideo.file = source;
 				video.appendChild(source);
 			}
+			imageVideo.idNumero = posiblesId[0];
 			multimedia.push(imageVideo);
+			posiblesId.splice(0,1);
 			filesNumber = imageNumber + videoNumber;
 			slideIndex = filesNumber - 1;
 		}
