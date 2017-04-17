@@ -656,6 +656,7 @@ $(document).ready(function() {
             document.formNuevo.latitud.value = place.geometry.location.lat();
             document.formNuevo.longitud.value = place.geometry.location.lng();
             location_selected = true;
+            checkIfIsOutOfRange(place.geometry.location);
 
             var address = '';
             if (place.address_components) {
@@ -671,7 +672,7 @@ $(document).ready(function() {
         });
 
 		// Al clickear en el mapa, se guardan las coordenadas y se dibuja la ubicación
-        google.maps.event.addListener(map, 'click', function( event ){
+        google.maps.event.addListener(map, 'click', function( event ) {
        		marker.setVisible(false);
        		marker.setPosition(event.latLng);
             marker.setVisible(true);
@@ -680,16 +681,19 @@ $(document).ready(function() {
        	  	document.formNuevo.latitud.value = event.latLng.lat();
            	document.formNuevo.longitud.value = event.latLng.lng();
            	location_selected = true;
-
-           	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
-           	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
-        	if (google.maps.geometry.spherical.computeDistanceBetween(event.latLng, city_coordinates) < 15000) {
-        		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
-            } else {
-            	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
-            }
+           	checkIfIsOutOfRange(event.latLng);
         });
     }
+
+	function checkIfIsOutOfRange(coordinates) {
+       	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
+       	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
+    	if (google.maps.geometry.spherical.computeDistanceBetween(coordinates, city_coordinates) < 15000) {
+    		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+        } else {
+        	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
+        }
+	}
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>
