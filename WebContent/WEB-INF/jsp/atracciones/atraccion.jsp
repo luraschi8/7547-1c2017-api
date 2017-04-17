@@ -1019,7 +1019,6 @@ function setPosition(lat, lng) {
 }
 
 function saveCoordinates() {
-	google.maps.event.clearInstanceListeners(map);
 	if (hubo_click) {
 		map_lat = aux_lat;
 		map_lng = aux_lng;
@@ -1028,12 +1027,15 @@ function saveCoordinates() {
 	if (out_of_range) {
 		far_away = true;
 	}
+	google.maps.event.clearInstanceListeners(map);
+	google.maps.event.clearInstanceListeners(autocomplete);
 	hideOkAndCancelButtonsForCoordinates();
 	hideAllAtractionErrorMessages();
 }
 
 function cancelEditingCoordinates() {
 	google.maps.event.clearInstanceListeners(map);
+	google.maps.event.clearInstanceListeners(autocomplete);
 	setPosition(map_lat, map_lng);
 	hideAllAtractionErrorMessages();
 }
@@ -1065,6 +1067,15 @@ function editCoordinates() {
 	    // Se guardan las coordenadas
 	    aux_lat = place.geometry.location.lat();
 	    aux_lng = place.geometry.location.lng();
+
+
+
+
+	    out_of_range = isOutOfRange(place.geometry.location);
+
+
+
+	    
 	
 	    var address = '';
 	    if (place.address_components) {
@@ -1089,16 +1100,7 @@ function editCoordinates() {
 		aux_lat = event.latLng.lat();
 		aux_lng = event.latLng.lng();
 	   	
-	   	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
-	   	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
-		if (google.maps.geometry.spherical.computeDistanceBetween(event.latLng, city_coordinates) < 15000) {
-			document.getElementById("mensajeUbicacionLejana").style.display = 'none';
-			out_of_range = false;
-	    } else {
-	    	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
-	    	out_of_range = true;
-	    }
-		hubo_click = true;
+	   	out_of_range = isOutOfRange(event.latLng);
 	});
 }
 
@@ -1121,6 +1123,21 @@ function initMap() {
 
     marker.setPosition(map.center);
    	marker.setVisible(true);
+}
+
+function isOutOfRange(coordinates) {
+	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
+	var out_of_range;
+   	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
+	if (google.maps.geometry.spherical.computeDistanceBetween(coordinates, city_coordinates) < 15000) {
+		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+		out_of_range = false;
+    } else {
+    	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
+    	out_of_range = true;
+    }
+    hubo_click = true;
+    return out_of_range;
 }
 </script>
 		
