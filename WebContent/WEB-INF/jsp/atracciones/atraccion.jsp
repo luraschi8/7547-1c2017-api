@@ -345,74 +345,101 @@
 </div>
 
 	
-<div id="atraction-point-of-interest-popup-form">
-	<form:form class="atraction-new-point-of-interest" id ="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
-		<h2>Nuevo punto de interés</h2>
-		
-		<div>
-			<div>
-				<label class="atraction-label" path="nombre">Nombre</label>
-			</div>
-			<div>
-				<input maxlength="50" id="pdi-nombre" path="nombre" name="pdi-nombre" class="atraction-box"  placeholder="Ingrese el nombre del punto de interés" required="required"></textarea>
+<div id="atraction-point-of-interest-popup-form" style="width: 50%; height: 100%">
+	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 100%">
+		<form:form class="atraction-new-point-of-interest" style="width: 100%; height: 80%" id="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
+			<h2 style="width: 100%; height: 8%">Nuevo punto de interés</h2>
+			
+			<div style="width: 100%; height: 12%">
+				<div>
+					<label class="atraction-label" path="nombre">Nombre</label>
+				</div>
+				<div>
+					<input maxlength="50" id="pdi-nombre" path="nombre" name="pdi-nombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"></textarea>
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
+				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
-			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
-			</div>
-		</div>
-		
-		<div>
-			<div>
-				<label class="atraction-label" path="descripcion">Descripción</label>
-			</div>
-			<div>
-				<textarea onkeydown="calculateMaxLength('#pdi-descripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="pdi-descripcion" path="descripcion" name="pdi-descripcion" class="atraction-box"  placeholder="Ingrese la descripción del punto de interés" required="required"></textarea>
-			</div>
-			
-			<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
-			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
-			</div>
-		</div>
-		
-		<div>
-			<div>
-				<label class="atraction-label" path="orden">Orden</label>
-			</div>
-			<div>
-				<input maxlength="20" id="pdi-orden" path="orden" name="pdi-orden" class="atraction-box"  placeholder="Ingrese el orden del punto de interés" required="required"></textarea>
-				<!--<select class="order-list" id="pdi-orden" path="orden" name="pdi-orden"></select>-->
+			<div style="width: 100%; height: 16%">
+				<div>
+					<label class="atraction-label" path="descripcion">Descripción</label>
+				</div>
+				<div>
+					<textarea onkeydown="calculateMaxLength('#pdi-descripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="pdi-descripcion" path="descripcion" name="pdi-descripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"></textarea>
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
+				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-alert" id="mensajeOrdenVacioPuntoDeInteresError" style="display: none;">
-			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>&iexclError!</strong> El orden no puede estar vacío.
+			<div style="width: 100%; height: 40%;">
+				<div style="width: 100%; height: 20%">
+					<label class="atraction-label" path="imagen">Imagen</label>
+				</div>
+				<div class="atraction-point-of-interest-image-box">
+					<img id="pdi-imagen" style="width:100%; height:100%;">
+					<button type="button" class="btn btn-default btn-sm atraction-poi-get-image" id="atraction-poi-get-image">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+					<input id="pdi-imagen-cambiada" name="pdi-imagen-cambiada" type="hidden" value="0">
+					<input type="file" name="pdi-archivo-imagen" id="pdi-archivo-imagen" style="display: none"/>
+				</div>
 			</div>
+			
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
+			</div>
+			
+			<div style="width: 100%; height: 15%">
+				<div style="width: 100%; height: 65%">
+					<label class="atraction-label" path="audio">Audioguía</label>
+				</div>
+				<input type="hidden" id="audioCambiadoPoi" name="audioCambiado" value=0>
+				<div style="width: 100%; height: 35%">
+					<!-- Reproducir audioguía -->
+					<div style="float: left; width: 80%; height: 100%">
+						<audio id="audio-poi" style="width: 100%;" controls>
+						    <source type="audio/mpeg">
+						</audio> 
+					</div>
+					
+					<!-- Botón agregar audioguía -->
+					<div style="float: right; text-align:center; width: 20%; height: 100%">
+						<button type="button" class="btn btn-default btn-sm btn-atraction-get-poi-audio-file" id="atraction-get-poi-audio-file">
+							<span class="glyphicon glyphicon-pencil"></span>
+						 </button>
+					
+						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-poi-audio-file" id="borrarAudioPoi">
+							<span class="glyphicon glyphicon-erase"></span>
+						 </button>
+	
+						<input type="file" name="archivoAudioguiaPoi" id="archivoAudioguiaPoi"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPoiIncorrectoError" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPoiTamano" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
+			</div>
+		</form:form>
+			
+		<div class="btn-final-pdi-form" style="width: 100%;text-align:center; clear:both;">
+			<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
+			<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 		</div>
-		
-		<div>
-			<label class="atraction-label" path="imagen">Imagen</label>
-		</div>
-		<div class="atraction-point-of-interest-image-box">
-			<img id="pdi-imagen" style="width:100%; height:100%">
-			<button type="button" class="btn btn-default btn-sm atraction-poi-get-image" id="atraction-poi-get-image">
-				<span class="glyphicon glyphicon-pencil"></span>
-			</button>
-			<input id="pdi-imagen-cambiada" name="pdi-imagen-cambiada" type="hidden" value="0">
-			<input type="file" name="pdi-archivo-imagen" id="pdi-archivo-imagen" style="display: none"/>
-		</div>
-		
-		<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
-		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-		 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
-		</div>
-	</form:form>
-		
-	<div class="btn-final-pdi-form" style="text-align:center;">
-		<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
-		<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 	</div>
 </div>
 
@@ -935,52 +962,8 @@ $(document).ready(function() {
 <!-- Audioguía -->
 <script>
 $(document).ready(function() {
-	document.getElementById('borrarAudio').onclick = function() {
-		document.getElementById('archivoAudioguia').value = "" ;
-		document.getElementById('audio').src = "" ;
-		document.getElementById('audioCambiado').value = 1;
-	};
-	
-	document.getElementById('atraction-get-audio-file').onclick = function() {
-		hideAllAtractionErrorMessages();
-		document.getElementById('archivoAudioguia').addEventListener('change', readURL, true);
-		var fileButton = document.getElementById('archivoAudioguia');
-		fileButton.click();
-	};
-	
-	$("#archivoAudioguia").change(function() {
-       	document.getElementById('audioCambiado').value = 1;
-       	var file = document.getElementById("archivoAudioguia").files[0];
-	    var val = $(this).val();
-	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
-	        case 'mp3':
-	        	if (file.size > (3 * 1024 * 1024)) {
-	        		document.getElementById('mensajeAudioTamano').style.display = 'block';
-	        		document.getElementById('archivoAudioguia').value = "" ;
-					document.getElementById('audio').src = "" ;
-	        		return;
-	        	}
-	        	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
-	        	break;
-	        default:
-	            $(this).val('');
-				document.getElementById("mensajeAudioIncorrectoError").style.display = 'block';
-				document.getElementById('archivoAudioguia').value = "" ;
-				document.getElementById('audio').src = "" ;
-				break;
-	    }
-	});
-	
-	function readURL(){
-		var file = document.getElementById("archivoAudioguia").files[0];
-		var reader = new FileReader();
-	    reader.onloadend = function(){
-			document.getElementById('audio').src = reader.result;
-		}
-		if(file) {
-			reader.readAsDataURL(file);
-		} 
-	}
+	validateAudio("atraction-get-audio-file", "borrarAudio", "archivoAudioguia", "audio", "audioCambiado", "mensajeAudioTamano", "mensajeAudioIncorrectoError");
+	validateAudio("atraction-get-poi-audio-file", "borrarAudioPoi", "archivoAudioguiaPoi", "audio-poi", "audioCambiadoPoi", "mensajeAudioPoiTamano", "mensajeAudioPoiIncorrectoError");
 });
 </script>
 

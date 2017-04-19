@@ -15,7 +15,7 @@ body {
     padding: 0;
 }
 
-#archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano {
+#archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano, #archivoAudioguiaPoi {
     display: none;
 }
 
@@ -408,10 +408,8 @@ body {
 	z-index: 1;
 	background-color: #fefefe;
 	border: 1px solid #888;
-    width: 50%;
-    height: 600px;
     top: 0%;
-    margin-top: 100px;
+    margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
     left: 0;
@@ -429,8 +427,8 @@ body {
 }
 
 .btn-final-pdi-form {
-	margin-top: 2rem;
-	margin-bottom: 2rem;
+	margin-top: 1%;
+	margin-bottom: 1%;
 }
 
 .disable-buttons {
@@ -439,16 +437,16 @@ body {
 }
 
 .atraction-point-of-interest-image-box {
-	height: 18.75rem;
-	width: 50rem;
+	width: 15rem;
+	height: 15rem;
 	background-color: #909090;
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
 }
 
 .atraction-point-of-interest-image-box .atraction-poi-get-image {
 	position: relative;
-    top: -18rem;
-    left: 45rem;
+    top: -14.5rem;
+    left: 11rem;
 }
 
 #atraction-comment-popup {
@@ -480,4 +478,8 @@ body {
 
 #audio {
 	width: 40rem;
+}
+
+.atraction-poi-box, .atraction-poi-alert {
+	width: 100%;
 }
