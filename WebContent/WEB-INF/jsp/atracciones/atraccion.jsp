@@ -130,8 +130,8 @@
 					<div>
 						<form:label id="recorrible" name="recorrible" class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
-							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show();">Sí
-							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide();">No
+							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show(); $('#view-atraction-points-of-interest-panel').show();">Sí
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide(); $('#view-atraction-points-of-interest-panel').hide();">No
 							</div>
 						</form>
 					</div>
@@ -293,9 +293,9 @@
 						</div>
 				</div>
 				
-				<div class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
+				<div id="view-atraction-points-of-interest-panel" class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
-						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras" />
+						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras"/>
 						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm()"/>
 					</div>
 					
@@ -312,6 +312,11 @@
 							<tbody></tbody>
 						</table>
 					</div>
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none;">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> La atracción es recorrible. Debe por lo menos un punto de interés.
 				</div>
 				
 				<!-- Tabla reseñas (comentarios) -->
@@ -625,9 +630,11 @@ $("atraction-comment").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 if (${atraccion.recorrible}) {
 	$("#es-recorrible").attr("checked", "checked");
 	$("#blueprints").show();
+	$("#view-atraction-points-of-interest-panel").show();
 } else {
 	$("#no-es-recorrible").attr("checked", "checked");
 	$("#blueprints").hide();
+	$("#view-atraction-points-of-interest-panel").hide();
 }
 </script>
 
@@ -687,6 +694,11 @@ $(document).ready(function() {
 		
 		if (document.getElementById('es-recorrible').checked) {
 			hayError = validarPlano('plano', 'mensajePlanoNecesario', hayError);
+			if (!hayError) {
+				//hayError = validarPlano('plano', 'mensajePuntoDeInteresNecesario', hayError);
+			} else {
+				document.getElementById("mensajePuntoDeInteresNecesario").style.display = 'none';
+			}
 		} else {
 			document.getElementById("mensajePlanoNecesario").style.display = 'none';
 		}
