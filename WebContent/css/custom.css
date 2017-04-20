@@ -172,6 +172,11 @@ body {
 	width: 54rem;
 }
 
+.new-atraction-alert-no-location {
+	margin-top: 1rem;
+	width: 54rem;
+}
+
 .atraction-alert-far-location {
 	margin-left: 8rem;
 	width: 54rem;
@@ -183,6 +188,10 @@ body {
 
 .alert-message { 
 	margin-top: 20rem;
+}
+
+.atraction-blueprints-alert-messages { 
+	margin-top: 24rem;
 }
 
 .view-city-information-block {
@@ -260,8 +269,8 @@ body {
 }
 
 .atraction-blueprints-box, .atraction-gallery-box {
-	height: 18.75rem;
-	width: 50rem;
+	height: 22rem;
+	width: 22rem;
 	background-color: #909090;
 }
 
@@ -297,14 +306,14 @@ body {
 
 .atraction-blueprints-box .atraction-get-blueprints {
 	position: relative;
-    top: -18rem;
-    left: 45rem;
+    top: -21.5rem;
+    left: 18rem;
 }
 
 .atraction-gallery-box .atraction-erase-multimedia {
 	position: relative;
-    top: -18rem;
-    left: 35rem;
+    top: -22rem;
+    left: 9rem;
 }
 
 .atraction-bluprints-and-chart {
@@ -328,7 +337,7 @@ body {
 #atraction-map {
     width: 54rem;
     height: 30rem;
-    margin-left: 7.5rem;
+    margin-right: 13rem;
 }
 
 .atraction-map-controls {
@@ -360,36 +369,56 @@ body {
 
 .atraction-gallery-box .atraction-gallery-slide-left {
 	position: relative;
-    top: -10.5rem;
-    left: 5rem;
-    background-color: Transparent;
+    top: -12.5rem;
+    left: 0.5rem;
+    /*background-color: Transparent;*/
 }
 
 .atraction-gallery-box .atraction-gallery-slide-right {
 	position: relative;
-    top: -10.5rem;
-    left: 40rem;
-    background-color: Transparent;
+    top: -12.5rem;
+    left: 16.5rem;
+    /*background-color: Transparent;*/
+}
+
+.atraction-gallery .atraction-gallery-buttons {
+	display: none;
+}
+
+.atraction-blueprints-box .atraction-get-blueprints {
+	display: none;
+}
+
+.atraction-blueprints-box:hover .atraction-get-blueprints {
+	display: block;
+}
+
+.atraction-gallery:hover .atraction-gallery-buttons {
+   display: block;
 }
 
 .atraction-gallery-box .btn-atraction-get-gallery-file {
 	position: relative;
-    top: -10.7rem;
-    left: 17.5rem;
+    top: -12.6rem;
+    left: 4.2rem;
 }
 
 .view-atraction-map-group {
 	margin-top: 1rem;
-	margin-left: 0.6rem;
+	margin-left: 8rem;
 	margin-bottom: 33rem;
+	height: 0.2rem;
 }
 
 #edit-coordinates {
 	margin-bottom: 0.5rem;
 }
 
-.atraction-map-editing-buttons {
-	margin-left: 1rem;
+.view-atraction-map-group .atraction-map-editing-buttons {
+	position: relative;
+	margin-top: -29.3rem;
+	margin-left: 55rem;
+	margin-bottom: 30rem;
 }
 
 .view-city-image-box .btn-get-file {

@@ -19,7 +19,7 @@
 	
 	<form:form id ="formNuevo" name="formNuevo" action="atraccionNuevoValidar" method="post" commandName="atraccion" enctype="multipart/form-data">
 	
-		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
+		<div class="atraction-new-form" style="width: 100%; display: inline-block; overflow: hidden;"> 
 		
 			<!-- Bloque izquierdo -->
 			<div class="atraction-main-information-and-map" style="float:left; margin-top:-1.5rem">
@@ -74,8 +74,8 @@
 					<div>
 						<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
-							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show();">Sí
-							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide();">No
+							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show(); $('#view-atraction-points-of-interest-panel').show();">Sí
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide(); $('#view-atraction-points-of-interest-panel').hide();">No
 							</div>
 						</form>
 					</div>
@@ -97,12 +97,12 @@
 							<input type="file" name="archivoPlano" id="archivoPlano"/>
 						</div>
 		
-						<div class="alert-message">
+						<div class="atraction-blueprints-alert-messages">
 							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
 							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
 							</div>
-							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoIncorrectaError" style="display: none;">
+							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoIncorrectoError" style="display: none;">
 							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 							</div>
@@ -110,23 +110,27 @@
 					</div>
 					
 					<!-- Galería -->
-					<div>
+					<div style="clear: left">
 						<div>
 							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
 						</div>
-						<div id ="container" class="atraction-gallery-box">
+						<div id ="container" class="atraction-gallery atraction-gallery-box">
 							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
 							<video id="videoGaleria" style="width:100%; height:100%;display:none" controls >
 							</video>
-							<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&lt;</button>
-							<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
-							<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
-						    
-						    <button type="button" class="btn btn-default btn-sm atraction-erase-multimedia" id="eliminarImagen">
-								<span class="glyphicon glyphicon-erase"></span>
-							 </button>
+							
+							<div class="atraction-gallery-buttons">
+								<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&lt;</button>
+								<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
+								<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
+							    
+							    <button type="button" class="btn btn-default btn-sm atraction-erase-multimedia" id="eliminarImagen">
+									<span class="glyphicon glyphicon-erase"></span>
+								 </button>
+							</div>
 						</div>
 					</div>
+					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
@@ -198,26 +202,25 @@
 			</div>
 			
 			<!-- Bloque derecho -->
-			<div class="atraction-right-block" style="float:right">
-			
+			<div class="atraction-right-block">
 				<!-- Mapa -->
-				<div>
+				<div style="float: right">
 					<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
 					<div id="atraction-map"></div> 
 					
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
+					<div class="alert alert-warning fade in new-atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
+					<div class="alert alert-warning fade in new-atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
 					</div>	
 				</div>
 				
 				<!-- Tabla puntos de interés y obras -->
-				<div class="panel panel-primary view-atraction-panel">
+				<div id="view-atraction-points-of-interest-panel" style="float:right; display: none" class="panel panel-primary view-atraction-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras" type="button" value="Puntos de interés y obras" />
 						
@@ -280,6 +283,7 @@ $('#botonNuevo').on('click', function(e) {
 		document.getElementById("mensajeNombreRepetido").style.display = 'none';
 		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 		document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
+		hideAllAtractionErrorMessages();
  	 	validarAtraccionRepetida();
 });
 
@@ -317,6 +321,7 @@ function validarPlano(plano, mensaje, hayError) {
 }
 
 function validarAtraccionRepetida() {
+	hideAllAtractionErrorMessages();
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
@@ -389,7 +394,7 @@ function validarAtraccionRepetida() {
 <!-- Plano -->
 <script>
 $(document).ready(function() {
-	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajePlanoIncorrectaError");
+	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajePlanoIncorrectoError");
 });
 </script>
 
