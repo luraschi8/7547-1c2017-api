@@ -248,7 +248,7 @@
 				
 				<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
 				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
+				 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
 				</div>			
 			</div>
 						
@@ -346,8 +346,8 @@
 
 	
 <div id="atraction-point-of-interest-popup-form" style="width: 50%; height: 100%">
-	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 100%">
-		<form:form class="atraction-new-point-of-interest" style="width: 100%; height: 80%" id="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
+	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
+		<form:form class="atraction-new-point-of-interest" style="width: 100%; height: 100%" id="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
 			<h2 style="width: 100%; height: 8%">Nuevo punto de interés</h2>
 			
 			<div style="width: 100%; height: 12%">
@@ -378,8 +378,8 @@
 				</div>
 			</div>
 			
-			<div style="width: 100%; height: 40%;">
-				<div style="width: 100%; height: 20%">
+			<div style="width: 100%; height: 35%;">
+				<div style="width: 100%; height: 18%">
 					<label class="atraction-label" path="imagen">Imagen</label>
 				</div>
 				<div class="atraction-point-of-interest-image-box">
@@ -397,30 +397,30 @@
 			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 			</div>
 			
-			<div style="width: 100%; height: 15%">
-				<div style="width: 100%; height: 65%">
+			<div style="width: 100%; height: 16%">
+				<div style="width: 100%; height: 40%">
 					<label class="atraction-label" path="audio">Audioguía</label>
 				</div>
 				<input type="hidden" id="audioCambiadoPoi" name="audioCambiado" value=0>
-				<div style="width: 100%; height: 35%">
+				<div style="width: 100%; height: 60%">
 					<!-- Reproducir audioguía -->
-					<div style="float: left; width: 80%; height: 100%">
-						<audio id="audio-poi" style="width: 100%;" controls>
+					<div style="float: left; width: 85%; height: 50%">
+						<audio id="pdi-audio" style="width: 100%;" controls>
 						    <source type="audio/mpeg">
 						</audio> 
 					</div>
 					
 					<!-- Botón agregar audioguía -->
-					<div style="float: right; text-align:center; width: 20%; height: 100%">
-						<button type="button" class="btn btn-default btn-sm btn-atraction-get-poi-audio-file" id="atraction-get-poi-audio-file">
+					<div style="float: right; width: 15%; height: 50%; text-align: right;">
+						<button type="button" class="btn btn-default btn-sm btn-atraction-get-pdi-audio-file" id="atraction-get-pdi-audio-file">
 							<span class="glyphicon glyphicon-pencil"></span>
 						 </button>
 					
-						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-poi-audio-file" id="borrarAudioPoi">
+						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-poi-audio-file" id="borrarAudioPdi">
 							<span class="glyphicon glyphicon-erase"></span>
 						 </button>
 	
-						<input type="file" name="archivoAudioguiaPoi" id="archivoAudioguiaPoi"/>
+						<input type="file" name="archivoAudioguiaPdi" id="archivoAudioguiaPdi"/>
 					</div>
 				</div>
 			</div>
@@ -430,18 +430,24 @@
 			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPoiTamano" style="display: none;">
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiTamano" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
+			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
+			</div>
+			
+			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
+				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
+				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+			</div>
+			
+			<div class="alert alert-warning fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
 			</div>
 		</form:form>
-			
-		<div class="btn-final-pdi-form" style="width: 100%;text-align:center; clear:both;">
-			<input id="botonAtrasPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
-			<input id="botonNuevoPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
-		</div>
 	</div>
 </div>
+<form:form id="formGuardarPuntoDeInteres" action="atraccionVer?idAtraccion=${atraccion.id}" method="post"></form:form>
 
 <div id="atraction-comment-popup">
 	<div class="atraction-view-comment" id ="atraction-view-comment" name="atraction-view-comment">
@@ -509,8 +515,8 @@ function closeNewPointOfInterestForm() {
 	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'none';
 	document.getElementById('pdi-nombre').value = '';
 	document.getElementById('pdi-descripcion').value = '';
-	document.getElementById('pdi-orden').value = '';
 	document.getElementById('pdi-imagen').src = '//:0';
+	document.getElementById('pdi-audio').src = '';
 	enableAtractionPage();
 }
 
@@ -521,6 +527,71 @@ function closeViewCommentPopUp() {
 
 $(document).ready(function() {
 	validateImage("atraction-poi-get-image", "pdi-archivo-imagen", "pdi-imagen", "mensajeImagenIncorrectaPuntoDeInteresError");
+});
+
+function updatePointOfInterestForm() {
+	document.formNuevoPuntoDeInteres.nombre.value = $('#pdi-nombre').val();
+	document.formNuevoPuntoDeInteres.descripcion.value = $('#pdi-descripcion').val();
+	document.formNuevoPuntoDeInteres.orden.value = atraccion.cantPuntos;
+}
+
+function hideAllPointOfInterestErrorMessages() {
+	document.getElementById('mensajeNombreVacioPuntoDeInteresError').style.display = 'none';
+	document.getElementById('mensajeDescripcionVaciaPuntoDeInteresError').style.display = 'none';
+	document.getElementById('mensajeImagenIncorrectaPuntoDeInteresError').style.display = 'none';
+	document.getElementById('mensajeAudioPdiTamano').style.display = 'none';
+	document.getElementById('mensajeAudioPoiIncorrectoError').style.display = 'none';
+	document.getElementById('mensajeNombrePuntoDeInteresRepetido').style.display = 'none';
+}
+
+function validarAtraccionRepetida() {
+	hideAllPointOfInterestErrorMessages();
+	hayError = 0;
+	hayError = validarElemento('pdi-nombre', 'mensajeNombreVacioPuntoDeInteresError', hayError);
+	hayError = validarElemento('pdi-descripcion', 'mensajeDescripcionVaciaPuntoDeInteresError', hayError);
+	if ((document.getElementById('pdi-archivo-imagen').value == '') && (!hayError)) {
+		document.getElementById("mensajeImagenIncorrectaPuntoDeInteresError").style.display = 'block';
+		hayError = 1;
+	}
+	if ((document.getElementById('archivoAudioguiaPdi').value == '') && (!hayError)) {
+		document.getElementById("mensajeAudioPoiIncorrectoError").style.display = 'block';
+		hayError = 1;
+	}
+
+	if (hayError == 1) {
+		return;
+	}
+
+	/*var ciudad = {
+		"id": document.formModificar.idCiudad.value,
+	}
+	var json = {
+		"ciudad": ciudad,
+		"id": document.formModificar.id.value,
+		"nombre": document.formModificar.nombre.value
+	};
+	$.ajax({
+		url : "validarAtraccion",
+		type : "POST",
+		data : JSON.stringify(json),
+		processData : false,
+		dataType: "json",
+		contentType : "application/json",
+		success: function (data) {
+			if (data.existe == false) {
+			  	document.getElementById("formNuevoPuntoDeInteres").submit();
+			} else {
+				document.getElementById("mensajeNombrePuntoDeInteresRepetido").style.display = 'block';
+			}
+		}
+	});*/
+}
+
+$('#botonGuardarPuntoDeInteres').on('click', function(e) {
+	e.preventDefault();
+	updatePointOfInterestForm();
+	alert("3");
+	validarPuntoDeInteresRepetido();
 });
 </script>
 
@@ -963,7 +1034,7 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
 	validateAudio("atraction-get-audio-file", "borrarAudio", "archivoAudioguia", "audio", "audioCambiado", "mensajeAudioTamano", "mensajeAudioIncorrectoError");
-	validateAudio("atraction-get-poi-audio-file", "borrarAudioPoi", "archivoAudioguiaPoi", "audio-poi", "audioCambiadoPoi", "mensajeAudioPoiTamano", "mensajeAudioPoiIncorrectoError");
+	validateAudio("atraction-get-pdi-audio-file", "borrarAudioPdi", "archivoAudioguiaPdi", "pdi-audio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
 });
 </script>
 

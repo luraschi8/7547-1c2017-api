@@ -55,9 +55,11 @@ create table PuntoDeInteres (
 	id bigint(10) primary key not null auto_increment,
     nombre varchar(50),
     descripcion varchar(250),
-    orden varchar(20),
+    orden tinyint,
     borrado tinyint default 0 not null,
     imagen mediumblob,
+    audioEN mediumblob,
+    audioES mediumblob,
     idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
 )

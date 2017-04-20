@@ -143,6 +143,8 @@ function validateAudio(btn_get, btn_erase, file_id, audio, modified_audio, size_
        	document.getElementById(modified_audio).value = 1;
        	var file = document.getElementById(file_id).files[0];
 	    var val = $(this).val();
+	    document.getElementById(size_msg).style.display = 'none';
+	    document.getElementById(incorrect_audio_msg).style.display = 'none';
 	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
 	        case 'mp3':
 	        	if (file.size > (3 * 1024 * 1024)) {
@@ -151,7 +153,6 @@ function validateAudio(btn_get, btn_erase, file_id, audio, modified_audio, size_
 					document.getElementById(audio).src = "" ;
 	        		return;
 	        	}
-	        	document.getElementById(incorrect_audio_msg).style.display = 'none';
 	        	break;
 	        default:
 	            $(this).val('');

@@ -58,8 +58,11 @@ create table PuntoDeInteres (
 	id serial primary key not null,
     nombre varchar(50),
     descripcion varchar(250),
-    orden varchar(20),
+    orden int,
+    borrado int default 0 not null,
     imagen bytea,
+    audioEN bytea,
+    audioES bytea,
     idAtraccion bigint not null,
     foreign key (idAtraccion) references Atraccion (id)
 )

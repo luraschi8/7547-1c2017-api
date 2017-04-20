@@ -32,7 +32,7 @@ public class PuntoDeInteres extends Modelo {
 	private String descripcion;
 	
 	@Column(name="orden")
-	private String orden;
+	private int orden;
 	
 	@Column(name="borrado")
 	private int borrado;
@@ -42,6 +42,18 @@ public class PuntoDeInteres extends Modelo {
 	@Type(type="org.hibernate.type.ImageType")
 	@JsonBackReference(value="imagen")
 	private byte[] imagen;
+	
+	@Column(name="audioEN")
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
+	@JsonBackReference(value="audioEN")
+	private byte[] audioEN;
+	
+	@Column(name="audioES")
+	@Lob
+	@Type(type="org.hibernate.type.ImageType")
+	@JsonBackReference(value="audioES")
+	private byte[] audioES;
 	
 		
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
@@ -77,11 +89,11 @@ public class PuntoDeInteres extends Modelo {
 		this.descripcion = descripcion;
 	}
 	
-	public String getOrden() {
+	public int getOrden() {
 		return orden;
 	}
 
-	public void setOrden(String orden) {
+	public void setOrden(int orden) {
 		this.orden = orden;
 	}
 
@@ -107,5 +119,21 @@ public class PuntoDeInteres extends Modelo {
 
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
-	}	
+	}
+	
+	public byte[] getAudioEN() {
+		return audioEN;
+	}
+
+	public void setAudioEN(byte[] audioEN) {
+		this.audioEN = audioEN;
+	}
+
+	public byte[] getAudioES() {
+		return audioES;
+	}
+
+	public void setAudioES(byte[] audioES) {
+		this.audioES = audioES;
+	}
 }
