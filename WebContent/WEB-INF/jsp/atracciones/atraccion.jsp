@@ -350,7 +350,7 @@
 		<form:form class="atraction-new-point-of-interest" style="width: 100%; height: 100%" id="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
 			<h2 style="width: 100%; height: 8%">Nuevo punto de interés</h2>
 			
-			<div style="width: 100%; height: 12%">
+			<div style="width: 100%; height: 11%">
 				<div>
 					<label class="atraction-label" path="nombre">Nombre</label>
 				</div>
@@ -364,7 +364,7 @@
 				</div>
 			</div>
 			
-			<div style="width: 100%; height: 16%">
+			<div style="width: 100%; height: 15%">
 				<div>
 					<label class="atraction-label" path="descripcion">Descripción</label>
 				</div>
@@ -378,7 +378,16 @@
 				</div>
 			</div>
 			
-			<div style="width: 100%; height: 35%;">
+			<div style="width: 100%; height: 11%">
+				<div>
+					<label class="atraction-label" path="orden">Orden</label>
+				</div>
+				<div>
+					<p maxlength="50" id="pdi-orden" path="orden" name="pdi-orden" class="atraction-poi-box"></p> <!-- TODO falta poner value igual a la cantidad de puntos que tenga la atracción -->
+				</div>
+			</div>
+					
+			<div style="width: 100%; height: 33%;">
 				<div style="width: 100%; height: 18%">
 					<label class="atraction-label" path="imagen">Imagen</label>
 				</div>
@@ -397,11 +406,11 @@
 			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 			</div>
 			
-			<div style="width: 100%; height: 16%">
+			<div style="width: 100%; height: 15%">
 				<div style="width: 100%; height: 40%">
-					<label class="atraction-label" path="audio">Audioguía</label>
+					<label class="atraction-label" path="audioES">Audioguía</label>
 				</div>
-				<input type="hidden" id="audioCambiadoPoi" name="audioCambiado" value=0>
+				<input type="hidden" id="audioCambiadoPdi" name="audioCambiadoPdi" value=0>
 				<div style="width: 100%; height: 60%">
 					<!-- Reproducir audioguía -->
 					<div style="float: left; width: 85%; height: 50%">
@@ -425,7 +434,7 @@
 				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPoiIncorrectoError" style="display: none;">
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiIncorrectoError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 			</div>
@@ -517,6 +526,7 @@ function closeNewPointOfInterestForm() {
 	document.getElementById('pdi-descripcion').value = '';
 	document.getElementById('pdi-imagen').src = '//:0';
 	document.getElementById('pdi-audio').src = '';
+	hideAllPointOfInterestErrorMessages();
 	enableAtractionPage();
 }
 
@@ -540,7 +550,7 @@ function hideAllPointOfInterestErrorMessages() {
 	document.getElementById('mensajeDescripcionVaciaPuntoDeInteresError').style.display = 'none';
 	document.getElementById('mensajeImagenIncorrectaPuntoDeInteresError').style.display = 'none';
 	document.getElementById('mensajeAudioPdiTamano').style.display = 'none';
-	document.getElementById('mensajeAudioPoiIncorrectoError').style.display = 'none';
+	document.getElementById('mensajeAudioPdiIncorrectoError').style.display = 'none';
 	document.getElementById('mensajeNombrePuntoDeInteresRepetido').style.display = 'none';
 }
 
@@ -554,7 +564,7 @@ function validarAtraccionRepetida() {
 		hayError = 1;
 	}
 	if ((document.getElementById('archivoAudioguiaPdi').value == '') && (!hayError)) {
-		document.getElementById("mensajeAudioPoiIncorrectoError").style.display = 'block';
+		document.getElementById("mensajeAudioPdiIncorrectoError").style.display = 'block';
 		hayError = 1;
 	}
 
@@ -590,7 +600,6 @@ function validarAtraccionRepetida() {
 $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	e.preventDefault();
 	updatePointOfInterestForm();
-	alert("3");
 	validarPuntoDeInteresRepetido();
 });
 </script>
