@@ -30,9 +30,9 @@ create table Atraccion (
 	id bigint(10) primary key not null auto_increment,
 	nombre varchar(50) not null,
     idCiudad bigint(10) not null,
-    horario varchar(50),
+    horario varchar(100),
     descripcion varchar(250),
-    precio varchar(50),
+    precio varchar(100),
     latitud float not null,
     longitud float not null,
     borrado tinyint default 0 not null,
@@ -55,9 +55,19 @@ create table PuntoDeInteres (
 	id bigint(10) primary key not null auto_increment,
     nombre varchar(50),
     descripcion varchar(250),
-    orden varchar(20),
+    orden tinyint,
     borrado tinyint default 0 not null,
     imagen mediumblob,
+    audioEN mediumblob,
+    audioES mediumblob,
     idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
+)
+
+create table Resenia (
+	id bigint(10) primary key not null auto_increment,
+    idUsuario bigint(10) not null,
+	nombreUsuario varchar(50),
+    comentario varchar(250),
+    calificaion double
 )

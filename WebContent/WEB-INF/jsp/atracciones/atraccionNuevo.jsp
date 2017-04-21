@@ -19,7 +19,7 @@
 	
 	<form:form id ="formNuevo" name="formNuevo" action="atraccionNuevoValidar" method="post" commandName="atraccion" enctype="multipart/form-data">
 	
-		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
+		<div class="atraction-new-form" style="width: 100%; display: inline-block; overflow: hidden;"> 
 		
 			<!-- Bloque izquierdo -->
 			<div class="atraction-main-information-and-map" style="float:left; margin-top:-1.5rem">
@@ -41,7 +41,7 @@
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para la atracción.
 					</div>
 					
@@ -53,7 +53,7 @@
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
 					</div>
 					
@@ -74,8 +74,8 @@
 					<div>
 						<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
-							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show();">Sí
-							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide();">No
+							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show(); $('#view-atraction-points-of-interest-panel').show();">Sí
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide(); $('#view-atraction-points-of-interest-panel').hide();">No
 							</div>
 						</form>
 					</div>
@@ -97,59 +97,68 @@
 							<input type="file" name="archivoPlano" id="archivoPlano"/>
 						</div>
 		
-						<div class="alert-message">
+						<div class="atraction-blueprints-alert-messages">
 							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
-							 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
 							</div>
-							<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
-							 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoIncorrectoError" style="display: none;">
+							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 							</div>
 						</div>
 					</div>
 					
 					<!-- Galería -->
-					<div>
+					<div style="clear: left">
 						<div>
 							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
 						</div>
-						<div id ="container" class="atraction-gallery-box">
+						<div id ="container" class="atraction-gallery atraction-gallery-box">
 							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
 							<video id="videoGaleria" style="width:100%; height:100%;display:none" controls >
 							</video>
-							<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&lt;</button>
-							<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
-							<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
-						    
-						    <button type="button" class="btn btn-default btn-sm atraction-erase-multimedia" id="eliminarImagen">
-								<span class="glyphicon glyphicon-erase"></span>
-							 </button>
+							
+							<div class="atraction-gallery-buttons">
+								<button type="button" class="w3-button w3-display-left atraction-gallery-slide-left" onclick="nextGalleryItem(-1)">&lt;</button>
+								<button type="button" class="w3-button w3-display-right atraction-gallery-slide-right" onclick="nextGalleryItem(+1)">&#10095;</button>
+								<input type="button" id="atraction-get-gallery-file" class="btn btn-default btn-atraction-get-gallery-file" value="+">
+							    
+							    <button type="button" class="btn btn-default btn-sm atraction-erase-multimedia" id="eliminarImagen">
+									<span class="glyphicon glyphicon-erase"></span>
+								 </button>
+							</div>
 						</div>
 					</div>
+					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> El archivo no es una imagen/video. Por favor, introduzca otra.
 					</div>
 					
 					<!-- Audioguía -->
@@ -180,12 +189,12 @@
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 					</div>
 					
 					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
 					</div>
 					
@@ -193,26 +202,25 @@
 			</div>
 			
 			<!-- Bloque derecho -->
-			<div class="atraction-right-block" style="float:right">
-			
+			<div class="atraction-right-block">
 				<!-- Mapa -->
-				<div>
+				<div style="float: right">
 					<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
 					<div id="atraction-map"></div> 
 					
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					<div class="alert alert-warning fade in new-atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
-					 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+					<div class="alert alert-warning fade in new-atraction-alert-no-location" id="mensajeUbicacionLejana" style="display: none">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
 					</div>	
 				</div>
 				
 				<!-- Tabla puntos de interés y obras -->
-				<div class="panel panel-primary view-atraction-panel">
+				<div id="view-atraction-points-of-interest-panel" style="float:right; display: none" class="panel panel-primary view-atraction-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras" type="button" value="Puntos de interés y obras" />
 						
@@ -239,7 +247,7 @@
 		</div>
 	
 		<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
-		 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
+		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
 		</div>	
 	</form:form>
@@ -275,6 +283,7 @@ $('#botonNuevo').on('click', function(e) {
 		document.getElementById("mensajeNombreRepetido").style.display = 'none';
 		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
 		document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
+		hideAllAtractionErrorMessages();
  	 	validarAtraccionRepetida();
 });
 
@@ -312,6 +321,7 @@ function validarPlano(plano, mensaje, hayError) {
 }
 
 function validarAtraccionRepetida() {
+	hideAllAtractionErrorMessages();
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
@@ -352,7 +362,26 @@ function validarAtraccionRepetida() {
 		success: function (data) {
 			if (data.existe == false) {
 				document.formNuevo.recorrible.value = $("input[name='recorrible']:checked").val();
-				document.getElementById("formNuevo").submit();
+				if (far_away) {
+				    bootbox.confirm({
+			    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
+			    	    buttons: {
+			    	        confirm: {
+			    	            label: 'Sí'
+			    	        },
+			    	        cancel: {
+			    	            label: 'No'
+			    	        }
+			    	    },
+			    	    callback: function(result) {
+					        if (result) {
+					        	document.getElementById("formNuevo").submit();
+					        }
+			    	    }
+				    });
+			  	} else {
+			  		document.getElementById("formNuevo").submit();
+				}
 			} else {
 				document.getElementById("mensajeNombreRepetido").style.display = 'block';
 			}
@@ -365,7 +394,7 @@ function validarAtraccionRepetida() {
 <!-- Plano -->
 <script>
 $(document).ready(function() {
-	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajeImagenIncorrectaError");
+	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajePlanoIncorrectoError");
 });
 </script>
 
@@ -420,7 +449,10 @@ function hideGalleryVideo() {
 
 $(document).ready(function() {
 	
+	var posiblesId = [0,1,2,3,4];
+	
 	document.getElementById('eliminarImagen').onclick = function() {
+		hideAllAtractionErrorMessages();
 		if (filesNumber == 0) {
 			return;
 		}
@@ -433,6 +465,7 @@ $(document).ready(function() {
 			eliminado.parentNode.removeChild(eliminado);
 		}
 		filesNumber -= 1;
+		posiblesId.push(unArchivo.idNumero);
 		var element = document.getElementById(unArchivo.id);
 		element.parentNode.removeChild(element);
 		multimedia.splice(slideIndex, 1);
@@ -482,9 +515,9 @@ $(document).ready(function() {
 	        	tagImagen = document.createElement('img');
 	        	imageVideo.file = tagImagen;
 	        	document.getElementById('archivoGaleria').style.display = 'none';
-	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + imageNumber;
-				document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
-				imageVideo.id = 'archivoGaleria' + filesNumber;
+	        	document.getElementById('archivoGaleria').name = 'archivoGaleria' + posiblesId[0];
+				document.getElementById('archivoGaleria').id = 'archivoGaleria' + posiblesId[0];
+				imageVideo.id = 'archivoGaleria' + posiblesId[0];
 				imageNumber = imageNumber + 1;
 	        	break;
 	        case 'mp4': case 'avi': 
@@ -514,14 +547,15 @@ $(document).ready(function() {
 	        		videoType='video/avi';
 	        	}
 	        	document.getElementById('archivoGaleria').name = 'unVideo';
-	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + filesNumber;
-	        	imageVideo.id = 'archivoGaleria' + filesNumber;
+	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + posiblesId[0];
+	        	imageVideo.id = 'archivoGaleria' + posiblesId[0];
 	        	break;
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-				document.getElementById('archivoGaleria').value = "" ;
-				document.getElementById('galeria').src = "" ;
+				elem = document.getElementById('archivoGaleria');
+	        	elem.parentNode.removeChild(elem);
+	        	return;
 				break;
 	    }
 		var reader = new FileReader();
@@ -544,7 +578,9 @@ $(document).ready(function() {
 			    imageVideo.file = source;
 				video.appendChild(source);
 			}
+			imageVideo.idNumero = posiblesId[0];
 			multimedia.push(imageVideo);
+			posiblesId.splice(0,1);
 			filesNumber = imageNumber + videoNumber;
 			slideIndex = filesNumber - 1;
 		}
@@ -610,6 +646,7 @@ $(document).ready(function() {
 
 <!-- Mapa -->
 <script>
+	far_away = false;
     function initMap() {
         var map = new google.maps.Map(document.getElementById('atraction-map'), {
             center: {lat: ${latitud_ciudad}, lng: ${longitud_ciudad}},
@@ -621,6 +658,12 @@ $(document).ready(function() {
 
         var autocomplete = new google.maps.places.Autocomplete(input, {types: []});
         autocomplete.bindTo('bounds', map);
+        
+        google.maps.event.addDomListener(input, 'keydown', function(e) { 
+			if (e.keyCode == 13) { 
+				e.preventDefault(); 
+			}
+		});
 
         var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
@@ -650,6 +693,7 @@ $(document).ready(function() {
             document.formNuevo.latitud.value = place.geometry.location.lat();
             document.formNuevo.longitud.value = place.geometry.location.lng();
             location_selected = true;
+            checkIfIsOutOfRange(place.geometry.location);
 
             var address = '';
             if (place.address_components) {
@@ -665,7 +709,7 @@ $(document).ready(function() {
         });
 
 		// Al clickear en el mapa, se guardan las coordenadas y se dibuja la ubicación
-        google.maps.event.addListener(map, 'click', function( event ){
+        google.maps.event.addListener(map, 'click', function( event ) {
        		marker.setVisible(false);
        		marker.setPosition(event.latLng);
             marker.setVisible(true);
@@ -674,16 +718,21 @@ $(document).ready(function() {
        	  	document.formNuevo.latitud.value = event.latLng.lat();
            	document.formNuevo.longitud.value = event.latLng.lng();
            	location_selected = true;
-
-           	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
-           	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
-        	if (google.maps.geometry.spherical.computeDistanceBetween(event.latLng, city_coordinates) < 15000) {
-        		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
-            } else {
-            	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
-            }
+           	checkIfIsOutOfRange(event.latLng);
         });
     }
+
+	function checkIfIsOutOfRange(coordinates) {
+       	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
+       	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
+    	if (google.maps.geometry.spherical.computeDistanceBetween(coordinates, city_coordinates) < 15000) {
+    		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+    		far_away = false;
+        } else {
+        	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
+        	far_away = true;
+        }
+	}
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>

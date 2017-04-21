@@ -102,7 +102,6 @@ $(document).ready(function() {
 	$('#tablita tbody').on('click', '#ver', function (e) {
 		var data = table.row(this.closest("tr")).data();
 		e.preventDefault();
-		//window.location.href = 'ciudadVer/' + data["id"];
 		document.formVer.idCiudad.value = data["id"];
 		document.getElementById("formVer").submit();
 	});

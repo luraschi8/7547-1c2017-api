@@ -123,3 +123,54 @@ function hideAllPointOfInterestErrorMessages() {
 	document.getElementById("mensajeOrdenVacioPuntoDeInteresError").style.display = 'none';
 	document.getElementById("mensajeImagenIncorrectaPuntoDeInteresError").style.display = 'none';
 }
+
+function validateAudio(btn_get, btn_erase, file_id, audio, modified_audio, size_msg, incorrect_audio_msg) {
+	document.getElementById(btn_erase).onclick = function() {
+		document.getElementById(file_id).value = "" ;
+		document.getElementById(audio).src = "" ;
+		document.getElementById(modified_audio).value = 1;
+	};
+	
+	document.getElementById(btn_get).onclick = function() {
+		hideAllAtractionErrorMessages();
+		document.getElementById(file_id).addEventListener('change', readURL, true);
+		var fileButton = document.getElementById(file_id);
+		fileButton.click();
+	};
+	
+	var file_str = "#" + file_id;
+	$(file_str).change(function() {
+       	document.getElementById(modified_audio).value = 1;
+       	var file = document.getElementById(file_id).files[0];
+	    var val = $(this).val();
+	    document.getElementById(size_msg).style.display = 'none';
+	    document.getElementById(incorrect_audio_msg).style.display = 'none';
+	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	        case 'mp3':
+	        	if (file.size > (3 * 1024 * 1024)) {
+	        		document.getElementById(size_msg).style.display = 'block';
+	        		document.getElementById(file_id).value = "" ;
+					document.getElementById(audio).src = "" ;
+	        		return;
+	        	}
+	        	break;
+	        default:
+	            $(this).val('');
+				document.getElementById(incorrect_audio_msg).style.display = 'block';
+				document.getElementById(file_id).value = "" ;
+				document.getElementById(audio).src = "" ;
+				break;
+	    }
+	});
+	
+	function readURL() {
+		var file = document.getElementById(file_id).files[0];
+		var reader = new FileReader();
+	    reader.onloadend = function(){
+			document.getElementById(audio).src = reader.result;
+		}
+		if(file) {
+			reader.readAsDataURL(file);
+		} 
+	}
+}
