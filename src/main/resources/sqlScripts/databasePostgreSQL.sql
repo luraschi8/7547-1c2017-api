@@ -65,4 +65,16 @@ create table PuntoDeInteres (
     audioES bytea,
     idAtraccion bigint not null,
     foreign key (idAtraccion) references Atraccion (id)
-)
+);
+
+create table Resenia (
+	id serial primary key not null,
+    idUsuario bigint not null,
+    foreign key (idUsuario) references Usuario (id),
+	nombreUsuario varchar(50), /* Cuando esté la BDD de Usuario, se podría sacar del idUsuario */
+	fecha varchar(10), /* DD-MM-AAAA */
+	hora varchar(5), /* HH:MM */
+    comentario varchar(250),
+    calificaion double,
+    foreign key (idAtraccion) references Atraccion (id)
+);

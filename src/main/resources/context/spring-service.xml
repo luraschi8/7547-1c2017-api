@@ -37,6 +37,8 @@
 				</value>
 				<value>ar.com.trips.persistencia.modelo.PuntoDeInteres
 				</value>
+				<value>ar.com.trips.persistencia.modelo.Resenia
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -65,6 +67,8 @@
 		class="ar.com.trips.persistencia.dao.impl.ImagenAtraccionDAOImpl" />
 	<bean id="puntoDeInteresDAO"
 		class="ar.com.trips.persistencia.dao.impl.PuntoDeInteresDAOImpl" />
+	<bean id="ReseniaDAO"
+		class="ar.com.trips.persistencia.dao.impl.ReseniaDAOImpl" />
 	
 	
 	<!-- Validaciones -->

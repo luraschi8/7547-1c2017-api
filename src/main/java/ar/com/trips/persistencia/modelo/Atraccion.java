@@ -102,13 +102,13 @@ public class Atraccion extends Modelo{
 	
 	@Transient
 	private int cantPuntosDeInteres;
-	/*
+	
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaResenias")
 	private List<Resenia> listaResenias = new ArrayList<>();
 	
 	@Transient
-	private int cantResenias;*/
+	private int cantResenias;
 
 	public Atraccion() {
 		
@@ -258,7 +258,7 @@ public class Atraccion extends Modelo{
 		this.imagen = imagen;
 	}
 	
-	/*public List<PuntoDeInteres> getListaPuntosDeInteres() {
+	public List<PuntoDeInteres> getListaPuntosDeInteres() {
 		return listaPuntosDeInteres;
 	}
 
@@ -288,5 +288,5 @@ public class Atraccion extends Modelo{
 
 	public void setCantResenias(int cantResenias) {
 		this.cantResenias = cantResenias;
-	}*/
+	}
 }
