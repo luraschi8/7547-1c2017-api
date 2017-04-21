@@ -63,3 +63,11 @@ create table PuntoDeInteres (
     idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
 )
+
+create table Resenia (
+	id bigint(10) primary key not null auto_increment,
+    idUsuario bigint(10) not null,
+	nombreUsuario varchar(50),
+    comentario varchar(250),
+    calificaion double
+)
