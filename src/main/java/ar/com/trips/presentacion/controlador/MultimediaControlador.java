@@ -1,10 +1,7 @@
 package ar.com.trips.presentacion.controlador;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
+import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
+import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 
 @Controller
 public class MultimediaControlador {
@@ -35,6 +34,9 @@ public class MultimediaControlador {
 	
 	@Autowired
 	private IAtraccionDAO atraccionDao;
+	
+	@Autowired
+	private IPuntoDeInteresDAO puntoDao;
 	
 	@Autowired
 	private IImagenAtraccionDAO imagenAtraccionDao;
@@ -59,9 +61,18 @@ public class MultimediaControlador {
 	@RequestMapping(path="/imagenAtraccion", method=RequestMethod.GET)
 	public void imagenAtraccion(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) 
 	          throws ServletException, IOException {
-		ImagenAtraccion imagenAtraccion = imagenAtraccionDao.get(id);        
+		ImagenAtraccion imagenAtraccion = imagenAtraccionDao.get(id);
+		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+		response.getOutputStream().write(imagenAtraccion.getImagen());
+	    response.getOutputStream().close();
+	}
+	
+	@RequestMapping(path="/imagenPunto", method=RequestMethod.GET)
+	public void imagenPunto(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) 
+	          throws ServletException, IOException {
+		PuntoDeInteres punto = puntoDao.get(id);        
 	    response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-	    response.getOutputStream().write(imagenAtraccion.getImagen());
+	    response.getOutputStream().write(punto.getImagen());
 	    response.getOutputStream().close();
 	}
 	
@@ -99,6 +110,24 @@ public class MultimediaControlador {
 	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 	        //response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
 	        ByteArrayInputStream iStream = new ByteArrayInputStream(atraccion.getAudioEN());
+	        IOUtils.copy(iStream, response.getOutputStream());
+	        response.flushBuffer();
+	    } catch (java.nio.file.NoSuchFileException e) {
+	        e.printStackTrace();
+	    	response.setStatus(HttpStatus.NOT_FOUND.value());
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+	    }
+	}
+	
+	@RequestMapping(value = "/audioPunto", method = RequestMethod.GET)
+	@ResponseBody public void getAudioPunto(@RequestParam("id") Long id, HttpServletResponse response) {
+	    try {
+	        PuntoDeInteres punto = puntoDao.get(id);
+	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+	        //response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
+	        ByteArrayInputStream iStream = new ByteArrayInputStream(punto.getAudioEN());
 	        IOUtils.copy(iStream, response.getOutputStream());
 	        response.flushBuffer();
 	    } catch (java.nio.file.NoSuchFileException e) {

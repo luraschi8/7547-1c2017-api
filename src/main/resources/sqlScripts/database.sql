@@ -60,7 +60,7 @@ create table PuntoDeInteres (
     imagen mediumblob,
     audioEN mediumblob,
     audioES mediumblob,
-    idAtraccion bigint(10) not null,
+    idAtraccion bigint(10),
     foreign key (idAtraccion) references Atraccion (id)
 )
 

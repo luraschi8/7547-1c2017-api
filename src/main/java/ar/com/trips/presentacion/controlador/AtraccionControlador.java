@@ -17,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
+import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
+import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 
 @Controller
 public class AtraccionControlador {
@@ -28,6 +30,9 @@ public class AtraccionControlador {
 	
 	@Autowired
 	private IAtraccionDAO atraccionDao;
+	
+	@Autowired
+	private IPuntoDeInteresDAO puntoDao;
 	
 	@Autowired
 	private IImagenAtraccionDAO imagenAtraccionDao;
@@ -50,6 +55,7 @@ public class AtraccionControlador {
 		ciudad.setLongitud(longitudCiudad);
 		atraccion.setCiudad(ciudad);
 		model.addObject("atraccion", atraccion);
+		model.addObject("puntoDeInteres",new PuntoDeInteres());
 		return model;
 	}
 	
@@ -78,7 +84,12 @@ public class AtraccionControlador {
 		atraccion.setRecorrible(recorrible);
 		atraccionDao.guardar(atraccion);
 		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
+		guardarPuntosDeInteres(atraccion);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
+	}
+
+	private void guardarPuntosDeInteres(Atraccion atraccion) {
+		puntoDao.guardarPuntosConAtraccionNula(atraccion);
 	}
 
 	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {

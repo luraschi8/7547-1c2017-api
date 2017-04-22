@@ -2,6 +2,7 @@ package ar.com.trips.persistencia.dao;
 
 import java.util.List;
 
+import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 
 public interface IPuntoDeInteresDAO extends IDAO {
@@ -13,4 +14,8 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	void borrar(long id);
 
 	boolean puntoDeInteresExistente(PuntoDeInteres puntoDeInteres);
+
+	List<PuntoDeInteres> listarPorAtraccionNuevo(int idAtraccion);
+
+	void guardarPuntosConAtraccionNula(Atraccion atraccion);
 }

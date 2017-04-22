@@ -19,7 +19,7 @@
 
 	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
 
-<div id="atraction-form">
+<div id="attractionForm">
 	<form:form id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
 		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
 		
@@ -306,8 +306,8 @@
 						<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th></th> <!-- Imagen -->
-									<th></th> <!-- Nombre -->
+									<th>Imagen</th> <!-- Imagen -->
+									<th>Nombre</th> <!-- Nombre -->
 									<th></th> <!-- Borrar -->
 									<th></th> <!-- Ver -->
 								</tr>
@@ -363,7 +363,7 @@
 					<label class="atraction-label" path="nombre">Nombre</label>
 				</div>
 				<div>
-					<input maxlength="50" id="pdi-nombre" path="nombre" name="pdi-nombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"></textarea>
+					<input maxlength="50" id="puntoNombre" path="nombre" name="puntoNombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/>
 				</div>
 				
 				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
@@ -377,7 +377,7 @@
 					<label class="atraction-label" path="descripcion">Descripción</label>
 				</div>
 				<div>
-					<textarea onkeydown="calculateMaxLength('#pdi-descripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="pdi-descripcion" path="descripcion" name="pdi-descripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"></textarea>
+					<input onkeydown="calculateMaxLength('#puntoDescripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcion" path="descripcion" name="puntoDescripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/>
 				</div>
 				
 				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
@@ -386,26 +386,17 @@
 				</div>
 			</div>
 			
-			<div style="width: 100%; height: 11%">
-				<div>
-					<label class="atraction-label" path="orden">Orden</label>
-				</div>
-				<div>
-					<p maxlength="50" id="pdi-orden" path="orden" name="pdi-orden" class="atraction-poi-box"></p> <!-- TODO falta poner value igual a la cantidad de puntos que tenga la atracción -->
-				</div>
-			</div>
-					
 			<div style="width: 100%; height: 33%;">
 				<div style="width: 100%; height: 18%">
 					<label class="atraction-label" path="imagen">Imagen</label>
 				</div>
 				<div class="atraction-point-of-interest-image-box">
-					<img id="pdi-imagen" style="width:100%; height:100%;">
-					<button type="button" class="btn btn-default btn-sm atraction-poi-get-image" id="atraction-poi-get-image">
+					<img id="puntoImagen" style="width:100%; height:100%;">
+					<button type="button" class="btn btn-default btn-sm atraction-poi-get-image" id="puntoGetImagen">
 						<span class="glyphicon glyphicon-pencil"></span>
 					</button>
-					<input id="pdi-imagen-cambiada" name="pdi-imagen-cambiada" type="hidden" value="0">
-					<input type="file" name="pdi-archivo-imagen" id="pdi-archivo-imagen" style="display: none"/>
+					<input id="puntoImagenCambiada" name="puntoImagenCambiada" type="hidden" value="0">
+					<input type="file" name="puntoArchivoImagen" id="puntoArchivoImagen" style="display: none"/>
 				</div>
 			</div>
 			
@@ -422,14 +413,14 @@
 				<div style="width: 100%; height: 60%">
 					<!-- Reproducir audioguía -->
 					<div style="float: left; width: 85%; height: 50%">
-						<audio id="pdi-audio" style="width: 100%;" controls>
+						<audio id="puntoAudio" style="width: 100%;" controls>
 						    <source type="audio/mpeg">
 						</audio> 
 					</div>
 					
 					<!-- Botón agregar audioguía -->
 					<div style="float: right; width: 15%; height: 50%; text-align: right;">
-						<button type="button" class="btn btn-default btn-sm btn-atraction-get-pdi-audio-file" id="atraction-get-pdi-audio-file">
+						<button type="button" class="btn btn-default btn-sm btn-atraction-get-pdi-audio-file" id="puntoGetAudio">
 							<span class="glyphicon glyphicon-pencil"></span>
 						 </button>
 					
@@ -498,70 +489,8 @@
 	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 </div>
 
-
+<script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 <script>
-function disableAtractionPage() {
-	$("#atraction-form").addClass("disable-buttons");
-	$(".btn-final").addClass("disable-buttons");
-	$(".atraction-new-page-header").addClass("disable-buttons");
-}
-
-function openNewPointOfInterestForm() {
-	hideAllAtractionErrorMessages();
-	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'block';
-	document.getElementById('atraction-point-of-interest-popup-form').focus();
-	document.getElementById('atraction-form').blur();
-	disableAtractionPage();
-}
-
-function openViewCommentPopUp() {
-	hideAllAtractionErrorMessages();
-	document.getElementById('atraction-comment-popup').style.display = 'block';
-	document.getElementById('atraction-comment-popup').focus();
-	document.getElementById('atraction-form').blur();
-	disableAtractionPage();
-}
-
-function enableAtractionPage() {
-	$("#atraction-form").removeClass("disable-buttons");
-	$(".btn-final").removeClass("disable-buttons");
-	$(".atraction-new-page-header").removeClass("disable-buttons");
-}
-
-function closeNewPointOfInterestForm() {
-	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'none';
-	document.getElementById('pdi-nombre').value = '';
-	document.getElementById('pdi-descripcion').value = '';
-	document.getElementById('pdi-imagen').src = '//:0';
-	document.getElementById('pdi-audio').src = '';
-	hideAllPointOfInterestErrorMessages();
-	enableAtractionPage();
-}
-
-function closeViewCommentPopUp() {
-	document.getElementById('atraction-comment-popup').style.display = 'none';
-	enableAtractionPage();
-}
-
-$(document).ready(function() {
-	validateImage("atraction-poi-get-image", "pdi-archivo-imagen", "pdi-imagen", "mensajeImagenIncorrectaPuntoDeInteresError");
-});
-
-function updatePointOfInterestForm() {
-	document.formNuevoPuntoDeInteres.nombre.value = $('#pdi-nombre').val();
-	document.formNuevoPuntoDeInteres.descripcion.value = $('#pdi-descripcion').val();
-	document.formNuevoPuntoDeInteres.orden.value = atraccion.cantPuntos;
-}
-
-function hideAllPointOfInterestErrorMessages() {
-	document.getElementById('mensajeNombreVacioPuntoDeInteresError').style.display = 'none';
-	document.getElementById('mensajeDescripcionVaciaPuntoDeInteresError').style.display = 'none';
-	document.getElementById('mensajeImagenIncorrectaPuntoDeInteresError').style.display = 'none';
-	document.getElementById('mensajeAudioPdiTamano').style.display = 'none';
-	document.getElementById('mensajeAudioPdiIncorrectoError').style.display = 'none';
-	document.getElementById('mensajeNombrePuntoDeInteresRepetido').style.display = 'none';
-}
-
 function validarAtraccionRepetida() {
 	hideAllPointOfInterestErrorMessages();
 	hayError = 0;
@@ -623,9 +552,6 @@ $("#nombreEditadoTextarea").attr("maxlength", MAX_NOMBRE_ATRACCION);
 $("#descripcionEditadaTextarea").attr("maxlength", MAX_DESCRIPCION_ATRACCION);
 $("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO_ATRACCION);
 $("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
-
-const MAX_DESCRIPCION_PUNTO_DE_INTERES = "250";
-$("#pid-descripcion").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 
 const MAX_COMENTARIO = "500";
 $("atraction-comment").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
@@ -816,7 +742,6 @@ $(document).ready(function() {
 
 <!-- Gallery -->
 <script>
-var slideIndex = 1;
 
 var imageNumber = 0;
 var videoNumber = 0;
@@ -1058,7 +983,7 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
 	validateAudio("atraction-get-audio-file", "borrarAudio", "archivoAudioguia", "audio", "audioCambiado", "mensajeAudioTamano", "mensajeAudioIncorrectoError");
-	validateAudio("atraction-get-pdi-audio-file", "borrarAudioPdi", "archivoAudioguiaPdi", "pdi-audio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
+	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
 });
 </script>
 
@@ -1077,6 +1002,9 @@ $(document).ready(function() {
 
 <c:set var="longitud_ciudad">
 	${atraccion.ciudad.longitud}
+</c:set>
+<c:set var="id">
+	${atraccion.id}
 </c:set>
 
 <!-- Mapa -->
@@ -1229,6 +1157,27 @@ function isOutOfRange(coordinates) {
     hubo_click = true;
     return out_of_range;
 }
+
+/* PUNTO DE INTERES  */
+var table = $('#tablita').DataTable( {
+	dom: 'frtip',
+	ajax: "puntoAtraccionNuevoJson/${id}",
+	columns: [
+		{	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },
+        {data: "nombre" },
+		{defaultContent:'<button class="btn btn-danger" id="borrar">Borrar</button>'},
+		{defaultContent:'<button class="btn btn-warning" id="ver">Ver</button>'}
+		],
+		select:true,
+		paging:true,
+		pageLength:50,
+		ordering:true
+});
+
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>

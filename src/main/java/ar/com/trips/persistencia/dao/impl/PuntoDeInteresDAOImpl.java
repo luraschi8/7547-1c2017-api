@@ -3,9 +3,11 @@ package ar.com.trips.persistencia.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 
 public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO {
@@ -14,6 +16,17 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 	public List<PuntoDeInteres> listarPorAtraccion(int idAtraccion) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE a.atraccion.id = " + idAtraccion + " AND a.borrado = 0";
+		@SuppressWarnings("unchecked")
+		List<PuntoDeInteres> lista = session.createQuery(query).list();
+		session.close();
+		return lista;
+	}
+	
+	@Override
+	public List<PuntoDeInteres> listarPorAtraccionNuevo(int idAtraccion) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE (a.atraccion.id = " + idAtraccion + 
+				" OR a.atraccion.id is null) AND a.borrado = 0";
 		@SuppressWarnings("unchecked")
 		List<PuntoDeInteres> lista = session.createQuery(query).list();
 		session.close();
@@ -46,5 +59,18 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		List<PuntoDeInteres> lista = session.createQuery(query).list();
 		session.close();
 		return lista.size() != 0;
+	}
+
+	@Override
+	public void guardarPuntosConAtraccionNula(Atraccion atraccion) {
+		List<PuntoDeInteres> lista = listarPorAtraccionNuevo((int)atraccion.getId());
+		Session s = sessionFactory.openSession();
+		Transaction tx = s.beginTransaction();
+		for (PuntoDeInteres puntoDeInteres : lista) {
+			puntoDeInteres.setAtraccion(atraccion);
+			s.update(puntoDeInteres);
+		}
+		tx.commit();
+		s.close();
 	}
 }

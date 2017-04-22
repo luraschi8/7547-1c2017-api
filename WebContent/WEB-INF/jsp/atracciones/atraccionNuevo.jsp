@@ -16,7 +16,8 @@
 <body>
 
 	<h1 class="page-header atraction-new-page-header" style="margin-left: 5rem">Nueva atracción</h1>
-	
+
+<div id="attractionForm">
 	<form:form id ="formNuevo" name="formNuevo" action="atraccionNuevoValidar" method="post" commandName="atraccion" enctype="multipart/form-data">
 	
 		<div class="atraction-new-form" style="width: 100%; display: inline-block; overflow: hidden;"> 
@@ -220,12 +221,12 @@
 				</div>
 				
 				<!-- Tabla puntos de interés y obras -->
-				<div id="view-atraction-points-of-interest-panel" style="float:right; display: none" class="panel panel-primary view-atraction-panel">
+				<div id="view-atraction-points-of-interest-panel" style="float:right; display: block" class="panel panel-primary view-atraction-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras" type="button" value="Puntos de interés y obras" />
 						
 						<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
-							<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" />
+							<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm()"/>
 						</form>
 					</div>
 					
@@ -251,6 +252,7 @@
 		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
 		</div>	
 	</form:form>
+</div>
 
 <form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
@@ -258,6 +260,108 @@
 	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Guardar" />
 </div>
 
+<div id="atraction-point-of-interest-popup-form" style="width: 50%; height: 100%">
+	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
+		<form:form class="atraction-new-point-of-interest" style="width: 100%; height: 100%" id="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
+			<h2 style="width: 100%; height: 8%">Nuevo punto de interés</h2>
+			
+			<div style="width: 100%; height: 11%">
+				<div>
+					<label class="atraction-label" path="nombre">Nombre</label>
+				</div>
+				<div>
+					<form:input maxlength="50" id="puntoNombre" path="nombre" name="puntoNombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/>
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
+				</div>
+			</div>
+			
+			<div style="width: 100%; height: 15%">
+				<div>
+					<label class="atraction-label" path="descripcion">Descripción</label>
+				</div>
+				<div>
+					<form:input onkeydown="calculateMaxLength('#puntoDescripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcion" path="descripcion" name="puntoDescripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/>
+				</div>
+				
+				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
+				</div>
+			</div>
+					
+			<div style="width: 100%; height: 33%;">
+				<div style="width: 100%; height: 18%">
+					<label class="atraction-label" path="imagen">Imagen</label>
+				</div>
+				<div class="atraction-point-of-interest-image-box">
+					<img id="puntoImagen" style="width:100%; height:100%;">
+					<button type="button" class="btn btn-default btn-sm atraction-poi-get-image" id="puntoGetImagen">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+					<input type="file" name="puntoArchivoImagen" id="puntoArchivoImagen" style="display: none"/>
+				</div>
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
+			</div>
+			
+			<div style="width: 100%; height: 15%">
+				<div style="width: 100%; height: 40%">
+					<label class="atraction-label">Audioguía</label>
+				</div>
+				<div style="width: 100%; height: 60%">
+					<!-- Reproducir audioguía -->
+					<div style="float: left; width: 85%; height: 50%">
+						<audio id="puntoAudio" style="width: 100%;" controls>
+						    <source type="audio/mpeg">
+						</audio> 
+					</div>
+					
+					<!-- Botón agregar audioguía -->
+					<div style="float: right; width: 15%; height: 50%; text-align: right;">
+						<button type="button" class="btn btn-default btn-sm btn-atraction-get-pdi-audio-file" id="puntoGetAudio">
+							<span class="glyphicon glyphicon-pencil"></span>
+						 </button>
+					
+						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-poi-audio-file" id="borrarAudioPdi">
+							<span class="glyphicon glyphicon-erase"></span>
+						 </button>
+	
+						<input type="file" name="archivoAudioguiaPdi" id="archivoAudioguiaPdi"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiIncorrectoError" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+			</div>
+			
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiTamano" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
+			</div>
+			
+			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
+				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
+				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+			</div>
+			
+			<div class="alert alert-warning fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
+			</div>
+		</form:form>
+	</div>
+</div>
+
+<script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 
 <!-- Definición de constantes -->
 <script>
@@ -399,7 +503,7 @@ $(document).ready(function() {
 </script>
 
 
-<!-- Para el slide de Galería podría ser útil -->
+<!-- Gallery -->
 <script>
 
 var imageNumber = 0;
@@ -593,6 +697,8 @@ $(document).ready(function() {
 
 <!-- Audioguía -->
 <script>
+validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
+
 $(document).ready(function() {
 	document.getElementById('atraction-get-audio-file').onclick = function() {
 		hideAllAtractionErrorMessages();
@@ -644,95 +750,121 @@ $(document).ready(function() {
 	${atraccion.ciudad.longitud}
 </c:set>
 
+<c:set var="id">
+	-1
+</c:set>
+
 <!-- Mapa -->
 <script>
-	far_away = false;
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('atraction-map'), {
-            center: {lat: ${latitud_ciudad}, lng: ${longitud_ciudad}},
-            zoom: 13
-        });
-        var input = (document.getElementById('atraction-map-input'));
+far_away = false;
+function initMap() {
+	var map = new google.maps.Map(document.getElementById('atraction-map'), {
+		center: {lat: ${latitud_ciudad}, lng: ${longitud_ciudad}},
+		zoom: 13
+	});
+	var input = (document.getElementById('atraction-map-input'));
 
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-        var autocomplete = new google.maps.places.Autocomplete(input, {types: []});
-        autocomplete.bindTo('bounds', map);
-        
-        google.maps.event.addDomListener(input, 'keydown', function(e) { 
-			if (e.keyCode == 13) { 
-				e.preventDefault(); 
-			}
-		});
+	var autocomplete = new google.maps.places.Autocomplete(input, {types: []});
+	autocomplete.bindTo('bounds', map);
+      
+	google.maps.event.addDomListener(input, 'keydown', function(e) { 
+		if (e.keyCode == 13) { 
+			e.preventDefault(); 
+		}
+	});
 
-        var infowindow = new google.maps.InfoWindow();
-        var marker = new google.maps.Marker({
-            map: map,
-        });
+	var infowindow = new google.maps.InfoWindow();
+	var marker = new google.maps.Marker({
+		map: map,
+	});
 
-        autocomplete.addListener('place_changed', function() {
-            infowindow.close();
-            marker.setVisible(false);
-            var place = autocomplete.getPlace();
-            if (!place.geometry) {
-                window.alert("Autocomplete's returned place contains no geometry");
-                return;
-            }
-
-            // If the place has a geometry, then present it on a map.
-            if (place.geometry.viewport) {
-                map.fitBounds(place.geometry.viewport);
-            } else {
-                map.setCenter(place.geometry.location);
-                map.setZoom(17);  // Why 17? Because it looks good.
-            }
-            marker.setPosition(place.geometry.location);
-            marker.setVisible(true);
-
-            // Se guardan las coordenadas
-            document.formNuevo.latitud.value = place.geometry.location.lat();
-            document.formNuevo.longitud.value = place.geometry.location.lng();
-            location_selected = true;
-            checkIfIsOutOfRange(place.geometry.location);
-
-            var address = '';
-            if (place.address_components) {
-                address = [
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[1] && place.address_components[1].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].short_name || '')
-                ].join(' ');
-            }
-
-            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-            infowindow.open(map, marker);
-        });
-
-		// Al clickear en el mapa, se guardan las coordenadas y se dibuja la ubicación
-        google.maps.event.addListener(map, 'click', function( event ) {
-       		marker.setVisible(false);
-       		marker.setPosition(event.latLng);
-            marker.setVisible(true);
-
-			// Se guardan las coordenadas
-       	  	document.formNuevo.latitud.value = event.latLng.lat();
-           	document.formNuevo.longitud.value = event.latLng.lng();
-           	location_selected = true;
-           	checkIfIsOutOfRange(event.latLng);
-        });
-    }
-
-	function checkIfIsOutOfRange(coordinates) {
-       	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
-       	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
-    	if (google.maps.geometry.spherical.computeDistanceBetween(coordinates, city_coordinates) < 15000) {
-    		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
-    		far_away = false;
-        } else {
-        	document.getElementById("mensajeUbicacionLejana").style.display = 'block';
-        	far_away = true;
-        }
+	autocomplete.addListener('place_changed', function() {
+	infowindow.close();
+	marker.setVisible(false);
+	var place = autocomplete.getPlace();
+	if (!place.geometry) {
+		window.alert("Autocomplete's returned place contains no geometry");
+		return;
 	}
+
+	// If the place has a geometry, then present it on a map.
+	if (place.geometry.viewport) {
+		map.fitBounds(place.geometry.viewport);
+	} else {
+		map.setCenter(place.geometry.location);
+		map.setZoom(17);  // Why 17? Because it looks good.
+	}
+	marker.setPosition(place.geometry.location);
+	marker.setVisible(true);
+
+	// Se guardan las coordenadas
+	document.formNuevo.latitud.value = place.geometry.location.lat();
+	document.formNuevo.longitud.value = place.geometry.location.lng();
+	location_selected = true;
+	checkIfIsOutOfRange(place.geometry.location);
+
+	var address = '';
+	if (place.address_components) {
+		address = [
+			(place.address_components[0] && place.address_components[0].short_name || ''),
+			(place.address_components[1] && place.address_components[1].short_name || ''),
+			(place.address_components[2] && place.address_components[2].short_name || '')
+		].join(' ');
+	}
+
+	infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+		infowindow.open(map, marker);
+	});
+
+	// Al clickear en el mapa, se guardan las coordenadas y se dibuja la ubicación
+	google.maps.event.addListener(map, 'click', function( event ) {
+		marker.setVisible(false);
+		marker.setPosition(event.latLng);
+		marker.setVisible(true);
+
+	// Se guardan las coordenadas
+		document.formNuevo.latitud.value = event.latLng.lat();
+		document.formNuevo.longitud.value = event.latLng.lng();
+		location_selected = true;
+		checkIfIsOutOfRange(event.latLng);
+	});
+};
+
+function checkIfIsOutOfRange(coordinates) {
+	// Se verifica si la ubicación seleccionada se encuentra a más de 15km.
+	var city_coordinates = new google.maps.LatLng(${latitud_ciudad}, ${longitud_ciudad});
+   	if (google.maps.geometry.spherical.computeDistanceBetween(coordinates, city_coordinates) < 15000) {
+		document.getElementById("mensajeUbicacionLejana").style.display = 'none';
+   		far_away = false;
+	} else {
+		document.getElementById("mensajeUbicacionLejana").style.display = 'block';
+		far_away = true;
+	}
+};
+
+/* PUNTO DE INTERES  */
+
+var table = $('#tablita').DataTable( {
+	dom: 'frtip',
+	ajax: "puntoAtraccionNuevoJson/${id}",
+	columns: [
+		{	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },
+        {data: "nombre" },
+		{defaultContent:'<button class="btn btn-danger" id="borrar">Borrar</button>'},
+		{defaultContent:'<button class="btn btn-warning" id="ver">Ver</button>'}
+		],
+		select:true,
+		paging:true,
+		pageLength:50,
+		ordering:true
+});
+
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>
