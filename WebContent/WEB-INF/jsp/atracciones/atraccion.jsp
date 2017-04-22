@@ -329,16 +329,45 @@
 					</div>
 					
 					<div class="panel-body atraction-comments">
-						<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
+						<table id="tabla-resenias" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th></th> <!-- Usuario -->
-									<th></th> <!-- Comentario -->
-									<th></th> <!-- Borrar -->
-									<th></th> <!-- Editar -->
-								</tr>
+						            <th>Usuario</th> <!-- Usuario -->
+									<th>Fecha</th> <!-- Fecha -->
+									<th>Hora</th> <!-- Hora -->
+									<th>Valoración</th> <!-- Valoración -->
+						        </tr>
+						        <tr>
+						            <th colspan="2">Comentario</th> <!-- Comentario -->
+						            <th>Borrar</th> <!-- Borrar -->
+									<th>Editar</th> <!-- Editar -->
+						        </tr>	
 							</thead>
-							<tbody></tbody>
+							<tbody>				
+								<tr>
+									<td>José Nuñez</td>
+					                <td>10/10/2010</td>
+					                <td>10:10</td>
+					                <td>5.0</td>     
+						        </tr>
+						        <tr>
+						            <td colspan="2">Éste es un comentario bastante extenso para probar cómo se ve en la tabla.</td>
+						            <td>Borrar</td>
+						            <td>Editar</td>
+						        </tr>
+						        
+						        <tr>
+									<td>Juan Pérez</td>
+					                <td>10/10/2010</td>
+					                <td>10:12</td>
+					                <td>4.0</td>     
+						        </tr>
+						        <tr>
+						            <td colspan="2">Éste es otro comentario, pero más corto.</td>
+						            <td>Borrar</td>
+						            <td>Editar</td>
+						        </tr>
+				            </tbody>
 						</table>
 					</div>
 				</div>				
@@ -351,6 +380,57 @@
 		</div>
 	</form:form>
 </div>
+
+<c:set var="id">
+	${atraccion.id}
+</c:set>
+    
+<script>
+var comments_table = $('#tabla-resenias').DataTable(); /*{
+	dom: 'frtip',
+	ajax: "${pageContext.request.contextPath}/1.txt",//"reseniasAtraccionJson/${id}",
+    columns: [
+        /*{	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        		return '<div align="center"><img src="/Trips/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },*/
+        /*{data: "nombreUsuario" },
+        {data: "fecha" },
+        {data: "hora" },
+        {data: "calificacion" }/*,
+        {data: "comentario" }/*,
+        {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
+        {defaultContent:'<button class="btn btn-warning" id="editar">${editar}</button>'}*/
+        /*],
+    select:true,
+    paging:false,
+    pageLength:10,
+    ordering:true,
+    bFilter: false
+});*/
+
+/*$('#tabla-resenias tbody').on('click', '#borrar', function (e) {
+	var data = table.row(this.closest("tr")).data();
+	var id = data["id"];
+	var mensaje = document.getElementById("mensajeBorrar").value;
+	e.preventDefault();
+	bootbox.confirm(mensaje, function (response) {
+		if (response) {
+			document.formBorrar.idAtraccion.value = id;
+			document.getElementById("formBorrar").submit();
+		}
+	});
+});
+
+$('#tabla-resenias tbody').on('click', '#editar', function (e) {
+	var data = table.row(this.closest("tr")).data();
+	e.preventDefault();
+	document.formVer.idAtraccion.value = data["id"];
+	document.getElementById("formVer").submit();
+});*/
+</script>
 
 	
 <div id="atraction-point-of-interest-popup-form" style="width: 50%; height: 100%">

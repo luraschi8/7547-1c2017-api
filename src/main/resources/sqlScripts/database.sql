@@ -62,12 +62,18 @@ create table PuntoDeInteres (
     audioES mediumblob,
     idAtraccion bigint(10),
     foreign key (idAtraccion) references Atraccion (id)
-)
+);
 
 create table Resenia (
 	id bigint(10) primary key not null auto_increment,
     idUsuario bigint(10) not null,
-	nombreUsuario varchar(50),
+    foreign key (idUsuario) references Usuario (id),
+	nombreUsuario varchar(50), /* Cuando esté la BDD de Usuario, se podría sacar del idUsuario */
+	fecha varchar(10), /* DD-MM-AAAA */
+	hora varchar(5), /* HH:MM */
     comentario varchar(250),
-    calificaion double
-)
+    calificacion double,
+    borrado tinyint default 0 not null,
+    idAtraccion bigint(10) not null,
+    foreign key (idAtraccion) references Atraccion (id)
+);
