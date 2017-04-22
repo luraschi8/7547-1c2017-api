@@ -329,16 +329,45 @@
 					</div>
 					
 					<div class="panel-body atraction-comments">
-						<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
+						<table id="tabla-resenias" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th></th> <!-- Usuario -->
-									<th></th> <!-- Comentario -->
-									<th></th> <!-- Borrar -->
-									<th></th> <!-- Editar -->
-								</tr>
+						            <th>Usuario</th> <!-- Usuario -->
+									<th>Fecha</th> <!-- Fecha -->
+									<th>Hora</th> <!-- Hora -->
+									<th>Valoración</th> <!-- Valoración -->
+						        </tr>
+						        <tr>
+						            <th colspan="2">Comentario</th> <!-- Comentario -->
+						            <th>Borrar</th> <!-- Borrar -->
+									<th>Editar</th> <!-- Editar -->
+						        </tr>	
 							</thead>
-							<tbody></tbody>
+							<tbody>				
+								<tr>
+									<td>José Nuñez</td>
+					                <td>10/10/2010</td>
+					                <td>10:10</td>
+					                <td>5.0</td>     
+						        </tr>
+						        <tr>
+						            <td colspan="2">Éste es un comentario bastante extenso para probar cómo se ve en la tabla.</td>
+						            <td>Borrar</td>
+						            <td>Editar</td>
+						        </tr>
+						        
+						        <tr>
+									<td>Juan Pérez</td>
+					                <td>10/10/2010</td>
+					                <td>10:12</td>
+					                <td>4.0</td>     
+						        </tr>
+						        <tr>
+						            <td colspan="2">Éste es otro comentario, pero más corto.</td>
+						            <td>Borrar</td>
+						            <td>Editar</td>
+						        </tr>
+				            </tbody>
 						</table>
 					</div>
 				</div>				
@@ -352,7 +381,58 @@
 	</form:form>
 </div>
 
-<!-- Punto de interés -->
+<c:set var="id">
+	${atraccion.id}
+</c:set>
+    
+<script>
+var comments_table = $('#tabla-resenias').DataTable(); /*{
+	dom: 'frtip',
+	ajax: "${pageContext.request.contextPath}/1.txt",//"reseniasAtraccionJson/${id}",
+    columns: [
+        /*{	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        		return '<div align="center"><img src="/Trips/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },*/
+        /*{data: "nombreUsuario" },
+        {data: "fecha" },
+        {data: "hora" },
+        {data: "calificacion" }/*,
+        {data: "comentario" }/*,
+        {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
+        {defaultContent:'<button class="btn btn-warning" id="editar">${editar}</button>'}*/
+        /*],
+    select:true,
+    paging:false,
+    pageLength:10,
+    ordering:true,
+    bFilter: false
+});*/
+
+/*$('#tabla-resenias tbody').on('click', '#borrar', function (e) {
+	var data = table.row(this.closest("tr")).data();
+	var id = data["id"];
+	var mensaje = document.getElementById("mensajeBorrar").value;
+	e.preventDefault();
+	bootbox.confirm(mensaje, function (response) {
+		if (response) {
+			document.formBorrar.idAtraccion.value = id;
+			document.getElementById("formBorrar").submit();
+		}
+	});
+});
+
+$('#tabla-resenias tbody').on('click', '#editar', function (e) {
+	var data = table.row(this.closest("tr")).data();
+	e.preventDefault();
+	document.formVer.idAtraccion.value = data["id"];
+	document.getElementById("formVer").submit();
+});*/
+</script>
+
+	
 <div id="atraction-point-of-interest-popup-form" style="width: 50%; height: 100%">
 	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
 		<form:form class="atraction-new-point-of-interest" style="width: 100%; height: 100%" id="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
@@ -466,44 +546,20 @@
 </div>
 <form:form id="formGuardarPuntoDeInteres" action="atraccionVer?idAtraccion=${atraccion.id}" method="post"></form:form>
 
-
-<!-- Reseñas -->
 <div id="atraction-comment-popup">
-	<div class="atraction-view-comment" style="width: 100%; margin-left: 3%; margin-right: 3%; overflow: hidden" id="atraction-view-comment" name="atraction-view-comment">
-		<h2>Ver reseña</h2>
+	<div class="atraction-view-comment" id ="atraction-view-comment" name="atraction-view-comment">
+		<h2>Edición reseña</h2>
 		
-		<div class="atraction-comment-group" style="width: 96%">
-			<div style="float: left;width: 15%;">
-				<img src="${pageContext.request.contextPath}/imagenAtraccion?id=1" style="width:7.5rem; height:7.5rem"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
-				<p style="overflow: auto" id="comentario-nombre-usuario">Pepeeeeeeeeeeeeee<!-- TODO Acá iría el nombre del usuario ${comentario.usuario.nombre} --></p>
+		<div class="atraction-comment-group">
+			<div style="float: left; margin-top: 4.5rem;">
+				<!-- <img src="${pageContext.request.contextPath}/imagenAtraccion?id=1" style="width:7.5rem; height:7.5rem"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
+				<p id="comentario-nombre-usuario">Pepe<!-- TODO Acá iría el nombre del usuario ${comentario.usuario.nombre} --></p>
 			</div>
 			
-			<div style="float: right; width: 76%;">
-					<label class="atraction-label">Enviado el día... </label><!-- TODO Acá habría que agregar la fecha y la hora del comentario ${comentario.fecha} ${comentario.hora} -->
-				<div>
-					<div style="float: left; width: 75%;">
-						<p id="comentarioEditado" style="white-space: pre-wrap;">Acá iría el comentario!</p>
-						<textarea id="comentarioEditadoTextarea" onkeydown="calculateMaxLength('#comentarioEditado', MAX_COMENTARIO)" path="comentario" style="display: none" class="atraction-box" required="required" rows="5"></textarea>
-						<div class="alert alert-warning fade in atraction-alert" id="mensajeComentarioVacioError" style="display: none;">
-						 	<aclass="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclError!</strong> La reseña no puede estar vacía. Se ha dejado el último estado válido.
-						</div>
-					</div>
-					<div style="float: right; width: 25%;">
-						<div style="float: left">
-							<button type="button" class="btn btn-default btn-sm btn-edit-comment" id="edit-comment" onclick="editField('#comentarioEditado', 'ok-comentario', 'cancel-comentario', 'mensajeComentarioVacioError', true)">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</button>
-							<div>
-								<button type="button" class="btn btn-default btn-sm btn-edit-comment" style="display:none; background-color: red;" id="cancel-comentario" onclick="cancelField('#comentarioEditado', 'ok-comentario', 'cancel-comentario')">
-									<span class="glyphicon glyphicon-remove"></span>
-								</button>
-								<button type="button" class="btn btn-default btn-sm btn-edit-comment" style="display:none; background-color: green;" id="ok-comentario" onclick="saveField('#comentarioEditado', 'ok-comentario', 'cancel-comentario', 'mensajeComentarioVacioError', true)">
-									<span class="glyphicon glyphicon-ok"></span>
-								</button>
-							</div>
-						</div>
-					</div>
+			<div style="float: right;">
+			 	<div>
+					<label class="atraction-label">Enviado el día... </label><!-- TODO Acá habría que agregar la fecha y la hora del comentario ${comentario.fecha} ${comentario.hora} --></p>
+					<textarea onkeydown="calculateMaxLength('#atraction-comment', MAX_COMENTARIO)" id="atraction-comment" path="comentario" name="atraction-comment" class="atraction-box" required="required" rows="5"></textarea>
 				</div>
 			</div>
 		</div>
@@ -511,8 +567,8 @@
 	
 	<form:form id="formGuardarEdicionComentario" action="atraccionVer?idAtraccion=${atraccion.id}" method="post"></form:form>
 	<div class="btn-final-edicion-comentario-popup" style="text-align:center; clear: right;">
-		<input id="botonCancelarComentario" class="btn btn-default" type="button" value="Atrás" onclick="closeViewCommentPopUp();"/>
-		<input id="botonAceptarComentario" class="btn btn-default btn-primary" type="button" value="Aceptar"/>
+		<input id="botonCancelarComentario" class="btn btn-default" type="button" value="Cancelar" onclick="closeViewCommentPopUp();"/>
+		<input id="botonAceptarComentario" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 	</div>
 </div>
 

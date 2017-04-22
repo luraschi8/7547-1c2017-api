@@ -72,7 +72,8 @@ create table Resenia (
 	fecha varchar(10), /* DD-MM-AAAA */
 	hora varchar(5), /* HH:MM */
     comentario varchar(250),
-    calificaion double,
+    calificacion double,
+    borrado tinyint default 0 not null,
     idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
 );
