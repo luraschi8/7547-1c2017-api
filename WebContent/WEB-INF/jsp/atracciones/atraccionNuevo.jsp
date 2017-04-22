@@ -846,7 +846,7 @@ function checkIfIsOutOfRange(coordinates) {
 
 /* PUNTO DE INTERES  */
 
-var table = $('#tablita').DataTable( {
+table = $('#tablita').DataTable( {
 	dom: 'frtip',
 	ajax: "puntoAtraccionNuevoJson/${id}",
 	columns: [

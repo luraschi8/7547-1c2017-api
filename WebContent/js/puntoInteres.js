@@ -25,6 +25,7 @@ $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 			if (data.existe == false) {
 				alert("HOW");
 			} else {
+				table.ajax.reload();
 				closeNewPointOfInterestForm();
 			}
 		}

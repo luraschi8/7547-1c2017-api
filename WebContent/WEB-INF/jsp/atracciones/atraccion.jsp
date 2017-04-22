@@ -306,8 +306,8 @@
 						<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>Imagen</th> <!-- Imagen -->
-									<th>Nombre</th> <!-- Nombre -->
+									<th></th> <!-- Imagen -->
+									<th></th> <!-- Nombre -->
 									<th></th> <!-- Borrar -->
 									<th></th> <!-- Ver -->
 								</tr>
