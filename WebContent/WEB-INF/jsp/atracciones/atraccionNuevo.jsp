@@ -221,7 +221,7 @@
 				</div>
 				
 				<!-- Tabla puntos de interés y obras -->
-				<div id="view-atraction-points-of-interest-panel" style="float:right; display: block" class="panel panel-primary view-atraction-panel">
+				<div id="view-atraction-points-of-interest-panel" style="float:right; display: none" class="panel panel-primary view-atraction-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras" type="button" value="Puntos de interés y obras" />
 						
@@ -851,6 +851,11 @@ var table = $('#tablita').DataTable( {
 	dom: 'frtip',
 	ajax: "puntoAtraccionNuevoJson/${id}",
 	columns: [
+		{	data:"orden",
+			render: function (data,type,row) {
+		 		return '<span class="ordinal-position">' + data + '</span>'
+		 	}
+		},
 		{	data: "id",
         	render: function (data,type,row) {
         		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data + '" style="align: center; width:40px; height:40px"/></div'

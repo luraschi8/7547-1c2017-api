@@ -89,7 +89,11 @@ public class AtraccionControlador {
 	}
 
 	private void guardarPuntosDeInteres(Atraccion atraccion) {
-		puntoDao.guardarPuntosConAtraccionNula(atraccion);
+		if (atraccion.getRecorrible() == 1) {
+			puntoDao.guardarPuntosConAtraccionNula(atraccion);
+		} else {
+			puntoDao.borrarPuntosDeAtraccion(atraccion);
+		}
 	}
 
 	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {

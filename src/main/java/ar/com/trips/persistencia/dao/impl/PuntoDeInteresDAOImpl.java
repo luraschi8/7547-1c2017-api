@@ -68,28 +68,9 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		List<PuntoDeInteres> lista = listarPorAtraccionNuevo((int)atraccion.getId());
 		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
-		int orden = 1;
-		int ordenMasAlto = 0;
-		int ordenMasBajo = 9999;
 		for (PuntoDeInteres puntoDeInteres : lista) {
 			puntoDeInteres.setAtraccion(atraccion);
-			if (puntoDeInteres.getOrden() > ordenMasAlto) {
-				ordenMasAlto = puntoDeInteres.getOrden();
-			}
-			if (puntoDeInteres.getOrden() < ordenMasBajo) {
-				ordenMasBajo = puntoDeInteres.getOrden();
-			}
-		}
-		if (ordenMasAlto > 0) {
-			orden = ordenMasAlto + 1;
-		}
-		if (ordenMasBajo == 0) {
-			for (PuntoDeInteres puntoDeInteres : lista) {
-				if (puntoDeInteres.getOrden() == 0) {
-					puntoDeInteres.setOrden(orden++);
-					s.update(puntoDeInteres);
-				}
-			}
+			s.update(puntoDeInteres);
 		}
 		tx.commit();
 		s.close();
@@ -119,6 +100,18 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 			PuntoDeInteres punto = get(new Long(id));
 			punto.setOrden(orden);
 			s.update(punto);
+		}
+		tx.commit();
+		s.close();
+	}
+
+	@Override
+	public void borrarPuntosDeAtraccion(Atraccion atraccion) {
+		List<PuntoDeInteres> lista = listarPorAtraccionNuevo((int)atraccion.getId());
+		Session s = sessionFactory.openSession();
+		Transaction tx = s.beginTransaction();
+		for (PuntoDeInteres puntoDeInteres : lista) {
+			s.delete(puntoDeInteres);
 		}
 		tx.commit();
 		s.close();
