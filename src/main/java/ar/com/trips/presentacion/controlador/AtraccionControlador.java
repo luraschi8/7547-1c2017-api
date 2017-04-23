@@ -198,6 +198,7 @@ public class AtraccionControlador {
 		guardarAudio(atraccion,audio);
 		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
 		atraccionDao.modificar(atraccion);
+		guardarPuntosDeInteres(atraccion);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
 	}
 

@@ -234,6 +234,7 @@
 						<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 							<thead>
 								<tr>
+									<th></th>
 									<th></th> <!-- Imagen -->
 									<th></th> <!-- Nombre -->
 									<th></th> <!-- Borrar -->
@@ -846,7 +847,7 @@ function checkIfIsOutOfRange(coordinates) {
 
 /* PUNTO DE INTERES  */
 
-table = $('#tablita').DataTable( {
+var table = $('#tablita').DataTable( {
 	dom: 'frtip',
 	ajax: "puntoAtraccionNuevoJson/${id}",
 	columns: [
@@ -861,8 +862,38 @@ table = $('#tablita').DataTable( {
 		],
 		select:true,
 		paging:true,
-		pageLength:50,
-		ordering:true
+		pageLength:50
+});
+
+$('#botonGuardarPuntoDeInteres').on('click', function(e) {
+	e.preventDefault();
+	if (validarPunto() == false) {
+		return;
+	}
+	var formData = new FormData();
+	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
+	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
+	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombre.value);
+	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcion.value);
+	$.ajax({
+		url : "crearPunto",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data.existe == false) {
+				alert("HOW");
+			} else {
+				guardarOrden();
+				table.ajax.reload();
+				closeNewPointOfInterestForm();
+			}
+		}
+	});
+	
 });
 
 </script>

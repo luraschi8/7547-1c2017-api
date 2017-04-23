@@ -74,12 +74,21 @@ public class PuntoDeInteresRest {
 	public HashMap<String, Boolean> crearPunto(@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
 			@RequestParam(name="imagen") MultipartFile imagen,
+			@RequestParam(name="idAtraccion",required=false) int idAtraccion,
 			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
+		List<PuntoDeInteres> listaPuntos = puntoDao.listarPorAtraccionNuevo(idAtraccion);
+		int orden = 0;
+		for (PuntoDeInteres puntoDeInteres : listaPuntos) {
+			if (puntoDeInteres.getOrden() > orden) {
+				orden = puntoDeInteres.getOrden();
+			}
+		}
 		PuntoDeInteres punto = new PuntoDeInteres();
 		punto.setNombre(nombre);
 		punto.setDescripcion(descripcion);
 		punto.setImagen(imagen.getBytes());
+		punto.setOrden(++orden);
 		if (audio != null ) {
 			punto.setAudioEN(audio.getBytes());
 		}
@@ -97,6 +106,13 @@ public class PuntoDeInteresRest {
 //		} else {
 //			lista.put(EXISTE, false);
 //		}
+		return lista;
+	}
+	
+	@RequestMapping(path="/cambiarOrden",method=RequestMethod.POST)
+	public HashMap<String, Boolean> cambiarOrden(@RequestParam("ordenPuntos") String ordenPuntos) {
+		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
+		puntoDao.cambiarOrdenes(ordenPuntos);
 		return lista;
 	}
 }

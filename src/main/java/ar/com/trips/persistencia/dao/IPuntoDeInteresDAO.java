@@ -20,4 +20,6 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	void guardarPuntosConAtraccionNula(Atraccion atraccion);
 
 	void borrarPuntosSinAtraccion();
+
+	void cambiarOrdenes(String ordenPuntos);
 }

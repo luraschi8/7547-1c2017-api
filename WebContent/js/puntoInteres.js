@@ -1,45 +1,65 @@
 const MAX_DESCRIPCION_PUNTO_DE_INTERES = "250";
 $("#puntoDescripcion").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 
+var ordenPuntos = '';
+
 $(function() {
-	$("#sortable").sortable();
+	$("#sortable").sortable({
+		placeholder:    'sort-placeholder',
+	    forcePlaceholderSize: true,
+	    start: function( e, ui )
+	    {
+	    	ui.item.data( 'start-pos', ui.item.index()+1 );
+	    },
+	    change: function( e, ui ) {
+	    	var seq,
+	    	startPos = ui.item.data( 'start-pos' ),
+	    	$index,
+	    	correction;
+	    	ordenPuntos = '';
+	    	correction = startPos <= ui.placeholder.index() ? 0 : 1;
+	    	ui.item.parent().find('tr').each( function( idx, el ) {
+	    		var $this = $( el ),
+	    		$index = $this.index();
+	            if (($index+1 >= startPos && correction === 0) || ($index+1 <= startPos && correction === 1)) {
+	            	$index = $index + correction;
+	            	$this.find('.ordinal-position').text($index);
+	            	var id = $this.find('.clasePuntoId').text();
+	            	if (id != undefined && id != "" && $index != 0) {
+	            		var idOrden = id + "," + $index;
+	            		ordenPuntos += idOrden + ";";
+	            	}
+	            }
+	    	});
+	    	seq = ui.placeholder.index() + correction;
+	    	var idOrden = ui.item.find('.clasePuntoId').text() + "," + seq;
+	    	ordenPuntos += idOrden + ";";
+	    	ui.item.find('.ordinal-position').text(seq);
+	    	console.log(ordenPuntos);
+	    },
+	    stop: function(e, ui) {
+	    	guardarOrden();
+	    }
+	});
 	$("#sortable").disableSelection();
 });
 
-$('#botonGuardarPuntoDeInteres').on('click', function(e) {
-	e.preventDefault();
-	if (validarPunto() == false) {
-		return;
-	}
+function guardarOrden() {
 	var formData = new FormData();
-	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
-	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
-	formData.append("nombre",document.formNuevoPuntoDeInteres.nombre.value);
-	formData.append("descripcion",document.formNuevoPuntoDeInteres.descripcion.value);
+	formData.append("ordenPuntos",ordenPuntos);
 	var json = {
-			"nombre": document.formNuevoPuntoDeInteres.nombre.value,
-			"descripcion": document.formNuevoPuntoDeInteres.descripcion.value
+		"ordenPuntos": ordenPuntos	
 	};
-	
 	$.ajax({
-		url : "crearPunto",
+		url : "cambiarOrden",
 		type : "POST",
 		data : formData,
 		enctype: 'multipart/form-data',
 		processData : false,
 		contentType: false,
 		dataType: 'json',
-		success: function (data) {
-			if (data.existe == false) {
-				alert("HOW");
-			} else {
-				table.ajax.reload();
-				closeNewPointOfInterestForm();
-			}
-		}
 	});
-	
-});
+}
 
 function validarPunto() {
 	hideAllPointOfInterestErrorMessages();
@@ -115,4 +135,5 @@ function hideAllPointOfInterestErrorMessages() {
 	document.getElementById('mensajeAudioPdiTamano').style.display = 'none';
 	document.getElementById('mensajeAudioPdiIncorrectoError').style.display = 'none';
 	document.getElementById('mensajeNombrePuntoDeInteresRepetido').style.display = 'none';
-}
+};
+

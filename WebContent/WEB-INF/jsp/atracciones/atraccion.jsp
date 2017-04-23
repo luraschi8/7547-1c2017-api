@@ -306,13 +306,14 @@
 						<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 							<thead>
 								<tr>
+									<th></th>
 									<th></th> <!-- Imagen -->
 									<th></th> <!-- Nombre -->
 									<th></th> <!-- Borrar -->
 									<th></th> <!-- Ver -->
 								</tr>
 							</thead>
-							<tbody></tbody>
+							<tbody id="sortable"></tbody>
 						</table>
 					</div>
 				</div>
@@ -643,6 +644,17 @@ if (${atraccion.recorrible}) {
 </script>
 
 <script>
+	
+function validarElemento(elemento, mensaje, hayError) {
+	if ((document.getElementById(elemento).value == '') && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById(mensaje).style.display = 'none';
+	}
+	return hayError;
+}
+	
 $(document).ready(function() {
 
 	far_away = false;
@@ -670,15 +682,6 @@ $(document).ready(function() {
 		validarAtraccionRepetida();
 	});
 	
-	function validarElemento(elemento, mensaje, hayError) {
-		if ((document.getElementById(elemento).value == '') && (!hayError)) {
-			document.getElementById(mensaje).style.display = 'block';
-			hayError = 1;
-		} else {
-			document.getElementById(mensaje).style.display = 'none';
-		}
-		return hayError;
-	}
 	
 	function validarPlano(plano, mensaje, hayError) {
 		if ((document.getElementById(plano).src == "http://:0/") && (!hayError)) {
@@ -1237,21 +1240,58 @@ var table = $('#tablita').DataTable( {
 	dom: 'frtip',
 	ajax: "puntoAtraccionNuevoJson/${id}",
 	columns: [
+		{	data:"orden",
+			render: function (data,type,row) {
+		 		return '<span class="ordinal-position">' + data + '</span>'
+		 	}
+		},
 		{	data: "id",
-        	render: function (data,type,row) {
-        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
-        	}
+         	render: function (data,type,row) {
+		 		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data 
+		 		+ '" style="align: center; width:40px; height:40px"/></div>' 
+		 		+ '<span style="display:none" class="clasePuntoId">' + data + '</span>'
+		 	}
         },
         {data: "nombre" },
 		{defaultContent:'<button class="btn btn-danger" id="borrar">Borrar</button>'},
 		{defaultContent:'<button class="btn btn-warning" id="ver">Ver</button>'}
 		],
-		select:true,
-		paging:true,
-		pageLength:50,
-		ordering:true
+	select:true,
+	paging:true,
+	pageLength:50
 });
 
+$('#botonGuardarPuntoDeInteres').on('click', function(e) {
+	e.preventDefault();
+	if (validarPunto() == false) {
+		return;
+	}
+	var formData = new FormData();
+	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
+	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
+	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombre.value);
+	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcion.value);
+	formData.append("idAtraccion",${id});
+	$.ajax({
+		url : "crearPunto",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data.existe == false) {
+				alert("HOW");
+			} else {
+				guardarOrden();
+				table.ajax.reload();
+				closeNewPointOfInterestForm();
+			}
+		}
+	});
+	
+});
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>
