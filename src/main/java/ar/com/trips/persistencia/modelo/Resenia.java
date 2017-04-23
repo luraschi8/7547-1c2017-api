@@ -38,6 +38,12 @@ public class Resenia extends Modelo {
 	@JoinColumn(name="idAtraccion")
 	@JsonBackReference(value="atraccion")
 	private Atraccion atraccion;
+	
+	@Column(name="nombreUsuario")
+	private String nombreUsuario;
+	
+	@Column(name="calificacion")
+	private float calificacion;
 
 	public Resenia() {
 		
@@ -89,5 +95,21 @@ public class Resenia extends Modelo {
 
 	public void setAtraccion(Atraccion atraccion) {
 		this.atraccion = atraccion;
+	}
+
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
+	
+	public void setNombreUsuario(String nombre) {
+		this.nombreUsuario = nombre;
+	}
+
+	public float getCalificacion() {
+		return calificacion;
+	}
+	
+	public void setCalificacion(float calificacion) {
+		this.calificacion = calificacion;
 	}
 }

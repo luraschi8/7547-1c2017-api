@@ -60,7 +60,7 @@ create table PuntoDeInteres (
     imagen mediumblob,
     audioEN mediumblob,
     audioES mediumblob,
-    idAtraccion bigint(10),
+    idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
 );
 
@@ -72,7 +72,7 @@ create table Resenia (
 	fecha varchar(10), /* DD-MM-AAAA */
 	hora varchar(5), /* HH:MM */
     comentario varchar(250),
-    calificacion double,
+    calificacion float,
     borrado tinyint default 0 not null,
     idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
