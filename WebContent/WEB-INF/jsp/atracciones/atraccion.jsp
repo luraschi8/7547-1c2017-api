@@ -331,44 +331,15 @@
 					</div>
 					
 					<div class="panel-body atraction-comments">
-						<table id="tabla-resenias" class="display order-column view-atraction-board" cellspacing="0" width="100%">
+						<table id="tablaResenias" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-						            <th>Usuario</th> <!-- Usuario -->
-									<th>Fecha</th> <!-- Fecha -->
-									<th>Hora</th> <!-- Hora -->
-									<th>Valoración</th> <!-- Valoración -->
-						        </tr>
-						        <tr>
-						            <th colspan="2">Comentario</th> <!-- Comentario -->
-						            <th>Borrar</th> <!-- Borrar -->
-									<th>Editar</th> <!-- Editar -->
+						            <th></th> <!-- Reseña -->
+									<th></th> <!-- Borrar -->
+									<th></th> <!-- Editar -->
 						        </tr>	
 							</thead>
-							<tbody>				
-								<tr>
-									<td>José Nuñez</td>
-					                <td>10/10/2010</td>
-					                <td>10:10</td>
-					                <td>5.0</td>     
-						        </tr>
-						        <tr>
-						            <td colspan="2">Éste es un comentario bastante extenso para probar cómo se ve en la tabla.</td>
-						            <td>Borrar</td>
-						            <td>Editar</td>
-						        </tr>
-						        
-						        <tr>
-									<td>Juan Pérez</td>
-					                <td>10/10/2010</td>
-					                <td>10:12</td>
-					                <td>4.0</td>     
-						        </tr>
-						        <tr>
-						            <td colspan="2">Éste es otro comentario, pero más corto.</td>
-						            <td>Borrar</td>
-						            <td>Editar</td>
-						        </tr>
+							<tbody>
 				            </tbody>
 						</table>
 					</div>
@@ -386,32 +357,60 @@
 <c:set var="id">
 	${atraccion.id}
 </c:set>
+
+
+
+
+<c:set var="borrarResenia">
+	Borrar
+</c:set>
+
+<c:set var="mensajeBorrarResenia">
+ 	Se borrará la reseña seleccionada. ¿Desea continuar?
+</c:set>
+<input id="mensajeBorrarResenia" type="hidden" value="${mensajeBorrarResenia}" />
+ 
+<form id ="formBorrarResenia" name="formBorrarResenia" action="atraccionBorrar" method="post">
+	<input id="idResenia" name="idResenia" type="hidden">
+	<input id="idAtraccion" name="idAtraccion" value="${atraccion.id}" type="hidden"> 
+</form>
+
     
 <script>
-var comments_table = $('#tabla-resenias').DataTable(); /*{
+var comments_table = $('#tablaResenias').DataTable({
 	dom: 'frtip',
-	ajax: "${pageContext.request.contextPath}/1.txt",//"reseniasAtraccionJson/${id}",
+	ajax: "reseniasAtraccionJson/${id}",
     columns: [
-        /*{	data: "id",
-        	render: function (data,type,row) {
-        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
-        		return '<div align="center"><img src="/Trips/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        {	data: "id",
+            render: function (data,type,row) {
+            	return "Enviado por " + row.nombreUsuario + "<br>" + row.fecha + " a las " + row.hora + "<br>" + row.calificacion + "<br>" + row.comentario;
         	}
-        },*/
-        /*{data: "nombreUsuario" },
-        {data: "fecha" },
-        {data: "hora" },
-        {data: "calificacion" }/*,
-        {data: "comentario" }/*,
-        {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
-        {defaultContent:'<button class="btn btn-warning" id="editar">${editar}</button>'}*/
-        /*],
+        },
+        {defaultContent:'<button class="btn btn-danger" id="borrarResenia" value="Borrar">${borrarResenia}</button>'},
+        {defaultContent:'<button class="btn btn-warning" id="editarResenia" value="Editar">${editar}</button>'}
+        ],
     select:true,
     paging:false,
     pageLength:10,
     ordering:true,
     bFilter: false
-});*/
+});
+
+$('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
+	e.preventDefault();
+	var data = table.row(this.closest("tr"));
+	var id = data.id;
+	alert(data);
+	alert(id);
+	var mensaje = document.getElementById("mensajeBorrarResenia").value;
+	e.preventDefault();
+	bootbox.confirm(mensaje, function (response) {
+		if (response) {
+			document.formBorrar.idResenia.value = id;
+			document.getElementById("formBorrarResenia").submit();
+		}
+	});
+});
 
 /*$('#tabla-resenias tbody').on('click', '#borrar', function (e) {
 	var data = table.row(this.closest("tr")).data();
