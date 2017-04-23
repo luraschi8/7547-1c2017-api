@@ -3,9 +3,12 @@ package ar.com.trips.persistencia.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IReseniaDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 import ar.com.trips.persistencia.modelo.Resenia;
 
 public class ReseniaDAOImpl extends DAOImpl implements IReseniaDAO {
@@ -33,6 +36,19 @@ public class ReseniaDAOImpl extends DAOImpl implements IReseniaDAO {
 		model.setBorrado(1);
 		s.update(model);
 		s.getTransaction().commit();
+		s.close();
+	}
+	
+	@Override
+	public void guardar(Atraccion atraccion) {
+		List<Resenia> lista = listarPorAtraccion((int)atraccion.getId());
+		Session s = sessionFactory.openSession();
+		Transaction tx = s.beginTransaction();
+		for (Resenia resenia : lista) {
+			resenia.setAtraccion(atraccion);
+			s.update(resenia);
+		}
+		tx.commit();
 		s.close();
 	}
 }
