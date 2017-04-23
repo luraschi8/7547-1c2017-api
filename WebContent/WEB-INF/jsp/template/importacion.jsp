@@ -18,3 +18,4 @@
 <script src="${pageContext.request.contextPath}/js/ripples.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/material.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

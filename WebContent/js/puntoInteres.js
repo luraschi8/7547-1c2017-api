@@ -1,8 +1,16 @@
 const MAX_DESCRIPCION_PUNTO_DE_INTERES = "250";
 $("#puntoDescripcion").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
 
+$(function() {
+	$("#sortable").sortable();
+	$("#sortable").disableSelection();
+});
+
 $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	e.preventDefault();
+	if (validarPunto() == false) {
+		return;
+	}
 	var formData = new FormData();
 	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
@@ -32,12 +40,18 @@ $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	});
 	
 });
-$(document).ready(function() {
-	var id = "${id}";
-	console.log("IDD: " + id);
+
+function validarPunto() {
+	hideAllPointOfInterestErrorMessages();
+	var hayError = 0;
+	hayError = validarElemento('puntoNombre', 'mensajeNombreVacioPuntoDeInteresError', hayError);
+	hayError = validarElemento('puntoDescripcion', 'mensajeDescripcionVaciaPuntoDeInteresError', hayError);
+	validarPuntoDeInteresRepetido();
+}
+
+function validarPuntoDeInteresRepetido() {
 	
-	
-});
+}
 
 function disableAtractionPage() {
 	$("#attractionForm").addClass("disable-buttons");
@@ -84,6 +98,7 @@ function closeViewCommentPopUp() {
 
 $(document).ready(function() {
 	validateImage("puntoGetImagen", "puntoArchivoImagen", "puntoImagen", "mensajeImagenIncorrectaPuntoDeInteresError");
+	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
 });
 
 function updatePointOfInterestForm() {
@@ -91,6 +106,7 @@ function updatePointOfInterestForm() {
 	document.formNuevoPuntoDeInteres.descripcion.value = $('#pdi-descripcion').val();
 	document.formNuevoPuntoDeInteres.orden.value = atraccion.cantPuntos;
 }
+
 
 function hideAllPointOfInterestErrorMessages() {
 	document.getElementById('mensajeNombreVacioPuntoDeInteresError').style.display = 'none';

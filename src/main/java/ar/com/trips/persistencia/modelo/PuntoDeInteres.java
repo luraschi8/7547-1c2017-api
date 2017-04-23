@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -60,6 +61,9 @@ public class PuntoDeInteres extends Modelo {
 	@JoinColumn(name="idAtraccion")
 	@JsonBackReference(value="atraccion")
 	private Atraccion atraccion;
+	
+	@Transient
+	private String imagenString;
 
 	public PuntoDeInteres() {
 		
@@ -136,4 +140,13 @@ public class PuntoDeInteres extends Modelo {
 	public void setAudioES(byte[] audioES) {
 		this.audioES = audioES;
 	}
+
+	public String getImagenString() {
+		return imagenString;
+	}
+
+	public void setImagenString(String imagenString) {
+		this.imagenString = imagenString;
+	}
+	
 }

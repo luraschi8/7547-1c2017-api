@@ -240,7 +240,7 @@
 									<th></th> <!-- Ver -->
 								</tr>
 							</thead>
-							<tbody></tbody>
+							<tbody id="sortable"></tbody>
 						</table>
 					</div>
 				</div>		

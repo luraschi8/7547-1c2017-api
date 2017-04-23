@@ -18,4 +18,6 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	List<PuntoDeInteres> listarPorAtraccionNuevo(int idAtraccion);
 
 	void guardarPuntosConAtraccionNula(Atraccion atraccion);
+
+	void borrarPuntosSinAtraccion();
 }

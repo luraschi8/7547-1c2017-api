@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.ICiudadDAO;
+import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
 import ar.com.trips.persistencia.modelo.Ciudad;
 
 @Controller
@@ -20,6 +21,9 @@ public class CiudadControlador {
 	
 	@Autowired
 	private ICiudadDAO ciudadDao;
+	
+	@Autowired
+	private IPuntoDeInteresDAO puntoDao;
 	
 	@RequestMapping(path="/ciudades")
 	public ModelAndView listar() {
@@ -75,6 +79,7 @@ public class CiudadControlador {
 	
 	@RequestMapping(path="ciudadVer")
 	public ModelAndView ver(@RequestParam("idCiudad") long idCiudad) {
+		puntoDao.borrarPuntosSinAtraccion();
 		Ciudad ciudad = ciudadDao.get(idCiudad);
 		ModelAndView model = new ModelAndView("ciudades/ciudad");
 		model.addObject("ciudad",ciudad);		

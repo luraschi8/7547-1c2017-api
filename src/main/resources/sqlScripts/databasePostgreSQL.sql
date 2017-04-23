@@ -63,7 +63,7 @@ create table PuntoDeInteres (
     imagen bytea,
     audioEN bytea,
     audioES bytea,
-    idAtraccion bigint not null,
+    idAtraccion bigint,
     foreign key (idAtraccion) references Atraccion (id)
 );
 

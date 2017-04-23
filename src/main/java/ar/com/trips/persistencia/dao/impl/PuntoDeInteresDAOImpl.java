@@ -66,9 +66,23 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		List<PuntoDeInteres> lista = listarPorAtraccionNuevo((int)atraccion.getId());
 		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
+		int orden = 1;
 		for (PuntoDeInteres puntoDeInteres : lista) {
 			puntoDeInteres.setAtraccion(atraccion);
+			puntoDeInteres.setOrden(orden++);
 			s.update(puntoDeInteres);
+		}
+		tx.commit();
+		s.close();
+	}
+
+	@Override
+	public void borrarPuntosSinAtraccion() {
+		List<PuntoDeInteres> lista = listarPorAtraccionNuevo(-1);
+		Session s = sessionFactory.openSession();
+		Transaction tx = s.beginTransaction();
+		for (PuntoDeInteres puntoDeInteres : lista) {
+			s.delete(puntoDeInteres);
 		}
 		tx.commit();
 		s.close();

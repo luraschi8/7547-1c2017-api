@@ -614,11 +614,6 @@ function validarAtraccionRepetida() {
 	});*/
 }
 
-$('#botonGuardarPuntoDeInteres').on('click', function(e) {
-	e.preventDefault();
-	updatePointOfInterestForm();
-	validarPuntoDeInteresRepetido();
-});
 </script>
 
 
@@ -1063,7 +1058,6 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
 	validateAudio("atraction-get-audio-file", "borrarAudio", "archivoAudioguia", "audio", "audioCambiado", "mensajeAudioTamano", "mensajeAudioIncorrectoError");
-	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
 });
 </script>
 

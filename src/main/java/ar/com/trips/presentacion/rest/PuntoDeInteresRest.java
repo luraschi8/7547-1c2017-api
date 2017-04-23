@@ -37,6 +37,9 @@ public class PuntoDeInteresRest {
 	public HashMap<String, List> listarPuntoDeInteresesAtraccion(@PathVariable int idAtraccion) {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		List<PuntoDeInteres> list = puntoDao.listarPorAtraccion(idAtraccion);
+		for (PuntoDeInteres punto : list) {
+			punto.setImagenString(DatatypeConverter.printBase64Binary(punto.getImagen()));
+		}
 		lista.put(DATA, list);
 		return lista;
 	}
@@ -55,7 +58,7 @@ public class PuntoDeInteresRest {
 		HashMap<String, PuntoDeInteresDTO> lista = new HashMap<String, PuntoDeInteresDTO>();
 		PuntoDeInteres punto = puntoDao.get(idPuntoDeInteres);
 		String url = request.getRequestURL().toString();
-		url = url.substring(0, url.indexOf("atraccion"));
+		url = url.substring(0, url.indexOf("punto"));
 		PuntoDeInteresDTO dto = new PuntoDeInteresDTO();
 		dto.setNombre(punto.getNombre());
 		dto.setDescripcion(punto.getDescripcion());
