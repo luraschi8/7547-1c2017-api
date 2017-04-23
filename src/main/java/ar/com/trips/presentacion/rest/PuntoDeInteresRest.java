@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 import ar.com.trips.presentacion.dto.PuntoDeInteresDTO;
+import ar.com.trips.presentacion.validacion.PuntoDeInteresValidacion;
 
 @RestController
 public class PuntoDeInteresRest {
@@ -32,6 +33,9 @@ public class PuntoDeInteresRest {
 	
 	@Autowired
 	private IPuntoDeInteresDAO puntoDao;
+	
+	@Autowired
+	private PuntoDeInteresValidacion puntoValidacion;
 	
 	@RequestMapping(path="/puntoAtraccionJson/{idAtraccion}",method=RequestMethod.GET)
 	public HashMap<String, List> listarPuntoDeInteresesAtraccion(@PathVariable int idAtraccion) {
@@ -74,7 +78,7 @@ public class PuntoDeInteresRest {
 	public HashMap<String, Boolean> crearPunto(@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
 			@RequestParam(name="imagen") MultipartFile imagen,
-			@RequestParam(name="idAtraccion",required=false) int idAtraccion,
+			@RequestParam(name="idAtraccion",required=false) Integer idAtraccion,
 			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
 		List<PuntoDeInteres> listaPuntos = puntoDao.listarPorAtraccionNuevo(idAtraccion);
@@ -100,12 +104,12 @@ public class PuntoDeInteresRest {
 	@RequestMapping(path="/validarPuntoDeInteres",method=RequestMethod.POST)
 	public HashMap<String, Boolean> validarPuntoDeInteres(@RequestBody PuntoDeInteres punto) {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-//		List<String> listaErrores = atraccionValidacion.validar(punto);
-//		if (listaErrores.size() != 0) {
-//			lista.put(EXISTE, true);
-//		} else {
-//			lista.put(EXISTE, false);
-//		}
+		List<String> listaErrores = puntoValidacion.validar(punto);
+		if (listaErrores.size() != 0) {
+			lista.put(EXISTE, true);
+		} else {
+			lista.put(EXISTE, false);
+		}
 		return lista;
 	}
 	

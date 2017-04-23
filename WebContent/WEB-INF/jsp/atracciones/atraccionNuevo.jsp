@@ -312,6 +312,11 @@
 			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 			</div>
 			
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenVaciaPuntoDeInteresError" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> Por favor seleccione una imagen.
+			</div>
+			
 			<div style="width: 100%; height: 15%">
 				<div style="width: 100%; height: 40%">
 					<label class="atraction-label">Audioguía</label>
@@ -872,9 +877,10 @@ var table = $('#tablita').DataTable( {
 
 $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	e.preventDefault();
-	if (validarPunto() == false) {
-		return;
-	}
+	validarPunto();	
+});
+
+function crearPunto() {
 	var formData = new FormData();
 	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
@@ -898,8 +904,32 @@ $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 			}
 		}
 	});
-	
-});
+}
+
+function validarPuntoDeInteresRepetido() {
+	var atraccion = {
+		"id": document.formNuevo.id.value
+	}
+	var json = {
+		"atraccion": atraccion,
+		"nombre": document.formNuevoPuntoDeInteres.puntoNombre.value
+	};
+	$.ajax({
+		url : "validarPuntoDeInteres",
+		type : "POST",
+		data : JSON.stringify(json),
+		processData : false,
+		dataType: "json",
+		contentType : "application/json",
+		success: function (data) {
+			if (data.existe == false) {
+				crearPunto();
+			} else {
+				document.getElementById("mensajeNombrePuntoDeInteresRepetido").style.display = 'block';
+			}
+		}
+	});
+};
 
 </script>
 		

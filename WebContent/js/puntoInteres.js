@@ -66,11 +66,16 @@ function validarPunto() {
 	var hayError = 0;
 	hayError = validarElemento('puntoNombre', 'mensajeNombreVacioPuntoDeInteresError', hayError);
 	hayError = validarElemento('puntoDescripcion', 'mensajeDescripcionVaciaPuntoDeInteresError', hayError);
+	if ((document.getElementById('puntoImagen').src == '' || document.getElementById('puntoImagen').src == 'http://:0/') && (!hayError)) {
+		document.getElementById('mensajeImagenVaciaPuntoDeInteresError').style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById('mensajeImagenVaciaPuntoDeInteresError').style.display = 'none';
+	}
+	if (hayError == 1) {
+		return false;
+	}
 	validarPuntoDeInteresRepetido();
-}
-
-function validarPuntoDeInteresRepetido() {
-	
 }
 
 function disableAtractionPage() {
@@ -132,6 +137,7 @@ function hideAllPointOfInterestErrorMessages() {
 	document.getElementById('mensajeNombreVacioPuntoDeInteresError').style.display = 'none';
 	document.getElementById('mensajeDescripcionVaciaPuntoDeInteresError').style.display = 'none';
 	document.getElementById('mensajeImagenIncorrectaPuntoDeInteresError').style.display = 'none';
+	document.getElementById('mensajeImagenVaciaPuntoDeInteresError').style.display = 'none';
 	document.getElementById('mensajeAudioPdiTamano').style.display = 'none';
 	document.getElementById('mensajeAudioPdiIncorrectoError').style.display = 'none';
 	document.getElementById('mensajeNombrePuntoDeInteresRepetido').style.display = 'none';

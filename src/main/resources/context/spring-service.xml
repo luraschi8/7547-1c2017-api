@@ -78,6 +78,9 @@
 	<bean name="atraccionValidacion"
 		class="ar.com.trips.presentacion.validacion.AtraccionValidacion">
 	</bean>
+	<bean name="puntoValidacion"
+		class="ar.com.trips.presentacion.validacion.PuntoDeInteresValidacion">
+	</bean>
 	
 	<!-- Imagen -->
 	

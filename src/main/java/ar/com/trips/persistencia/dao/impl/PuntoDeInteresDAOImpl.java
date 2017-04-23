@@ -22,9 +22,9 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		session.close();
 		return lista;
 	}
-	
+
 	@Override
-	public List<PuntoDeInteres> listarPorAtraccionNuevo(int idAtraccion) {
+	public List<PuntoDeInteres> listarPorAtraccionNuevo(Integer idAtraccion) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE (a.atraccion.id = " + idAtraccion + 
 				" OR a.atraccion.id is null) AND a.borrado = 0 "
@@ -34,7 +34,7 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		session.close();
 		return lista;
 	}
-	
+
 	@Override
 	public PuntoDeInteres get(Long id) {
 		return this.get(PuntoDeInteres.class, id);
@@ -55,8 +55,8 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 	public boolean puntoDeInteresExistente(PuntoDeInteres puntoDeInteres) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE a.nombre = '" + puntoDeInteres.getNombre() + "'"
-						+ " AND a.atraccion.id = '" + puntoDeInteres.getAtraccion().getId() + "' AND a.borrado = 0"
-						+ " AND a.id != '" + puntoDeInteres.getId() + "'";
+				+ " AND a.atraccion.id = '" + puntoDeInteres.getAtraccion().getId() + "' AND a.borrado = 0"
+				+ " AND a.id != '" + puntoDeInteres.getId() + "'";
 		@SuppressWarnings("unchecked")
 		List<PuntoDeInteres> lista = session.createQuery(query).list();
 		session.close();
@@ -115,5 +115,17 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		}
 		tx.commit();
 		s.close();
+	}
+
+	@Override
+	public boolean puntoExistente(PuntoDeInteres punto) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE a.nombre = '" + punto.getNombre() + "'"
+				+ " AND (a.atraccion.id = '" + punto.getAtraccion().getId() + "' OR a.atraccion.id is null) AND a.borrado = 0"
+				+ " AND a.id != '" + punto.getId() + "'";
+		@SuppressWarnings("unchecked")
+		List<Atraccion> lista = session.createQuery(query).list();
+		session.close();
+		return lista.size() != 0;
 	}
 }

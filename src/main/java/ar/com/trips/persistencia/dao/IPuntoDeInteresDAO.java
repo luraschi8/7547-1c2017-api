@@ -15,7 +15,7 @@ public interface IPuntoDeInteresDAO extends IDAO {
 
 	boolean puntoDeInteresExistente(PuntoDeInteres puntoDeInteres);
 
-	List<PuntoDeInteres> listarPorAtraccionNuevo(int idAtraccion);
+	List<PuntoDeInteres> listarPorAtraccionNuevo(Integer idAtraccion);
 
 	void guardarPuntosConAtraccionNula(Atraccion atraccion);
 
@@ -24,4 +24,6 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	void cambiarOrdenes(String ordenPuntos);
 
 	void borrarPuntosDeAtraccion(Atraccion atraccion);
+
+	boolean puntoExistente(PuntoDeInteres punto);
 }
