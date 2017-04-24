@@ -142,4 +142,3 @@ function hideAllPointOfInterestErrorMessages() {
 	document.getElementById('mensajeAudioPdiIncorrectoError').style.display = 'none';
 	document.getElementById('mensajeNombrePuntoDeInteresRepetido').style.display = 'none';
 };
-
