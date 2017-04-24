@@ -68,7 +68,7 @@ public class PuntoDeInteresRest {
 		dto.setNombre(punto.getNombre());
 		dto.setDescripcion(punto.getDescripcion());
 		if (punto.getAudioEN() != null) {
-			dto.setAudioEN(url + "audioPuntoDeInteres?id=" + punto.getId());
+			dto.setAudioEN(url + "audioPunto?id=" + punto.getId());
 		}
 		dto.setImagen(DatatypeConverter.printBase64Binary(punto.getImagen()));
 		lista.put(DATA, dto);
