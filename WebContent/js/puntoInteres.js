@@ -92,6 +92,15 @@ function openNewPointOfInterestForm() {
 	disableAtractionPage();
 }
 
+function prepareNewPointOfInterestForm() {
+	document.getElementById("puntoVerNombre").style.display = "none";
+	document.getElementById("puntoVerDescripcion").style.display = "none";
+	document.getElementById("puntoEditNameButton").style.display = "none";
+	document.getElementById("puntoEditDescriptionButton").style.display = "none";
+	document.getElementById("puntoNombre").style.display = "block";
+	document.getElementById("puntoDescripcion").style.display = "block";
+}
+
 function openViewCommentPopUp() {
 	hideAllAtractionErrorMessages();
 	document.getElementById('atraction-comment-popup').style.display = 'block';

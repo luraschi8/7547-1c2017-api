@@ -300,7 +300,7 @@
 				<div id="view-atraction-points-of-interest-panel" class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras"/>
-						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm()"/>
+						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm(); prepareNewPointOfInterestForm();"/>
 					</div>
 					
 					<div class="panel-body atraction-points-of-interest">
@@ -398,11 +398,6 @@ var comments_table = $('#tablaResenias').DataTable({
     bFilter: false
 });
 
-
-
-
-
-
 $('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
 	 	var data = comments_table.row(this.closest("tr")).data();
 	 	var id = data["id"];
@@ -484,11 +479,17 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			<h2 style="width: 100%; height: 8%">Nuevo punto de interés</h2>
 			
 			<div style="width: 100%; height: 11%">
-				<div>
+				<div style="display: inline-block;">
 					<label class="atraction-label" path="nombre">Nombre</label>
 				</div>
+				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditNameButton">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
 				<div>
 					<input maxlength="50" id="puntoNombre" path="nombre" name="puntoNombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/>
+				</div>
+				<div>
+					<p style="display: none;" id="puntoVerNombre" name="puntoVerNombre" class="atraction-poi-box"/></p>
 				</div>
 			</div>
 			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
@@ -497,11 +498,17 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			</div>
 			
 			<div style="width: 100%; height: 15%;">
-				<div>
+				<div style="display: inline-block;">
 					<label class="atraction-label" path="descripcion">Descripción</label>
 				</div>
+				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditDescriptionButton">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
 				<div>
 					<input onkeydown="calculateMaxLength('#puntoDescripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcion" path="descripcion" name="puntoDescripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/>
+				</div>
+				<div>
+					<p id="puntoVerDescripcion" name="puntoVerDescripcion" class="atraction-poi-box"/></p>
 				</div>
 			</div>
 			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
@@ -1336,6 +1343,25 @@ $('#tablita tbody').on('click', '#borrar', function (e) {
 		}
 	});
 });
+
+
+
+
+$('#tablita tbody').on('click', '#ver', function (e) {
+	e.preventDefault();
+	openNewPointOfInterestForm();
+	document.getElementById("puntoVerNombre").style.display = "block";
+	document.getElementById("puntoVerDescripcion").style.display = "block";
+	document.getElementById("puntoEditNameButton").style.display = "inline-block";
+	document.getElementById("puntoEditDescriptionButton").style.display = "inline-block";
+	document.getElementById("puntoNombre").style.display = "none";
+	document.getElementById("puntoDescripcion").style.display = "none";
+	var data = table.row(this.closest("tr")).data();
+	document.getElementById("puntoVerNombre").innerHTML = data["nombre"];
+	document.getElementById("puntoVerDescripcion").innerHTML = data["descripcion"];
+});
+
+
 
 $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	e.preventDefault();
