@@ -10,6 +10,8 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	List<PuntoDeInteres> listarPorAtraccion(int idAtraccion);
 	
 	PuntoDeInteres get(Long id);
+	
+	PuntoDeInteres get(int id);
 
 	void borrar(long id, Integer idAtraccion);
 

@@ -287,20 +287,20 @@
 				
 				<div style="clear: left;">
 					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
-						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
-						</div>
-						
-						<div class="alert alert-warning fade in atraction-alert-far-location" id="mensajeUbicacionLejana" style="display: none">
-						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
-						</div>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert-far-location" id="mensajeUbicacionLejana" style="display: none">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
+					</div>
 				</div>
 				
 				<div id="view-atraction-points-of-interest-panel" class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras"/>
-						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm()"/>
+						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm(); prepareNewPointOfInterestForm();"/>
 					</div>
 					
 					<div class="panel-body atraction-points-of-interest">
@@ -398,11 +398,6 @@ var comments_table = $('#tablaResenias').DataTable({
     bFilter: false
 });
 
-
-
-
-
-
 $('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
 	 	var data = comments_table.row(this.closest("tr")).data();
 	 	var id = data["id"];
@@ -484,31 +479,55 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			<h2 style="width: 100%; height: 8%">Nuevo punto de interés</h2>
 			
 			<div style="width: 100%; height: 11%">
-				<div>
+				<div style="display: inline-block;">
 					<label class="atraction-label" path="nombre">Nombre</label>
 				</div>
+				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditNameButton" onclick="editField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true);">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: red;" id="cancel-nombre-punto" onclick="cancelField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto')">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: green;" id="ok-nombre-punto" onclick="saveField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true)">
+					<span class="glyphicon glyphicon-ok"></span>
+				</button>
 				<div>
-					<input maxlength="50" id="puntoNombre" path="nombre" name="puntoNombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/>
+					<textarea onkeydown="calculateMaxLength('#puntoNombreTextarea', MAX_NOMBRE_PUNTO_DE_INTERES)" rows="1" id="puntoNombreTextarea" path="nombre" name="puntoNombreTextarea" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/></textarea>
 				</div>
-				
-				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
-				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
+				<div>
+					<p style="display: none;" id="puntoNombre" name="puntoNombre" class="atraction-poi-box"/></p>
 				</div>
 			</div>
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
+			</div>
 			
-			<div style="width: 100%; height: 15%">
-				<div>
+			<div style="width: 100%; height: 15%;">
+				<div style="display: inline-block;">
 					<label class="atraction-label" path="descripcion">Descripción</label>
 				</div>
-				<div>
-					<input onkeydown="calculateMaxLength('#puntoDescripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcion" path="descripcion" name="puntoDescripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/>
-				</div>
 				
-				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
-				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
+				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditDescriptionButton" onclick="editField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeDescripcionVaciaPuntoDeInteresError', true);">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: red;" id="cancel-descripcion-punto" onclick="cancelField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto')">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: green;" id="ok-descripcion-punto" onclick="saveField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeNombreVacioPuntoDeInteresError', true)">
+					<span class="glyphicon glyphicon-ok"></span>
+				</button>
+				
+				<div>
+					<textarea onkeydown="calculateMaxLength('#puntoDescripcionTextarea', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcionTextarea" path="descripcion" name="puntoDescripcionTextarea" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/></textarea>
 				</div>
+				<div>
+					<p id="puntoDescripcion" name="puntoDescripcion" class="atraction-poi-box"/></p>
+				</div>
+			</div>
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
 			</div>
 			
 			<div style="width: 100%; height: 33%;">
@@ -576,6 +595,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
 				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
 				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 			</div>
 			
 			<div class="alert alert-warning fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
@@ -677,7 +697,7 @@ $("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO_ATRACCION);
 $("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
 
 const MAX_COMENTARIO = "500";
-$("atraction-comment").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
+$("atraction-comment").attr("maxlength", MAX_COMENTARIO);
 
 if (${atraccion.recorrible}) {
 	$("#es-recorrible").attr("checked", "checked");
@@ -1351,17 +1371,72 @@ $('#tablita tbody').on('click', '#borrar', function (e) {
 	});
 });
 
+$('#tablita tbody').on('click', '#ver', function (e) {
+	e.preventDefault();
+	openNewPointOfInterestForm();
+	document.getElementById("puntoNombre").style.display = "block";
+	document.getElementById("puntoDescripcion").style.display = "block";
+	document.getElementById("puntoEditNameButton").style.display = "inline-block";
+	document.getElementById("puntoEditDescriptionButton").style.display = "inline-block";
+	document.getElementById("puntoNombreTextarea").style.display = "none";
+	document.getElementById("puntoDescripcionTextarea").style.display = "none";
+	var data = table.row(this.closest("tr")).data();
+	document.getElementById("puntoNombre").innerHTML = data["nombre"];
+	document.getElementById("puntoDescripcion").innerHTML = data["descripcion"];
+	document.getElementById("botonGuardarPuntoDeInteres").style.display = "none";
+	document.getElementById("botonGuardarEdicionPuntoDeInteres").style.display = "inline-block";
+	document.getElementById('puntoImagen').src = "${pageContext.request.contextPath}/imagenPunto?id=" + data["id"];
+});
+
 $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	e.preventDefault();
 	validarPunto();
+});
+
+$('#botonGuardarEdicionPuntoDeInteres').on('click', function(e) {
+	e.preventDefault();
+	validarEdicionPunto();
+	
+	var formData = new FormData();
+	//formData.append("imagen", document.getElementById("puntoArchivoImagen").files[0]);
+	//formData.append("audio", document.getElementById("archivoAudioguiaPdi").files[0]);
+	formData.append("imagen", null);
+	formData.append("audio", null);
+	formData.append("nombre", document.getElementById("puntoNombreTextarea").value);
+	formData.append("descripcion", document.getElementById("puntoDescripcionTextarea").value);
+	formData.append("id", table.row(this.closest("tr")).data()["id"]);
+	alert(document.getElementById("puntoArchivoImagen").files[0]);
+	alert(document.getElementById("archivoAudioguiaPdi").files[0]);
+	alert(document.getElementById("puntoNombre").innerHTML);
+	alert(document.getElementById("puntoDescripcion").innerHTML);
+	alert(table.row(this.closest("tr")).data()["id"]);
+	$.ajax({
+		url : "modificarPunto",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data.existe == false) {
+				alert("HOW");
+			} else {
+				hideAllAtractionErrorMessages();
+				guardarOrden();
+				table.ajax.reload();
+				closeNewPointOfInterestForm();
+			}
+		}
+	});
 });
 
 function crearPunto() {
 	var formData = new FormData();
 	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
-	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombre.value);
-	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcion.value);
+	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombreTextarea.value);
+	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcionTextarea.value);
 	formData.append("idAtraccion",${id});
 	$.ajax({
 		url : "crearPunto",
@@ -1390,7 +1465,7 @@ function validarPuntoDeInteresRepetido() {
 	}
 	var json = {
 		"atraccion": atraccion,
-		"nombre": document.formNuevoPuntoDeInteres.puntoNombre.value
+		"nombre": document.formNuevoPuntoDeInteres.puntoNombreTextarea.value
 	};
 	$.ajax({
 		url : "validarPuntoDeInteres",

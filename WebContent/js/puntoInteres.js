@@ -1,5 +1,8 @@
 const MAX_DESCRIPCION_PUNTO_DE_INTERES = "250";
-$("#puntoDescripcion").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
+$("#puntoDescripcionTextarea").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
+
+const MAX_NOMBRE_PUNTO_DE_INTERES = "50";
+$("#puntoNombreTextarea").attr("maxlength", MAX_NOMBRE_PUNTO_DE_INTERES);
 
 var ordenPuntos = '';
 
@@ -64,6 +67,23 @@ function guardarOrden() {
 function validarPunto() {
 	hideAllPointOfInterestErrorMessages();
 	var hayError = 0;
+	hayError = validarElemento('puntoNombreTextarea', 'mensajeNombreVacioPuntoDeInteresError', hayError);
+	hayError = validarElemento('puntoDescripcionTextarea', 'mensajeDescripcionVaciaPuntoDeInteresError', hayError);
+	if ((document.getElementById('puntoImagen').src == '' || document.getElementById('puntoImagen').src == 'http://:0/') && (!hayError)) {
+		document.getElementById('mensajeImagenVaciaPuntoDeInteresError').style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById('mensajeImagenVaciaPuntoDeInteresError').style.display = 'none';
+	}
+	if (hayError == 1) {
+		return false;
+	}
+	validarPuntoDeInteresRepetido();
+}
+
+function validarEdicionPunto() {
+	hideAllPointOfInterestErrorMessages();
+	var hayError = 0;
 	hayError = validarElemento('puntoNombre', 'mensajeNombreVacioPuntoDeInteresError', hayError);
 	hayError = validarElemento('puntoDescripcion', 'mensajeDescripcionVaciaPuntoDeInteresError', hayError);
 	if ((document.getElementById('puntoImagen').src == '' || document.getElementById('puntoImagen').src == 'http://:0/') && (!hayError)) {
@@ -75,7 +95,6 @@ function validarPunto() {
 	if (hayError == 1) {
 		return false;
 	}
-	validarPuntoDeInteresRepetido();
 }
 
 function disableAtractionPage() {
@@ -90,6 +109,17 @@ function openNewPointOfInterestForm() {
 	document.getElementById('atraction-point-of-interest-popup-form').focus();
 	document.getElementById('attractionForm').blur();
 	disableAtractionPage();
+}
+
+function prepareNewPointOfInterestForm() {
+	document.getElementById("puntoNombre").style.display = "none";
+	document.getElementById("puntoDescripcion").style.display = "none";
+	document.getElementById("puntoEditNameButton").style.display = "none";
+	document.getElementById("puntoEditDescriptionButton").style.display = "none";
+	document.getElementById("puntoNombreTextarea").style.display = "block";
+	document.getElementById("puntoDescripcionTextarea").style.display = "block";
+	document.getElementById("botonGuardarPuntoDeInteres").style.display = "inline-block";
+	document.getElementById("botonGuardarEdicionPuntoDeInteres").style.display = "none";
 }
 
 function openViewCommentPopUp() {
@@ -108,8 +138,8 @@ function enableAtractionPage() {
 
 function closeNewPointOfInterestForm() {
 	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'none';
-	document.getElementById('puntoNombre').value = '';
-	document.getElementById('puntoDescripcion').value = '';
+	document.getElementById('puntoNombreTextarea').value = '';
+	document.getElementById('puntoDescripcionTextarea').value = '';
 	document.getElementById('puntoImagen').src = '//:0';
 	document.getElementById('puntoAudio').src = '';
 	hideAllPointOfInterestErrorMessages();
