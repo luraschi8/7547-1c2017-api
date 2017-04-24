@@ -41,7 +41,7 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 	}
 
 	@Transactional
-	public void borrar(long id) {
+	public void borrar(long id,Integer idAtraccion) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		PuntoDeInteres model = (PuntoDeInteres) s.get(PuntoDeInteres.class, id);
@@ -49,6 +49,7 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		s.update(model);
 		s.getTransaction().commit();
 		s.close();
+		this.actualizarOrdenes(idAtraccion);
 	}
 
 	@Override
@@ -127,5 +128,21 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		List<Atraccion> lista = session.createQuery(query).list();
 		session.close();
 		return lista.size() != 0;
+	}
+	
+	private void actualizarOrdenes(Integer idAtraccion) {
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		List<PuntoDeInteres> lista = listarPorAtraccionNuevo(idAtraccion);
+		int orden = 1;
+		for (PuntoDeInteres puntoDeInteres : lista) {
+			if (puntoDeInteres.getOrden() != orden) {
+				puntoDeInteres.setOrden(orden);
+				s.update(puntoDeInteres);
+			}
+			orden++;
+		}
+		s.getTransaction().commit();
+		s.close();
 	}
 }

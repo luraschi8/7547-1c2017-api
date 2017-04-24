@@ -62,6 +62,7 @@ public class AtraccionControladorRest {
 		String url = request.getRequestURL().toString();
 		url = url.substring(0, url.indexOf("atraccion"));
 		AtraccionDTO dto = new AtraccionDTO();
+		dto.setId(idAtraccion);
 		dto.setNombre(a.getNombre());
 		dto.setHorario(a.getHorario());
 		dto.setDescripcion(a.getDescripcion());

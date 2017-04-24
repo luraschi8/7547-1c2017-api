@@ -11,7 +11,7 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	
 	PuntoDeInteres get(Long id);
 
-	void borrar(long id);
+	void borrar(long id, Integer idAtraccion);
 
 	boolean puntoDeInteresExistente(PuntoDeInteres puntoDeInteres);
 

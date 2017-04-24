@@ -64,6 +64,7 @@ public class PuntoDeInteresRest {
 		String url = request.getRequestURL().toString();
 		url = url.substring(0, url.indexOf("punto"));
 		PuntoDeInteresDTO dto = new PuntoDeInteresDTO();
+		dto.setId(idPuntoDeInteres);
 		dto.setNombre(punto.getNombre());
 		dto.setDescripcion(punto.getDescripcion());
 		if (punto.getAudioEN() != null) {
@@ -118,5 +119,12 @@ public class PuntoDeInteresRest {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
 		puntoDao.cambiarOrdenes(ordenPuntos);
 		return lista;
+	}
+	
+	@RequestMapping(path="/borrarPunto",method=RequestMethod.POST)
+	public HashMap<String, Boolean> borrarPunto(@RequestParam("id") Integer id,@RequestParam("idAtraccion") Integer idAtraccion) {
+		HashMap<String, Boolean> respuesta = new HashMap<String, Boolean>();
+		puntoDao.borrar(id,idAtraccion);
+		return respuesta;
 	}
 }

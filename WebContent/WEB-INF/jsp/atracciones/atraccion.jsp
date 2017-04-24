@@ -1270,6 +1270,35 @@ var table = $('#tablita').DataTable( {
 	pageLength:50
 });
 
+$('#tablita tbody').on('click', '#borrar', function (e) {
+	var data = table.row(this.closest("tr")).data();
+	var id = data["id"];
+	var mensaje = "¿Desea borrar?";
+	e.preventDefault();
+	bootbox.confirm(mensaje, function (response) {
+		if (response) {
+			var formData = new FormData();
+			formData.append("id",id);
+			formData.append("idAtraccion",${id});
+			$.ajax({
+				url : "borrarPunto",
+				type : "POST",
+				data : formData,
+				enctype: 'multipart/form-data',
+				processData : false,
+				contentType: false,
+				dataType: 'json',
+				success: function (data) {
+					hideAllAtractionErrorMessages();
+					guardarOrden();
+					table.ajax.reload();
+					closeNewPointOfInterestForm();
+				}
+			});
+		}
+	});
+});
+
 $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	e.preventDefault();
 	validarPunto();
