@@ -420,12 +420,18 @@ function openEditComment() {
 	disableAtractionPage();
 }
 
+function saveCommentsEdition() {
+	data['comentario'] = document.getElementById('atraction-comment').innerHTML;
+}
+
 $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	e.preventDefault();
 	openEditComment();
 	var data = comments_table.row(this.closest("tr")).data();
+	
 	document.getElementById('atraction_edit_comment_date_and_user').innerHTML = "Enviado el " + data['fecha'] + " a las " + data['hora'] + " por " + data['nombreUsuario'] + ".";
 	document.getElementById('atraction_edit_comment_qualification').innerHTML = "Calificación: " + data['calificacion'];
+	document.getElementById('atraction-comment').value = data['comentario'];
 	//document.formVer.idAtraccion.value = data["id"];
 	//document.getElementById("formVer").submit();
 });
@@ -550,7 +556,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			 	<div>
 					<p id="atraction_edit_comment_date_and_user"></p>
 					<p id="atraction_edit_comment_qualification"></p>
-					<textarea onkeydown="calculateMaxLength('#atraction-comment', MAX_COMENTARIO)" id="atraction-comment" path="comentario" name="atraction-comment" class="atraction-box" required="required" rows="5"></textarea>
+					<textarea onkeydown="calculateMaxLength('#atraction-comment', MAX_COMENTARIO)" id="atraction-comment" name="atraction-comment" class="atraction-box" required="required" rows="5"></textarea>
 				</div>
 			</div>
 		</div>
@@ -559,7 +565,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	<form:form id="formGuardarEdicionComentario" action="atraccionVer?idAtraccion=${atraccion.id}" method="post"></form:form>
 	<div class="btn-final-edicion-comentario-popup" style="text-align:center; clear: right;">
 		<input id="botonCancelarComentario" class="btn btn-default" type="button" value="Cancelar" onclick="closeViewCommentPopUp();"/>
-		<input id="botonAceptarComentario" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+		<input id="botonAceptarComentario" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="saveCommentsEdition();"/>
 	</div>
 </div>
 
