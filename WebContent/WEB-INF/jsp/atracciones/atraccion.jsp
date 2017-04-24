@@ -359,7 +359,9 @@
 </c:set>
 
 
-
+<c:set var="editarResenia">
+	Editar
+</c:set>
 
 <c:set var="borrarResenia">
 	Borrar
@@ -370,7 +372,7 @@
 </c:set>
 <input id="mensajeBorrarResenia" type="hidden" value="${mensajeBorrarResenia}" />
  
-<form id ="formBorrarResenia" name="formBorrarResenia" action="atraccionBorrar" method="post">
+<form id ="formBorrarResenia" name="formBorrarResenia" action="atraccionBorrarResenia" method="post">
 	<input id="idResenia" name="idResenia" type="hidden">
 	<input id="idAtraccion" name="idAtraccion" value="${atraccion.id}" type="hidden"> 
 </form>
@@ -386,8 +388,8 @@ var comments_table = $('#tablaResenias').DataTable({
             	return "Enviado por " + row.nombreUsuario + "<br>" + row.fecha + " a las " + row.hora + "<br>" + row.calificacion + "<br>" + row.comentario;
         	}
         },
-        {defaultContent:'<button class="btn btn-danger" id="borrarResenia" value="Borrar">${borrarResenia}</button>'},
-        {defaultContent:'<button class="btn btn-warning" id="editarResenia" value="Editar">${editar}</button>'}
+        {defaultContent:'<button class="btn btn-danger" id="borrarResenia">${borrarResenia}</button>'},
+        {defaultContent:'<button class="btn btn-warning" id="editarResenia">${editarResenia}</button>'}
         ],
     select:true,
     paging:false,
@@ -398,17 +400,13 @@ var comments_table = $('#tablaResenias').DataTable({
 
 $('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
 	e.preventDefault();
-	var data = comments_table.row(this.closest("tr")).data();
-	var id = data["id"];
-	console.log("DATA");
-	console.log(data);
-	console.log("ID");
-	console.log(id)
+	var data = comments_table.row(this.closest("tr"));
+	var id = data['id'];
 	var mensaje = document.getElementById("mensajeBorrarResenia").value;
 	e.preventDefault();
 	bootbox.confirm(mensaje, function (response) {
 		if (response) {
-			document.formBorrar.idResenia.value = id;
+			document.formBorrarResenia.idResenia.value = id;
 			document.getElementById("formBorrarResenia").submit();
 		}
 	});
@@ -427,7 +425,7 @@ $('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
 	});
 });
 
-$('#tabla-resenias tbody').on('click', '#editar', function (e) {
+$('#tabla-resenias tbody').on('click', '#editarResenia', function (e) {
 	var data = table.row(this.closest("tr")).data();
 	e.preventDefault();
 	document.formVer.idAtraccion.value = data["id"];
