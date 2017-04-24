@@ -40,14 +40,22 @@ public class ReseniaDAOImpl extends DAOImpl implements IReseniaDAO {
 	}
 	
 	@Override
-	public void guardar(Atraccion atraccion) {
-		List<Resenia> lista = listarPorAtraccion((int)atraccion.getId());
+	public Resenia getResenia(int id) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Resenia.class.getName() + " a WHERE a.id = " + id;
+		@SuppressWarnings("unchecked")
+		Resenia resenia = (Resenia) session.createQuery(query).list().get(0);
+		session.close();
+		return resenia;
+	}
+	
+	@Override
+	public void guardar(int id, String comentario) {
+		Resenia resenia = getResenia(id);
 		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
-		for (Resenia resenia : lista) {
-			resenia.setAtraccion(atraccion);
-			s.update(resenia);
-		}
+		resenia.setComentario(comentario);
+		s.update(resenia);
 		tx.commit();
 		s.close();
 	}

@@ -412,7 +412,6 @@ $('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
 	 		if (response) {
 	 			var formData = new FormData();
 	 			formData.append("id", id);
-	 			//formData.append("idAtraccion",0);
 	 			$.ajax({
 	 				url : "borrarResenia",
 	 				type : "POST",
@@ -438,8 +437,32 @@ function openEditComment() {
 	disableAtractionPage();
 }
 
+function closeEditComment() {
+	hideAllAtractionErrorMessages();
+	document.getElementById('atraction-comment-popup').style.display = 'none';
+	document.getElementById('atraction-comment-popup').blur();
+	document.getElementById('attractionForm').focus();
+	enableAtractionPage();
+}
+
 function saveCommentsEdition() {
-	data['comentario'] = document.getElementById('atraction-comment').innerHTML;
+	var formData = new FormData();
+	formData.append("idResenia", document.getElementById('atraction-comment-id').innerHTML);
+	formData.append("comentario", document.getElementById('atraction-comment').value);
+	$.ajax({
+		url : "editarResenia",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			hideAllAtractionErrorMessages();
+			comments_table.ajax.reload();
+		}
+	});
+	closeEditComment();
 }
 
 $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
@@ -450,8 +473,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	document.getElementById('atraction_edit_comment_date_and_user').innerHTML = "Enviado el " + data['fecha'] + " a las " + data['hora'] + " por " + data['nombreUsuario'] + ".";
 	document.getElementById('atraction_edit_comment_qualification').innerHTML = "Calificación: " + data['calificacion'];
 	document.getElementById('atraction-comment').value = data['comentario'];
-	//document.formVer.idAtraccion.value = data["id"];
-	//document.getElementById("formVer").submit();
+	document.getElementById('atraction-comment-id').innerHTML = data['id'];
 });
 </script>
 
@@ -572,6 +594,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 		<div class="atraction-comment-group">
 			<div style="float: center;">
 			 	<div>
+			 		<p style="display: none" id="atraction-comment-id"></p>
 					<p id="atraction_edit_comment_date_and_user"></p>
 					<p id="atraction_edit_comment_qualification"></p>
 					<textarea onkeydown="calculateMaxLength('#atraction-comment', MAX_COMENTARIO)" id="atraction-comment" name="atraction-comment" class="atraction-box" required="required" rows="5"></textarea>
@@ -580,10 +603,9 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 		</div>
 	</div>
 	
-	<form:form id="formGuardarEdicionComentario" action="atraccionVer?idAtraccion=${atraccion.id}" method="post"></form:form>
 	<div class="btn-final-edicion-comentario-popup" style="text-align:center; clear: right;">
 		<input id="botonCancelarComentario" class="btn btn-default" type="button" value="Cancelar" onclick="closeViewCommentPopUp();"/>
-		<input id="botonAceptarComentario" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="saveCommentsEdition();"/>
+		<input id="botonGuardarComentario" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="saveCommentsEdition();"/>
 	</div>
 </div>
 

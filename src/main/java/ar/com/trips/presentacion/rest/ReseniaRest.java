@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IReseniaDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Resenia;
 import ar.com.trips.presentacion.dto.ReseniaDTO;
 
@@ -82,6 +83,13 @@ public class ReseniaRest {
  	public HashMap<String, Boolean> borrarResenia(@RequestParam("id") int id) {
  		HashMap<String, Boolean> respuesta = new HashMap<String, Boolean>();
  		reseniaDao.borrar(id);
+ 		return respuesta;
+ 	}
+	
+	@RequestMapping(path="/editarResenia",method=RequestMethod.POST)
+ 	public HashMap<String, Boolean> editarResenia(@RequestParam("idResenia") int id, @RequestParam("comentario") String comentario) {
+ 		HashMap<String, Boolean> respuesta = new HashMap<String, Boolean>();
+ 		reseniaDao.guardar(id, comentario);
  		return respuesta;
  	}
 }

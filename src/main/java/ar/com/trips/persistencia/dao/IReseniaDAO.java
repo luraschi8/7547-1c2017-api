@@ -13,5 +13,7 @@ public interface IReseniaDAO extends IDAO {
 
 	void borrar(long id);
 
-	void guardar(Atraccion atraccion);
+	Resenia getResenia(int id);
+
+	void guardar(int id, String comentario);
 }
