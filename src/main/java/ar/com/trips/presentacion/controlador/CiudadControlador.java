@@ -78,8 +78,12 @@ public class CiudadControlador {
 	}
 	
 	@RequestMapping(path="ciudadVer")
-	public ModelAndView ver(@RequestParam("idCiudad") long idCiudad) {
+	public ModelAndView ver(@RequestParam("idCiudad") long idCiudad,
+				@RequestParam(name="ordenOriginal",required=false) String ordenOriginal) {
 		puntoDao.borrarPuntosSinAtraccion();
+		if (ordenOriginal != null && !ordenOriginal.equals("")) {
+			puntoDao.rollbackPuntosBorrados(ordenOriginal);
+		}
 		Ciudad ciudad = ciudadDao.get(idCiudad);
 		ModelAndView model = new ModelAndView("ciudades/ciudad");
 		model.addObject("ciudad",ciudad);		

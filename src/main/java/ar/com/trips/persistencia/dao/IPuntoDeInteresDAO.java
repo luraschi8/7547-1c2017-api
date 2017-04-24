@@ -26,4 +26,6 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	void borrarPuntosDeAtraccion(Atraccion atraccion);
 
 	boolean puntoExistente(PuntoDeInteres punto);
+
+	void rollbackPuntosBorrados(String puntosBorrados);
 }

@@ -609,9 +609,11 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	</div>
 </div>
 
-<form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
+<form:form id="formAtras" name="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post">
+	<input id="ordenOriginal" name="ordenOriginal" type="hidden" value="">
+</form:form>
 <div class="btn-final" style="text-align:center;">
-	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
+	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" /> 
 	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 </div>
 
@@ -714,6 +716,7 @@ $(document).ready(function() {
 	
 	$('#botonAtras').on('click', function(e) {
 		e.preventDefault();
+		document.formAtras.ordenOriginal.value = ordenOriginal;
 		document.getElementById("formAtras").submit();
 	});
 	
@@ -1309,6 +1312,15 @@ var table = $('#tablita').DataTable( {
 	paging:true,
 	pageLength:50
 });
+
+ordenOriginal = '';
+<c:if test="${atraccion.listaPuntosDeInteres != null}">
+	<c:forEach items="${atraccion.listaPuntosDeInteres}" var="punto">
+	    ordenOriginal += ${punto.id} + ";";
+	    console.log("HOLA");
+	</c:forEach>
+	console.log("ORDEN: " + ordenOriginal);
+</c:if>
 
 $('#tablita tbody').on('click', '#borrar', function (e) {
 	var data = table.row(this.closest("tr")).data();

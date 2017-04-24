@@ -1,5 +1,6 @@
 package ar.com.trips.persistencia.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -141,6 +142,27 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 				s.update(puntoDeInteres);
 			}
 			orden++;
+		}
+		s.getTransaction().commit();
+		s.close();
+	}
+
+	@Override
+	public void rollbackPuntosBorrados(String ordenOriginal) {
+		String[] ids = ordenOriginal.split(";");
+		List<PuntoDeInteres> lista = new ArrayList<>();
+		int orden = 1;
+		for (String id : ids) {
+			PuntoDeInteres punto = get(Long.parseLong(id));
+			punto.setBorrado(0);
+			punto.setOrden(orden);
+			lista.add(punto);
+			orden++;
+		}
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		for (PuntoDeInteres puntoDeInteres : lista) {
+			s.update(puntoDeInteres);
 		}
 		s.getTransaction().commit();
 		s.close();
