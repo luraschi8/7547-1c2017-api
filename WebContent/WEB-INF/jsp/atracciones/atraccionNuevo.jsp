@@ -271,11 +271,23 @@
 			<h2 style="width: 100%; height: 8%">Nuevo punto de interés</h2>
 			
 			<div style="width: 100%; height: 11%">
-				<div>
+				<div style="display: inline-block;">
 					<label class="atraction-label" path="nombre">Nombre</label>
 				</div>
+				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditNameButton" onclick="editField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true);">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: red;" id="cancel-nombre-punto" onclick="cancelField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto')">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: green;" id="ok-nombre-punto" onclick="saveField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true)">
+					<span class="glyphicon glyphicon-ok"></span>
+				</button>
 				<div>
-					<form:input maxlength="50" id="puntoNombre" path="nombre" name="puntoNombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/>
+					<textarea onkeydown="calculateMaxLength('#puntoNombreTextarea', MAX_NOMBRE_PUNTO_DE_INTERES)" rows="1" id="puntoNombreTextarea" path="nombre" name="puntoNombreTextarea" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/></textarea>
+				</div>
+				<div>
+					<p style="display: none;" id="puntoNombre" name="puntoNombre" class="atraction-poi-box"/></p>
 				</div>
 			</div>
 			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
@@ -283,19 +295,33 @@
 			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
 			</div>
 			
-			<div style="width: 100%; height: 15%">
-				<div>
+			<div style="width: 100%; height: 15%;">
+				<div style="display: inline-block;">
 					<label class="atraction-label" path="descripcion">Descripción</label>
 				</div>
+				
+				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditDescriptionButton" onclick="editField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeDescripcionVaciaPuntoDeInteresError', true);">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: red;" id="cancel-descripcion-punto" onclick="cancelField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto')">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: green;" id="ok-descripcion-punto" onclick="saveField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeNombreVacioPuntoDeInteresError', true)">
+					<span class="glyphicon glyphicon-ok"></span>
+				</button>
+				
 				<div>
-					<form:input onkeydown="calculateMaxLength('#puntoDescripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcion" path="descripcion" name="puntoDescripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/>
+					<textarea onkeydown="calculateMaxLength('#puntoDescripcionTextarea', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcionTextarea" path="descripcion" name="puntoDescripcionTextarea" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/></textarea>
+				</div>
+				<div>
+					<p id="puntoDescripcion" name="puntoDescripcion" class="atraction-poi-box"/></p>
 				</div>
 			</div>
 			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
 			</div>
-					
+			
 			<div style="width: 100%; height: 33%;">
 				<div style="width: 100%; height: 18%">
 					<label class="atraction-label" path="imagen">Imagen</label>
@@ -305,6 +331,7 @@
 					<button type="button" class="btn btn-default btn-sm atraction-poi-get-image" id="puntoGetImagen">
 						<span class="glyphicon glyphicon-pencil"></span>
 					</button>
+					<input id="puntoImagenCambiada" name="puntoImagenCambiada" type="hidden" value="0">
 					<input type="file" name="puntoArchivoImagen" id="puntoArchivoImagen" style="display: none"/>
 				</div>
 			</div>
@@ -321,8 +348,9 @@
 			
 			<div style="width: 100%; height: 15%">
 				<div style="width: 100%; height: 40%">
-					<label class="atraction-label">Audioguía</label>
+					<label class="atraction-label" path="audioES">Audioguía</label>
 				</div>
+				<input type="hidden" id="audioCambiadoPdi" name="audioCambiadoPdi" value=0>
 				<div style="width: 100%; height: 60%">
 					<!-- Reproducir audioguía -->
 					<div style="float: left; width: 85%; height: 50%">
@@ -359,6 +387,7 @@
 			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
 				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
 				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 			</div>
 			
 			<div class="alert alert-warning fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
@@ -368,6 +397,7 @@
 		</form:form>
 	</div>
 </div>
+
 
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 
@@ -919,8 +949,8 @@ function crearPunto() {
 	var formData = new FormData();
 	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
-	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombre.value);
-	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcion.value);
+	formData.append("nombre",document.getElementById('puntoNombreTextarea').value);//document.formNuevoPuntoDeInteres.puntoNombre.value);
+	formData.append("descripcion",document.getElementById('puntoDescripcionTextarea').value);//document.formNuevoPuntoDeInteres.puntoDescripcion.value);
 	$.ajax({
 		url : "crearPunto",
 		type : "POST",
@@ -948,7 +978,7 @@ function validarPuntoDeInteresRepetido() {
 	}
 	var json = {
 		"atraccion": atraccion,
-		"nombre": document.formNuevoPuntoDeInteres.puntoNombre.value
+		"nombre": document.getElementById('puntoNombreTextarea').value//document.formNuevoPuntoDeInteres.puntoNombre.value
 	};
 	$.ajax({
 		url : "validarPuntoDeInteres",
