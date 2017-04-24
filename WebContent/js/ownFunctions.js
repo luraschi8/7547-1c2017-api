@@ -69,7 +69,7 @@ function saveField(field, ok, cancel, vacio, obligatorio) {
 function cancelField(field, ok, cancel) {
 	hideAllAtractionErrorMessages();
 	hideEdition(field, ok, cancel);
-    $(field).html($(field).val());
+    //$(field).html($(field).val());
 	$(field).show();
 }
 

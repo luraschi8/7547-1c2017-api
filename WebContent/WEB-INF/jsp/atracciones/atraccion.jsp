@@ -636,12 +636,6 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 <script>
-function puntoEditName() {
-	nombrePunto
-}
-
-
-
 function validarAtraccionRepetida() {
 	hideAllPointOfInterestErrorMessages();
 	hayError = 0;
@@ -1376,6 +1370,7 @@ $('#tablita tbody').on('click', '#ver', function (e) {
 	var data = table.row(this.closest("tr")).data();
 	document.getElementById("puntoNombre").innerHTML = data["nombre"];
 	document.getElementById("puntoDescripcion").innerHTML = data["descripcion"];
+	document.getElementById('puntoImagen').src = "${pageContext.request.contextPath}/imagenPunto?id=" + data["id"];
 });
 
 
