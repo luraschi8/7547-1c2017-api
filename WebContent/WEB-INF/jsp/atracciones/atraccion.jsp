@@ -412,25 +412,23 @@ $('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
 	});
 });
 
-/*$('#tabla-resenias tbody').on('click', '#borrar', function (e) {
-	var data = table.row(this.closest("tr")).data();
-	var id = data["id"];
-	var mensaje = document.getElementById("mensajeBorrar").value;
-	e.preventDefault();
-	bootbox.confirm(mensaje, function (response) {
-		if (response) {
-			document.formBorrar.idAtraccion.value = id;
-			document.getElementById("formBorrar").submit();
-		}
-	});
-});
+function openEditComment() {
+	hideAllAtractionErrorMessages();
+	document.getElementById('atraction-comment-popup').style.display = 'block';
+	document.getElementById('atraction-comment-popup').focus();
+	document.getElementById('attractionForm').blur();
+	disableAtractionPage();
+}
 
-$('#tabla-resenias tbody').on('click', '#editarResenia', function (e) {
-	var data = table.row(this.closest("tr")).data();
+$('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	e.preventDefault();
-	document.formVer.idAtraccion.value = data["id"];
-	document.getElementById("formVer").submit();
-});*/
+	openEditComment();
+	var data = comments_table.row(this.closest("tr")).data();
+	document.getElementById('atraction_edit_comment_date_and_user').innerHTML = "Enviado el " + data['fecha'] + " a las " + data['hora'] + " por " + data['nombreUsuario'] + ".";
+	document.getElementById('atraction_edit_comment_qualification').innerHTML = "Calificación: " + data['calificacion'];
+	//document.formVer.idAtraccion.value = data["id"];
+	//document.getElementById("formVer").submit();
+});
 </script>
 
 	
@@ -548,14 +546,10 @@ $('#tabla-resenias tbody').on('click', '#editarResenia', function (e) {
 		<h2>Edición reseña</h2>
 		
 		<div class="atraction-comment-group">
-			<div style="float: left; margin-top: 4.5rem;">
-				<!-- <img src="${pageContext.request.contextPath}/imagenAtraccion?id=1" style="width:7.5rem; height:7.5rem"><!-- TODO Acá iría el path a la imagen del usuario ${comentario.usuario.imagen}-->
-				<p id="comentario-nombre-usuario">Pepe<!-- TODO Acá iría el nombre del usuario ${comentario.usuario.nombre} --></p>
-			</div>
-			
-			<div style="float: right;">
+			<div style="float: center;">
 			 	<div>
-					<label class="atraction-label">Enviado el día... </label><!-- TODO Acá habría que agregar la fecha y la hora del comentario ${comentario.fecha} ${comentario.hora} --></p>
+					<p id="atraction_edit_comment_date_and_user"></p>
+					<p id="atraction_edit_comment_qualification"></p>
 					<textarea onkeydown="calculateMaxLength('#atraction-comment', MAX_COMENTARIO)" id="atraction-comment" path="comentario" name="atraction-comment" class="atraction-box" required="required" rows="5"></textarea>
 				</div>
 			</div>
