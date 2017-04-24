@@ -127,4 +127,25 @@ public class PuntoDeInteresRest {
 		puntoDao.borrar(id,idAtraccion);
 		return respuesta;
 	}
+	
+	@RequestMapping(path="/modificarPunto",method=RequestMethod.POST)
+	public HashMap<String, Boolean> modificarPunto(@RequestParam("nombre") String nombre,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam(name="imagen") MultipartFile imagen,
+			@RequestParam(name="id",required=false) int id,
+			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
+		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
+		PuntoDeInteres punto = puntoDao.get(id);
+		punto.setNombre(nombre);
+		punto.setDescripcion(descripcion);
+		if (imagen != null) {
+			punto.setImagen(imagen.getBytes());
+		}
+		if (audio != null) {
+			punto.setAudioEN(audio.getBytes());
+		}
+		puntoDao.guardar(punto);
+		lista.put(EXISTE, true);
+		return lista;
+	}
 }

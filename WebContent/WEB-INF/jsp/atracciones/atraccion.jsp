@@ -595,6 +595,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
 				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
 				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 			</div>
 			
 			<div class="alert alert-warning fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
@@ -1370,14 +1371,52 @@ $('#tablita tbody').on('click', '#ver', function (e) {
 	var data = table.row(this.closest("tr")).data();
 	document.getElementById("puntoNombre").innerHTML = data["nombre"];
 	document.getElementById("puntoDescripcion").innerHTML = data["descripcion"];
+	document.getElementById("botonGuardarPuntoDeInteres").style.display = "none";
+	document.getElementById("botonGuardarEdicionPuntoDeInteres").style.display = "inline-block";
 	document.getElementById('puntoImagen').src = "${pageContext.request.contextPath}/imagenPunto?id=" + data["id"];
 });
-
-
 
 $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	e.preventDefault();
 	validarPunto();
+});
+
+$('#botonGuardarEdicionPuntoDeInteres').on('click', function(e) {
+	e.preventDefault();
+	validarEdicionPunto();
+	
+	var formData = new FormData();
+	//formData.append("imagen", document.getElementById("puntoArchivoImagen").files[0]);
+	//formData.append("audio", document.getElementById("archivoAudioguiaPdi").files[0]);
+	formData.append("imagen", null);
+	formData.append("audio", null);
+	formData.append("nombre", document.getElementById("puntoNombreTextarea").value);
+	formData.append("descripcion", document.getElementById("puntoDescripcionTextarea").value);
+	formData.append("id", table.row(this.closest("tr")).data()["id"]);
+	alert(document.getElementById("puntoArchivoImagen").files[0]);
+	alert(document.getElementById("archivoAudioguiaPdi").files[0]);
+	alert(document.getElementById("puntoNombre").innerHTML);
+	alert(document.getElementById("puntoDescripcion").innerHTML);
+	alert(table.row(this.closest("tr")).data()["id"]);
+	$.ajax({
+		url : "modificarPunto",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data.existe == false) {
+				alert("HOW");
+			} else {
+				hideAllAtractionErrorMessages();
+				guardarOrden();
+				table.ajax.reload();
+				closeNewPointOfInterestForm();
+			}
+		}
+	});
 });
 
 function crearPunto() {

@@ -39,6 +39,11 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 	public PuntoDeInteres get(Long id) {
 		return this.get(PuntoDeInteres.class, id);
 	}
+	
+	@Override
+	public PuntoDeInteres get(int id) {
+		return this.get(PuntoDeInteres.class, id);
+	}
 
 	@Transactional
 	public void borrar(long id,Integer idAtraccion) {

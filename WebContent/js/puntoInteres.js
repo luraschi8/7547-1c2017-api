@@ -81,6 +81,22 @@ function validarPunto() {
 	validarPuntoDeInteresRepetido();
 }
 
+function validarEdicionPunto() {
+	hideAllPointOfInterestErrorMessages();
+	var hayError = 0;
+	hayError = validarElemento('puntoNombre', 'mensajeNombreVacioPuntoDeInteresError', hayError);
+	hayError = validarElemento('puntoDescripcion', 'mensajeDescripcionVaciaPuntoDeInteresError', hayError);
+	if ((document.getElementById('puntoImagen').src == '' || document.getElementById('puntoImagen').src == 'http://:0/') && (!hayError)) {
+		document.getElementById('mensajeImagenVaciaPuntoDeInteresError').style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById('mensajeImagenVaciaPuntoDeInteresError').style.display = 'none';
+	}
+	if (hayError == 1) {
+		return false;
+	}
+}
+
 function disableAtractionPage() {
 	$("#attractionForm").addClass("disable-buttons");
 	$(".btn-final").addClass("disable-buttons");
@@ -102,6 +118,8 @@ function prepareNewPointOfInterestForm() {
 	document.getElementById("puntoEditDescriptionButton").style.display = "none";
 	document.getElementById("puntoNombreTextarea").style.display = "block";
 	document.getElementById("puntoDescripcionTextarea").style.display = "block";
+	document.getElementById("botonGuardarPuntoDeInteres").style.display = "inline-block";
+	document.getElementById("botonGuardarEdicionPuntoDeInteres").style.display = "none";
 }
 
 function openViewCommentPopUp() {
