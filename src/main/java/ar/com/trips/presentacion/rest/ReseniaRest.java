@@ -77,4 +77,11 @@ public class ReseniaRest {
 		lista.put(EXISTE, true);
 		return lista;
 	}
+	
+	@RequestMapping(path="/borrarResenia",method=RequestMethod.POST)
+ 	public HashMap<String, Boolean> borrarResenia(@RequestParam("id") int id) {
+ 		HashMap<String, Boolean> respuesta = new HashMap<String, Boolean>();
+ 		reseniaDao.borrar(id);
+ 		return respuesta;
+ 	}
 }

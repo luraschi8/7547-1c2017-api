@@ -372,7 +372,7 @@
 </c:set>
 <input id="mensajeBorrarResenia" type="hidden" value="${mensajeBorrarResenia}" />
  
-<form id ="formBorrarResenia" name="formBorrarResenia" action="atraccionBorrarResenia" method="post">
+<form id ="formBorrarResenia" name="formBorrarResenia" action="borrarResenia" method="post">
 	<input id="idResenia" name="idResenia" type="hidden">
 	<input id="idAtraccion" name="idAtraccion" value="${atraccion.id}" type="hidden"> 
 </form>
@@ -398,18 +398,36 @@ var comments_table = $('#tablaResenias').DataTable({
     bFilter: false
 });
 
+
+
+
+
+
 $('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
-	e.preventDefault();
-	var data = comments_table.row(this.closest("tr"));
-	var id = data['id'];
-	var mensaje = document.getElementById("mensajeBorrarResenia").value;
-	e.preventDefault();
-	bootbox.confirm(mensaje, function (response) {
-		if (response) {
-			document.formBorrarResenia.idResenia.value = id;
-			document.getElementById("formBorrarResenia").submit();
-		}
-	});
+	 	var data = comments_table.row(this.closest("tr")).data();
+	 	var id = data["id"];
+	 	var mensaje = "¿Desea borrar la reseña seleccionada?";
+	 	e.preventDefault();
+	 	bootbox.confirm(mensaje, function (response) {
+	 		if (response) {
+	 			var formData = new FormData();
+	 			formData.append("id", id);
+	 			//formData.append("idAtraccion",0);
+	 			$.ajax({
+	 				url : "borrarResenia",
+	 				type : "POST",
+	 				data : formData,
+	 				enctype: 'multipart/form-data',
+	 				processData : false,
+	 				contentType: false,
+	 				dataType: 'json',
+	 				success: function (data) {
+	 					hideAllAtractionErrorMessages();
+	 					comments_table.ajax.reload();
+	 				}
+	 			});
+	 		}
+	 	});
 });
 
 function openEditComment() {
