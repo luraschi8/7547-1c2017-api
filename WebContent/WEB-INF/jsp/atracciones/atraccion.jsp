@@ -482,14 +482,20 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				<div style="display: inline-block;">
 					<label class="atraction-label" path="nombre">Nombre</label>
 				</div>
-				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditNameButton">
+				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditNameButton" onclick="editField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true);">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: red;" id="cancel-nombre-punto" onclick="cancelField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto')">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: green;" id="ok-nombre-punto" onclick="saveField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true)">
+					<span class="glyphicon glyphicon-ok"></span>
+				</button>
 				<div>
-					<input maxlength="50" id="puntoNombre" path="nombre" name="puntoNombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/>
+					<textarea onkeydown="calculateMaxLength('#puntoNombreTextarea', MAX_NOMBRE_PUNTO_DE_INTERES)" rows="1" id="puntoNombreTextarea" path="nombre" name="puntoNombreTextarea" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/></textarea>
 				</div>
 				<div>
-					<p style="display: none;" id="puntoVerNombre" name="puntoVerNombre" class="atraction-poi-box"/></p>
+					<p style="display: none;" id="puntoNombre" name="puntoNombre" class="atraction-poi-box"/></p>
 				</div>
 			</div>
 			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
@@ -501,14 +507,22 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				<div style="display: inline-block;">
 					<label class="atraction-label" path="descripcion">Descripción</label>
 				</div>
-				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditDescriptionButton">
+				
+				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditDescriptionButton" onclick="editField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeDescripcionVaciaPuntoDeInteresError', true);">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: red;" id="cancel-descripcion-punto" onclick="cancelField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto')">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: green;" id="ok-descripcion-punto" onclick="saveField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeNombreVacioPuntoDeInteresError', true)">
+					<span class="glyphicon glyphicon-ok"></span>
+				</button>
+				
 				<div>
-					<input onkeydown="calculateMaxLength('#puntoDescripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcion" path="descripcion" name="puntoDescripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/>
+					<textarea onkeydown="calculateMaxLength('#puntoDescripcionTextarea', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcionTextarea" path="descripcion" name="puntoDescripcionTextarea" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/></textarea>
 				</div>
 				<div>
-					<p id="puntoVerDescripcion" name="puntoVerDescripcion" class="atraction-poi-box"/></p>
+					<p id="puntoDescripcion" name="puntoDescripcion" class="atraction-poi-box"/></p>
 				</div>
 			</div>
 			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
@@ -622,6 +636,12 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 <script>
+function puntoEditName() {
+	nombrePunto
+}
+
+
+
 function validarAtraccionRepetida() {
 	hideAllPointOfInterestErrorMessages();
 	hayError = 0;
@@ -680,7 +700,7 @@ $("#horarioEditadoTextarea").attr("maxlength", MAX_HORARIO_ATRACCION);
 $("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
 
 const MAX_COMENTARIO = "500";
-$("atraction-comment").attr("maxlength", MAX_DESCRIPCION_PUNTO_DE_INTERES);
+$("atraction-comment").attr("maxlength", MAX_COMENTARIO);
 
 if (${atraccion.recorrible}) {
 	$("#es-recorrible").attr("checked", "checked");
@@ -1344,21 +1364,18 @@ $('#tablita tbody').on('click', '#borrar', function (e) {
 	});
 });
 
-
-
-
 $('#tablita tbody').on('click', '#ver', function (e) {
 	e.preventDefault();
 	openNewPointOfInterestForm();
-	document.getElementById("puntoVerNombre").style.display = "block";
-	document.getElementById("puntoVerDescripcion").style.display = "block";
+	document.getElementById("puntoNombre").style.display = "block";
+	document.getElementById("puntoDescripcion").style.display = "block";
 	document.getElementById("puntoEditNameButton").style.display = "inline-block";
 	document.getElementById("puntoEditDescriptionButton").style.display = "inline-block";
-	document.getElementById("puntoNombre").style.display = "none";
-	document.getElementById("puntoDescripcion").style.display = "none";
+	document.getElementById("puntoNombreTextarea").style.display = "none";
+	document.getElementById("puntoDescripcionTextarea").style.display = "none";
 	var data = table.row(this.closest("tr")).data();
-	document.getElementById("puntoVerNombre").innerHTML = data["nombre"];
-	document.getElementById("puntoVerDescripcion").innerHTML = data["descripcion"];
+	document.getElementById("puntoNombre").innerHTML = data["nombre"];
+	document.getElementById("puntoDescripcion").innerHTML = data["descripcion"];
 });
 
 
@@ -1372,8 +1389,8 @@ function crearPunto() {
 	var formData = new FormData();
 	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
-	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombre.value);
-	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcion.value);
+	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombreTextarea.value);
+	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcionTextarea.value);
 	formData.append("idAtraccion",${id});
 	$.ajax({
 		url : "crearPunto",
@@ -1402,7 +1419,7 @@ function validarPuntoDeInteresRepetido() {
 	}
 	var json = {
 		"atraccion": atraccion,
-		"nombre": document.formNuevoPuntoDeInteres.puntoNombre.value
+		"nombre": document.formNuevoPuntoDeInteres.puntoNombreTextarea.value
 	};
 	$.ajax({
 		url : "validarPuntoDeInteres",
