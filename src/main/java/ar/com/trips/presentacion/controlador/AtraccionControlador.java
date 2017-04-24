@@ -89,7 +89,6 @@ public class AtraccionControlador {
 		atraccionDao.guardar(atraccion);
 		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
 		guardarPuntosDeInteres(atraccion);
-		guardarResenia(atraccion);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
 
@@ -99,10 +98,6 @@ public class AtraccionControlador {
 		} else {
 			puntoDao.borrarPuntosDeAtraccion(atraccion);
 		}
-	}
-	
-	private void guardarResenia(Atraccion atraccion) {
-		reseniaDao.guardar(atraccion);
 	}
 
 	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {

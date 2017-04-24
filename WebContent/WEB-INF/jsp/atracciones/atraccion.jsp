@@ -1336,10 +1336,10 @@ var table = $('#tablita').DataTable( {
 ordenOriginal = '';
 <c:if test="${atraccion.listaPuntosDeInteres != null}">
 	<c:forEach items="${atraccion.listaPuntosDeInteres}" var="punto">
-	    ordenOriginal += ${punto.id} + ";";
-	    console.log("HOLA");
+	    <c:if test="${punto.borrado == 0}">
+	    	ordenOriginal += ${punto.id} + ";";
+	    </c:if>
 	</c:forEach>
-	console.log("ORDEN: " + ordenOriginal);
 </c:if>
 
 $('#tablita tbody').on('click', '#borrar', function (e) {
