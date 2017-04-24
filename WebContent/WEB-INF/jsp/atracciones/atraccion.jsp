@@ -287,14 +287,14 @@
 				
 				<div style="clear: left;">
 					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
-						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
-						</div>
-						
-						<div class="alert alert-warning fade in atraction-alert-far-location" id="mensajeUbicacionLejana" style="display: none">
-						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
-						</div>
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
+					</div>
+					
+					<div class="alert alert-warning fade in atraction-alert-far-location" id="mensajeUbicacionLejana" style="display: none">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclAdvertencia!</strong> La atracción seleccionada está a más de 15km de la ciudad actual.
+					</div>
 				</div>
 				
 				<div id="view-atraction-points-of-interest-panel" class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
@@ -490,25 +490,23 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				<div>
 					<input maxlength="50" id="puntoNombre" path="nombre" name="puntoNombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/>
 				</div>
-				
-				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
-				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
-				</div>
+			</div>
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
 			</div>
 			
-			<div style="width: 100%; height: 15%">
+			<div style="width: 100%; height: 15%;">
 				<div>
 					<label class="atraction-label" path="descripcion">Descripción</label>
 				</div>
 				<div>
 					<input onkeydown="calculateMaxLength('#puntoDescripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcion" path="descripcion" name="puntoDescripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/>
 				</div>
-				
-				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
-				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
-				</div>
+			</div>
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
 			</div>
 			
 			<div style="width: 100%; height: 33%;">

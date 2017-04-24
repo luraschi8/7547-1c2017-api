@@ -244,13 +244,11 @@
 							<tbody id="sortable"></tbody>
 						</table>
 					</div>
-					<div class="alert alert-warning fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> La atracción es recorrible. Debe haber por lo menos un punto de interés.
-					</div>
 				</div>
-				
-						
+				<div class="alert alert-warning fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> La atracción es recorrible. Debe haber por lo menos un punto de interés.
+				</div>
 			</div>
 		</div>
 	
@@ -279,11 +277,10 @@
 				<div>
 					<form:input maxlength="50" id="puntoNombre" path="nombre" name="puntoNombre" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/>
 				</div>
-				
-				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none;">
-				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
-				</div>
+			</div>
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
 			</div>
 			
 			<div style="width: 100%; height: 15%">
@@ -293,11 +290,10 @@
 				<div>
 					<form:input onkeydown="calculateMaxLength('#puntoDescripcion', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcion" path="descripcion" name="puntoDescripcion" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/>
 				</div>
-				
-				<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none;">
-				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
-				</div>
+			</div>
+			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
 			</div>
 					
 			<div style="width: 100%; height: 33%;">
