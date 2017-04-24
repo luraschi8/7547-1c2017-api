@@ -244,7 +244,13 @@
 							<tbody id="sortable"></tbody>
 						</table>
 					</div>
-				</div>		
+					<div class="alert alert-warning fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none;">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>&iexclError!</strong> La atracción es recorrible. Debe haber por lo menos un punto de interés.
+					</div>
+				</div>
+				
+						
 			</div>
 		</div>
 	
@@ -439,6 +445,10 @@ function validarAtraccionRepetida() {
 	
 	if (document.getElementById('es-recorrible').checked) {
 		hayError = validarPlano('plano', 'mensajePlanoNecesario', hayError);
+		if (table.data().count() == 0) {
+			hayError = 1;
+			document.getElementById("mensajePuntoDeInteresNecesario").style.display = 'block';
+		}
 	} else {
 		document.getElementById("mensajePlanoNecesario").style.display = 'none';
 	}
@@ -898,6 +908,7 @@ function crearPunto() {
 			if (data.existe == false) {
 				alert("HOW");
 			} else {
+				hideAllAtractionErrorMessages();
 				guardarOrden();
 				table.ajax.reload();
 				closeNewPointOfInterestForm();

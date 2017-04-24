@@ -49,6 +49,7 @@ function hideAllAtractionErrorMessages() {
 	document.getElementById("mensajeUbicacionLejana").style.display = 'none';
 	document.getElementById("mensajeNombreRepetido").style.display = "none";
 	document.getElementById('mensajeAudioTamano').style.display = 'none';
+	document.getElementById("mensajePuntoDeInteresNecesario").style.display = 'none';
 }
 
 function saveField(field, ok, cancel, vacio, obligatorio) {

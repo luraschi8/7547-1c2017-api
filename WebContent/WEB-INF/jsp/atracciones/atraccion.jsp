@@ -398,10 +398,12 @@ var comments_table = $('#tablaResenias').DataTable({
 
 $('#tablaResenias tbody').on('click', '#borrarResenia', function (e) {
 	e.preventDefault();
-	var data = table.row(this.closest("tr"));
-	var id = data.id;
-	alert(data);
-	alert(id);
+	var data = comments_table.row(this.closest("tr")).data();
+	var id = data["id"];
+	console.log("DATA");
+	console.log(data);
+	console.log("ID");
+	console.log(id)
 	var mensaje = document.getElementById("mensajeBorrarResenia").value;
 	e.preventDefault();
 	bootbox.confirm(mensaje, function (response) {
@@ -710,6 +712,10 @@ $(document).ready(function() {
 				//hayError = validarPlano('plano', 'mensajePuntoDeInteresNecesario', hayError);
 			} else {
 				document.getElementById("mensajePuntoDeInteresNecesario").style.display = 'none';
+			}
+			if (table.data().count() == 0) {
+				hayError = 1;
+				document.getElementById("mensajePuntoDeInteresNecesario").style.display = 'block';
 			}
 		} else {
 			document.getElementById("mensajePlanoNecesario").style.display = 'none';
@@ -1290,6 +1296,7 @@ function crearPunto() {
 			if (data.existe == false) {
 				alert("HOW");
 			} else {
+				hideAllAtractionErrorMessages();
 				guardarOrden();
 				table.ajax.reload();
 				closeNewPointOfInterestForm();
