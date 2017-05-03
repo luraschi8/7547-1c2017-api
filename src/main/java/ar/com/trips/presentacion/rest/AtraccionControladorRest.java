@@ -70,6 +70,7 @@ public class AtraccionControladorRest {
 		dto.setLatitud(a.getLatitud());
 		dto.setLongitud(a.getLongitud());
 		dto.setRecorrible(a.getRecorrible());
+		dto.setIdioma(a.getIdioma());
 		if (a.getAudioEN() != null) {
 			dto.setAudioEN(url + "audioAtraccion?id=" + a.getId());
 		}

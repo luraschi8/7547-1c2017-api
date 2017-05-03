@@ -34,6 +34,19 @@
 					<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
 					<input type="hidden" id="id" name="id" value="${atraccion.id}"/>
 					
+					
+					
+					<div>
+						<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
+						  	<div>
+							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="es" style="margin: 4px" checked="checked">Español
+							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="en" style="margin: 4px; margin-left: 15px;">Inglés
+							</div>
+						</form>
+					</div>
+					
+					
+					
 					<div>
 						<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label>
 					</div>

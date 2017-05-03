@@ -41,6 +41,7 @@ create table Atraccion (
     audioES mediumblob,
     video mediumblob,
     recorrible tinyint default 0,
+    idioma varchar(2),
     foreign key (idCiudad) references Ciudad (id)
 );
 
@@ -61,6 +62,7 @@ create table PuntoDeInteres (
     audioEN mediumblob,
     audioES mediumblob,
     idAtraccion bigint(10),
+    idioma varchar(2),
     foreign key (idAtraccion) references Atraccion (id)
 );
 
@@ -76,4 +78,14 @@ create table Resenia (
     borrado tinyint default 0 not null,
     idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
+);
+
+create table Recorrido (
+	id bigint(10) primary key not null auto_increment,
+    nombre varchar(50),
+    descripcion varchar(250),
+    borrado tinyint default 0 not null,
+    idioma varchar(2),
+    idCiudad bigint(10),
+    foreign key (idCiudad) references Ciudad (id)
 );

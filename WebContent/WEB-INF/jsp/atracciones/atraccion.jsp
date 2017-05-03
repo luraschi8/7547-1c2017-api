@@ -17,12 +17,34 @@
 
 <body>
 
+	<div class="nav-wrapper">
+		<div class="nav-menu">
+   		    <ul class="clearfix">
+	        	<li>Idioma
+		        	<ul class="sub-menu">
+			        	<li><a href="">Español</a></li>
+			            <li><a href="">Inglés</a></li>
+			        </ul>
+			    </li>
+	        </ul>
+	    </div>
+    </div>
+    
 	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
+
+
+
+	
+	    
+	    
+	    
+	    
+	    
 
 <div id="attractionForm">
 	<form:form id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
 		<form:input type="hidden" id="id" name="id" path="id" value="${atraccion.id}"/>
-		
+
 		<div class="atraction-new-form" style="width: 100%; overflow: hidden;"> 
 			
 			<!-- Bloque izquierdo (Información principal, Plano, Galería y Audioguia) -->	

@@ -1,6 +1,14 @@
 @CHARSET "ISO-8859-1";
 
- html {
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+}
+
+head {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -517,4 +525,50 @@ body {
 
 .atraction-alert-point-of-interest-needed {
 	width: 70rem;
+}
+
+
+
+
+.nav-menu ul {
+	margin: 0;
+	padding: 0;
+}
+
+.clearfix: after {
+	content: "";
+    display: table;
+}
+
+.nav-wrapper {
+	width:100%;
+   	background: #c0c0c0;
+   	margin-bottom: 2rem;
+}
+ 
+.nav-menu {
+   	position: relative;
+   	display: block;
+   	margin-left: 5rem;
+}
+ 
+.nav-menu li {
+   	display: block;
+   	list-style-type: none;
+}
+ 
+.sub-menu {
+   	position: absolute;
+   	display: none;
+   	background: #c0c0c0;
+}
+
+.nav-menu ul li:hover > ul {
+   	display: block;
+}
+
+.nav-menu > ul > li:after {
+	content: "\25BC"; /*código unicode de la flecha hacia abajo*/
+	display: inline;
+	position: relative;
 }

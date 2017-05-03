@@ -18,6 +18,8 @@ public class PuntoDeInteresDTO {
 	private String audioES;
 	
 	private String imagen;
+	
+	private String idioma;
 
 	public long getId() {
 		return id;
@@ -67,4 +69,11 @@ public class PuntoDeInteresDTO {
 		this.imagen = imagen;
 	}
 	
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
 }

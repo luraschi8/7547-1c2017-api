@@ -34,6 +34,8 @@ public class AtraccionDTO {
 	private int recorrible;
 		
 	private List<String> listaImagenes = new ArrayList<>();
+	
+	private String idioma;
 
 	public long getId() {
 		return id;
@@ -147,6 +149,11 @@ public class AtraccionDTO {
 		this.listaImagenes = listaImagenes;
 	}
 
-	
-	
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
 }

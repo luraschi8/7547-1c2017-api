@@ -44,6 +44,7 @@ create table Atraccion (
     audioES bytea,
     video bytea,
     recorrible int default 0,
+    idioma varchar(2),
     foreign key (idCiudad) references Ciudad (id)
 );
 
@@ -64,6 +65,7 @@ create table PuntoDeInteres (
     audioEN bytea,
     audioES bytea,
     idAtraccion bigint,
+    idioma varchar(2),
     foreign key (idAtraccion) references Atraccion (id)
 );
 
@@ -78,4 +80,14 @@ create table Resenia (
     borrado int default 0 not null,
     calificacion double,
     foreign key (idAtraccion) references Atraccion (id)
+);
+
+create table Recorrido (
+	id serial primary key not null,
+    nombre varchar(50),
+    descripcion varchar(250),
+    borrado int default 0 not null,
+    idioma varchar(2),
+    idCiudad bigint not null,
+    foreign key (idCiudad) references Ciudad (id)
 );

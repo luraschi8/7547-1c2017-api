@@ -1,4 +1,4 @@
-package ar.com.trips.main;
+/*package ar.com.trips.main;
 
 import java.io.File;
 
@@ -38,4 +38,4 @@ public class Main {
         tomcat.start();
         tomcat.getServer().await();
     }
-}
+}*/

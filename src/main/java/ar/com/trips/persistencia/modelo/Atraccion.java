@@ -77,6 +77,9 @@ public class Atraccion extends Modelo{
 	
 	@Column(name="recorrible")
 	private int recorrible;
+	
+	@Column(name="idioma")
+	private String idioma;
 		
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idCiudad")
@@ -288,5 +291,13 @@ public class Atraccion extends Modelo{
 
 	public void setCantResenias(int cantResenias) {
 		this.cantResenias = cantResenias;
+	}
+	
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
 	}
 }

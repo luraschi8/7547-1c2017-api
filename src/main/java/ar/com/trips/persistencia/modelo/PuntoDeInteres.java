@@ -38,6 +38,9 @@ public class PuntoDeInteres extends Modelo {
 	@Column(name="borrado")
 	private int borrado;
 	
+	@Column(name="idioma")
+	private String idioma;
+	
 	@Column(name="imagen")
 	@Lob
 	@Type(type="org.hibernate.type.ImageType")
@@ -149,4 +152,11 @@ public class PuntoDeInteres extends Modelo {
 		this.imagenString = imagenString;
 	}
 	
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
 }

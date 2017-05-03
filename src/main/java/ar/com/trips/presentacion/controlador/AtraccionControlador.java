@@ -73,7 +73,8 @@ public class AtraccionControlador {
 							@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
 							@RequestParam(name="archivoGaleria4",required = false) MultipartFile galeria5,
 							@RequestParam(name="unVideo",required = false) MultipartFile video,
-							@RequestParam("recorrible") int recorrible) {
+							@RequestParam("recorrible") int recorrible,
+							@RequestParam("idioma") String idioma) {
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		atraccion.setCiudad(ciudad);
@@ -86,6 +87,7 @@ public class AtraccionControlador {
 		guardarAudio(atraccion,audio);
 		atraccion.setBorrado(0);
 		atraccion.setRecorrible(recorrible);
+		atraccion.setIdioma(idioma);
 		atraccionDao.guardar(atraccion);
 		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
 		guardarPuntosDeInteres(atraccion);
@@ -125,7 +127,7 @@ public class AtraccionControlador {
 	}
 
 	private void guardarMultimediaMultiple(Atraccion atraccion, MultipartFile galeria1, MultipartFile galeria2, MultipartFile galeria3,
-			MultipartFile galeria4, MultipartFile galeria5) {
+											MultipartFile galeria4, MultipartFile galeria5) {
 		guardarMultimediaSingle(atraccion, galeria1);
 		guardarMultimediaSingle(atraccion, galeria2);
 		guardarMultimediaSingle(atraccion, galeria3);
@@ -186,7 +188,8 @@ public class AtraccionControlador {
 									@RequestParam(name="videoCambiado") int videoCambiado,
 									@RequestParam("planoCambiado") int planoCambiado,
 									@RequestParam("audioCambiado") int audioCambiado,
-									@RequestParam("archivoPlano") MultipartFile plano) throws IOException {
+									@RequestParam("archivoPlano") MultipartFile plano,
+									@RequestParam("idioma") String idiomaModificado) throws IOException {
 		Atraccion atraccion = atraccionDao.get(atraccionId.getId());
 		
 		if (planoCambiado == 1) {
@@ -206,6 +209,7 @@ public class AtraccionControlador {
 		atraccion.setLatitud(latitudModificada);
 		atraccion.setLongitud(longitudModificada);
 		atraccion.setRecorrible(recorribleModificado);
+		atraccion.setIdioma(idiomaModificado);
 		if (video != null) {
 			atraccion.setVideo(video.getBytes());
 		}
