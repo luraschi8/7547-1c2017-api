@@ -39,6 +39,8 @@
 				</value>
 				<value>ar.com.trips.persistencia.modelo.Resenia
 				</value>
+				<value>ar.com.trips.persistencia.modelo.Recorrido
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -69,6 +71,8 @@
 		class="ar.com.trips.persistencia.dao.impl.PuntoDeInteresDAOImpl" />
 	<bean id="ReseniaDAO"
 		class="ar.com.trips.persistencia.dao.impl.ReseniaDAOImpl" />
+	<bean id="RecorridoDAO"
+		class="ar.com.trips.persistencia.dao.impl.RecorridoDAOImpl" />
 	
 	
 	<!-- Validaciones -->
@@ -80,6 +84,9 @@
 	</bean>
 	<bean name="puntoValidacion"
 		class="ar.com.trips.presentacion.validacion.PuntoDeInteresValidacion">
+	</bean>
+	<bean name="recorridoValidacion"
+		class="ar.com.trips.presentacion.validacion.RecorridoValidacion">
 	</bean>
 	
 	<!-- Imagen -->

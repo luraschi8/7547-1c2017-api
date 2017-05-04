@@ -541,7 +541,7 @@ body {
 }
 
 .nav-wrapper {
-	width:100%;
+	width:103.3%;
    	background: #c0c0c0;
    	margin-bottom: 2rem;
 }
@@ -556,8 +556,13 @@ body {
    	display: block;
    	list-style-type: none;
 }
+
+.sub-menu li {
+   	margin-left: 2px;
+}
  
 .sub-menu {
+	min-width: 70px;
    	position: absolute;
    	display: none;
    	background: #c0c0c0;

@@ -88,6 +88,12 @@
 	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 </div>
 
+<form style="display: none" class="form_city_add_route" id="formAgregarRecorrido" name="formAgregarRecorrido" action="recorridoNuevo" method="post">
+	<input id="idCiudad" name="idCiudad" type="hidden" value="${ciudad.id}"/>
+	<!-- <input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${ciudad.latitud}"/>
+	<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${ciudad.longitud}"/> -->
+</form>
+
 <c:set var="borrar">
 	Borrar
 </c:set>
@@ -225,6 +231,11 @@ $('#botonAtras').on('click', function(e) {
 $('#botonAgregarAtraccion').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAgregarAtraccion").submit();
+});
+
+$('#botonAgregarRecorrido').on('click', function(e) {
+	e.preventDefault();
+	document.getElementById("formAgregarRecorrido").submit();
 });
 </script>
 
