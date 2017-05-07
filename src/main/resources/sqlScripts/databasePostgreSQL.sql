@@ -1,9 +1,10 @@
 -- Database: ddvfs68eo6l9vk
 
-drop table Usuario;
 drop table Permiso;
 drop table ImagenAtraccion;
 drop table PuntoDeInteres;
+drop table Resenia;
+drop table Usuario;
 drop table Atraccion;
 drop table Ciudad;
 
@@ -78,7 +79,8 @@ create table Resenia (
 	hora varchar(5), /* HH:MM */
     comentario varchar(250),
     borrado int default 0 not null,
-    calificacion double,
+    calificacion real,
+    idAtraccion bigint,
     foreign key (idAtraccion) references Atraccion (id)
 );
 
