@@ -90,8 +90,8 @@
 
 <form style="display: none" class="form_city_add_route" id="formAgregarRecorrido" name="formAgregarRecorrido" action="recorridoNuevo" method="post">
 	<input id="idCiudad" name="idCiudad" type="hidden" value="${ciudad.id}"/>
-	<!-- <input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${ciudad.latitud}"/>
-	<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${ciudad.longitud}"/> -->
+	<input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${ciudad.latitud}"/>
+	<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${ciudad.longitud}"/>
 </form>
 
 <c:set var="borrar">
@@ -138,7 +138,7 @@ var markers = [];
 
 function initMap() {
 	map = new google.maps.Map(document.getElementById('view-city-map'), {
-	    center: {lat: ${latitud}, lng: ${longitud}}, //Buenos Aires coordinates
+	    center: {lat: ${latitud}, lng: ${longitud}},
 	    zoom: 13
 	});
 };

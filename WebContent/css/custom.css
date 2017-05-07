@@ -27,10 +27,6 @@ body {
     display: none;
 }
 
-.page-header {
-	 margin-left: 5rem;
-}
-
 .view-city-page-header {
 	margin-left: 3%;
 	margin-bottom: 2%;
@@ -578,10 +574,15 @@ body {
 	position: relative;
 }
 
-.route_box {
-	widht: 100%;
+.route_new_form, .route_main_information, .route_language, .route_name, .route_description, .route_box, .route_map_group {
+	width: 100%;
 }
 
-.route_boxs {
-	widht: 10%;
+.route_left_block, .route_right_block {
+	width: 48%;
+}
+
+.view_or_edit_route_map {
+	width: 100%;
+	height: 25rem;
 }

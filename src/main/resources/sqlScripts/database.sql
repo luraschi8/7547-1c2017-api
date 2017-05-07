@@ -86,6 +86,6 @@ create table Recorrido (
     descripcion varchar(250),
     borrado tinyint default 0 not null,
     idioma varchar(2),
-    idCiudad bigint(10),
+    idCiudad bigint(10) not null,
     foreign key (idCiudad) references Ciudad (id)
 );
