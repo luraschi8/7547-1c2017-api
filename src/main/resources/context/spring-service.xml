@@ -18,7 +18,6 @@
 		<property name="url" value="${database.url}" />
 		<property name="username" value="${database.user}" />
 		<property name="password" value="${database.password}" />
-		<property name="databasePlatform" value="${database.dialect}"/>
 	</bean>
 
 	<!-- En vez de establecer una clase aparte, la definimos como un bean -->
@@ -46,7 +45,7 @@
 		</property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.dialect">${database.dialect}</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<prop key="hibernate.id.new_generator_mappings">false</prop>
 			</props>
