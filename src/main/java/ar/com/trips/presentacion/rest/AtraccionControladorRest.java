@@ -34,16 +34,16 @@ public class AtraccionControladorRest {
 	AtraccionValidacion atraccionValidacion;
 	
 	@RequestMapping("/atraccionesJson")
-	public HashMap<String, List> listar() {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<Atraccion>> listar() {
+		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();
 		lista.put(DATA, atraccionDao.listar(Atraccion.class));
 		return lista;
 	}
 
 	
 	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}",method=RequestMethod.GET)
-	public HashMap<String, List> listarAtraccionesCiudad(@PathVariable int idCiudad) {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<Atraccion>> listarAtraccionesCiudad(@PathVariable int idCiudad) {
+		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();
 		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);
 		for (Atraccion a : list) {
 			if (a.getListaImagenes().size() > 0) {

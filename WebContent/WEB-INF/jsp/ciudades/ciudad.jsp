@@ -70,6 +70,18 @@
 					</thead>
 					<tbody></tbody>
 				</table>
+				
+				<table id="route_table" display="none" class="order-column view-city-board" cellspacing="0">
+					<thead>
+						<tr>
+							<th></th> <!-- Nombre -->
+							<th></th> <!-- Cantidad paradas -->
+							<th></th> <!-- Borrar -->
+							<th></th> <!-- Ver -->
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -108,12 +120,26 @@
 	<input id="idCiudadAtraccion" name="idCiudadAtraccion" value="${ciudad.id}" type="hidden"> 
 </form>
 
+<c:set var="msg_delete_route">
+ 	Se borrará el recorrido junto a todo el contenido asociado al mismo. ¿Desea continuar?
+</c:set>
+<input id="mensajeBorrarRecorrido" type="hidden" value="${msg_delete_route}" />
+ 
+<form id ="formBorrarRecorrido" name="formBorrarRecorrido" action="recorridoBorrar" method="post">
+	<input id="idRecorrido" name="idRecorrido" type="hidden">
+	<input id="idCiudadRecorrido" name="idCiudadRecorrido" value="${ciudad.id}" type="hidden"> 
+</form>
+
 <c:set var="ver">
 	Ver
 </c:set>
 
 <form:form id="formVer" name="formVer" action="atraccionVer" method="get" commandName="atraccion">
 	<input id="idAtraccion" name="idAtraccion" type="hidden"/>
+</form:form>
+
+<form:form id="formVerRecorrido" name="formVerRecorrido" action="recorridoVer" method="get" commandName="recorrido">
+	<input id="idRecorrido" name="idRecorrido" type="hidden"/>
 </form:form>
 
 <c:set var="marcar">
@@ -236,6 +262,55 @@ $('#botonAgregarAtraccion').on('click', function(e) {
 $('#botonAgregarRecorrido').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAgregarRecorrido").submit();
+});
+
+$('#botonAtracciones').on('click', function(e) {
+	e.preventDefault();
+	//document.getElementById("route_table").style.display = "none";
+	document.getElementById("tablita").style.display = "block";
+});
+
+$('#botonRecorridos').on('click', function(e) {
+	e.preventDefault();
+	document.getElementById("tablita").style.display = "none";
+	//document.getElementById("route_table").style.display = "block";
+});
+
+
+var route_table = $('#route_table').DataTable( {
+	dom: 'frtip',
+	ajax: "recorridosCiudadJson/${id}",
+    columns: [
+    	{data: "nombre"},
+        {data: "cantAtracciones"},
+        {defaultContent:'<button class="btn btn-danger" id="borrarRecorrido">${borrar}</button>'},
+        {defaultContent:'<button class="btn btn-warning" id="verRecorrido">${ver}</button>'},
+        ],
+    select:true,
+    paging:false,
+    pageLength:50,
+    ordering:true,
+    bFilter: false
+});
+
+$('#route_table tbody').on('click', '#borrarRecorrido', function (e) {
+	var data = route_table.row(this.closest("tr")).data();
+	var id = data["id"];
+	var mensaje = document.getElementById("mensajeBorrarRecorrido").value;
+	e.preventDefault();
+	bootbox.confirm(mensaje, function (response) {
+		if (response) {
+			document.formBorrarRecorrido.idRecorrido.value = id;
+			document.getElementById("formBorrarRecorrido").submit();
+		}
+	});
+});
+
+$('#route_table tbody').on('click', '#verRecorrido', function (e) {
+	var data = route_table.row(this.closest("tr")).data();
+	e.preventDefault();
+	document.formVerRecorrido.idRecorrido.value = data["id"];
+	document.getElementById("formVerRecorrido").submit();
 });
 </script>
 

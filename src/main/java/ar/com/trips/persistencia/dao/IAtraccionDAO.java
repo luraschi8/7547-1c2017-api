@@ -6,7 +6,7 @@ import ar.com.trips.persistencia.modelo.Atraccion;
 
 public interface IAtraccionDAO extends IDAO {
 
-	List listarPorCiudad(int idCiudad);
+	List<Atraccion> listarPorCiudad(int idCiudad);
 	
 	Atraccion get(Long id);
 
