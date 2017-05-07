@@ -79,7 +79,7 @@
 						</button>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
+					<div class="alert fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> El nombre no puede estar vacío. Se ha dejado el último nombre válido.
 					</div>
@@ -104,7 +104,7 @@
 						</button>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none; width:54rem">
+					<div class="alert fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none; width:54rem">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> La descripción no puede estar vacía. Se ha dejado la última descripción válida.
 					</div>
@@ -174,11 +174,11 @@
 					</div>
 	
 					<div class="atraction-blueprints-alert-messages">
-						<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
+						<div class="alert fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
 						</div>
-						<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoIncorrectaError" style="display: none;">
+						<div class="alert fade in atraction-alert" id="mensajePlanoIncorrectaError" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 						</div>
@@ -210,32 +210,32 @@
 						</div>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeHayVideo" style="display: none;">
+					<div class="alert fade in atraction-alert atraction-gallery-alert" id="mensajeHayVideo" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente. Sólo se puede seleccionar uno.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeCincoArchivos" style="display: none;">
+					<div class="alert fade in atraction-alert atraction-gallery-alert" id="mensajeCincoArchivos" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar más.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoImagen" style="display: none;">
+					<div class="alert fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoImagen" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> La imagen no puede pesar más de 50KB.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoVideo" style="display: none;">
+					<div class="alert fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoVideo" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> El video no puede pesar más de 10MB.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert atraction-gallery-alert" id="mensajeUnaImagen" style="display: none;">
+					<div class="alert fade in atraction-alert atraction-gallery-alert" id="mensajeUnaImagen" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
+					<div class="alert fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> El archivo no es una imagen/video. Por favor, introduzca otra.
 					</div>
@@ -268,12 +268,12 @@
 						</div>
 					</div>
 				
-					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
+					<div class="alert fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
+					<div class="alert fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
 					</div>
@@ -308,7 +308,7 @@
 				</div>
 				
 				<div style="clear: left;">
-					<div class="alert alert-warning fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
+					<div class="alert fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 					</div>
@@ -341,7 +341,7 @@
 					</div>
 				</div>
 				
-				<div class="alert alert-warning fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none;">
+				<div class="alert fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none;">
 				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 				 	<strong>&iexclError!</strong> La atracción es recorrible. Debe por lo menos un punto de interés.
 				</div>
@@ -369,7 +369,7 @@
 			</div>
 		</div>
 			
-		<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
+		<div class="alert fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
 		</div>
@@ -520,7 +520,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 					<p style="display: none;" id="puntoNombre" name="puntoNombre" class="atraction-poi-box"/></p>
 				</div>
 			</div>
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			<div class="alert fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
 			</div>
@@ -547,7 +547,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 					<p id="puntoDescripcion" name="puntoDescripcion" class="atraction-poi-box"/></p>
 				</div>
 			</div>
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			<div class="alert fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
 			</div>
@@ -566,12 +566,12 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
+			<div class="alert fade in atraction-poi-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenVaciaPuntoDeInteresError" style="display: none;">
+			<div class="alert fade in atraction-poi-alert" id="mensajeImagenVaciaPuntoDeInteresError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> Por favor seleccione una imagen.
 			</div>
@@ -604,12 +604,12 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiIncorrectoError" style="display: none;">
+			<div class="alert fade in atraction-poi-alert" id="mensajeAudioPdiIncorrectoError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiTamano" style="display: none;">
+			<div class="alert fade in atraction-poi-alert" id="mensajeAudioPdiTamano" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
 			</div>
@@ -620,7 +620,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 			</div>
 			
-			<div class="alert alert-warning fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
+			<div class="alert fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
 			</div>
