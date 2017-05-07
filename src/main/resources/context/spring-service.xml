@@ -18,6 +18,7 @@
 		<property name="url" value="${database.url}" />
 		<property name="username" value="${database.user}" />
 		<property name="password" value="${database.password}" />
+		<property name="hibernate.dialect" value="{database.dialect}"/>
 	</bean>
 
 	<!-- En vez de establecer una clase aparte, la definimos como un bean -->
