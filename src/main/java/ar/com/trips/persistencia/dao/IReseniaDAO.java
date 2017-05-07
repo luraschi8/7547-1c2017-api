@@ -2,7 +2,6 @@ package ar.com.trips.persistencia.dao;
 
 import java.util.List;
 
-import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Resenia;
 
 public interface IReseniaDAO extends IDAO {
@@ -16,4 +15,7 @@ public interface IReseniaDAO extends IDAO {
 	Resenia getResenia(int id);
 
 	void guardar(int id, String comentario);
+
+	List<Resenia> listarPorAtraccionPaginada(int idAtraccion, int pagina);
+	
 }

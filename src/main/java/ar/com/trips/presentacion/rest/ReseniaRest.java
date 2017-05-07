@@ -3,7 +3,6 @@ package ar.com.trips.presentacion.rest;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IReseniaDAO;
-import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Resenia;
 import ar.com.trips.presentacion.dto.ReseniaDTO;
 
@@ -45,6 +43,14 @@ public class ReseniaRest {
 	public HashMap<String, List> listarReseniasAtraccionNuevo(@PathVariable int idAtraccion) {
 		HashMap<String, List> lista = new HashMap<String, List>();
 		List<Resenia> list = reseniaDao.listarPorAtraccion(idAtraccion);
+		lista.put(DATA, list);
+		return lista;
+	}
+	
+	@RequestMapping(path="/reseniasPaginadasAtraccionJson/{idAtraccion}/{pagina}",method=RequestMethod.GET)
+	public HashMap<String, List> listarReseniaPaginadasAtraccion(@PathVariable int idAtraccion, @PathVariable int pagina) {
+		HashMap<String, List> lista = new HashMap<String, List>();
+		List<Resenia> list = reseniaDao.listarPorAtraccionPaginada(idAtraccion,pagina);
 		lista.put(DATA, list);
 		return lista;
 	}
