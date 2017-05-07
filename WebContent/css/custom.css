@@ -577,3 +577,11 @@ body {
 	display: inline;
 	position: relative;
 }
+
+.route_box {
+	widht: 100%;
+}
+
+.route_boxs {
+	widht: 10%;
+}

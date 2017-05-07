@@ -521,6 +521,7 @@ function validarAtraccionRepetida() {
 		success: function (data) {
 			if (data.existe == false) {
 				document.formNuevo.recorrible.value = $("input[name='recorrible']:checked").val();
+				document.formNuevo.recorrible.value = $("input[name='idioma']:checked").val();
 				if (far_away) {
 				    bootbox.confirm({
 			    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
