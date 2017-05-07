@@ -68,9 +68,9 @@ create table PuntoDeInteres (
 
 create table Resenia (
 	id bigint(10) primary key not null auto_increment,
-    idUsuario bigint(10) not null,
+    idUsuario bigint(10),
     foreign key (idUsuario) references Usuario (id),
-	nombreUsuario varchar(50), /* Cuando esté la BDD de Usuario, se podría sacar del idUsuario */
+	nombreUsuario varchar(50), /* Cuando estÃ© la BDD de Usuario, se podrÃ­a sacar del idUsuario */
 	fecha varchar(10), /* DD-MM-AAAA */
 	hora varchar(5), /* HH:MM */
     comentario varchar(250),

@@ -71,7 +71,7 @@ create table PuntoDeInteres (
 
 create table Resenia (
 	id serial primary key not null,
-    idUsuario bigint not null,
+    idUsuario bigint,
     foreign key (idUsuario) references Usuario (id),
 	nombreUsuario varchar(50), /* Cuando esté la BDD de Usuario, se podría sacar del idUsuario */
 	fecha varchar(10), /* DD-MM-AAAA */

@@ -39,6 +39,11 @@ public class Resenia extends Modelo {
 	@JsonBackReference(value="atraccion")
 	private Atraccion atraccion;
 	
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@JoinColumn(name="idUsuario")
+	@JsonBackReference(value="usuario")
+	private Usuario usuario;
+	
 	@Column(name="nombreUsuario")
 	private String nombreUsuario;
 	
@@ -112,4 +117,13 @@ public class Resenia extends Modelo {
 	public void setCalificacion(float calificacion) {
 		this.calificacion = calificacion;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 }

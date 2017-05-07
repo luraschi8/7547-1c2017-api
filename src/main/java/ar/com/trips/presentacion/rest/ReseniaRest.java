@@ -1,6 +1,10 @@
 package ar.com.trips.presentacion.rest;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,8 +54,6 @@ public class ReseniaRest {
 								@PathVariable long idResenia) {
 		HashMap<String, ReseniaDTO> lista = new HashMap<String, ReseniaDTO>();
 		Resenia resenia = reseniaDao.get(idResenia);
-		String url = request.getRequestURL().toString();
-		url = url.substring(0, url.indexOf("resenia"));
 		ReseniaDTO dto = new ReseniaDTO();
 		dto.setNombreUsuario(resenia.getNombreUsuario());
 		dto.setFecha(resenia.getFecha());
@@ -62,18 +65,13 @@ public class ReseniaRest {
 	}
 	
 	@RequestMapping(path="/crearResenia",method=RequestMethod.POST)
-	public HashMap<String, Boolean> crearResenia(@RequestParam("nombreUsuario") String nombreUsuario,
-			@RequestParam("fecha") String fecha,
-			@RequestParam("hora") String hora,
-			@RequestParam("calificacion") float calificacion,
-			@RequestParam("comentario") String comentario) throws IOException {
+	public HashMap<String, Boolean> crearResenia(@RequestBody Resenia resenia) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-		Resenia resenia = new Resenia();
-		resenia.setNombreUsuario(nombreUsuario);
-		resenia.setFecha(fecha);
-		resenia.setHora(hora);
-		resenia.setCalificacion(calificacion);
-		resenia.setComentario(comentario);
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Date date = new Date();
+		String[] fechaHora = dateFormat.format(date).split(" ");
+		resenia.setFecha(fechaHora[0]);
+		resenia.setHora(fechaHora[1]);
 		reseniaDao.guardar(resenia);
 		lista.put(EXISTE, true);
 		return lista;
