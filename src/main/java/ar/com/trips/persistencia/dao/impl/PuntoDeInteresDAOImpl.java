@@ -59,18 +59,6 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 	}
 
 	@Override
-	public boolean puntoDeInteresExistente(PuntoDeInteres puntoDeInteres) {
-		Session session = sessionFactory.openSession();
-		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE a.nombre = '" + puntoDeInteres.getNombre() + "'"
-				+ " AND a.atraccion.id = '" + puntoDeInteres.getAtraccion().getId() + "' AND a.borrado = 0"
-				+ " AND a.id != '" + puntoDeInteres.getId() + "'";
-		@SuppressWarnings("unchecked")
-		List<PuntoDeInteres> lista = session.createQuery(query).list();
-		session.close();
-		return lista.size() != 0;
-	}
-
-	@Override
 	public void guardarPuntosConAtraccionNula(Atraccion atraccion) {
 		List<PuntoDeInteres> lista = listarPorAtraccionNuevo((int)atraccion.getId());
 		Session s = sessionFactory.openSession();
@@ -127,8 +115,8 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 	@Override
 	public boolean puntoExistente(PuntoDeInteres punto) {
 		Session session = sessionFactory.openSession();
-		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE a.nombre = '" + punto.getNombre() + "'"
-				+ " AND (a.atraccion.id = '" + punto.getAtraccion().getId() + "' OR a.atraccion.id is null) AND a.borrado = 0"
+		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE (a.atraccion.id = '"
+				+ punto.getAtraccion().getId() + "' OR a.atraccion.id is null) AND a.borrado = 0"
 				+ " AND a.id != '" + punto.getId() + "'";
 		@SuppressWarnings("unchecked")
 		List<Atraccion> lista = session.createQuery(query).list();

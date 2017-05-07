@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -26,12 +25,6 @@ public class PuntoDeInteres extends Modelo {
 	@Column(name="id")
 	private long id;
 	
-	@Column(name="nombre")
-	private String nombre;
-	
-	@Column(name="descripcion")
-	private String descripcion;
-	
 	@Column(name="orden")
 	private int orden;
 	
@@ -44,26 +37,10 @@ public class PuntoDeInteres extends Modelo {
 	@JsonBackReference(value="imagen")
 	private byte[] imagen;
 	
-	@Column(name="audioEN")
-	@Lob
-	@Type(type="org.hibernate.type.ImageType")
-	@JsonBackReference(value="audioEN")
-	private byte[] audioEN;
-	
-	@Column(name="audioES")
-	@Lob
-	@Type(type="org.hibernate.type.ImageType")
-	@JsonBackReference(value="audioES")
-	private byte[] audioES;
-	
-		
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idAtraccion")
 	@JsonBackReference(value="atraccion")
 	private Atraccion atraccion;
-	
-	@Transient
-	private String imagenString;
 
 	public PuntoDeInteres() {
 		
@@ -77,22 +54,6 @@ public class PuntoDeInteres extends Modelo {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	
 	public int getOrden() {
 		return orden;
 	}
@@ -109,14 +70,6 @@ public class PuntoDeInteres extends Modelo {
 		this.borrado = borrado;
 	}
 
-	public Atraccion getAtraccion() {
-		return atraccion;
-	}
-
-	public void setAtraccion(Atraccion atraccion) {
-		this.atraccion = atraccion;
-	}
-
 	public byte[] getImagen() {
 		return imagen;
 	}
@@ -124,29 +77,13 @@ public class PuntoDeInteres extends Modelo {
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
-	
-	public byte[] getAudioEN() {
-		return audioEN;
+
+	public Atraccion getAtraccion() {
+		return atraccion;
 	}
 
-	public void setAudioEN(byte[] audioEN) {
-		this.audioEN = audioEN;
-	}
-
-	public byte[] getAudioES() {
-		return audioES;
-	}
-
-	public void setAudioES(byte[] audioES) {
-		this.audioES = audioES;
-	}
-
-	public String getImagenString() {
-		return imagenString;
-	}
-
-	public void setImagenString(String imagenString) {
-		this.imagenString = imagenString;
+	public void setAtraccion(Atraccion atraccion) {
+		this.atraccion = atraccion;
 	}
 	
 }
