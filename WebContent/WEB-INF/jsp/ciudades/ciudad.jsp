@@ -57,7 +57,7 @@
 				<input id="botonAgregarRecorrido" class="btn btn-agregar" type="button" value="+"/>
 			</div>
 		
-			<div class="panel-body">
+			<div class="panel-body atractions_panel_body">
 				<table id="tablita" class="display order-column view-city-board" cellspacing="0">
 					<thead>
 						<tr>
@@ -70,8 +70,10 @@
 					</thead>
 					<tbody></tbody>
 				</table>
+			</div>
 				
-				<table id="route_table" display="none" class="order-column view-city-board" cellspacing="0">
+			<div class="panel-body routes_panel_body" style="display: none;">
+				<table id="route_table" class="order-column view-city-board" cellspacing="0">
 					<thead>
 						<tr>
 							<th></th> <!-- Nombre -->
@@ -266,16 +268,15 @@ $('#botonAgregarRecorrido').on('click', function(e) {
 
 $('#botonAtracciones').on('click', function(e) {
 	e.preventDefault();
-	//document.getElementById("route_table").style.display = "none";
-	document.getElementById("tablita").style.display = "block";
+	document.getElementsByClassName("atractions_panel_body")[0].style.display = "none";
+	document.getElementsByClassName("routes_panel_body")[0].style.display = "block";
 });
 
 $('#botonRecorridos').on('click', function(e) {
 	e.preventDefault();
-	document.getElementById("tablita").style.display = "none";
-	//document.getElementById("route_table").style.display = "block";
+	document.getElementsByClassName("routes_panel_body")[0].style.display = "none";
+	document.getElementsByClassName("atractions_panel_body")[0].style.display = "block";
 });
-
 
 var route_table = $('#route_table').DataTable( {
 	dom: 'frtip',
