@@ -44,7 +44,7 @@
 						<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_RECORRIDO)" rows="1" id="nombre" path="nombre" name="nombre" class="route_box" placeholder="Ingrese el nombre del recorrido" required></textarea>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para el recorrido.
 					</div>
@@ -56,7 +56,7 @@
 						<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_RECORRIDO)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="route_box"  placeholder="Ingrese la descripcion del recorrido" required></textarea>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
 					</div>
@@ -69,9 +69,9 @@
 				<div id="route_map_group">
 					<div id="view_or_edit_route_map" class="view_or_edit_route_map"></div>
 					
-					<div class="alert alert-warning fade in error_msg_new_route_no_atraction" id="mensajeNingunaAtraccionElegida" style="display: none">
+					<div class="alert alert-danger fade in error_msg_new_route_no_atraction" id="mensajeNingunaAtraccionElegida" style="display: none">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> No se ha seleccionado ninguna atracción para el recorrido.
+					 	<strong>&iexclError!</strong> No se ha seleccionado ninguna atracción para el recorrido. Debe poseer al menos una.
 					</div>
 				</div>
 				
@@ -100,14 +100,14 @@
 						</table>
 					</div>
 				</div>
-				<div class="alert alert-warning fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
+				<div class="alert alert-danger fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
 				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 				 	<strong>&iexclError!</strong> La atracción es recorrible. Debe haber por lo menos un punto de interés.
 				</div>-->
 			</div>
 		</div>
 	
-		<div class="alert alert-warning fade in error_msg_route_already_exists" id="mensajeNombreRepetido" style="display: none;">
+		<div class="alert alert-danger fade in error_msg_route_already_exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>&iexclError!</strong>El recorrido seleccionado ya se encuentra registrado. Seleccione otro nombre.
 		</div>

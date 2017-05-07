@@ -53,7 +53,7 @@
 						<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="1" id="nombre" path="nombre" name="nombre" class="atraction-box atraction-name-box"  placeholder="Ingrese el nombre de la atracción" required></textarea>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para la atracción.
 					</div>
@@ -65,7 +65,7 @@
 						<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_ATRACCION)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="atraction-box atraction-descripcion-box"  placeholder="Ingrese la descripcion de la atracción" required></textarea>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
 					</div>
@@ -110,11 +110,11 @@
 						</div>
 		
 						<div class="atraction-blueprints-alert-messages">
-							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
+							<div class="alert alert-danger fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
 							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
 							</div>
-							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoIncorrectoError" style="display: none;">
+							<div class="alert alert-danger fade in atraction-alert" id="mensajePlanoIncorrectoError" style="display: none;">
 							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 							</div>
@@ -143,32 +143,32 @@
 						</div>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> El archivo no es una imagen/video. Por favor, introduzca otra.
 					</div>
@@ -200,12 +200,12 @@
 						</div>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
 					</div>
@@ -220,7 +220,7 @@
 					<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
 					<div id="atraction-map"></div> 
 					
-					<div class="alert alert-warning fade in new-atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
+					<div class="alert alert-danger fade in new-atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 					</div>
@@ -256,14 +256,14 @@
 						</table>
 					</div>
 				</div>
-				<div class="alert alert-warning fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
+				<div class="alert alert-danger fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
 				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 				 	<strong>&iexclError!</strong> La atracción es recorrible. Debe haber por lo menos un punto de interés.
 				</div>
 			</div>
 		</div>
 	
-		<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
+		<div class="alert alert-danger fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
 		</div>	
@@ -301,7 +301,7 @@
 					<p style="display: none;" id="puntoNombre" name="puntoNombre" class="atraction-poi-box"/></p>
 				</div>
 			</div>
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
 			</div>
@@ -328,7 +328,7 @@
 					<p id="puntoDescripcion" name="puntoDescripcion" class="atraction-poi-box"/></p>
 				</div>
 			</div>
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
 			</div>
@@ -347,12 +347,12 @@
 				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenVaciaPuntoDeInteresError" style="display: none;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeImagenVaciaPuntoDeInteresError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> Por favor seleccione una imagen.
 			</div>
@@ -385,12 +385,12 @@
 				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiIncorrectoError" style="display: none;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeAudioPdiIncorrectoError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiTamano" style="display: none;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeAudioPdiTamano" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
 			</div>
@@ -401,7 +401,7 @@
 				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 			</div>
 			
-			<div class="alert alert-warning fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
+			<div class="alert alert-danger fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
 			</div>

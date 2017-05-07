@@ -34,7 +34,7 @@
 	</div>
 	
 	<div>
-		<div class="alert alert-warning fade in view-city-wrong-image" id="mensajeImagenIncorrectaError" style="display: none;">
+		<div class="alert alert-danger fade in view-city-wrong-image" id="mensajeImagenIncorrectaError" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>¡Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 		</div>
