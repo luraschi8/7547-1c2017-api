@@ -918,6 +918,9 @@ var table = $('#tablita').DataTable( {
 		{defaultContent:'<button class="btn btn-danger" id="borrar">Borrar</button>'},
 		{defaultContent:'<button class="btn btn-warning" id="ver">Ver</button>'}
 		],
+		"columnDefs": [
+            {className: "dt-body-center", "targets": [0, 3, 4]}
+        ],
 		select:true,
 		paging:true,
 		pageLength:50
