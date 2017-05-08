@@ -21,89 +21,100 @@
 		
 		<div class="route_new_form" style="display: inline-block; overflow: hidden;">
 			
-			<!-- Bloque izquierdo -->
-			<div class="route_left_block" style="float:left; margin-top: -1%">
-
-				<!-- Información principal -->
-				<div class="route_main_information">
-					<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.ciudad.id}"/>
-					<input type="hidden" id="id" name="id" value="${recorrido.id}"/>
-
-					<div class="route_language">
-						<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
-					  	<div>
-						  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="es" style="margin: 4px" checked="checked">Español
-						  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="en" style="margin: 4px; margin-left: 15px;">Inglés
+			<div class="route_main_information_and_map" style="width: 100%; margin_bottom: 75%;">
+				<!-- Bloque izquierdo -->
+				<div class="route_left_block" style="float:left; margin-top: -1%">
+	
+					<!-- Información principal -->
+					<div class="route_main_information">
+						<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.ciudad.id}"/>
+						<input type="hidden" id="id" name="id" value="${recorrido.id}"/>
+	
+						<div class="route_language">
+							<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
+						  	<div>
+							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="es" style="margin: 4px" checked="checked">Español
+							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="en" style="margin: 4px; margin-left: 15px;">Inglés
+							</div>
+						</div>
+						
+						<div class="route_name" style="margin-top: 1%">
+							<form:label class="route_name_label" path="nombre">Nombre</form:label>
+						</div>
+						<div>
+							<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_RECORRIDO)" rows="1" id="nombre" path="nombre" name="nombre" class="route_box" placeholder="Ingrese el nombre del recorrido" required></textarea>
+						</div>
+						
+						<div class="alert alert-danger fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
+						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para el recorrido.
+						</div>
+						
+						<div class="route_description" style="margin-top: 1%">
+							<form:label class="route_description_label" path="descripcion">Descripción</form:label>
+						</div>
+						<div>
+							<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_RECORRIDO)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="route_box"  placeholder="Ingrese la descripcion del recorrido" required></textarea>
+						</div>
+						
+						<div class="alert alert-danger fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
 						</div>
 					</div>
-					
-					<div class="route_name" style="margin-top: 1%">
-						<form:label class="route_name_label" path="nombre">Nombre</form:label>
-					</div>
-					<div>
-						<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_RECORRIDO)" rows="1" id="nombre" path="nombre" name="nombre" class="route_box" placeholder="Ingrese el nombre del recorrido" required></textarea>
-					</div>
-					
-					<div class="alert alert-danger fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para el recorrido.
-					</div>
-					
-					<div class="route_description" style="margin-top: 1%">
-						<form:label class="route_description_label" path="descripcion">Descripción</form:label>
-					</div>
-					<div>
-						<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_RECORRIDO)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="route_box"  placeholder="Ingrese la descripcion del recorrido" required></textarea>
-					</div>
-					
-					<div class="alert alert-danger fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
+				</div>
+				
+				<!-- Bloque derecho -->
+				<div class="route_right_block" style="float: right">
+					<!-- Mapa -->
+					<div id="route_map_group">
+						<div id="view_or_edit_route_map" class="view_or_edit_route_map"></div>
+						
+						<div class="alert alert-danger fade in error_msg_new_route_no_atraction" id="mensajeNingunaAtraccionElegida" style="display: none">
+						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+						 	<strong>&iexclError!</strong> No se ha seleccionado ninguna atracción para el recorrido. Debe poseer al menos una.
+						</div>
 					</div>
 				</div>
 			</div>
 			
-			<!-- Bloque derecho -->
-			<div class="route_right_block" style="float: right">
-				<!-- Mapa -->
-				<div id="route_map_group">
-					<div id="view_or_edit_route_map" class="view_or_edit_route_map"></div>
-					
-					<div class="alert alert-danger fade in error_msg_new_route_no_atraction" id="mensajeNingunaAtraccionElegida" style="display: none">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> No se ha seleccionado ninguna atracción para el recorrido. Debe poseer al menos una.
+			<div class="route_tables" style="width: 100%;">
+				<div class="route_left_block" style="clear: both; float: left; width: 48%; margin-top: 2%;">
+					<label>Atracciones de la ciudad</label>
+					<div style="width: 100%;" class="panel panel-primary route-panel">
+						<div class="panel-body route_panel_body">
+							<table id="table_all_atractions" class="display order-column route_board" cellspacing="0">
+								<thead>
+									<tr>
+										<th></th> <!-- Imagen -->
+										<th></th> <!-- Nombre -->
+										<th></th> <!-- Agregar -->
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 				
-				<!-- Tabla puntos de interés y obras 
-				<div id="view-atraction-points-of-interest-panel" style="float:right; display: none" class="panel panel-primary view-atraction-panel">
-					<div style="text-align:center">
-						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras" type="button" value="Puntos de interés y obras" />
-						
-						<form class="form-horizontal maxwid" id="formAgregarPuntoDeInteres" name="formAgregarPuntoDeInteres" action="puntoDeInteresNuevo" method="post">
-							<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm()"/>
-						</form>
-					</div>
-					
-					<div class="panel-body atraction-points-of-interest">
-						<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th></th>
-									<th></th> 
-									<th></th> 
-									<th></th> 
-									<th></th> 
-								</tr>
-							</thead>
-							<tbody id="sortable"></tbody>
-						</table>
+				<div class="route_right_block" style="float: right; width: 48%; margin-top: 2%;">
+					<label>Atracciones del recorrido</label>
+					<div style="width: 100%;" class="panel panel-primary route-panel">
+						<div class="panel-body route_panel_body">
+							<table id="table_route_atractions" class="display order-column route_board" cellspacing="0">
+								<thead>
+									<tr>
+										<th></th> <!-- Quitar -->
+										<th></th> <!-- Orden -->
+										<th></th> <!-- Imagen -->
+										<!--<th></th>--> <!-- Nombre -->
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
 					</div>
 				</div>
-				<div class="alert alert-danger fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
-				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-				 	<strong>&iexclError!</strong> La atracción es recorrible. Debe haber por lo menos un punto de interés.
-				</div>-->
 			</div>
 		</div>
 	
@@ -132,6 +143,51 @@ $("#descripcion").attr("maxlength", MAX_DESCRIPCION_RECORRIDO);
 </script>
 
 <script>
+var table_all_atractions = $('#table_all_atractions').DataTable( {
+	dom: 'frtip',
+	ajax: "atraccionesCiudadJson/${recorrido.ciudad.id}",
+    columns: [
+        {	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },
+        {data: "nombre" },
+        {defaultContent:'<button class="btn btn-success" id="add_atraction"> < </button>'}
+        ],
+    select:true,
+    paging:false,
+    pageLength:50,
+    ordering:true,
+    bFilter: false
+});
+
+var table_all_atractions = $('#table_route_atractions').DataTable( {
+	dom: 'frtip',
+	ajax: "atraccionesCiudadJson/${recorrido.ciudad.id}",
+    columns: [
+    	{defaultContent:'<button class="btn btn-danger" id="add_atraction"> > </button>'},
+        {	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },
+        {data: "nombre"}
+        ],
+    select:true,
+    paging:false,
+    pageLength:50,
+    ordering:true,
+    bFilter: false
+});
+
+
+
+
+
+
+
+
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();

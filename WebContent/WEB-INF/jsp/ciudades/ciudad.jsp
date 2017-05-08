@@ -268,14 +268,14 @@ $('#botonAgregarRecorrido').on('click', function(e) {
 
 $('#botonAtracciones').on('click', function(e) {
 	e.preventDefault();
-	document.getElementsByClassName("atractions_panel_body")[0].style.display = "none";
-	document.getElementsByClassName("routes_panel_body")[0].style.display = "block";
+	document.getElementsByClassName("routes_panel_body")[0].style.display = "none";
+	document.getElementsByClassName("atractions_panel_body")[0].style.display = "block";
 });
 
 $('#botonRecorridos').on('click', function(e) {
 	e.preventDefault();
-	document.getElementsByClassName("routes_panel_body")[0].style.display = "none";
-	document.getElementsByClassName("atractions_panel_body")[0].style.display = "block";
+	document.getElementsByClassName("atractions_panel_body")[0].style.display = "none";
+	document.getElementsByClassName("routes_panel_body")[0].style.display = "block";
 });
 
 var route_table = $('#route_table').DataTable( {

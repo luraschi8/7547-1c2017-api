@@ -228,7 +228,7 @@ body {
 	right: 0;
 }
 
-.view-city-board {
+.view-city-board, .route_board {
 	width: 100%;
 	height: 100%;
 }
