@@ -153,7 +153,7 @@ var table_all_atractions = $('#table_all_atractions').DataTable( {
         	}
         },
         {data: "nombre" },
-        {defaultContent:'<button class="btn btn-success" id="add_atraction"> < </button>'}
+        {defaultContent:'<button class="btn btn-success" id="add_atraction"> > </button>'}
         ],
     select:true,
     paging:false,
@@ -166,7 +166,7 @@ var table_all_atractions = $('#table_route_atractions').DataTable( {
 	dom: 'frtip',
 	ajax: "atraccionesCiudadJson/${recorrido.ciudad.id}",
     columns: [
-    	{defaultContent:'<button class="btn btn-danger" id="add_atraction"> > </button>'},
+    	{defaultContent:'<button class="btn btn-danger" id="add_atraction"> < </button>'},
         {	data: "id",
         	render: function (data,type,row) {
         		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
