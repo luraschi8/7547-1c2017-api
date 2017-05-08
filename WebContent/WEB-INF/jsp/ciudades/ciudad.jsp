@@ -73,7 +73,7 @@
 			</div>
 				
 			<div class="panel-body routes_panel_body" style="display: none;">
-				<table id="route_table" class="order-column view-city-board" cellspacing="0">
+				<table id="route_table" class="display order-column view-city-board" cellspacing="0">
 					<thead>
 						<tr>
 							<th></th> <!-- Nombre -->
@@ -289,7 +289,7 @@ var route_table = $('#route_table').DataTable( {
         ],
     select:true,
     paging:false,
-    pageLength:50,
+    pageLength:30,
     ordering:true,
     bFilter: false
 });
