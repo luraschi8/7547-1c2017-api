@@ -1,6 +1,9 @@
 package ar.com.trips.presentacion.dto;
 
-public class PuntoDeInteresDTO {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RecorridoDTO {
 
 	private long id;
 	
@@ -8,9 +11,7 @@ public class PuntoDeInteresDTO {
 	
 	private String descripcion;
 	
-	private String audio;
-	
-	private String imagen;
+	private int borrado;
 	
 	private String idioma;
 
@@ -38,20 +39,12 @@ public class PuntoDeInteresDTO {
 		this.descripcion = descripcion;
 	}
 
-	public String getAudio() {
-		return audio;
+	public int getBorrado() {
+		return borrado;
 	}
 
-	public void setAudio(String audio) {
-		this.audio = audio;
-	}
-
-	public String getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
+	public void setBorrado(int borrado) {
+		this.borrado = borrado;
 	}
 	
 	public String getIdioma() {

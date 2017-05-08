@@ -7,12 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
-import ar.com.trips.persistencia.modelo.Ciudad;
 
 public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 
 	@Override
-	public List listarPorCiudad(int idCiudad) {
+	public List<Atraccion> listarPorCiudad(int idCiudad) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.ciudad.id = " + idCiudad + " AND a.borrado = 0";
 		@SuppressWarnings("unchecked")

@@ -1,5 +1,8 @@
 package ar.com.trips.persistencia.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -41,6 +45,10 @@ public class PuntoDeInteres extends Modelo {
 	@JoinColumn(name="idAtraccion")
 	@JsonBackReference(value="atraccion")
 	private Atraccion atraccion;
+	
+	@OneToMany(mappedBy="puntoDeInteres",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonBackReference(value="listaPuntoIdioma")
+	private List<PuntoIdioma> listaPuntoIdioma = new ArrayList<>();
 
 	public PuntoDeInteres() {
 		
@@ -85,5 +93,16 @@ public class PuntoDeInteres extends Modelo {
 	public void setAtraccion(Atraccion atraccion) {
 		this.atraccion = atraccion;
 	}
+
+	public List<PuntoIdioma> getListaPuntoIdioma() {
+		return listaPuntoIdioma;
+	}
+
+	public void setListaPuntoIdioma(List<PuntoIdioma> listaPuntoIdioma) {
+		this.listaPuntoIdioma = listaPuntoIdioma;
+	}
 	
+	public void add(PuntoIdioma puntoIdioma) {
+		getListaPuntoIdioma().add(puntoIdioma);
+	}
 }

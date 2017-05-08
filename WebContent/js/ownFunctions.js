@@ -175,3 +175,10 @@ function validateAudio(btn_get, btn_erase, file_id, audio, modified_audio, size_
 		} 
 	}
 }
+
+function hideAllRouteErrorMessages() {
+	document.getElementById("mensajeNombreVacio").style.display = "none";
+	document.getElementById("mensajeDescripcionVacia").style.display = 'none';
+	document.getElementById("mensajeNingunaAtraccionElegida").style.display = 'none';
+	document.getElementById("mensajeNombreRepetido").style.display = "none";
+}

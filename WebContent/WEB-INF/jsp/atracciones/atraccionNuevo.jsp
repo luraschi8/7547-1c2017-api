@@ -27,12 +27,20 @@
 	
 				<!-- Información principal -->
 				<div class="atraction-main-information">
-					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
-					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.latitud}"/>
+					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.atraccion.ciudad.id}"/>
+					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.atraccion.ciudad.latitud}"/>
 	
-					<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
-					<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
+					<form:input type="hidden" id="latitud" name="latitud" path="atraccion.latitud"/>
+					<form:input type="hidden" id="longitud" name="longitud" path="atraccion.longitud"/>
 					<input type="hidden" id="id" name="id" value="${atraccion.id}"/>
+					
+					<div>
+						<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
+						  	<div>
+							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked">Español
+							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;">Inglés
+							</div>
+					</div>
 					
 					<div>
 						<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label>
@@ -41,7 +49,7 @@
 						<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="1" id="nombre" path="nombre" name="nombre" class="atraction-box atraction-name-box"  placeholder="Ingrese el nombre de la atracción" required></textarea>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para la atracción.
 					</div>
@@ -53,7 +61,7 @@
 						<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_ATRACCION)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="atraction-box atraction-descripcion-box"  placeholder="Ingrese la descripcion de la atracción" required></textarea>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
 					</div>
@@ -73,12 +81,11 @@
 					</div>
 					
 					<div>
-						<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
+						<form:label class="atraction-label atraction-recorrible-label" path="atraccion.recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
-							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show(); $('#view-atraction-points-of-interest-panel').show();">Sí
-							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide(); $('#view-atraction-points-of-interest-panel').hide();">No
+							  	<input type="radio" id="es-recorrible" name="recorrible" path="atraccion.recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show(); $('#view-atraction-points-of-interest-panel').show();">Si
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="atraccion.recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide(); $('#view-atraction-points-of-interest-panel').hide();">No
 							</div>
-						</form>
 					</div>
 				</div>
 			
@@ -87,7 +94,7 @@
 					<!-- Plano -->
 					<div id="blueprints" style="display: none;style="float:left"">
 						<div>
-							<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
+							<form:label class="atraction-label atraction-blueprints-label" path="atraccion.plano">Plano</form:label>
 						</div>
 						<div class="atraction-blueprints-box" style="float:left">
 							<img id="plano" style="width:100%; height:100%">
@@ -99,11 +106,11 @@
 						</div>
 		
 						<div class="atraction-blueprints-alert-messages">
-							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
+							<div class="alert alert-danger fade in atraction-alert" id="mensajePlanoNecesario" style="display: none;">
 							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> La atracción es recorrible. Debe proporcionarse un plano.
 							</div>
-							<div class="alert alert-warning fade in atraction-alert" id="mensajePlanoIncorrectoError" style="display: none;">
+							<div class="alert alert-danger fade in atraction-alert" id="mensajePlanoIncorrectoError" style="display: none;">
 							 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 							 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 							</div>
@@ -113,7 +120,7 @@
 					<!-- Galería -->
 					<div style="clear: left">
 						<div>
-							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
+							<label class="atraction-label atraction-gallery-label">Galería</label>
 						</div>
 						<div id ="container" class="atraction-gallery atraction-gallery-box">
 							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
@@ -132,39 +139,39 @@
 						</div>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeHayVideo" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente! Solo se puede seleccionar uno!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeCincoArchivos" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar mas!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeTamanoImagen" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> La imagen no puede pesar mas de 50KB!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeTamanoVideo" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> El video no puede pesar mas de 10MB!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeUnaImagen" style="display: none;float:left">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> El archivo no es una imagen/video. Por favor, introduzca otra.
 					</div>
 					
 					<!-- Audioguía -->
 					<div class="new-atraction-audio-group">
-						<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
+						<label class="atraction-label atraction-audio-label">Audioguía</label>
 						<div>
 							<!-- Reproducir audioguía -->
 							<div style="float:left">
@@ -189,12 +196,12 @@
 						</div>
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert-incorrect-audio" id="mensajeAudioIncorrectoError" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 					</div>
 					
-					<div class="alert alert-warning fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
+					<div class="alert alert-danger fade in atraction-alert-incorrect-audio" id="mensajeAudioTamano" style="display: none;">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
 					</div>
@@ -209,7 +216,7 @@
 					<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
 					<div id="atraction-map"></div> 
 					
-					<div class="alert alert-warning fade in new-atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
+					<div class="alert alert-danger fade in new-atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 					</div>
@@ -245,21 +252,21 @@
 						</table>
 					</div>
 				</div>
-				<div class="alert alert-warning fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
+				<div class="alert alert-danger fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
 				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 				 	<strong>&iexclError!</strong> La atracción es recorrible. Debe haber por lo menos un punto de interés.
 				</div>
 			</div>
 		</div>
 	
-		<div class="alert alert-warning fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
+		<div class="alert alert-danger fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
 		</div>	
 	</form:form>
 </div>
 
-<form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
+<form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
 	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Guardar" />
@@ -290,7 +297,7 @@
 					<p style="display: none;" id="puntoNombre" name="puntoNombre" class="atraction-poi-box"/></p>
 				</div>
 			</div>
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> El nombre no puede estar vacío.
 			</div>
@@ -317,7 +324,7 @@
 					<p id="puntoDescripcion" name="puntoDescripcion" class="atraction-poi-box"/></p>
 				</div>
 			</div>
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
 			</div>
@@ -336,12 +343,12 @@
 				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeImagenIncorrectaPuntoDeInteresError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otro.
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeImagenVaciaPuntoDeInteresError" style="display: none;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeImagenVaciaPuntoDeInteresError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>&iexclError!</strong> Por favor seleccione una imagen.
 			</div>
@@ -374,12 +381,12 @@
 				</div>
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiIncorrectoError" style="display: none;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeAudioPdiIncorrectoError" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
 			</div>
 			
-			<div class="alert alert-warning fade in atraction-poi-alert" id="mensajeAudioPdiTamano" style="display: none;">
+			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeAudioPdiTamano" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
 			</div>
@@ -390,7 +397,7 @@
 				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 			</div>
 			
-			<div class="alert alert-warning fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
+			<div class="alert alert-danger fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
 			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
 			</div>
@@ -491,11 +498,15 @@ function validarAtraccionRepetida() {
 		"id": document.formNuevo.idCiudad.value,
 	}
 	
-	var json = {
+	var a = {
 		"ciudad": ciudad,
-		"nombre": document.formNuevo.nombre.value,
 		"latitud": document.formNuevo.latitud.value,
 		"longitud": document.formNuevo.longitud.value
+	}
+	
+	var json = {
+		"atraccion": a,
+		"nombre": document.formNuevo.nombre.value
 	};
 	
 	$.ajax({
@@ -508,6 +519,7 @@ function validarAtraccionRepetida() {
 		success: function (data) {
 			if (data.existe == false) {
 				document.formNuevo.recorrible.value = $("input[name='recorrible']:checked").val();
+				document.formNuevo.idioma.value = $("input[name='idioma']:checked").val();
 				if (far_away) {
 				    bootbox.confirm({
 			    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
@@ -785,11 +797,11 @@ $(document).ready(function() {
 </script>
 
 <c:set var="latitud_ciudad">
-	${atraccion.ciudad.latitud}
+	${atraccion.atraccion.ciudad.latitud}
 </c:set>
 
 <c:set var="longitud_ciudad">
-	${atraccion.ciudad.longitud}
+	${atraccion.atraccion.ciudad.longitud}
 </c:set>
 
 <c:set var="id">
@@ -890,7 +902,7 @@ function checkIfIsOutOfRange(coordinates) {
 
 var table = $('#tablita').DataTable( {
 	dom: 'frtip',
-	ajax: "puntoAtraccionNuevoJson/${id}",
+	ajax: "puntoAtraccionNuevoJson/${id}/EN",
 	columns: [
 		{	data:"orden",
 			render: function (data,type,row) {

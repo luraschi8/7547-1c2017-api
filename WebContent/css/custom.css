@@ -1,6 +1,14 @@
 @CHARSET "ISO-8859-1";
 
- html {
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+}
+
+head {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -17,10 +25,6 @@ body {
 
 #archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano, #archivoAudioguiaPdi {
     display: none;
-}
-
-.page-header {
-	 margin-left: 5rem;
 }
 
 .view-city-page-header {
@@ -517,4 +521,68 @@ body {
 
 .atraction-alert-point-of-interest-needed {
 	width: 70rem;
+}
+
+
+
+
+.nav-menu ul {
+	margin: 0;
+	padding: 0;
+}
+
+.clearfix: after {
+	content: "";
+    display: table;
+}
+
+.nav-wrapper {
+	width:103.3%;
+   	background: #c0c0c0;
+   	margin-bottom: 2rem;
+}
+ 
+.nav-menu {
+   	position: relative;
+   	display: block;
+   	margin-left: 5rem;
+}
+ 
+.nav-menu li {
+   	display: block;
+   	list-style-type: none;
+}
+
+.sub-menu li {
+   	margin-left: 2px;
+}
+ 
+.sub-menu {
+	min-width: 70px;
+   	position: absolute;
+   	display: none;
+   	background: #c0c0c0;
+}
+
+.nav-menu ul li:hover > ul {
+   	display: block;
+}
+
+.nav-menu > ul > li:after {
+	content: "\25BC"; /*código unicode de la flecha hacia abajo*/
+	display: inline;
+	position: relative;
+}
+
+.route_new_form, .route_main_information, .route_language, .route_name, .route_description, .route_box, .route_map_group {
+	width: 100%;
+}
+
+.route_left_block, .route_right_block {
+	width: 48%;
+}
+
+.view_or_edit_route_map {
+	width: 100%;
+	height: 25rem;
 }

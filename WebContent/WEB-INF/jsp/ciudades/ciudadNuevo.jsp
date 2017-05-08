@@ -50,32 +50,32 @@
 					</div>
 					
 					<div class="alert-message">
-						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeImagenIncorrectaError" style="display: none;">
+						<div class="alert alert-danger fade in new-city-alert-message" id="mensajeImagenIncorrectaError" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
 						</div>
 						
-						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeNombreRepetido" style="display: none;">
+						<div class="alert alert-danger fade in new-city-alert-message" id="mensajeNombreRepetido" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> La ciudad seleccionada ya se encuentra registrada, seleccione otra.
 						</div>
 						
-						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeNombreVacio" style="display: none;">
+						<div class="alert alert-danger fade in new-city-alert-message" id="mensajeNombreVacio" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> No se ha seleccionado ninguna ciudad.
 						</div>
 						
-						<div class="alert alert-warning fade in new-city-alert-message" id="mensajePaisVacio" style="display: none;">
+						<div class="alert alert-danger fade in new-city-alert-message" id="mensajePaisVacio" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> No se ha seleccionado ningún país.
 						</div>
 						
-						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeUbicacionVacia" style="display: none">
+						<div class="alert alert-danger fade in new-city-alert-message" id="mensajeUbicacionVacia" style="display: none">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
 						</div>
 				
-						<div class="alert alert-warning fade in new-city-alert-message" id="mensajeNombreIncorrecto" style="display: none;">
+						<div class="alert alert-danger fade in new-city-alert-message" id="mensajeNombreIncorrecto" style="display: none;">
  						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
  						 	<strong>¡Error!</strong> La ciudad seleccionada es incorecta.
  						</div>

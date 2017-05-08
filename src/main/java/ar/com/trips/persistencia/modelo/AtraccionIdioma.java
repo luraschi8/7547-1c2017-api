@@ -50,7 +50,7 @@ public class AtraccionIdioma extends Modelo{
 	@JsonBackReference(value="audio")
 	private byte[] audio;
 	
-	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)
+	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinColumn(name="idAtraccion")
 	@JsonBackReference(value="atraccion")
 	private Atraccion atraccion;

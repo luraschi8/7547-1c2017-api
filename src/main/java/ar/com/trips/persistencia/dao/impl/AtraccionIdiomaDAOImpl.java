@@ -7,14 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IAtraccionIdiomaDAO;
 import ar.com.trips.persistencia.modelo.AtraccionIdioma;
-import ar.com.trips.persistencia.modelo.Ciudad;
 
 public class AtraccionIdiomaDAOImpl extends DAOImpl implements IAtraccionIdiomaDAO {
 
 	@Override
-	public List listarPorCiudad(int idCiudad) {
+	public List listarPorCiudad(int idCiudad,String idioma) {
 		Session session = sessionFactory.openSession();
-		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.ciudad.id = " + idCiudad + " AND a.borrado = 0";
+		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.atraccion.ciudad.id = " + idCiudad 
+				+ " AND a.idioma = '" + idioma + "' AND a.borrado = 0";
 		@SuppressWarnings("unchecked")
 		List<AtraccionIdioma> lista = session.createQuery(query).list();
 		session.close();
@@ -36,8 +36,8 @@ public class AtraccionIdiomaDAOImpl extends DAOImpl implements IAtraccionIdiomaD
 	public boolean atraccionExistente(AtraccionIdioma atraccionIdioma) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.nombre = '" + atraccionIdioma.getNombre() + "'"
-						+ " AND a.ciudad.id = '" + atraccionIdioma.getAtraccion().getCiudad().getId() + "' AND a.borrado = 0"
-						+ " AND a.id != '" + atraccionIdioma.getId() + "'";
+						+ " AND a.atraccion.ciudad.id = '" + atraccionIdioma.getAtraccion().getCiudad().getId() + "' AND a.borrado = 0"
+						+ " AND a.idioma = '" + atraccionIdioma.getIdioma() + "' AND a.id != '" + atraccionIdioma.getId() + "'";
 		@SuppressWarnings("unchecked")
 		List<AtraccionIdioma> lista = session.createQuery(query).list();
 		session.close();
@@ -47,6 +47,21 @@ public class AtraccionIdiomaDAOImpl extends DAOImpl implements IAtraccionIdiomaD
 	@Override
 	public AtraccionIdioma get(Long id) {
 		return this.get(AtraccionIdioma.class, id);
+	}
+
+	@Override
+	public AtraccionIdioma get(long idAtraccion, String idioma) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.atraccion.id = " + idAtraccion 
+				+ " AND a.idioma = '" + idioma + "' AND a.borrado = 0";
+		@SuppressWarnings("unchecked")
+		List<AtraccionIdioma> lista = session.createQuery(query).list();
+		session.close();
+		if (lista.size() == 0) {
+			return null;
+		} else {
+			return lista.get(0);
+		}
 	}
 	
 }

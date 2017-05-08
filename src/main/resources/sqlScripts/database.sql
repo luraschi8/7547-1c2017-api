@@ -80,7 +80,7 @@ create table PuntoIdioma (
 
 create table Resenia (
 	id bigint(10) primary key not null auto_increment,
-    idUsuario bigint(10) not null,
+    idUsuario bigint(10),
     foreign key (idUsuario) references Usuario (id),
 	nombreUsuario varchar(50), /* Cuando esté la BDD de Usuario, se podría sacar del idUsuario */
 	fecha varchar(10), /* DD-MM-AAAA */
@@ -90,4 +90,14 @@ create table Resenia (
     borrado tinyint default 0 not null,
     idAtraccion bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id)
+);
+
+create table Recorrido (
+	id bigint(10) primary key not null auto_increment,
+    nombre varchar(50),
+    descripcion varchar(250),
+    borrado tinyint default 0 not null,
+    idioma varchar(2),
+    idCiudad bigint(10) not null,
+    foreign key (idCiudad) references Ciudad (id)
 );

@@ -16,13 +16,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
+import ar.com.trips.persistencia.dao.IAtraccionIdiomaDAO;
 import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
 import ar.com.trips.persistencia.dao.IReseniaDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
+import ar.com.trips.util.enums.Idioma;
 
 @Controller
 public class AtraccionControlador {
@@ -31,6 +34,9 @@ public class AtraccionControlador {
 	
 	@Autowired
 	private IAtraccionDAO atraccionDao;
+	
+	@Autowired
+	private IAtraccionIdiomaDAO atraccionIdiomaDao;
 	
 	@Autowired
 	private IPuntoDeInteresDAO puntoDao;
@@ -58,13 +64,15 @@ public class AtraccionControlador {
 		ciudad.setLatitud(latitudCiudad);
 		ciudad.setLongitud(longitudCiudad);
 		atraccion.setCiudad(ciudad);
-		model.addObject("atraccion", atraccion);
+		AtraccionIdioma a = new AtraccionIdioma();
+		a.setAtraccion(atraccion);
+		model.addObject("atraccion", a);
 		model.addObject("puntoDeInteres",new PuntoDeInteres());
 		return model;
 	}
 	
 	@RequestMapping("atraccionNuevoValidar")
-	public String nuevo(@ModelAttribute("atraccion") Atraccion atraccion, @RequestParam("idCiudad") int idCiudad,
+	public String nuevo(@ModelAttribute("atraccion") AtraccionIdioma atraccion, @RequestParam("idCiudad") int idCiudad,
 							@RequestParam("archivoPlano") MultipartFile plano,
 							@RequestParam(name="archivoAudioguia") MultipartFile audio,
 							@RequestParam(name="archivoGaleria0",required = false) MultipartFile galeria1,
@@ -73,41 +81,45 @@ public class AtraccionControlador {
 							@RequestParam(name="archivoGaleria3",required = false) MultipartFile galeria4,
 							@RequestParam(name="archivoGaleria4",required = false) MultipartFile galeria5,
 							@RequestParam(name="unVideo",required = false) MultipartFile video,
-							@RequestParam("recorrible") int recorrible) {
+							@RequestParam("recorrible") int recorrible,
+							@RequestParam("idioma") String idioma) {
+		Atraccion a = new Atraccion();
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
-		atraccion.setCiudad(ciudad);
-		guardarPlano(atraccion,plano);
+		a.setCiudad(ciudad);
+		guardarPlano(a,plano);
 		try {
-			atraccion.setVideo(video.getBytes());
+			a.setVideo(video.getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		guardarAudio(atraccion,audio);
 		atraccion.setBorrado(0);
-		atraccion.setRecorrible(recorrible);
-		atraccionDao.guardar(atraccion);
-		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
-		guardarPuntosDeInteres(atraccion);
+		atraccion.setIdioma(Idioma.valueOf(idioma));
+		atraccion.setAtraccion(a);
+		a.addAtraccionIdioma(atraccion);
+		atraccionDao.guardar(a);
+		guardarMultimediaMultiple(a,galeria1,galeria2,galeria3,galeria4,galeria5);
+		guardarPuntosDeInteres(a,idioma);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
 
-	private void guardarPuntosDeInteres(Atraccion atraccion) {
+	private void guardarPuntosDeInteres(Atraccion atraccion,String idioma) {
 		if (atraccion.getRecorrible() == 1) {
-			puntoDao.guardarPuntosConAtraccionNula(atraccion);
+			puntoDao.guardarPuntosConAtraccionNula(atraccion,idioma);
 		} else {
 			puntoDao.borrarPuntosDeAtraccion(atraccion);
 		}
 	}
 
-	private void guardarAudio(Atraccion atraccion, MultipartFile audio) {
+	private void guardarAudio(AtraccionIdioma atraccion, MultipartFile audio) {
 		try {
 			byte[] bytes = audio.getBytes();
 			if (bytes.length != 0) {
-				atraccion.setAudioEN(bytes);
+				atraccion.setAudio(bytes);
 			}
 		} catch (Exception e) {
-			atraccion.setAudioEN(null);
+			atraccion.setAudio(null);
 			e.printStackTrace();
 		}
 	}
@@ -125,7 +137,7 @@ public class AtraccionControlador {
 	}
 
 	private void guardarMultimediaMultiple(Atraccion atraccion, MultipartFile galeria1, MultipartFile galeria2, MultipartFile galeria3,
-			MultipartFile galeria4, MultipartFile galeria5) {
+											MultipartFile galeria4, MultipartFile galeria5) {
 		guardarMultimediaSingle(atraccion, galeria1);
 		guardarMultimediaSingle(atraccion, galeria2);
 		guardarMultimediaSingle(atraccion, galeria3);
@@ -167,7 +179,7 @@ public class AtraccionControlador {
 	}
 	
 	@RequestMapping("atraccionModificar")
-	public ModelAndView modificar(@ModelAttribute("atraccion") Atraccion atraccionId,
+	public ModelAndView modificar(@ModelAttribute("atraccion") AtraccionIdioma atraccion,
 									@RequestParam("nombre") String nombreModificado,
 									@RequestParam("descripcion") String descripcionModificada,
 									@RequestParam("horario") String horarioModificado,
@@ -186,34 +198,36 @@ public class AtraccionControlador {
 									@RequestParam(name="videoCambiado") int videoCambiado,
 									@RequestParam("planoCambiado") int planoCambiado,
 									@RequestParam("audioCambiado") int audioCambiado,
-									@RequestParam("archivoPlano") MultipartFile plano) throws IOException {
-		Atraccion atraccion = atraccionDao.get(atraccionId.getId());
+									@RequestParam("archivoPlano") MultipartFile plano,
+									@RequestParam("idioma") String idiomaModificado) throws IOException {
+		atraccion = atraccionIdiomaDao.get(atraccion.getId());
 		
 		if (planoCambiado == 1) {
-			guardarPlano(atraccion,plano);
+			guardarPlano(atraccion.getAtraccion(),plano);
 		}
 		if (videoCambiado == 1) {
-			atraccion.setVideo(null);
+			atraccion.getAtraccion().setVideo(null);
 		}
 		if (audioCambiado == 1) {
-			atraccion.setAudioEN(null);
+			atraccion.setAudio(null);
 		}
 		eliminarImagenes(imagenesCambiadas);
 		atraccion.setNombre(nombreModificado);
 		atraccion.setDescripcion(descripcionModificada);
 		atraccion.setHorario(horarioModificado);
 		atraccion.setPrecio(precioModificado);
-		atraccion.setLatitud(latitudModificada);
-		atraccion.setLongitud(longitudModificada);
-		atraccion.setRecorrible(recorribleModificado);
+		atraccion.getAtraccion().setLatitud(latitudModificada);
+		atraccion.getAtraccion().setLongitud(longitudModificada);
+		atraccion.getAtraccion().setRecorrible(recorribleModificado);
+		atraccion.setIdioma(Idioma.valueOf(idiomaModificado));
 		if (video != null) {
-			atraccion.setVideo(video.getBytes());
+			atraccion.getAtraccion().setVideo(video.getBytes());
 		}
 		guardarAudio(atraccion,audio);
-		guardarMultimediaMultiple(atraccion,galeria1,galeria2,galeria3,galeria4,galeria5);
+		guardarMultimediaMultiple(atraccion.getAtraccion(),galeria1,galeria2,galeria3,galeria4,galeria5);
 		atraccionDao.modificar(atraccion);
-		guardarPuntosDeInteres(atraccion);
-		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getCiudad().getId());
+		guardarPuntosDeInteres(atraccion.getAtraccion(),idiomaModificado);
+		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getAtraccion().getCiudad().getId());
 	}
 
 	private void eliminarImagenes(String imagenesCambiadas) {

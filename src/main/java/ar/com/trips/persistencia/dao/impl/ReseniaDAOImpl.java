@@ -2,6 +2,7 @@ package ar.com.trips.persistencia.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,5 +59,19 @@ public class ReseniaDAOImpl extends DAOImpl implements IReseniaDAO {
 		s.update(resenia);
 		tx.commit();
 		s.close();
+	}
+
+	@Override
+	public List<Resenia> listarPorAtraccionPaginada(int idAtraccion, int pagina) {
+		Session session = sessionFactory.openSession();
+		String queryString = "FROM " + Resenia.class.getName() + " a WHERE a.atraccion.id = " + idAtraccion + " AND a.borrado = 0 "
+				+ " ORDER BY a.fecha,a.hora DESC";
+		Query query = session.createQuery(queryString);
+		query.setFirstResult(pagina * 10);
+		query.setMaxResults(10);
+		@SuppressWarnings("unchecked")
+		List<Resenia> lista = query.list();
+		session.close();
+		return lista;
 	}
 }

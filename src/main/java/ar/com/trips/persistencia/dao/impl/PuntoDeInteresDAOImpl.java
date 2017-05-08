@@ -41,11 +41,6 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 		return this.get(PuntoDeInteres.class, id);
 	}
 	
-	@Override
-	public PuntoDeInteres get(int id) {
-		return this.get(PuntoDeInteres.class, id);
-	}
-
 	@Transactional
 	public void borrar(long id,Integer idAtraccion) {
 		Session s = sessionFactory.openSession();
@@ -59,7 +54,7 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 	}
 
 	@Override
-	public void guardarPuntosConAtraccionNula(Atraccion atraccion) {
+	public void guardarPuntosConAtraccionNula(Atraccion atraccion,String idioma) {
 		List<PuntoDeInteres> lista = listarPorAtraccionNuevo((int)atraccion.getId());
 		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();

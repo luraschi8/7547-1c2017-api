@@ -31,19 +31,25 @@
 				</value>
 				<value>ar.com.trips.persistencia.modelo.Atraccion
 				</value>
+				<value>ar.com.trips.persistencia.modelo.AtraccionIdioma
+				</value>
 				<value>ar.com.trips.persistencia.modelo.Usuario
 				</value>
 				<value>ar.com.trips.persistencia.modelo.ImagenAtraccion
 				</value>
 				<value>ar.com.trips.persistencia.modelo.PuntoDeInteres
 				</value>
+				<value>ar.com.trips.persistencia.modelo.PuntoIdioma
+				</value>
 				<value>ar.com.trips.persistencia.modelo.Resenia
+				</value>
+				<value>ar.com.trips.persistencia.modelo.Recorrido
 				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.dialect">${database.dialect}</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<prop key="hibernate.id.new_generator_mappings">false</prop>
 			</props>
@@ -61,14 +67,20 @@
 		class="ar.com.trips.persistencia.dao.impl.CiudadDAOImpl" />
 	<bean id="atraccionDAO"
 		class="ar.com.trips.persistencia.dao.impl.AtraccionDAOImpl" />
+	<bean id="atraccionIdiomaDAO"
+		class="ar.com.trips.persistencia.dao.impl.AtraccionIdiomaDAOImpl" />
 	<bean id="usuarioDAO"
 		class="ar.com.trips.persistencia.dao.impl.UsuarioDAOImpl" />
 	<bean id="imagenAtraccionDAO"
 		class="ar.com.trips.persistencia.dao.impl.ImagenAtraccionDAOImpl" />
 	<bean id="puntoDeInteresDAO"
 		class="ar.com.trips.persistencia.dao.impl.PuntoDeInteresDAOImpl" />
+	<bean id="puntoDeInteresIdiomaDAO"
+		class="ar.com.trips.persistencia.dao.impl.PuntoDeInteresIdiomaDAOImpl" />
 	<bean id="ReseniaDAO"
 		class="ar.com.trips.persistencia.dao.impl.ReseniaDAOImpl" />
+	<bean id="RecorridoDAO"
+		class="ar.com.trips.persistencia.dao.impl.RecorridoDAOImpl" />
 	
 	
 	<!-- Validaciones -->
@@ -80,6 +92,9 @@
 	</bean>
 	<bean name="puntoValidacion"
 		class="ar.com.trips.presentacion.validacion.PuntoDeInteresValidacion">
+	</bean>
+	<bean name="recorridoValidacion"
+		class="ar.com.trips.presentacion.validacion.RecorridoValidacion">
 	</bean>
 	
 	<!-- Imagen -->

@@ -52,7 +52,7 @@ public class Atraccion extends Modelo{
 	
 	@Column(name="recorrible")
 	private int recorrible;
-		
+	
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idCiudad")
 	@JsonBackReference(value="ciudad")
@@ -69,6 +69,10 @@ public class Atraccion extends Modelo{
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaResenias")
 	private List<Resenia> listaResenias = new ArrayList<>();
+	
+	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@JsonBackReference(value="listaAtraccionIdioma")
+	private List<AtraccionIdioma> listaAtraccionIdioma = new ArrayList<>();
 
 	public Atraccion() {
 		
@@ -160,6 +164,18 @@ public class Atraccion extends Modelo{
 
 	public void setListaResenias(List<Resenia> listaResenias) {
 		this.listaResenias = listaResenias;
+	}
+
+	public List<AtraccionIdioma> getListaAtraccionIdioma() {
+		return listaAtraccionIdioma;
+	}
+
+	public void setListaAtraccionIdioma(List<AtraccionIdioma> listaAtraccionIdioma) {
+		this.listaAtraccionIdioma = listaAtraccionIdioma;
+	}
+
+	public void addAtraccionIdioma(AtraccionIdioma atraccion) {
+		this.getListaAtraccionIdioma().add(atraccion);
 	}
 
 }

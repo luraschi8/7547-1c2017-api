@@ -1,9 +1,10 @@
 -- Database: ddvfs68eo6l9vk
 
-drop table Usuario;
 drop table Permiso;
 drop table ImagenAtraccion;
 drop table PuntoDeInteres;
+drop table Resenia;
+drop table Usuario;
 drop table Atraccion;
 drop table Ciudad;
 
@@ -44,6 +45,7 @@ create table Atraccion (
     audioES bytea,
     video bytea,
     recorrible int default 0,
+    idioma varchar(2),
     foreign key (idCiudad) references Ciudad (id)
 );
 
@@ -64,18 +66,30 @@ create table PuntoDeInteres (
     audioEN bytea,
     audioES bytea,
     idAtraccion bigint,
+    idioma varchar(2),
     foreign key (idAtraccion) references Atraccion (id)
 );
 
 create table Resenia (
 	id serial primary key not null,
-    idUsuario bigint not null,
+    idUsuario bigint,
     foreign key (idUsuario) references Usuario (id),
 	nombreUsuario varchar(50), /* Cuando esté la BDD de Usuario, se podría sacar del idUsuario */
 	fecha varchar(10), /* DD-MM-AAAA */
 	hora varchar(5), /* HH:MM */
     comentario varchar(250),
     borrado int default 0 not null,
-    calificacion double,
+    calificacion real,
+    idAtraccion bigint,
     foreign key (idAtraccion) references Atraccion (id)
+);
+
+create table Recorrido (
+	id serial primary key not null,
+    nombre varchar(50),
+    descripcion varchar(250),
+    borrado int default 0 not null,
+    idioma varchar(2),
+    idCiudad bigint not null,
+    foreign key (idCiudad) references Ciudad (id)
 );

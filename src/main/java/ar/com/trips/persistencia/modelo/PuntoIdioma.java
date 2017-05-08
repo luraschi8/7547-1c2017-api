@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import ar.com.trips.util.enums.Idioma;
 
 @Entity
-@Table(name="PuntoDeInteres")
+@Table(name="PuntoIdioma")
 public class PuntoIdioma extends Modelo {
 
 	@Id
@@ -44,7 +44,7 @@ public class PuntoIdioma extends Modelo {
 	@JsonBackReference(value="audio")
 	private byte[] audio;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="idPunto")
 	@JsonBackReference(value="puntoDeInteres")
 	private PuntoDeInteres puntoDeInteres;

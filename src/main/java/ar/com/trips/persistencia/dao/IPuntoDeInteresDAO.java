@@ -11,13 +11,11 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	
 	PuntoDeInteres get(Long id);
 	
-	PuntoDeInteres get(int id);
-
 	void borrar(long id, Integer idAtraccion);
 
 	List<PuntoDeInteres> listarPorAtraccionNuevo(Integer idAtraccion);
 
-	void guardarPuntosConAtraccionNula(Atraccion atraccion);
+	void guardarPuntosConAtraccionNula(Atraccion atraccion, String idioma);
 
 	void borrarPuntosSinAtraccion();
 
