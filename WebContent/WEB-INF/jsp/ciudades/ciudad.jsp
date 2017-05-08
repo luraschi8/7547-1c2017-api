@@ -185,6 +185,9 @@ var table = $('#tablita').DataTable( {
         {defaultContent:'<button class="btn btn-warning" id="ver">${ver}</button>'},
         {defaultContent:'<button class="btn btn-info" id="marcar">${marcar}</button>'}
         ],
+    "columnDefs": [
+   		{className: "dt-body-center", "targets": [2, 3, 4]}
+    ],
     select:true,
     paging:false,
     pageLength:50,
@@ -287,6 +290,9 @@ var route_table = $('#route_table').DataTable( {
         {defaultContent:'<button class="btn btn-danger" id="borrarRecorrido">${borrar}</button>'},
         {defaultContent:'<button class="btn btn-warning" id="verRecorrido">${ver}</button>'},
         ],
+    "columnDefs": [
+   		{className: "dt-body-center", "targets": [1, 2, 3]}
+    ],
     select:true,
     paging:false,
     pageLength:30,

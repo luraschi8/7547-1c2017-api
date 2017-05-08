@@ -209,38 +209,38 @@
 							</button>
 						</div>
 					</div>
-					
-					<div class="alert alert-danger fade in atraction-alert atraction-gallery-alert" id="mensajeHayVideo" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente. Sólo se puede seleccionar uno.
-					</div>
-					
-					<div class="alert alert-danger fade in atraction-alert atraction-gallery-alert" id="mensajeCincoArchivos" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar más.
-					</div>
-					
-					<div class="alert alert-danger fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoImagen" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> La imagen no puede pesar más de 50KB.
-					</div>
-					
-					<div class="alert alert-danger fade in atraction-alert atraction-gallery-alert" id="mensajeTamanoVideo" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> El video no puede pesar más de 10MB.
-					</div>
-					
-					<div class="alert alert-danger fade in atraction-alert atraction-gallery-alert" id="mensajeUnaImagen" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
-					</div>
-					
-					<div class="alert alert-danger fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none;">
-					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-					 	<strong>&iexclError!</strong> El archivo no es una imagen/video. Por favor, introduzca otra.
-					</div>
-					
 				</div>
+				
+				<div class="alert alert-danger fade in atraction-alert" id="mensajeHayVideo" style="display: none; float:left">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> Ya se ha seleccionado un video anteriormente. Sólo se puede seleccionar uno.
+				</div>
+				
+				<div class="alert alert-danger fade in atraction-alert" id="mensajeCincoArchivos" style="display: none; float:left">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> Ya se han seleccionado 5 archivos, no se pueden agregar más.
+				</div>
+				
+				<div class="alert alert-danger fade in atraction-alert" id="mensajeTamanoImagen" style="display: none; float:left">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> La imagen no puede pesar más de 50KB.
+				</div>
+				
+				<div class="alert alert-danger fade in atraction-alert" id="mensajeTamanoVideo" style="display: none; float:left">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> El video no puede pesar más de 10MB.
+				</div>
+				
+				<div class="alert alert-danger fade in atraction-alert" id="mensajeUnaImagen" style="display: none; float:left">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> Tiene que estar presente una imagen por lo menos!
+				</div>
+				
+				<div class="alert alert-danger fade in atraction-alert" id="mensajeImagenIncorrectaError" style="display: none; float:left">
+				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+				 	<strong>&iexclError!</strong> El archivo no es una imagen/video. Por favor, introduzca otra.
+				</div>
+				
 				
 				<!-- Audioguía -->
 				<div style="clear: both">
@@ -413,6 +413,9 @@ var comments_table = $('#tablaResenias').DataTable({
         {defaultContent:'<button class="btn btn-danger" id="borrarResenia">${borrarResenia}</button>'},
         {defaultContent:'<button class="btn btn-warning" id="editarResenia">${editarResenia}</button>'}
         ],
+    "columnDefs": [
+   		{className: "dt-body-center", "targets": [1, 2]}
+    ],
     select:true,
     paging:false,
     pageLength:10,
@@ -1350,6 +1353,9 @@ var table = $('#tablita').DataTable( {
 		{defaultContent:'<button class="btn btn-danger" id="borrar">Borrar</button>'},
 		{defaultContent:'<button class="btn btn-warning" id="ver">Ver</button>'}
 		],
+	"columnDefs": [
+    	{className: "dt-body-center", "targets": [0, 3, 4]}
+    ],
 	select:true,
 	paging:true,
 	pageLength:50

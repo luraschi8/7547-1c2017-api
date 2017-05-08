@@ -27,8 +27,8 @@
 				<thead>
 					<tr>
 						<th>Nombre</th>
-						<th>Pa&iacutes</th>
-						<th>Cantidad de atracciones</th>
+						<th>País</th>
+						<th style="text-align: center">Cantidad de atracciones</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -72,6 +72,9 @@ $(document).ready(function() {
 	        {defaultContent:'<button class="btn btn-danger" id="borrar">${borrar}</button>'},
 	        {defaultContent:'<button class="btn btn-warning" id="ver">${ver}</button>'}
 	        ],
+        "columnDefs": [
+     		{className: "dt-body-center", "targets": [2, 3, 4]}
+        ],
 	    select:true,
 	    paging:true,
 	    pageLength:50,
