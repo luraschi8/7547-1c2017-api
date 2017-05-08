@@ -437,26 +437,16 @@ body {
 
 #atraction-point-of-interest-popup-form {
 	display: none;
-	position: absolute;
+	position: fixed;
 	z-index: 1;
 	background-color: #fefefe;
 	border: 1px solid #888;
-    top: 0%;
-    margin-top: 0px;
+    top: 50%;
+    left: 50%;
     margin-left: auto;
     margin-right: auto;
-    left: 0;
-    right: 0;
     overflow: auto;
-}
-
-#atraction-point-of-interest-popup-form .atraction-new-point-of-interest {
-	position: relative;
-	width: 75%;
-	margin-left: auto;
-	margin-right: auto;
-	left: 0;
-	right: 0;
+  	transform: translate(-50%, -50%);
 }
 
 .btn-final-pdi-form {
@@ -484,18 +474,15 @@ body {
 
 #atraction-comment-popup {
 	display: none;
-	position: absolute;
+	position: fixed;
 	z-index: 1;
 	background-color: #fefefe;
 	border: 1px solid #888;
     width: 44%;
     height: 300px;
-    top: 0%;
-    margin-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
+    top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
     overflow: auto;
 }
 
