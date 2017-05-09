@@ -22,12 +22,12 @@
 			<div class="input" style="float:left">
 				<div class="name-group">
 					<div>
-						<form:label class="name-label" path="nombre">Nombre</form:label>
+						<form:label class="name-label" path="nombre">Nombre<font color="red"> *</font></form:label>
 					    <form:input id="city" maxlength="50" class="name-box" type="text" path="nombre" required="required" placeholder="Ingrese el nombre de la ciudad"/>
 					</div>
 					
 					<div>
-						<form:label class="name-label" path="pais">País</form:label>
+						<form:label class="name-label" path="pais">País<font color="red"> *</font></form:label>
 						<form:input id="pais" maxlength="50" class="name-box" type="text" name="pais" path="pais" required="required" placeholder="Ingrese el país al que pertenece"/>
 					</div>
 					
@@ -36,20 +36,22 @@
 				</div>
 				
 				<div class="image-group" style="width:100%; height:100%; overflow: auto;">
+					<div class="button-message-group" style="float:left">
+						<label class="name-label">Imagen<font color="red"> *</font></label>
+					</div>
+					
 					<div class="image-box" style="float:right" id="zonaArrastrable">
 						<img id="imagen" style="width:100%; height:100%">
+						<button type="button" class="btn btn-default btn-sm get_file" id="get_file">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+				        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
 					</div>
-					
-					<div class="button-message-group" style="float:left">
-						<div class="image-route" style="float:up">
-							<input type="button" id="get_file" class="btn btn-default btn-get-file" value="Agregar imagen">
-					        
-					        <input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
-						</div>
-						<div class="image-label" style="float:down">Se recomienda usar una imagen con resolución 800x300 u otra de similar escala</div>
-					</div>
-					
+		
 					<div class="alert-message">
+						<div style="margin-bottom: 2rem;">
+							<font style="margin-left: 18rem; font-weight: bold;" size="2">Se recomienda emplear una imagen de resolución 800x300 o de escala similar</font>
+						</div>
 						<div class="alert alert-danger fade in new-city-alert-message" id="mensajeImagenIncorrectaError" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>¡Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
@@ -79,6 +81,8 @@
  						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
  						 	<strong>¡Error!</strong> La ciudad seleccionada es incorecta.
  						</div>
+
+ 						<font style="margin-left: 18rem;" color="red" size="1">Los campos indicados con * son obligatorios</font>
 					</div>
 				</div>
 			</div>

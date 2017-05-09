@@ -47,7 +47,7 @@
 					
 					
 					<div>
-						<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label>
+						<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label><font color="red"> *</font>
 					</div>
 					<div>
 						<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="1" id="nombre" path="nombre" name="nombre" class="atraction-box atraction-name-box"  placeholder="Ingrese el nombre de la atracción" required></textarea>
@@ -59,7 +59,7 @@
 					</div>
 					
 					<div>
-						<form:label class="atraction-label atraction-description-label" path="descripcion">Descripción</form:label>
+						<form:label class="atraction-label atraction-description-label" path="descripcion">Descripción</form:label><font color="red"> *</font>
 					</div>
 					<div>
 						<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_ATRACCION)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="atraction-box atraction-descripcion-box"  placeholder="Ingrese la descripcion de la atracción" required></textarea>
@@ -98,7 +98,7 @@
 					<!-- Plano -->
 					<div id="blueprints" style="display: none;style="float:left"">
 						<div>
-							<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
+							<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label><font color="red"> *</font>
 						</div>
 						<div class="atraction-blueprints-box" style="float:left">
 							<img id="plano" style="width:100%; height:100%">
@@ -124,7 +124,7 @@
 					<!-- Galería -->
 					<div style="clear: left">
 						<div>
-							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
+							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label><font color="red"> *</font>
 						</div>
 						<div id ="container" class="atraction-gallery atraction-gallery-box">
 							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
@@ -217,6 +217,7 @@
 			<div class="atraction-right-block">
 				<!-- Mapa -->
 				<div style="float: right">
+					<label>Ubicación</label><font color="red"> *</font>
 					<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
 					<div id="atraction-map"></div> 
 					
@@ -255,6 +256,7 @@
 							<tbody id="sortable"></tbody>
 						</table>
 					</div>
+					<font color="red" size="1">&nbsp;&nbsp;&nbsp;&nbsp;* Debe añadirse al menos un punto de interés</font>
 				</div>
 				<div class="alert alert-danger fade in atraction-alert-point-of-interest-needed" id="mensajePuntoDeInteresNecesario" style="display: none; clear: right; float: right; margin-right: 5rem;">
 				 	<a class="close" data-dismiss="alert" aria-label="close"></a>
@@ -266,7 +268,9 @@
 		<div class="alert alert-danger fade in atraction-alert-already-exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 		 	<strong>&iexclError!</strong> La atracción seleccionada ya se encuentra registrada. Seleccione otra.
-		</div>	
+		</div>
+		<br>
+		<font style="margin-left: 5rem;" color="red" size="1">Los campos indicados con * son obligatorios</font>
 	</form:form>
 </div>
 
@@ -283,7 +287,7 @@
 			
 			<div style="width: 100%; height: 11%">
 				<div style="display: inline-block;">
-					<label class="atraction-label" path="nombre">Nombre</label>
+					<label class="atraction-label" path="nombre">Nombre</label><font color="red"> *</font>
 				</div>
 				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditNameButton" onclick="editField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true);">
 					<span class="glyphicon glyphicon-pencil"></span>
@@ -308,7 +312,7 @@
 			
 			<div style="width: 100%; height: 15%;">
 				<div style="display: inline-block;">
-					<label class="atraction-label" path="descripcion">Descripción</label>
+					<label class="atraction-label" path="descripcion">Descripción</label><font color="red"> *</font>
 				</div>
 				
 				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditDescriptionButton" onclick="editField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeDescripcionVaciaPuntoDeInteresError', true);">
@@ -335,7 +339,7 @@
 			
 			<div style="width: 100%; height: 33%;">
 				<div style="width: 100%; height: 18%">
-					<label class="atraction-label" path="imagen">Imagen</label>
+					<label class="atraction-label" path="imagen">Imagen</label><font color="red"> *</font>
 				</div>
 				<div class="atraction-point-of-interest-image-box">
 					<img id="puntoImagen" style="width:100%; height:100%;">
@@ -395,15 +399,17 @@
 			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
 			</div>
 			
+			<div class="alert alert-danger fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
+			</div>
+			<br>
+			<font style="margin-left: 1%;" color="red" size="1">Los campos indicados con * son obligatorios</font>
+			
 			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
 				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
 				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
-			</div>
-			
-			<div class="alert alert-danger fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
-			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
 			</div>
 		</form:form>
 	</div>

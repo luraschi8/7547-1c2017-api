@@ -39,7 +39,7 @@
 						</div>
 						
 						<div class="route_name" style="margin-top: 1%">
-							<form:label class="route_name_label" path="nombre">Nombre</form:label>
+							<form:label class="route_name_label" path="nombre">Nombre<font color="red"> *</font></form:label>
 						</div>
 						<div>
 							<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_RECORRIDO)" rows="1" id="nombre" path="nombre" name="nombre" class="route_box" placeholder="Ingrese el nombre del recorrido" required></textarea>
@@ -51,7 +51,7 @@
 						</div>
 						
 						<div class="route_description" style="margin-top: 1%">
-							<form:label class="route_description_label" path="descripcion">Descripción</form:label>
+							<form:label class="route_description_label" path="descripcion">Descripción<font color="red"> *</font></form:label>
 						</div>
 						<div>
 							<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_RECORRIDO)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="route_box"  placeholder="Ingrese la descripcion del recorrido" required></textarea>
@@ -113,6 +113,7 @@
 								<tbody></tbody>
 							</table>
 						</div>
+						<font color="red" size="1">&nbsp;&nbsp;&nbsp;&nbsp;* Deben añadirse al menos dos atracciones</font>
 					</div>
 				</div>
 			</div>

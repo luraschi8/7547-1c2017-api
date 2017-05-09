@@ -284,6 +284,7 @@
 			<div class="atraction-right-block" style="float:right">
 				<!-- Mapa -->
 				<div class="view-atraction-map-group">
+					<label>Ubicación</label>
 					<div class="atraction-map-div">
 						<input id="atraction-map-input" class="atraction-map-controls" type="text" placeholder="Ingresar ubicación">
 						<div id="atraction-map"></div>
@@ -307,7 +308,7 @@
 					</div>	
 				</div>
 				
-				<div style="clear: left;">
+				<div style="clear: left; margin-bottom: 36rem;">
 					<div class="alert alert-danger fade in atraction-alert-no-location" id="mensajeUbicacionVacia" style="display: none">
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>&iexclError!</strong> No se ha seleccionado una ubicación para la atracción.
@@ -505,7 +506,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div style="width: 100%; height: 11%">
 				<div style="display: inline-block;">
-					<label class="atraction-label" path="nombre">Nombre</label>
+					<label class="atraction-label" path="nombre">Nombre</label><font color="red"> *</font>
 				</div>
 				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditNameButton" onclick="editField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true);">
 					<span class="glyphicon glyphicon-pencil"></span>
@@ -530,7 +531,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div style="width: 100%; height: 15%;">
 				<div style="display: inline-block;">
-					<label class="atraction-label" path="descripcion">Descripción</label>
+					<label class="atraction-label" path="descripcion">Descripción</label><font color="red"> *</font>
 				</div>
 				
 				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditDescriptionButton" onclick="editField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeDescripcionVaciaPuntoDeInteresError', true);">
@@ -557,7 +558,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div style="width: 100%; height: 33%;">
 				<div style="width: 100%; height: 18%">
-					<label class="atraction-label" path="imagen">Imagen</label>
+					<label class="atraction-label" path="imagen">Imagen</label><font color="red"> *</font>
 				</div>
 				<div class="atraction-point-of-interest-image-box">
 					<img id="puntoImagen" style="width:100%; height:100%;">
@@ -617,15 +618,16 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
 			</div>
 			
+			<div class="alert alert-danger fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
+			</div>
+			<font style="margin-left: 1%;" color="red" size="1">Los campos indicados con * son obligatorios</font>
+			
 			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
 				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
 				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
 				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
-			</div>
-			
-			<div class="alert alert-danger fade in" id="mensajeNombrePuntoDeInteresRepetido" style="display: none;">
-			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-			 	<strong>Error!</strong> El nombre del punto de interés ingresado ya se encuentra registrado. Por favor, ingrese otro.
 			</div>
 		</form:form>
 	</div>
