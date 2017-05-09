@@ -258,11 +258,11 @@
 						<div style="text-align:center; float:right;">
 							<button type="button" class="btn btn-default btn-sm btn-atraction-get-audio-file" id="atraction-get-audio-file">
 								<span class="glyphicon glyphicon-pencil"></span>
-							 </button>
+							</button>
 						
 							<button type="button" class="btn btn-default btn-sm btn-atraction-erase-audio-file" id="borrarAudio">
 								<span class="glyphicon glyphicon-erase"></span>
-							 </button>
+							</button>
 	
 							<input type="file" name="archivoAudioguia" id="archivoAudioguia"/>
 						</div>
@@ -277,11 +277,15 @@
 					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 					 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
 					</div>
-				</div>		
+				</div>
+				
+				<div style="clear: both; margin-top: 5rem;">
+					<input id="atraction_add_language_btn" class="btn btn-default btn-success" type="button" value="Agregar idioma"/>
+				</div>
 			</div>
 						
 			<!-- Bloque derecho (Mapa, Puntos de interés y Reseñas) -->
-			<div class="atraction-right-block" style="float:right">
+			<div class="atraction-right-block" style="float:right; margin-top: -1rem;">
 				<!-- Mapa -->
 				<div class="view-atraction-map-group">
 					<label>Ubicación</label>
@@ -595,13 +599,13 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 					
 					<!-- Botón agregar audioguía -->
 					<div style="float: right; width: 15%; height: 50%; text-align: right;">
-						<button type="button" class="btn btn-default btn-sm btn-atraction-get-pdi-audio-file" id="puntoGetAudio">
+						<button type="button" class="btn btn-default btn-sm" id="puntoGetAudio">
 							<span class="glyphicon glyphicon-pencil"></span>
-						 </button>
+						</button>
 					
-						<button type="button" class="btn btn-default btn-sm btn-atraction-erase-poi-audio-file" id="borrarAudioPdi">
+						<button type="button" class="btn btn-default btn-sm" id="borrarAudioPdi">
 							<span class="glyphicon glyphicon-erase"></span>
-						 </button>
+						</button>
 	
 						<input type="file" name="archivoAudioguiaPdi" id="archivoAudioguiaPdi"/>
 					</div>
@@ -660,13 +664,135 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	<input id="ordenOriginal" name="ordenOriginal" type="hidden" value="">
 </form:form>
 <div class="btn-final" style="text-align:center;">
-	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" /> 
-	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar" />
+	<input id="botonAtras" class="btn btn-default" type="button" value="Atrás"/> 
+	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Aceptar"/>
 </div>
 
+
+
+<div id="atraction_new_language_popup" style="display: none; width: 50%; height: 100%">
+	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
+		<form:form class="atraction-new-language" style="width: 100%; height: 100%" id="formAtraccionNuevoLenguaje" name="formAtraccionNuevoLenguaje" action="nuevoLenguajeAtraccion" method="post" commandName="atraccion" enctype="multipart/form-data">
+			<h2 style="width: 100%; height: 8%">Añadir lenguaje</h2>
+			
+			<div style="width: 100%; height: 20%">
+				<div style="display: inline-block;">
+					<label class="atraction-label" path="descripcion">Descripción</label><font color="red"> *</font>
+				</div>
+				
+				<div>
+					<textarea onkeydown="calculateMaxLength('#atraccionDescripcionNuevoLenguajeTextarea', MAX_DESCRIPCION_ATRACCION)" id="atraccionDescripcionNuevoLenguajeTextarea" path="descripcion" name="atraccionDescripcionNuevoLenguajeTextarea" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese la descripción de la atracción" required="required"/></textarea>
+				</div>
+			</div>
+			<div class="alert alert-danger fade in atraction_new_language_alert" id="mensajeDescripcionVaciaAtraccionNuevoLenguajeError" style="display: none; margin-top: 2%;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
+			</div>
+			
+			<div style="width: 100%; height: 20%">
+				<div style="display: inline-block;">
+					<label class="atraction-label" path="horario">Horario</label>
+				</div>
+				
+				<div>
+					<textarea onkeydown="calculateMaxLength('#atraccionHorarioNuevoLenguajeTextarea', MAX_HORARIO_ATRACCION)" id="atraccionHorarioNuevoLenguajeTextarea" path="horario" name="atraccionHorarioNuevoLenguajeTextarea" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese el horario de la atracción" required="required"/></textarea>
+				</div>
+			</div>
+			
+			<div style="width: 100%; height: 20%">
+				<div style="display: inline-block;">
+					<label class="atraction-label" path="precio">Precio</label>
+				</div>
+				
+				<div>
+					<textarea onkeydown="calculateMaxLength('#atraccionPrecioNuevoLenguajeTextarea', MAX_PRECIO_ATRACCION)" id="atraccionPrecioNuevoLenguajeTextarea" path="precio" name="atraccionPrecioNuevoLenguajeTextarea" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese el precio de la atracción" required="required"/></textarea>
+				</div>
+			</div>
+
+			<div style="width: 100%; height: 14%">
+				<div style="width: 100%; height: 40%">
+					<label class="atraction-label" path="audio">Audioguía</label>
+				</div>
+				<input type="hidden" id="audioCambiadoAtraccionNuevoLenguaje" name="audioCambiadoAtraccionNuevoLenguaje" value=0>
+				<div style="width: 100%; height: 60%">
+					<!-- Reproducir audioguía -->
+					<div style="float: left; width: 85%; height: 50%">
+						<audio id="audioAtraccionNuevoLenguaje" style="width: 100%;" controls>
+						    <source type="audio/mpeg">
+						</audio> 
+					</div>
+					
+					<!-- Botón agregar audioguía -->
+					<div style="float: right; width: 15%; height: 50%; text-align: right;">
+						<button type="button" class="btn btn-default btn-sm" id="getAudioAtraccionNuevoLenguaje">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+					
+						<button type="button" class="btn btn-default btn-sm" id="borrarAudioAtraccionNuevoLenguaje">
+							<span class="glyphicon glyphicon-erase"></span>
+						</button>
+	
+						<input type="file" name="archivoAudioguiaAtraccionNuevoLenguaje" id="archivoAudioguiaAtraccionNuevoLenguaje"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="alert alert-danger fade in atraction_new_language_alert" id="mensajeAudioAtraccionNuevoLenguajeIncorrectoError" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+			</div>
+			
+			<div class="alert alert-danger fade in atraction_new_language_alert" id="mensajeAudioAtraccionNuevoLenguajeTamano" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
+			</div>
+
+			<font style="margin-left: 1%;" color="red" size="1">Los campos indicados con * son obligatorios</font>
+			
+			<div class="btn_final_atraction_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%;">
+				<input id="botonCancelarAtraccionNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closeAtractionNewLanguagePopup();"/>
+				<input id="botonGuardarAtraccionNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+				<input id="botonGuardarEdicionAtraccionNuevoLenguaje" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+			</div>
+		</form:form>
+	</div>
+</div>
+
+
+
+
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
+
 <script>
-function validarAtraccionRepetida() {
+$('#atraction_add_language_btn').on('click', function(e) {
+	e.preventDefault();
+	showAtractionNewLanguagePopup();
+});
+
+function hideAllAtractionNewLanguageErrorMessages() {
+	document.getElementById('mensajeDescripcionVaciaAtraccionNuevoLenguajeError').style.display = 'none';
+	document.getElementById('mensajeAudioAtraccionNuevoLenguajeIncorrectoError').style.display = 'none';
+	document.getElementById('mensajeAudioAtraccionNuevoLenguajeTamano').style.display = 'none';
+}
+
+function showAtractionNewLanguagePopup() {
+	document.getElementById("atraction_new_language_popup").style.display = 'block';
+	document.getElementById('atraction_new_language_popup').focus();
+	document.getElementById('attractionForm').blur();
+	disableAtractionPage();
+}
+
+function closeAtractionNewLanguagePopup() {
+	document.getElementById('atraction_new_language_popup').style.display = 'none';
+	document.getElementById('atraccionDescripcionNuevoLenguajeTextarea').value = '';
+	document.getElementById('atraccionHorarioNuevoLenguajeTextarea').value = '';
+	document.getElementById('atraccionPrecioNuevoLenguajeTextarea').value = '';
+	document.getElementById('audioAtraccionNuevoLenguaje').src = '';
+	hideAllAtractionNewLanguageErrorMessages();
+	enableAtractionPage();
+}
+
+function validarPuntoDeInteresRepetido() {
 	hideAllPointOfInterestErrorMessages();
 	hayError = 0;
 	hayError = validarElemento('pdi-nombre', 'mensajeNombreVacioPuntoDeInteresError', hayError);
@@ -738,7 +864,6 @@ if (${atraccion.recorrible}) {
 </script>
 
 <script>
-	
 function validarElemento(elemento, mensaje, hayError) {
 	if ((document.getElementById(elemento).value == '') && (!hayError)) {
 		document.getElementById(mensaje).style.display = 'block';
@@ -776,7 +901,6 @@ $(document).ready(function() {
 		updateCoordinatesForm();
 		validarAtraccionRepetida();
 	});
-	
 	
 	function validarPlano(plano, mensaje, hayError) {
 		if ((document.getElementById(plano).src == "http://:0/") && (!hayError)) {
@@ -1157,9 +1281,10 @@ $(document).ready(function() {
 
 
 <!-- Audioguía -->
-<script>
+<script>   
 $(document).ready(function() {
 	validateAudio("atraction-get-audio-file", "borrarAudio", "archivoAudioguia", "audio", "audioCambiado", "mensajeAudioTamano", "mensajeAudioIncorrectoError");
+	validateAudio("getAudioAtraccionNuevoLenguaje", "borrarAudioAtraccionNuevoLenguaje", "archivoAudioguiaAtraccionNuevoLenguaje", "audioAtraccionNuevoLenguaje", "audioCambiadoAtraccionNuevoLenguaje", "mensajeAudioAtraccionNuevoLenguajeTamano", "mensajeAudioAtraccionNuevoLenguajeIncorrectoError");
 });
 </script>
 

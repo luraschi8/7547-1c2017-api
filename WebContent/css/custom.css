@@ -23,7 +23,7 @@ body {
     padding: 0;
 }
 
-#archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano, #archivoAudioguiaPdi {
+#archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano, #archivoAudioguiaPdi, #archivoAudioguiaAtraccionNuevoLenguaje {
     display: none;
 }
 
@@ -288,7 +288,7 @@ body {
 }
 
 .new-atraction-right-block {
-	margin-top: 4rem;
+	margin-top: 3rem;
 }
 
 .new-atraction-audio-group {
@@ -499,7 +499,7 @@ body {
 	width: 40rem;
 }
 
-.atraction-poi-box, .atraction-poi-alert {
+.atraction-poi-box, .atraction-poi-alert, .atraccion_nuevo_lenguaje_box,  .atraction_new_language_alert {
 	width: 100%;
 	margin-top: 1%;
 	margin-bottom: 1%;
@@ -585,4 +585,18 @@ body {
 
 .image-box:hover .get_file {
 	display: block;
+}
+
+#atraction_new_language_popup {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	background-color: #fefefe;
+	border: 1px solid #888;
+    top: 50%;
+    left: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+  	transform: translate(-50%, -50%);
 }

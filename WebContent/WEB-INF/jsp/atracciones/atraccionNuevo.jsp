@@ -23,7 +23,7 @@
 		<div class="atraction-new-form" style="width: 100%; display: inline-block; overflow: hidden;"> 
 		
 			<!-- Bloque izquierdo -->
-			<div class="atraction-main-information-and-map" style="float:left; margin-top:-1.5rem">
+			<div class="atraction-main-information-and-map" style="float:left; margin-top:-1rem">
 	
 				<!-- Información principal -->
 				<div class="atraction-main-information">
