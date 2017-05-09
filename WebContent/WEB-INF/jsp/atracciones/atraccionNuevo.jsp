@@ -43,10 +43,11 @@
 					</div>
 					
 					<div>
-						<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label>
+						<form:label class="atraction-label atraction-name-label" path="atraccion.nombre">Nombre</form:label>
 					</div>
+					<!-- -->
 					<div>
-						<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="1" id="nombre" path="nombre" name="nombre" class="atraction-box atraction-name-box"  placeholder="Ingrese el nombre de la atracción" required></textarea>
+						<form:input path="atraccion.nombre" type="text" onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="1" id="nombre" name="nombre" class="atraction-box atraction-name-box" placeholder="Ingrese el nombre de la atracción"/>
 					</div>
 					
 					<div class="alert alert-danger fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
@@ -501,12 +502,12 @@ function validarAtraccionRepetida() {
 	var a = {
 		"ciudad": ciudad,
 		"latitud": document.formNuevo.latitud.value,
-		"longitud": document.formNuevo.longitud.value
+		"longitud": document.formNuevo.longitud.value,
+		"nombre": document.formNuevo.nombre.value
 	}
 	
 	var json = {
 		"atraccion": a,
-		"nombre": document.formNuevo.nombre.value
 	};
 	
 	$.ajax({
@@ -548,14 +549,12 @@ function validarAtraccionRepetida() {
 }
 </script>
 
-
 <!-- Plano -->
 <script>
 $(document).ready(function() {
 	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajePlanoIncorrectoError");
 });
 </script>
-
 
 <!-- Gallery -->
 <script>

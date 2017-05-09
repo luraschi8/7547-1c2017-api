@@ -29,6 +29,9 @@ public class PuntoDeInteres extends Modelo {
 	@Column(name="id")
 	private long id;
 	
+	@Column(name="nombre")
+	private String nombre;
+	
 	@Column(name="orden")
 	private int orden;
 	
@@ -60,6 +63,14 @@ public class PuntoDeInteres extends Modelo {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public int getOrden() {

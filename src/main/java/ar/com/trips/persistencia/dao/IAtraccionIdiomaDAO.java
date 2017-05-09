@@ -6,7 +6,7 @@ import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 
 public interface IAtraccionIdiomaDAO extends IDAO {
 
-	List listarPorCiudad(int idCiudad, String idioma);
+	List listarPorCiudad(int idCiudad);
 	
 	AtraccionIdioma get(Long id);
 

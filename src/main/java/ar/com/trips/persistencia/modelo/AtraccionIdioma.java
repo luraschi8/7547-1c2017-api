@@ -29,9 +29,6 @@ public class AtraccionIdioma extends Modelo{
 	@Column(name="id")
 	private long id;
 	
-	@Column(name="nombre")
-	private String nombre;
-	
 	@Column(name="horario")
 	private String horario;
 	
@@ -69,14 +66,6 @@ public class AtraccionIdioma extends Modelo{
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public String getHorario() {

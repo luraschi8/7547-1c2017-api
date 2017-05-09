@@ -48,18 +48,15 @@ public class AtraccionControladorRest {
 	}
 
 	
-	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}/{idioma}",method=RequestMethod.GET)
-	public HashMap<String, List<AtraccionDTO>> listarAtraccionesCiudad(@PathVariable int idCiudad, @PathVariable String idioma) {
-		if (!Idioma.contains(idioma)) {
-			return null;
-		}
+	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}",method=RequestMethod.GET)
+	public HashMap<String, List<AtraccionDTO>> listarAtraccionesCiudad(@PathVariable int idCiudad) {
 		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
 		List<AtraccionDTO> listaAtracciones = new ArrayList<>();
-		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad(idCiudad,idioma);
-		for (AtraccionIdioma a : list) {
+		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);
+		for (Atraccion a : list) {
 			AtraccionDTO atraccion = AtraccionMapper.map(a);
-			if (a.getAtraccion().getListaImagenes().size() > 0) {
-				atraccion.setImagen(DatatypeConverter.printBase64Binary(a.getAtraccion().getListaImagenes().get(0).getImagen()));
+			if (a.getListaImagenes().size() > 0) {
+				atraccion.setImagen(DatatypeConverter.printBase64Binary(a.getListaImagenes().get(0).getImagen()));
 			}
 			listaAtracciones.add(atraccion);
 		}

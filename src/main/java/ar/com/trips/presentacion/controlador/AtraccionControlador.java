@@ -83,7 +83,7 @@ public class AtraccionControlador {
 							@RequestParam(name="unVideo",required = false) MultipartFile video,
 							@RequestParam("recorrible") int recorrible,
 							@RequestParam("idioma") String idioma) {
-		Atraccion a = new Atraccion();
+		Atraccion a = atraccion.getAtraccion();
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		a.setCiudad(ciudad);
@@ -212,7 +212,7 @@ public class AtraccionControlador {
 			atraccion.setAudio(null);
 		}
 		eliminarImagenes(imagenesCambiadas);
-		atraccion.setNombre(nombreModificado);
+		atraccion.getAtraccion().setNombre(nombreModificado);
 		atraccion.setDescripcion(descripcionModificada);
 		atraccion.setHorario(horarioModificado);
 		atraccion.setPrecio(precioModificado);

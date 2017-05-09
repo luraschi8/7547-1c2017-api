@@ -29,9 +29,6 @@ public class PuntoIdioma extends Modelo {
 	@Column(name="id")
 	private long id;
 	
-	@Column(name="nombre")
-	private String nombre;
-	
 	@Column(name="descripcion")
 	private String descripcion;
 	
@@ -63,14 +60,6 @@ public class PuntoIdioma extends Modelo {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public String getDescripcion() {

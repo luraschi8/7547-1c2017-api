@@ -29,6 +29,7 @@ create table Ciudad (
 create table Atraccion (
 	id bigint(10) primary key not null auto_increment,
     idCiudad bigint(10) not null,
+    nombre varchar(50) not null,
     latitud float not null,
     longitud float not null,
     borrado tinyint default 0 not null,
@@ -42,7 +43,6 @@ create table AtraccionIdioma (
 	id bigint(10) primary key not null auto_increment,
     idAtraccion bigint(10) not null,
 	idioma varchar(3) not null,
-    nombre varchar(50) not null,
     horario varchar(100),
     descripcion varchar(250),
     borrado tinyint default 0 not null,
@@ -60,6 +60,7 @@ create table ImagenAtraccion (
 
 create table PuntoDeInteres (
 	id bigint(10) primary key not null auto_increment,
+    nombre varchar(50),
     orden tinyint,
     borrado tinyint default 0 not null,
     imagen mediumblob,
@@ -70,7 +71,6 @@ create table PuntoDeInteres (
 create table PuntoIdioma (
 	id bigint(10) primary key not null auto_increment,
     idioma varchar(3) not null,
-    nombre varchar(50),
     descripcion varchar(250),
     borrado tinyint default 0 not null,
     audio mediumblob,

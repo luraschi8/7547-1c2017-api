@@ -3,7 +3,6 @@ package ar.com.trips.presentacion.rest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
 import ar.com.trips.persistencia.dao.IPuntoDeInteresIdiomaDAO;
@@ -103,12 +101,12 @@ public class PuntoDeInteresRest {
 			}
 		}
 		PuntoDeInteres punto = new PuntoDeInteres();
-		PuntoIdioma puntoIdioma = new PuntoIdioma();
-		puntoIdioma.setNombre(nombre);
-		puntoIdioma.setDescripcion(descripcion);
-		puntoIdioma.setIdioma(Idioma.valueOf(idioma));
+		punto.setNombre(nombre);
 		punto.setImagen(imagen.getBytes());
 		punto.setOrden(++orden);
+		PuntoIdioma puntoIdioma = new PuntoIdioma();
+		puntoIdioma.setDescripcion(descripcion);
+		puntoIdioma.setIdioma(Idioma.valueOf(idioma));
 		if (audio != null ) {
 			puntoIdioma.setAudio(audio.getBytes());
 		}
@@ -153,7 +151,7 @@ public class PuntoDeInteresRest {
 			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
 		PuntoIdioma punto = puntoIdiomaDao.get(id);
-		punto.setNombre(nombre);
+		punto.getPuntoDeInteres().setNombre(nombre);
 		punto.setDescripcion(descripcion);
 		if (imagen != null) {
 			punto.getPuntoDeInteres().setImagen(imagen.getBytes());

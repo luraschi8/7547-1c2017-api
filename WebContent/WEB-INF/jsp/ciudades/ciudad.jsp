@@ -173,7 +173,7 @@ function initMap() {
   
 var table = $('#tablita').DataTable( {
 	dom: 'frtip',
-	ajax: "atraccionesCiudadJson/${id}/EN",
+	ajax: "atraccionesCiudadJson/${id}",
     columns: [
         {	data: "id",
         	render: function (data,type,row) {

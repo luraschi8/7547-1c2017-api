@@ -11,10 +11,10 @@ import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 public class AtraccionIdiomaDAOImpl extends DAOImpl implements IAtraccionIdiomaDAO {
 
 	@Override
-	public List listarPorCiudad(int idCiudad,String idioma) {
+	public List listarPorCiudad(int idCiudad) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.atraccion.ciudad.id = " + idCiudad 
-				+ " AND a.idioma = '" + idioma + "' AND a.borrado = 0";
+				+ " AND a.borrado = 0";
 		@SuppressWarnings("unchecked")
 		List<AtraccionIdioma> lista = session.createQuery(query).list();
 		session.close();
@@ -35,7 +35,7 @@ public class AtraccionIdiomaDAOImpl extends DAOImpl implements IAtraccionIdiomaD
 	@Override
 	public boolean atraccionExistente(AtraccionIdioma atraccionIdioma) {
 		Session session = sessionFactory.openSession();
-		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.nombre = '" + atraccionIdioma.getNombre() + "'"
+		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.atraccion.nombre = '" + atraccionIdioma.getAtraccion().getNombre() + "'"
 						+ " AND a.atraccion.ciudad.id = '" + atraccionIdioma.getAtraccion().getCiudad().getId() + "' AND a.borrado = 0"
 						+ " AND a.idioma = '" + atraccionIdioma.getIdioma() + "' AND a.id != '" + atraccionIdioma.getId() + "'";
 		@SuppressWarnings("unchecked")
