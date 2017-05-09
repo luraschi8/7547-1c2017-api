@@ -587,6 +587,14 @@ body {
 	display: block;
 }
 
+.atraction-point-of-interest-image-box #puntoGetImagen {
+	display: none;
+}
+
+.atraction-point-of-interest-image-box:hover #puntoGetImagen {
+	display: block;
+}
+
 #atraction_new_language_popup {
 	display: none;
 	position: fixed;

@@ -327,7 +327,7 @@
 				<div id="view-atraction-points-of-interest-panel" class="panel panel-primary view-atraction-panel view-atraction-points-of-interest-panel">
 					<div style="text-align:center">
 						<input id="botonPuntosDeInteres" class="btn btn-ver-puntos-y-obras btn-puntos-de-interes" type="button" value="Puntos de interés y obras"/>
-						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm(); prepareNewPointOfInterestForm();"/>
+						<input id="botonAgregarPuntoDeInteres" class="btn btn-agregar-puntos-y-obras btn-nuevo-punto-de-interes" type="button" value="+" onclick="openNewPointOfInterestForm(); showCreationElements();"/>
 					</div>
 					
 					<div class="panel-body atraction-points-of-interest">
@@ -506,13 +506,14 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 <div id="atraction-point-of-interest-popup-form" style="width: 50%; height: 100%">
 	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
 		<form:form class="atraction-new-point-of-interest" style="width: 100%; height: 100%" id="formNuevoPuntoDeInteres" name="formNuevoPuntoDeInteres" action="nuevoPuntoDeInteres" method="post" commandName="puntoDeInteres" enctype="multipart/form-data">
-			<h2 style="width: 100%; height: 8%">Nuevo punto de interés</h2>
+			<h2 style="width: 100%; height: 8%" class="new_point_of_interest_header puntoCreacion">Nuevo punto de interés</h2>
+			<h2 style="width: 100%; height: 8%; display: none;" class="view_point_of_interest_header puntoEdicion">Ver punto de interés</h2>
 			
 			<div style="width: 100%; height: 11%">
 				<div style="display: inline-block;">
-					<label class="atraction-label" path="nombre">Nombre</label><font color="red"> *</font>
+					<label class="atraction-label" path="nombre">Nombre</label><font color="red" class="puntoCreacionInline">&nbsp;*</font>
 				</div>
-				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditNameButton" onclick="editField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true);">
+				<button style="display: none" type="button" class="btn btn-default btn-sm puntoEdicionInline" id="puntoEditNameButton" onclick="editField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto', 'mensajeNombreVacioPuntoDeInteresError', true);">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>
 				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: red;" id="cancel-nombre-punto" onclick="cancelField('#puntoNombre', 'ok-nombre-punto', 'cancel-nombre-punto')">
@@ -522,10 +523,10 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 					<span class="glyphicon glyphicon-ok"></span>
 				</button>
 				<div>
-					<textarea onkeydown="calculateMaxLength('#puntoNombreTextarea', MAX_NOMBRE_PUNTO_DE_INTERES)" rows="1" id="puntoNombreTextarea" path="nombre" name="puntoNombreTextarea" class="atraction-poi-box"  placeholder="Ingrese el nombre del punto de interés" required="required"/></textarea>
+					<textarea onkeydown="calculateMaxLength('#puntoNombreTextarea', MAX_NOMBRE_PUNTO_DE_INTERES)" rows="1" id="puntoNombreTextarea" path="nombre" name="puntoNombreTextarea" class="atraction-poi-box puntoCreacion"  placeholder="Ingrese el nombre del punto de interés" required="required"/></textarea>
 				</div>
 				<div>
-					<p style="display: none;" id="puntoNombre" name="puntoNombre" class="atraction-poi-box"/></p>
+					<p style="display: none;" id="puntoNombre" name="puntoNombre" class="atraction-poi-box puntoEdicion"/></p>
 				</div>
 			</div>
 			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeNombreVacioPuntoDeInteresError" style="display: none; margin-top: 2%;">
@@ -535,10 +536,10 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div style="width: 100%; height: 15%;">
 				<div style="display: inline-block;">
-					<label class="atraction-label" path="descripcion">Descripción</label><font color="red"> *</font>
+					<label class="atraction-label" path="descripcion">Descripción</label><font color="red" class="puntoCreacionInline">&nbsp;*</font>
 				</div>
 				
-				<button style="display: none" type="button" class="btn btn-default btn-sm" id="puntoEditDescriptionButton" onclick="editField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeDescripcionVaciaPuntoDeInteresError', true);">
+				<button style="display: none" type="button" class="btn btn-default btn-sm puntoEdicionInline" id="puntoEditDescriptionButton" onclick="editField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto', 'mensajeDescripcionVaciaPuntoDeInteresError', true);">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>
 				<button type="button" class="btn btn-default btn-sm" style="display:none; background-color: red;" id="cancel-descripcion-punto" onclick="cancelField('#puntoDescripcion', 'ok-descripcion-punto', 'cancel-descripcion-punto')">
@@ -549,10 +550,10 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				</button>
 				
 				<div>
-					<textarea onkeydown="calculateMaxLength('#puntoDescripcionTextarea', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcionTextarea" path="descripcion" name="puntoDescripcionTextarea" class="atraction-poi-box"  placeholder="Ingrese la descripción del punto de interés" required="required"/></textarea>
+					<textarea onkeydown="calculateMaxLength('#puntoDescripcionTextarea', MAX_DESCRIPCION_PUNTO_DE_INTERES)" id="puntoDescripcionTextarea" path="descripcion" name="puntoDescripcionTextarea" class="atraction-poi-box puntoCreacion"  placeholder="Ingrese la descripción del punto de interés" required="required"/></textarea>
 				</div>
 				<div>
-					<p id="puntoDescripcion" name="puntoDescripcion" class="atraction-poi-box"/></p>
+					<p id="puntoDescripcion" name="puntoDescripcion" class="atraction-poi-box puntoEdicion"/></p>
 				</div>
 			</div>
 			<div class="alert alert-danger fade in atraction-poi-alert" id="mensajeDescripcionVaciaPuntoDeInteresError" style="display: none; margin-top: 2%;">
@@ -562,7 +563,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div style="width: 100%; height: 33%;">
 				<div style="width: 100%; height: 18%">
-					<label class="atraction-label" path="imagen">Imagen</label><font color="red"> *</font>
+					<label class="atraction-label" path="imagen">Imagen</label><font color="red" class="puntoCreacionInline">&nbsp;*</font>
 				</div>
 				<div class="atraction-point-of-interest-image-box">
 					<img id="puntoImagen" style="width:100%; height:100%;">
@@ -628,10 +629,14 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			</div>
 			<font style="margin-left: 1%;" color="red" size="1">Los campos indicados con * son obligatorios</font>
 			
+			<div style="clear: both; margin-top: 3%">
+				<input id="atraction_add_language_btn" class="btn btn-default btn-success puntoEdicion" type="button" value="Agregar idioma"/>
+			</div>
+			
 			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
 				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
-				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary" type="button" value="Guardar"/>
-				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary puntoCreacionInline" type="button" value="Guardar"/>
+				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary puntoEdicionInline" type="button" value="Guardar"/>
 			</div>
 		</form:form>
 	</div>
@@ -1529,18 +1534,11 @@ $('#tablita tbody').on('click', '#borrar', function (e) {
 $('#tablita tbody').on('click', '#ver', function (e) {
 	e.preventDefault();
 	openNewPointOfInterestForm();
-	document.getElementById("puntoNombre").style.display = "block";
-	document.getElementById("puntoDescripcion").style.display = "block";
-	document.getElementById("puntoEditNameButton").style.display = "inline-block";
-	document.getElementById("puntoEditDescriptionButton").style.display = "inline-block";
-	document.getElementById("puntoNombreTextarea").style.display = "none";
-	document.getElementById("puntoDescripcionTextarea").style.display = "none";
 	var data = table.row(this.closest("tr")).data();
 	document.getElementById("puntoNombre").innerHTML = data["nombre"];
 	document.getElementById("puntoDescripcion").innerHTML = data["descripcion"];
-	document.getElementById("botonGuardarPuntoDeInteres").style.display = "none";
-	document.getElementById("botonGuardarEdicionPuntoDeInteres").style.display = "inline-block";
 	document.getElementById('puntoImagen').src = "${pageContext.request.contextPath}/imagenPunto?id=" + data["id"];
+	showEditionElements();
 });
 
 $('#botonGuardarPuntoDeInteres').on('click', function(e) {
