@@ -417,6 +417,7 @@
 
 
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
+<script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 
 <!-- Definición de constantes -->
 <script>

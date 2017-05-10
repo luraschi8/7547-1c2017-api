@@ -111,17 +111,6 @@ function openNewPointOfInterestForm() {
 	disableAtractionPage();
 }
 
-function prepareNewPointOfInterestForm() {
-	document.getElementById("puntoNombre").style.display = "none";
-	document.getElementById("puntoDescripcion").style.display = "none";
-	document.getElementById("puntoEditNameButton").style.display = "none";
-	document.getElementById("puntoEditDescriptionButton").style.display = "none";
-	document.getElementById("puntoNombreTextarea").style.display = "block";
-	document.getElementById("puntoDescripcionTextarea").style.display = "block";
-	document.getElementById("botonGuardarPuntoDeInteres").style.display = "inline-block";
-	document.getElementById("botonGuardarEdicionPuntoDeInteres").style.display = "none";
-}
-
 function openViewCommentPopUp() {
 	hideAllAtractionErrorMessages();
 	document.getElementById('atraction-comment-popup').style.display = 'block';
@@ -154,6 +143,7 @@ function closeViewCommentPopUp() {
 $(document).ready(function() {
 	validateImage("puntoGetImagen", "puntoArchivoImagen", "puntoImagen", "mensajeImagenIncorrectaPuntoDeInteresError");
 	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
+	validateAudio("getAudioPuntoDeInteresNuevoLenguaje", "borrarAudioPuntoDeInteresNuevoLenguaje", "archivoAudioguiaPuntoDeInteresNuevoLenguaje", "audioPuntoDeInteresNuevoLenguaje", "audioCambiadoPuntoDeInteresNuevoLenguaje", "mensajeAudioPuntoDeInteresNuevoLenguajeTamano", "mensajeAudioPuntoDeInteresNuevoLenguajeIncorrectoError");
 });
 
 function updatePointOfInterestForm() {
@@ -161,7 +151,6 @@ function updatePointOfInterestForm() {
 	document.formNuevoPuntoDeInteres.descripcion.value = $('#pdi-descripcion').val();
 	document.formNuevoPuntoDeInteres.orden.value = atraccion.cantPuntos;
 }
-
 
 function hideAllPointOfInterestErrorMessages() {
 	document.getElementById('mensajeNombreVacioPuntoDeInteresError').style.display = 'none';
@@ -172,3 +161,41 @@ function hideAllPointOfInterestErrorMessages() {
 	document.getElementById('mensajeAudioPdiIncorrectoError').style.display = 'none';
 	document.getElementById('mensajeNombrePuntoDeInteresRepetido').style.display = 'none';
 };
+
+function showCreationElements() {
+	var puntoCreacion = document.getElementsByClassName("puntoCreacion");
+    for(var i = 0; i < puntoCreacion.length; i++) {
+    	puntoCreacion[i].style.display = "block";
+    }
+    var puntoCreacionInline = document.getElementsByClassName("puntoCreacionInline");
+    for(var i = 0; i < puntoCreacionInline.length; i++) {
+    	puntoCreacionInline[i].style.display = "inline-block";
+    }
+    var puntoEdicion = document.getElementsByClassName("puntoEdicion");
+    for(var i = 0; i < puntoEdicion.length; i++) {
+    	puntoEdicion[i].style.display = "none";
+    }
+    var puntoEdicionInline = document.getElementsByClassName("puntoEdicionInline");
+    for(var i = 0; i < puntoEdicionInline.length; i++) {
+    	puntoEdicionInline[i].style.display = "none";
+    }
+}
+
+function showEditionElements() {
+	var puntoCreacion = document.getElementsByClassName("puntoCreacion");
+    for(var i = 0; i < puntoCreacion.length; i++) {
+    	puntoCreacion[i].style.display = "none";
+    }
+    var puntoCreacionInline = document.getElementsByClassName("puntoCreacionInline");
+    for(var i = 0; i < puntoCreacionInline.length; i++) {
+    	puntoCreacionInline[i].style.display = "none";
+    }
+    var puntoEdicion = document.getElementsByClassName("puntoEdicion");
+    for(var i = 0; i < puntoEdicion.length; i++) {
+    	puntoEdicion[i].style.display = "block";
+    }
+    var puntoEdicionInline = document.getElementsByClassName("puntoEdicionInline");
+    for(var i = 0; i < puntoEdicionInline.length; i++) {
+    	puntoEdicionInline[i].style.display = "inline-block";
+    }
+}

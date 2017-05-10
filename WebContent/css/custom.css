@@ -23,7 +23,8 @@ body {
     padding: 0;
 }
 
-#archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano, #archivoAudioguiaPdi, #archivoAudioguiaAtraccionNuevoLenguaje {
+#archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano, #archivoAudioguiaPdi, #archivoAudioguiaAtraccionNuevoLenguaje,
+#archivoAudioguiaPuntoDeInteresNuevoLenguaje {
     display: none;
 }
 
@@ -499,7 +500,7 @@ body {
 	width: 40rem;
 }
 
-.atraction-poi-box, .atraction-poi-alert, .atraccion_nuevo_lenguaje_box,  .atraction_new_language_alert {
+.atraction-poi-box, .atraction-poi-alert, .atraccion_nuevo_lenguaje_box, .atraction_new_language_alert, .punto_nuevo_lenguaje_box {
 	width: 100%;
 	margin-top: 1%;
 	margin-bottom: 1%;
@@ -587,7 +588,29 @@ body {
 	display: block;
 }
 
+.atraction-point-of-interest-image-box #puntoGetImagen {
+	display: none;
+}
+
+.atraction-point-of-interest-image-box:hover #puntoGetImagen {
+	display: block;
+}
+
 #atraction_new_language_popup {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	background-color: #fefefe;
+	border: 1px solid #888;
+    top: 50%;
+    left: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+  	transform: translate(-50%, -50%);
+}
+
+#point_of_interest_new_language_popup {
 	display: none;
 	position: fixed;
 	z-index: 1;

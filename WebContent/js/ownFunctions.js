@@ -118,13 +118,6 @@ function hideEdition(field, ok, cancel) {
 	hideOkAndCancelButtons(ok, cancel);
 }
 
-function hideAllPointOfInterestErrorMessages() {
-	document.getElementById("mensajeNombreVacioPuntoDeInteresError").style.display = 'none';
-	document.getElementById("mensajeDescripcionVaciaPuntoDeInteresError").style.display = 'none';
-	document.getElementById("mensajeOrdenVacioPuntoDeInteresError").style.display = 'none';
-	document.getElementById("mensajeImagenIncorrectaPuntoDeInteresError").style.display = 'none';
-}
-
 function validateAudio(btn_get, btn_erase, file_id, audio, modified_audio, size_msg, incorrect_audio_msg) {
 	document.getElementById(btn_erase).onclick = function() {
 		document.getElementById(file_id).value = "" ;
@@ -174,6 +167,29 @@ function validateAudio(btn_get, btn_erase, file_id, audio, modified_audio, size_
 			reader.readAsDataURL(file);
 		} 
 	}
+}
+
+function hideAllAtractionNewLanguageErrorMessages() {
+	document.getElementById('mensajeDescripcionVaciaAtraccionNuevoLenguajeError').style.display = 'none';
+	document.getElementById('mensajeAudioAtraccionNuevoLenguajeIncorrectoError').style.display = 'none';
+	document.getElementById('mensajeAudioAtraccionNuevoLenguajeTamano').style.display = 'none';
+}
+
+function showAtractionNewLanguagePopup() {
+	document.getElementById("atraction_new_language_popup").style.display = 'block';
+	document.getElementById('atraction_new_language_popup').focus();
+	document.getElementById('attractionForm').blur();
+	disableAtractionPage();
+}
+
+function closeAtractionNewLanguagePopup() {
+	document.getElementById('atraction_new_language_popup').style.display = 'none';
+	document.getElementById('atraccionDescripcionNuevoLenguajeTextarea').value = '';
+	document.getElementById('atraccionHorarioNuevoLenguajeTextarea').value = '';
+	document.getElementById('atraccionPrecioNuevoLenguajeTextarea').value = '';
+	document.getElementById('audioAtraccionNuevoLenguaje').src = '';
+	hideAllAtractionNewLanguageErrorMessages();
+	enableAtractionPage();
 }
 
 function hideAllRouteErrorMessages() {
