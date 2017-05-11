@@ -41,5 +41,4 @@ public class CiudadDAOImpl extends DAOImpl implements ICiudadDAO {
 	public Ciudad get(Long id) {
 		return this.get(Ciudad.class, id);
 	}
-
 }

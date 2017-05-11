@@ -49,5 +49,4 @@ public class DAOImpl implements IDAO {
 		s.getTransaction().commit();
 		s.close();
 	}
-
 }

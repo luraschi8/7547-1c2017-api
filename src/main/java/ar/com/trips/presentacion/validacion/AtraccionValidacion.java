@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
-import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
-import ar.com.trips.persistencia.modelo.Ciudad;
 
 public class AtraccionValidacion {
 	

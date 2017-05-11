@@ -19,8 +19,8 @@ public class UsuarioControladorRest {
 	private IUsuarioDAO usuarioDao;
 	
 	@RequestMapping("/usuariosJson")
-	public HashMap<String, List> listar() {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<Usuario>> listar() {
+		HashMap<String, List<Usuario>> lista = new HashMap<String, List<Usuario>>();
 		lista.put(DATA, usuarioDao.listar(Usuario.class));
 		return lista;
 	}

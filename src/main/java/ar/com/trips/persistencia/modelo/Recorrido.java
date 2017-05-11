@@ -45,8 +45,8 @@ public class Recorrido extends Modelo {
 	private Ciudad ciudad;
 	
 	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
-	@JsonBackReference(value="listaAtraccionesDelRecorrido")
-	private List<Atraccion> listaAtraccionesDelRecorrido = new ArrayList<>();
+	@JsonBackReference(value="listaAtraccionesEnElRecorrido")
+	private List<Atraccion> listaAtraccionesEnElRecorrido = new ArrayList<>();
 	
 	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaAtraccionesFueraDelRecorrido")
@@ -99,12 +99,12 @@ public class Recorrido extends Modelo {
 		this.ciudad = ciudad;
 	}
 	
-	public List<Atraccion> getListaAtraccionesDelRecorrido() {
-		return listaAtraccionesDelRecorrido;
+	public List<Atraccion> getListaAtraccionesEnElRecorrido() {
+		return listaAtraccionesEnElRecorrido;
 	}
 
-	public void setListaAtraccionesDelRecorrido(List<Atraccion> listaAtraccionesDelRecorrido) {
-		this.listaAtraccionesDelRecorrido = listaAtraccionesDelRecorrido;
+	public void setListaAtraccionesEnElRecorrido(List<Atraccion> listaAtraccionesEnElRecorrido) {
+		this.listaAtraccionesEnElRecorrido = listaAtraccionesEnElRecorrido;
 	}
 	
 	public List<Atraccion> getListaAtraccionesFueraDelRecorrido() {
@@ -129,5 +129,9 @@ public class Recorrido extends Modelo {
 
 	public void setIdioma(String idioma) {
 		this.idioma = idioma;
+	}
+	
+	public void addAtractionToRoute(Atraccion atraccion) {
+		this.listaAtraccionesEnElRecorrido.add(atraccion);
 	}
 }

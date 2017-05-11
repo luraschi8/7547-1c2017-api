@@ -32,24 +32,24 @@ public class ReseniaRest {
 	private IReseniaDAO reseniaDao;
 	
 	@RequestMapping(path="/reseniaDaoJson/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, List> listarReseniaAtraccion(@PathVariable int idAtraccion) {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<Resenia>> listarReseniaAtraccion(@PathVariable int idAtraccion) {
+		HashMap<String, List<Resenia>> lista = new HashMap<String, List<Resenia>>();
 		List<Resenia> list = reseniaDao.listarPorAtraccion(idAtraccion);
 		lista.put(DATA, list);
 		return lista;
 	}
 
 	@RequestMapping(path="/reseniasAtraccionJson/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, List> listarReseniasAtraccionNuevo(@PathVariable int idAtraccion) {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<Resenia>> listarReseniasAtraccionNuevo(@PathVariable int idAtraccion) {
+		HashMap<String, List<Resenia>> lista = new HashMap<String, List<Resenia>>();
 		List<Resenia> list = reseniaDao.listarPorAtraccion(idAtraccion);
 		lista.put(DATA, list);
 		return lista;
 	}
 	
 	@RequestMapping(path="/reseniasPaginadasAtraccionJson/{idAtraccion}/{pagina}",method=RequestMethod.GET)
-	public HashMap<String, List> listarReseniaPaginadasAtraccion(@PathVariable int idAtraccion, @PathVariable int pagina) {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<Resenia>> listarReseniaPaginadasAtraccion(@PathVariable int idAtraccion, @PathVariable int pagina) {
+		HashMap<String, List<Resenia>> lista = new HashMap<String, List<Resenia>>();
 		List<Resenia> list = reseniaDao.listarPorAtraccionPaginada(idAtraccion,pagina);
 		lista.put(DATA, list);
 		return lista;

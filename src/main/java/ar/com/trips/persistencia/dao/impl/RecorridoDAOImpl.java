@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Recorrido;
 
 public class RecorridoDAOImpl extends DAOImpl implements IRecorridoDAO {
@@ -46,5 +47,46 @@ public class RecorridoDAOImpl extends DAOImpl implements IRecorridoDAO {
 	@Override
 	public Recorrido get(Long id) {
 		return this.get(Recorrido.class, id);
+	}
+	
+	@Override
+	public List<Atraccion> listarAtraccionesFueraDelRecorridoNuevo(int idCiudad) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.ciudad.id = " + idCiudad + " AND a.borrado = 0";
+		@SuppressWarnings("unchecked")
+		List<Atraccion> lista = session.createQuery(query).list();
+		session.close();
+		return lista;
+	}
+	
+	@Override
+	public List<Atraccion> listarAtraccionesEnElRecorridoNuevo() {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.ciudad.id = -1 AND a.borrado = 0";
+		@SuppressWarnings("unchecked")
+		List<Atraccion> lista = session.createQuery(query).list();
+		session.close();
+		return lista;
+	}
+
+	@Override
+	public List<Atraccion> listarAtraccionesFueraDelRecorrido(long id) {
+		Recorrido recorrido = this.get(id);
+		System.out.print("\nId: " + id + "\n\n");
+		System.out.print("\nRecorrido borrado: " + recorrido.getBorrado() + "\n\n");
+		List<Atraccion> atracciones = recorrido.getListaAtraccionesFueraDelRecorrido();
+		int last = atracciones.size() - 1;
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Atraccion.class.getName() + " a WHERE ";
+		for (int i = 0; i < atracciones.size(); i++) {
+			query += "a.id = '" + atracciones.get(i).getId() + "'";
+			if (i != last) {
+				query += " OR ";
+			}
+		}
+		@SuppressWarnings("unchecked")
+		List<Atraccion> lista = session.createQuery(query).list();
+		session.close();
+		return lista;
 	}
 }

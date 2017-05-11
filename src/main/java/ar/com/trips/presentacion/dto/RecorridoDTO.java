@@ -1,8 +1,5 @@
 package ar.com.trips.presentacion.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RecorridoDTO {
 
 	private long id;

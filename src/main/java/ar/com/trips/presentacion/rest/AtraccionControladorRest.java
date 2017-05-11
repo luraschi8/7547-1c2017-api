@@ -40,7 +40,6 @@ public class AtraccionControladorRest {
 		return lista;
 	}
 
-	
 	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}",method=RequestMethod.GET)
 	public HashMap<String, List<Atraccion>> listarAtraccionesCiudad(@PathVariable int idCiudad) {
 		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();

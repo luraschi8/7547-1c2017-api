@@ -141,5 +141,4 @@ public class Ciudad extends Modelo {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
 }

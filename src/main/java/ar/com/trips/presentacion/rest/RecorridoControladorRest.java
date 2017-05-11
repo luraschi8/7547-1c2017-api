@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Recorrido;
 import ar.com.trips.presentacion.dto.RecorridoDTO;
 import ar.com.trips.presentacion.validacion.RecorridoValidacion;
@@ -73,4 +74,43 @@ public class RecorridoControladorRest {
 		}
 		return lista;
 	}
+	
+	@RequestMapping(path="/atraccionesFueraDelRecorridoNuevoJson/{idCiudad}", method=RequestMethod.GET)
+	public HashMap<String, List<Atraccion>> getAtraccionesFueraDelRecorridoNuevo(@PathVariable int idCiudad) {
+		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();
+		List<Atraccion> list = recorridoDao.listarAtraccionesFueraDelRecorridoNuevo(idCiudad);
+		for (Atraccion a : list) {
+			if (a.getListaImagenes().size() > 0) {
+				a.setImagen(a.getListaImagenes().get(0).getImagen());
+			}
+		}
+		lista.put(DATA, list);
+		return lista;
+	}
+	
+	@RequestMapping(path="/atraccionesEnElRecorridoNuevoJson/{idCiudad}", method=RequestMethod.GET)
+	public HashMap<String, List<Atraccion>> listarAtraccionesEnElRecorridoNuevo(@PathVariable int idCiudad) {
+		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();
+		List<Atraccion> list = recorridoDao.listarAtraccionesEnElRecorridoNuevo();
+		for (Atraccion a : list) {
+			if (a.getListaImagenes().size() > 0) {
+				a.setImagen(a.getListaImagenes().get(0).getImagen());
+			}
+		}
+		lista.put(DATA, list);
+		return lista;
+	}
+	
+	/*@RequestMapping(path="/atraccionesEnElRecorridoCiudadJson/{idRecorrido}", method=RequestMethod.GET)
+	public HashMap<String, List<Atraccion>> listarAtraccionesEnElRecorrido(@PathVariable int idCiudad) {
+		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();
+		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);
+		for (Atraccion a : list) {
+			if (a.getListaImagenes().size() > 0) {
+				a.setImagen(a.getListaImagenes().get(0).getImagen());
+			}
+		}
+		lista.put(DATA, list);
+		return lista;
+	}*/
 }

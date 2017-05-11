@@ -1,6 +1,7 @@
 package ar.com.trips.presentacion.controlador;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.Recorrido;
 
@@ -20,6 +23,9 @@ public class RecorridoControlador {
 	
 	@Autowired
 	private IRecorridoDAO recorridoDao;
+	
+	@Autowired
+	private IAtraccionDAO atraccionDao;
 	
 	@RequestMapping(path="/recorridos")
 	public ModelAndView listar() {
@@ -38,6 +44,15 @@ public class RecorridoControlador {
 		ciudad.setLatitud(latitudCiudad);
 		ciudad.setLongitud(longitudCiudad);
 		recorrido.setCiudad(ciudad);
+
+		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);
+		for (Atraccion a : list) {
+			if (a.getBorrado() != 0) {
+				recorrido.addAtractionToRoute(a);
+			}
+		}
+
+		
 		model.addObject("recorrido", recorrido);
 		return model;
 	}

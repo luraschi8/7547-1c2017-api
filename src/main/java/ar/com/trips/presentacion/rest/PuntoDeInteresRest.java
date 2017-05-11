@@ -1,9 +1,7 @@
 package ar.com.trips.presentacion.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
@@ -38,8 +35,8 @@ public class PuntoDeInteresRest {
 	private PuntoDeInteresValidacion puntoValidacion;
 	
 	@RequestMapping(path="/puntoAtraccionJson/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, List> listarPuntoDeInteresesAtraccion(@PathVariable int idAtraccion) {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<PuntoDeInteres>> listarPuntoDeInteresesAtraccion(@PathVariable int idAtraccion) {
+		HashMap<String, List<PuntoDeInteres>> lista = new HashMap<String, List<PuntoDeInteres>>();
 		List<PuntoDeInteres> list = puntoDao.listarPorAtraccion(idAtraccion);
 		for (PuntoDeInteres punto : list) {
 			punto.setImagenString(DatatypeConverter.printBase64Binary(punto.getImagen()));
@@ -49,8 +46,8 @@ public class PuntoDeInteresRest {
 	}
 	
 	@RequestMapping(path="/puntoAtraccionNuevoJson/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, List> listarPuntoDeInteresesAtraccionNuevo(@PathVariable int idAtraccion) {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<PuntoDeInteres>> listarPuntoDeInteresesAtraccionNuevo(@PathVariable int idAtraccion) {
+		HashMap<String, List<PuntoDeInteres>> lista = new HashMap<String, List<PuntoDeInteres>>();
 		List<PuntoDeInteres> list = puntoDao.listarPorAtraccionNuevo(idAtraccion);
 		lista.put(DATA, list);
 		return lista;

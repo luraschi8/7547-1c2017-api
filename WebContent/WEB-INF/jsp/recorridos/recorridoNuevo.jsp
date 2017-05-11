@@ -145,9 +145,12 @@ $("#descripcion").attr("maxlength", MAX_DESCRIPCION_RECORRIDO);
 </script>
 
 <script>
+var fuera_del_recorrido = new Array();
+var dentro_del_recorrido = new Array();
+
 var table_all_atractions = $('#table_all_atractions').DataTable( {
 	dom: 'frtip',
-	ajax: "atraccionesCiudadJson/${recorrido.ciudad.id}",
+	ajax: "atraccionesFueraDelRecorridoNuevoJson/${recorrido.ciudad.id}",
     columns: [
         {	data: "id",
         	render: function (data,type,row) {
@@ -157,18 +160,21 @@ var table_all_atractions = $('#table_all_atractions').DataTable( {
         {data: "nombre" },
         {defaultContent:'<button class="btn btn-success" id="add_atraction"> > </button>'}
         ],
+    "columnDefs": [
+   		{className: "dt-body-right", "targets": [2]}
+    ],
     select:true,
     paging:false,
-    pageLength:50,
+    pageLength:30,
     ordering:true,
     bFilter: false
 });
 
-var table_all_atractions = $('#table_route_atractions').DataTable( {
+var table_route_atractions = $('#table_route_atractions').DataTable( {
 	dom: 'frtip',
-	ajax: "atraccionesCiudadJson/${recorrido.ciudad.id}",
+	ajax: "atraccionesEnElRecorridoNuevoJson/${recorrido.ciudad.id}",
     columns: [
-    	{defaultContent:'<button class="btn btn-danger" id="add_atraction"> < </button>'},
+    	{defaultContent:'<button class="btn btn-danger" id="remove_atraction"> < </button>'},
         {	data: "id",
         	render: function (data,type,row) {
         		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
@@ -178,12 +184,45 @@ var table_all_atractions = $('#table_route_atractions').DataTable( {
         ],
     select:true,
     paging:false,
-    pageLength:50,
+    pageLength:30,
     ordering:true,
     bFilter: false
 });
 
+function initializeAllAtractions() {
+	table_all_atractions.rows().every(function () {
+	    var data = this.data();
+	    fuera_del_recorrido.push(data["id"]);
+	});
+}
 
+$('#table_all_atractions tbody').on('click', '#add_atraction', function (e) {
+	if (fuera_del_recorrido.length == 0) {
+		initializeAllAtractions();
+	}
+	e.preventDefault();
+	var data = table_all_atractions.row(this.closest("tr")).data();
+	dentro_del_recorrido.push(data["id"]);
+	fuera_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
+	table_route_atractions.row.add({
+        "id":       data.id,
+        "nombre":   data.nombre
+    }).draw();
+	table_all_atractions.row(this.closest("tr")).remove().draw();
+});
+
+
+$('#table_route_atractions tbody').on('click', '#remove_atraction', function (e) {
+	e.preventDefault();
+	var data = table_route_atractions.row(this.closest("tr")).data();
+	dentro_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
+	fuera_del_recorrido.push(data["id"]);
+	table_all_atractions.row.add({
+        "id":       data.id,
+        "nombre":   data.nombre
+    }).draw();
+	table_route_atractions.row(this.closest("tr")).remove().draw();
+});
 
 
 

@@ -8,8 +8,6 @@ import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IReseniaDAO;
-import ar.com.trips.persistencia.modelo.Atraccion;
-import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 import ar.com.trips.persistencia.modelo.Resenia;
 
 public class ReseniaDAOImpl extends DAOImpl implements IReseniaDAO {
@@ -44,7 +42,6 @@ public class ReseniaDAOImpl extends DAOImpl implements IReseniaDAO {
 	public Resenia getResenia(int id) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + Resenia.class.getName() + " a WHERE a.id = " + id;
-		@SuppressWarnings("unchecked")
 		Resenia resenia = (Resenia) session.createQuery(query).list().get(0);
 		session.close();
 		return resenia;

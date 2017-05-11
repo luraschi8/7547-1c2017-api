@@ -28,8 +28,8 @@ public class CiudadControladorRest {
 	CiudadValidacion ciudadValidacion;
 	
 	@RequestMapping("/ciudadesJson")
-	public HashMap<String, List> listar() {
-		HashMap<String, List> lista = new HashMap<String, List>();
+	public HashMap<String, List<Ciudad>> listar() {
+		HashMap<String, List<Ciudad>> lista = new HashMap<String, List<Ciudad>>();
 		List<Ciudad> listaAux = ciudadDao.listar(Ciudad.class);
 		for (Ciudad ciudad : listaAux) {
 			int size = 0;
@@ -56,5 +56,4 @@ public class CiudadControladorRest {
 		}
 		return lista;
 	}
-
 }

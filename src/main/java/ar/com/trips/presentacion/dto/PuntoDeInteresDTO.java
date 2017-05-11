@@ -1,10 +1,5 @@
 package ar.com.trips.presentacion.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ar.com.trips.persistencia.modelo.ImagenAtraccion;
-
 public class PuntoDeInteresDTO {
 
 	private long id;

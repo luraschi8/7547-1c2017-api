@@ -47,5 +47,4 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 	public Atraccion get(Long id) {
 		return this.get(Atraccion.class, id);
 	}
-	
 }
