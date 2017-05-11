@@ -20,10 +20,10 @@
 	<div class="nav-wrapper">
 		<div class="nav-menu">
    		    <ul class="clearfix">
-	        	<li>Idioma
+	        	<li id="select_language">Idioma
 		        	<ul class="sub-menu">
-			        	<li><a href="">Español</a></li>
-			            <li><a href="">Inglés</a></li>
+			        	<li onclick="setSpanish();"><a href="">Español</a></li>
+			            <li onclick="setEnglish();"><a href="">Inglés</a></li>
 			        </ul>
 			    </li>
 	        </ul>
@@ -31,15 +31,6 @@
     </div>
     
 	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
-
-
-
-	
-	    
-	    
-	    
-	    
-	    
 
 <div id="attractionForm">
 	<form:form id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
@@ -762,13 +753,6 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 </div>
 
 
-
-
-
-
-
-
- 
 <div id="point_of_interest_new_language_popup" style="display: none; width: 50%; height: 60%">
 	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
 		<form:form class="atraction-point-of-interest-new-language" style="width: 100%; height: 100%" id="formPuntoNuevoLenguaje" name="formPuntoNuevoLenguaje" action="nuevoLenguajePunto" method="post" commandName="atraccion" enctype="multipart/form-data">
@@ -837,8 +821,6 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 </div>
 
 
-
-
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 <script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 
@@ -852,6 +834,14 @@ $('#point_of_interest_add_language_btn').on('click', function(e) {
 	e.preventDefault();
 	showPointOfInterestNewLanguagePopup();
 });
+
+function setSpanish() {
+	document.getElementById('select_language').innerHTML = 'Idioma - Español';
+}
+
+function setEnglish() {
+	document.getElementById('select_language').innerHTML = 'Idioma - Inglés';
+}
 
 function hideAllPointsOfInterestNewLanguageErrorMessages() {
 	document.getElementById('mensajeDescripcionVaciaPuntoDeInteresNuevoLenguajeError').style.display = 'none';

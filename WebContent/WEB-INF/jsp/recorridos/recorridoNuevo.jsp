@@ -95,6 +95,7 @@
 							</table>
 						</div>
 					</div>
+					<font color="red" size="1">Los campos indicados con * son obligatorios</font>
 				</div>
 				
 				<div class="route_right_block" style="float: right; width: 48%; margin-top: 2%;">
