@@ -32,9 +32,6 @@ public class PuntoDeInteres extends Modelo {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="orden")
-	private int orden;
-	
 	@Column(name="borrado")
 	private int borrado;
 	
@@ -71,14 +68,6 @@ public class PuntoDeInteres extends Modelo {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public int getOrden() {
-		return orden;
-	}
-
-	public void setOrden(int orden) {
-		this.orden = orden;
 	}
 
 	public int getBorrado() {

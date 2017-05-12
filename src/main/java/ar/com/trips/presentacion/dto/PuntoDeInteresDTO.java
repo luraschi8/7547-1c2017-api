@@ -8,6 +8,8 @@ public class PuntoDeInteresDTO {
 	
 	private String descripcion;
 	
+	private int orden;
+	
 	private String audio;
 	
 	private String imagen;
@@ -61,4 +63,13 @@ public class PuntoDeInteresDTO {
 	public void setIdioma(String idioma) {
 		this.idioma = idioma;
 	}
+
+	public int getOrden() {
+		return orden;
+	}
+
+	public void setOrden(int orden) {
+		this.orden = orden;
+	}
+	
 }

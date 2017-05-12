@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
+import ar.com.trips.persistencia.dao.IPuntoDeInteresIdiomaDAO;
 import ar.com.trips.persistencia.modelo.Ciudad;
 
 @Controller
@@ -24,6 +25,9 @@ public class CiudadControlador {
 	
 	@Autowired
 	private IPuntoDeInteresDAO puntoDao;
+	
+	@Autowired
+	private IPuntoDeInteresIdiomaDAO puntoIdiomaDao;
 	
 	@RequestMapping(path="/ciudades")
 	public ModelAndView listar() {
@@ -82,7 +86,7 @@ public class CiudadControlador {
 				@RequestParam(name="ordenOriginal",required=false) String ordenOriginal) {
 		puntoDao.borrarPuntosSinAtraccion();
 		if (ordenOriginal != null && !ordenOriginal.equals("")) {
-			puntoDao.rollbackPuntosBorrados(ordenOriginal);
+			puntoIdiomaDao.rollbackPuntosBorrados(ordenOriginal);
 		}
 		Ciudad ciudad = ciudadDao.get(idCiudad);
 		ModelAndView model = new ModelAndView("ciudades/ciudad");

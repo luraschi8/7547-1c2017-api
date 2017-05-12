@@ -2,15 +2,10 @@ package ar.com.trips.presentacion.controlador;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -56,7 +51,9 @@ public class AtraccionControlador {
 	}
 	
 	@RequestMapping("atraccionNuevo")
-	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad, @RequestParam("latitudCiudad") float latitudCiudad, @RequestParam("longitudCiudad") float longitudCiudad) {
+	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad, @RequestParam("latitudCiudad") float latitudCiudad, 
+			@RequestParam("longitudCiudad") float longitudCiudad, @RequestParam(name="idioma",required=false)String idioma) {
+		puntoDao.borrarPuntosSinAtraccion();
 		ModelAndView model = new ModelAndView(ATRACCION_NUEVO_PATH);
 		Atraccion atraccion = new Atraccion();
 		Ciudad ciudad = new Ciudad();
@@ -68,6 +65,7 @@ public class AtraccionControlador {
 		a.setAtraccion(atraccion);
 		model.addObject("atraccion", a);
 		model.addObject("puntoDeInteres",new PuntoDeInteres());
+		model.addObject("idioma",idioma);
 		return model;
 	}
 	
@@ -87,6 +85,7 @@ public class AtraccionControlador {
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		a.setCiudad(ciudad);
+		a.setRecorrible(recorrible);
 		guardarPlano(a,plano);
 		try {
 			a.setVideo(video.getBytes());
@@ -171,10 +170,13 @@ public class AtraccionControlador {
 	}
 
 	@RequestMapping(path="atraccionVer")
-	public ModelAndView ver(@RequestParam("idAtraccion") long id) {
+	public ModelAndView ver(@RequestParam("idAtraccion") long id,@RequestParam(name="idioma",required=false)String idioma ) {
 		Atraccion atraccion = atraccionDao.get(id);
+		AtraccionIdioma a = new AtraccionIdioma();
+		a.setAtraccion(atraccion);
 		ModelAndView model = new ModelAndView("atracciones/atraccion");
-		model.addObject("atraccion", atraccion);		
+		model.addObject("atraccion", a);
+		model.addObject("idioma",idioma);
 		return model;
 	}
 	

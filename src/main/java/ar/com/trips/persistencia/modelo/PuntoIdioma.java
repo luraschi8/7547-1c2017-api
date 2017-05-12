@@ -32,6 +32,9 @@ public class PuntoIdioma extends Modelo {
 	@Column(name="descripcion")
 	private String descripcion;
 	
+	@Column(name="orden")
+	private int orden;
+	
 	@Column(name="borrado")
 	private int borrado;
 	
@@ -68,6 +71,14 @@ public class PuntoIdioma extends Modelo {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public int getOrden() {
+		return orden;
+	}
+
+	public void setOrden(int orden) {
+		this.orden = orden;
 	}
 
 	public byte[] getAudio() {

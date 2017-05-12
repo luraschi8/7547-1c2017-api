@@ -61,7 +61,6 @@ create table ImagenAtraccion (
 create table PuntoDeInteres (
 	id bigint(10) primary key not null auto_increment,
     nombre varchar(50),
-    orden tinyint,
     borrado tinyint default 0 not null,
     imagen mediumblob,
     idAtraccion bigint(10),
@@ -72,6 +71,7 @@ create table PuntoIdioma (
 	id bigint(10) primary key not null auto_increment,
     idioma varchar(3) not null,
     descripcion varchar(250),
+    orden tinyint,
     borrado tinyint default 0 not null,
     audio mediumblob,
     idPunto bigint(10),

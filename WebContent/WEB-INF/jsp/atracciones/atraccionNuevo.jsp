@@ -37,8 +37,17 @@
 					<div>
 						<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
 						  	<div>
-							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked">Español
-							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;">Inglés
+							  	<c:choose>
+							  		<c:when test="${idioma =='EN'}">
+							  			<input type="radio" id="langES" name="idioma" path="idioma" value="ES" style="margin: 4px" onclick="cambiarIdioma()">Español
+									  	<input type="radio" id="langEN" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" checked="checked" onclick="cambiarIdioma()">Inglés
+							  		</c:when>
+							  		<c:otherwise>
+							  			<input type="radio" id="langES" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked" onclick="cambiarIdioma()">Español
+									  	<input type="radio" id="langEN" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" onclick="cambiarIdioma()">Inglés
+							  		</c:otherwise>	
+							  			
+							  	</c:choose>
 							</div>
 					</div>
 					
@@ -405,6 +414,13 @@
 		</form:form>
 	</div>
 </div>
+
+<form style="display: none" class="form-city-add-atraction" id="formAgregarAtraccion" name="formAgregarAtraccion" action="atraccionNuevo" method="post">
+	<input id="idCliudad" name="idCiudad" type="hidden" value="${atraccion.atraccion.ciudad.id}"/>
+	<input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${atraccion.atraccion.ciudad.latitud}"/>
+	<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${atraccion.atraccion.ciudad.longitud}"/>
+	<input id="idioma" name="idioma" type="hidden" value="${idioma}"/>
+</form>
 
 
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
@@ -898,10 +914,35 @@ function checkIfIsOutOfRange(coordinates) {
 };
 
 /* PUNTO DE INTERES  */
+<c:set var="idioma">
+	${idioma}
+</c:set>
+idiomaCheck = $("input[name='idioma']:checked").val();
+
+$(document).ready(function() {
+	var idioma = "${idioma}";
+	if (idioma != "") {
+		var idIdioma = "lang" + idioma;
+		document.getElementById(idIdioma).checked = true;
+	}
+	console.log("IDIOMA: " + idioma);
+});
+
+
+function cambiarIdioma() {
+	var idiomaACambiar = "";
+	if (idiomaCheck == "EN") {
+		idiomaACambiar = "ES"
+	} else {
+		idiomaACambiar = "EN";	
+	}
+	document.formAgregarAtraccion.idioma.value = idiomaACambiar;
+	document.getElementById("formAgregarAtraccion").submit();
+}
 
 var table = $('#tablita').DataTable( {
 	dom: 'frtip',
-	ajax: "puntoAtraccionNuevoJson/${id}/EN",
+	ajax: "puntoAtraccionNuevoJson/${id}/" + idiomaCheck,
 	columns: [
 		{	data:"orden",
 			render: function (data,type,row) {
@@ -909,9 +950,11 @@ var table = $('#tablita').DataTable( {
 		 	}
 		},
 		{	data: "id",
-        	render: function (data,type,row) {
-        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
-        	}
+         	render: function (data,type,row) {
+		 		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data 
+		 		+ '" style="align: center; width:40px; height:40px"/></div>' 
+		 		+ '<span style="display:none" class="clasePuntoId">' + data + '</span>'
+		 	}
         },
         {data: "nombre" },
 		{defaultContent:'<button class="btn btn-danger" id="borrar">Borrar</button>'},
@@ -962,6 +1005,7 @@ function crearPunto() {
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
 	formData.append("nombre",document.getElementById('puntoNombreTextarea').value);//document.formNuevoPuntoDeInteres.puntoNombre.value);
 	formData.append("descripcion",document.getElementById('puntoDescripcionTextarea').value);//document.formNuevoPuntoDeInteres.puntoDescripcion.value);
+	formData.append("idioma",$("input[name='idioma']:checked").val());
 	$.ajax({
 		url : "crearPunto",
 		type : "POST",

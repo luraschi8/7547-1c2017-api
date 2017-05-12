@@ -11,7 +11,7 @@ public interface IPuntoDeInteresDAO extends IDAO {
 	
 	PuntoDeInteres get(Long id);
 	
-	void borrar(long id, Integer idAtraccion);
+	void borrar(long id);
 
 	List<PuntoDeInteres> listarPorAtraccionNuevo(Integer idAtraccion);
 
@@ -19,11 +19,8 @@ public interface IPuntoDeInteresDAO extends IDAO {
 
 	void borrarPuntosSinAtraccion();
 
-	void cambiarOrdenes(String ordenPuntos);
-
 	void borrarPuntosDeAtraccion(Atraccion atraccion);
 
 	boolean puntoExistente(PuntoDeInteres punto);
 
-	void rollbackPuntosBorrados(String puntosBorrados);
 }

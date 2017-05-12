@@ -7,12 +7,13 @@ import ar.com.trips.presentacion.dto.PuntoDeInteresDTO;
 
 public class PuntoMapper {
 
-	public static PuntoDeInteresDTO map(PuntoIdioma atraccion) {
+	public static PuntoDeInteresDTO map(PuntoIdioma punto) {
 		PuntoDeInteresDTO dto = new PuntoDeInteresDTO();
-		dto.setId(atraccion.getId());
-		dto.setNombre(atraccion.getPuntoDeInteres().getNombre());
-		dto.setDescripcion(atraccion.getDescripcion());
-		dto.setImagen(DatatypeConverter.printBase64Binary(atraccion.getPuntoDeInteres().getImagen()));
+		dto.setId(punto.getId());
+		dto.setNombre(punto.getPuntoDeInteres().getNombre());
+		dto.setDescripcion(punto.getDescripcion());
+		dto.setOrden(punto.getOrden());
+		dto.setImagen(DatatypeConverter.printBase64Binary(punto.getPuntoDeInteres().getImagen()));
 		return dto;
 	}
 	

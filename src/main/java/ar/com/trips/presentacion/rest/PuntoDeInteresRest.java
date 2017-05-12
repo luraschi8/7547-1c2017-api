@@ -93,9 +93,9 @@ public class PuntoDeInteresRest {
 			@RequestParam(name="idAtraccion",required=false) Integer idAtraccion,
 			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-		List<PuntoDeInteres> listaPuntos = puntoDao.listarPorAtraccionNuevo(idAtraccion);
+		List<PuntoIdioma> listaPuntos = puntoIdiomaDao.listarPorAtraccionNuevo(idAtraccion,idioma);
 		int orden = 0;
-		for (PuntoDeInteres puntoDeInteres : listaPuntos) {
+		for (PuntoIdioma puntoDeInteres : listaPuntos) {
 			if (puntoDeInteres.getOrden() > orden) {
 				orden = puntoDeInteres.getOrden();
 			}
@@ -103,10 +103,10 @@ public class PuntoDeInteresRest {
 		PuntoDeInteres punto = new PuntoDeInteres();
 		punto.setNombre(nombre);
 		punto.setImagen(imagen.getBytes());
-		punto.setOrden(++orden);
 		PuntoIdioma puntoIdioma = new PuntoIdioma();
 		puntoIdioma.setDescripcion(descripcion);
 		puntoIdioma.setIdioma(Idioma.valueOf(idioma));
+		puntoIdioma.setOrden(++orden);
 		if (audio != null ) {
 			puntoIdioma.setAudio(audio.getBytes());
 		}
@@ -118,7 +118,7 @@ public class PuntoDeInteresRest {
 	}
 	
 	@RequestMapping(path="/validarPuntoDeInteres",method=RequestMethod.POST)
-	public HashMap<String, Boolean> validarPuntoDeInteres(@RequestBody PuntoIdioma punto) {
+	public HashMap<String, Boolean> validarPuntoDeInteres(@RequestBody PuntoDeInteres punto) {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
 		List<String> listaErrores = puntoValidacion.validar(punto);
 		if (listaErrores.size() != 0) {
@@ -132,14 +132,14 @@ public class PuntoDeInteresRest {
 	@RequestMapping(path="/cambiarOrden",method=RequestMethod.POST)
 	public HashMap<String, Boolean> cambiarOrden(@RequestParam("ordenPuntos") String ordenPuntos) {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-		puntoDao.cambiarOrdenes(ordenPuntos);
+		puntoIdiomaDao.cambiarOrdenes(ordenPuntos);
 		return lista;
 	}
 	
 	@RequestMapping(path="/borrarPunto",method=RequestMethod.POST)
 	public HashMap<String, Boolean> borrarPunto(@RequestParam("id") Integer id,@RequestParam("idAtraccion") Integer idAtraccion) {
 		HashMap<String, Boolean> respuesta = new HashMap<String, Boolean>();
-		puntoDao.borrar(id,idAtraccion);
+		puntoDao.borrar(id);
 		return respuesta;
 	}
 	

@@ -8,7 +8,7 @@ public interface IPuntoDeInteresIdiomaDAO extends IDAO {
 
 	PuntoIdioma get(Long id, String idioma);
 	
-	void borrar(long id, Integer idAtraccion);
+	void borrar(long id);
 
 	List<PuntoIdioma> listarPorAtraccion(int idAtraccion, String idioma);
 
@@ -17,5 +17,9 @@ public interface IPuntoDeInteresIdiomaDAO extends IDAO {
 	PuntoIdioma get(Long id);
 
 	boolean puntoExistente(PuntoIdioma punto);
+	
+	void cambiarOrdenes(String ordenPuntos);
+	
+	void rollbackPuntosBorrados(String puntosBorrados);
 
 }

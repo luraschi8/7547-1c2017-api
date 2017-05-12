@@ -138,6 +138,7 @@
 
 <form:form id="formVer" name="formVer" action="atraccionVer" method="get" commandName="atraccion">
 	<input id="idAtraccion" name="idAtraccion" type="hidden"/>
+	<input id="idioma" name="idioma" type="hidden"/>
 </form:form>
 
 <form:form id="formVerRecorrido" name="formVerRecorrido" action="recorridoVer" method="get" commandName="recorrido">
@@ -231,6 +232,7 @@ $('#tablita tbody').on('click', '#ver', function (e) {
 	var data = table.row(this.closest("tr")).data();
 	e.preventDefault();
 	document.formVer.idAtraccion.value = data["id"];
+	document.formVer.idioma.value = "ES";
 	document.getElementById("formVer").submit();
 });
 
