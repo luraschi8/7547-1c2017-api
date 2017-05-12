@@ -45,7 +45,7 @@
 							<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_RECORRIDO)" rows="1" id="nombre" path="nombre" name="nombre" class="route_box" placeholder="Ingrese el nombre del recorrido" required></textarea>
 						</div>
 						
-						<div class="alert alert-danger fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
+						<div class="alert alert-danger fade in route_alert" id="mensajeNombreVacio" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para el recorrido.
 						</div>
@@ -57,7 +57,7 @@
 							<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_RECORRIDO)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="route_box"  placeholder="Ingrese la descripcion del recorrido" required></textarea>
 						</div>
 						
-						<div class="alert alert-danger fade in atraction-alert" id="mensajeDescripcionVacia" style="display: none;">
+						<div class="alert alert-danger fade in route_alert" id="mensajeDescripcionVacia" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
 						 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
 						</div>
@@ -202,11 +202,14 @@ $('#table_all_atractions tbody').on('click', '#add_atraction', function (e) {
 	}
 	e.preventDefault();
 	var data = table_all_atractions.row(this.closest("tr")).data();
+	drawAtractionInMap(data);
 	dentro_del_recorrido.push(data["id"]);
 	fuera_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
 	table_route_atractions.row.add({
         "id":       data.id,
-        "nombre":   data.nombre
+        "nombre":   data.nombre,
+        "latitud":   data.latitud,
+        "longitud":   data.longitud
     }).draw();
 	table_all_atractions.row(this.closest("tr")).remove().draw();
 });
@@ -215,11 +218,14 @@ $('#table_all_atractions tbody').on('click', '#add_atraction', function (e) {
 $('#table_route_atractions tbody').on('click', '#remove_atraction', function (e) {
 	e.preventDefault();
 	var data = table_route_atractions.row(this.closest("tr")).data();
+	drawAtractionInMap(data);
 	dentro_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
 	fuera_del_recorrido.push(data["id"]);
 	table_all_atractions.row.add({
         "id":       data.id,
-        "nombre":   data.nombre
+        "nombre":   data.nombre,
+        "latitud":   data.latitud,
+        "longitud":   data.longitud
     }).draw();
 	table_route_atractions.row(this.closest("tr")).remove().draw();
 });
@@ -265,25 +271,19 @@ function validarUbicacion(hay_ubicacion, mensaje, hayError) {
 var location_selected = false;
 
 function validarRecorridoRepetido() {
-	hideAllAtractionErrorMessages();
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
-	hayError = validarUbicacion(location_selected, "mensajeUbicacionVacia", hayError);
-	
 	if (hayError == 1) {
 		return;
 	}
-	
 	var ciudad = {
 		"id": document.formNuevo.idCiudad.value,
 	}
-	
 	var json = {
 		"ciudad": ciudad,
 		"nombre": document.formNuevo.nombre.value,
 	};
-	
 	$.ajax({
 		url : "validarRecorrido",
 		type : "POST",
@@ -293,7 +293,7 @@ function validarRecorridoRepetido() {
 		contentType : "application/json",
 		success: function (data) {
 			if (data.existe == false) {
-				document.formNuevo.recorrible.value = $("input[name='idioma']:checked").val();
+				document.formNuevo.idioma.value = $("input[name='idioma']:checked").val();
 			  	document.getElementById("formNuevo").submit();
 			} else {
 				document.getElementById("mensajeNombreRepetido").style.display = 'block';
@@ -312,12 +312,36 @@ function validarRecorridoRepetido() {
 </c:set>
 
 <script>
+var map;
+var markers = [];
+
 function initMap() {
 	map = new google.maps.Map(document.getElementById('view_or_edit_route_map'), {
 	    center: {lat: ${latitud_ciudad}, lng: ${longitud_ciudad}},
 	    zoom: 13
 	});
 };
+
+function drawAtractionInMap(data) {
+	var latitud = data["latitud"];
+	var longitud = data["longitud"];
+	var myLatlng = new google.maps.LatLng(latitud, longitud);
+	for (var i = 0; i < markers.length; i++) {
+		pos = markers[i].getPosition();
+		if (pos.lat() == myLatlng.lat() && pos.lng() == myLatlng.lng()) {
+			markers[i].setMap(null);
+			markers.splice(i, 1);
+			return;
+		}
+	}
+	var marker = new google.maps.Marker({
+         position: myLatlng
+    });
+    
+    marker.setMap(map);
+	map.setCenter(marker.getPosition());
+	markers.push(marker);
+}
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places&callback=initMap" async defer></script>

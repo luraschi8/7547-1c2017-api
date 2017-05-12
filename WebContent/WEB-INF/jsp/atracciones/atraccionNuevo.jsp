@@ -439,12 +439,12 @@ $('#botonAtras').on('click', function(e) {
 });
 
 $('#botonNuevo').on('click', function(e) {
-		e.preventDefault();
-		document.getElementById("mensajeNombreRepetido").style.display = 'none';
-		document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
-		document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
-		hideAllAtractionErrorMessages();
- 	 	validarAtraccionRepetida();
+	e.preventDefault();
+	document.getElementById("mensajeNombreRepetido").style.display = 'none';
+	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
+	hideAllAtractionErrorMessages();
+ 	validarAtraccionRepetida();
 });
 
 function validarElemento(elemento, mensaje, hayError) {

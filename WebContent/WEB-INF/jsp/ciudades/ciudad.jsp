@@ -200,7 +200,7 @@ $('#tablita tbody').on('click', '#marcar', function (e) {
 	e.preventDefault();
 	var latitud = data["latitud"];
 	var longitud = data["longitud"];
-	var myLatlng = new google.maps.LatLng(latitud,longitud);
+	var myLatlng = new google.maps.LatLng(latitud, longitud);
 	for (var i = 0; i < markers.length; i++) {
 		pos = markers[i].getPosition();
 		if (pos.lat() == myLatlng.lat() && pos.lng() == myLatlng.lng()) {
@@ -210,9 +210,9 @@ $('#tablita tbody').on('click', '#marcar', function (e) {
 		}
 	}
 	var marker = new google.maps.Marker({
-         position: myLatlng
-       });
-       marker.setMap(map);
+    	position: myLatlng
+    });
+    marker.setMap(map);
 	map.setCenter(marker.getPosition());
 	markers.push(marker);
 });
