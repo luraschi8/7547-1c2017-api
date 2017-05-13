@@ -99,13 +99,13 @@ public class AtraccionControlador {
 		a.addAtraccionIdioma(atraccion);
 		atraccionDao.guardar(a);
 		guardarMultimediaMultiple(a,galeria1,galeria2,galeria3,galeria4,galeria5);
-		guardarPuntosDeInteres(a,idioma);
+		guardarPuntosDeInteres(a);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
 
-	private void guardarPuntosDeInteres(Atraccion atraccion,String idioma) {
+	private void guardarPuntosDeInteres(Atraccion atraccion) {
 		if (atraccion.getRecorrible() == 1) {
-			puntoDao.guardarPuntosConAtraccionNula(atraccion,idioma);
+			puntoDao.guardarPuntosConAtraccionNula(atraccion);
 		} else {
 			puntoDao.borrarPuntosDeAtraccion(atraccion);
 		}
@@ -170,9 +170,9 @@ public class AtraccionControlador {
 	}
 
 	@RequestMapping(path="atraccionVer")
-	public ModelAndView ver(@RequestParam("idAtraccion") long id,@RequestParam(name="idioma",required=false)String idioma ) {
+	public ModelAndView ver(@RequestParam("idAtraccion") long id,@RequestParam(name="idioma")String idioma ) {
 		Atraccion atraccion = atraccionDao.get(id);
-		AtraccionIdioma a = new AtraccionIdioma();
+		AtraccionIdioma a = atraccionIdiomaDao.get(id, idioma);
 		a.setAtraccion(atraccion);
 		ModelAndView model = new ModelAndView("atracciones/atraccion");
 		model.addObject("atraccion", a);
@@ -200,8 +200,7 @@ public class AtraccionControlador {
 									@RequestParam(name="videoCambiado") int videoCambiado,
 									@RequestParam("planoCambiado") int planoCambiado,
 									@RequestParam("audioCambiado") int audioCambiado,
-									@RequestParam("archivoPlano") MultipartFile plano,
-									@RequestParam("idioma") String idiomaModificado) throws IOException {
+									@RequestParam("archivoPlano") MultipartFile plano) throws IOException {
 		atraccion = atraccionIdiomaDao.get(atraccion.getId());
 		
 		if (planoCambiado == 1) {
@@ -221,14 +220,13 @@ public class AtraccionControlador {
 		atraccion.getAtraccion().setLatitud(latitudModificada);
 		atraccion.getAtraccion().setLongitud(longitudModificada);
 		atraccion.getAtraccion().setRecorrible(recorribleModificado);
-		atraccion.setIdioma(Idioma.valueOf(idiomaModificado));
 		if (video != null) {
 			atraccion.getAtraccion().setVideo(video.getBytes());
 		}
 		guardarAudio(atraccion,audio);
 		guardarMultimediaMultiple(atraccion.getAtraccion(),galeria1,galeria2,galeria3,galeria4,galeria5);
 		atraccionDao.modificar(atraccion);
-		guardarPuntosDeInteres(atraccion.getAtraccion(),idiomaModificado);
+		guardarPuntosDeInteres(atraccion.getAtraccion());
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + atraccion.getAtraccion().getCiudad().getId());
 	}
 

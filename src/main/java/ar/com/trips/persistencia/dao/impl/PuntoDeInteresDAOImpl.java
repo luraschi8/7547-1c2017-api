@@ -50,7 +50,7 @@ public class PuntoDeInteresDAOImpl extends DAOImpl implements IPuntoDeInteresDAO
 	}
 
 	@Override
-	public void guardarPuntosConAtraccionNula(Atraccion atraccion,String idioma) {
+	public void guardarPuntosConAtraccionNula(Atraccion atraccion) {
 		List<PuntoDeInteres> lista = listarPorAtraccionNuevo((int)atraccion.getId());
 		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();

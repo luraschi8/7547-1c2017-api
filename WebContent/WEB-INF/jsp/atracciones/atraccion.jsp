@@ -48,8 +48,8 @@
 					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.atraccion.ciudad.latitud}"/>
 					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.atraccion.ciudad.longitud}"/>
 	
-					<form:input type="hidden" id="latitud" name="latitud" path="atraccion.latitud"/>
-					<form:input type="hidden" id="longitud" name="longitud" path="atraccion.longitud"/>
+					<input type="hidden" id="latitud" name="latitud" value="${atraccion.atraccion.latitud}"/>
+					<input type="hidden" id="longitud" name="longitud" value="${atraccion.atraccion.longitud}"/>
 					
 					<div>
 						<form:label class="atraction-label atraction-main-information-label" path="atraccion.nombre">Nombre</form:label>
@@ -383,12 +383,37 @@
 <c:set var="mensajeBorrarResenia">
  	Se borrará la reseña seleccionada. ¿Desea continuar?
 </c:set>
+
 <input id="mensajeBorrarResenia" type="hidden" value="${mensajeBorrarResenia}" />
  
 <form id ="formBorrarResenia" name="formBorrarResenia" action="borrarResenia" method="post">
 	<input id="idResenia" name="idResenia" type="hidden">
 	<input id="idAtraccion" name="idAtraccion" value="${atraccion.id}" type="hidden"> 
 </form>
+
+<c:set var="latitud_atraccion">
+	${atraccion.atraccion.latitud}
+</c:set>
+
+<c:set var="longitud_atraccion">
+	${atraccion.atraccion.longitud}
+</c:set>
+
+<c:set var="latitud_ciudad">
+	${atraccion.atraccion.ciudad.latitud}
+</c:set>
+
+<c:set var="longitud_ciudad">
+	${atraccion.atraccion.ciudad.longitud}
+</c:set>
+
+<c:set var="id">
+	${atraccion.atraccion.id}
+</c:set>
+
+<c:set var="idioma">
+	${idioma}
+</c:set>
 
     
 <script>
@@ -1154,24 +1179,7 @@ $(document).ready(function() {
 </script>
 
 
-<c:set var="latitud_atraccion">
-	${atraccion.atraccion.latitud}
-</c:set>
 
-<c:set var="longitud_atraccion">
-	${atraccion.atraccion.longitud}
-</c:set>
-
-<c:set var="latitud_ciudad">
-	${atraccion.atraccion.ciudad.latitud}
-</c:set>
-
-<c:set var="longitud_ciudad">
-	${atraccion.atraccion.ciudad.longitud}
-</c:set>
-<c:set var="id">
-	${atraccion.atraccion.id}
-</c:set>
 
 <!-- Mapa -->
 <script>
@@ -1324,9 +1332,6 @@ function isOutOfRange(coordinates) {
     return out_of_range;
 }
 
-<c:set var="idioma">
-	${idioma}
-</c:set>
 
 /* PUNTO DE INTERES  */
 var table = $('#tablita').DataTable( {
@@ -1458,7 +1463,8 @@ function crearPunto() {
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
 	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombreTextarea.value);
 	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcionTextarea.value);
-	formData.append("idAtraccion",${id});
+	formData.append("idAtraccion","${id}");
+	formData.append("idioma","${idioma}");
 	$.ajax({
 		url : "crearPunto",
 		type : "POST",
