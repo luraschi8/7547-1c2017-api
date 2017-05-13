@@ -29,6 +29,7 @@
 					<div class="route_main_information">
 						<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.ciudad.id}"/>
 						<input type="hidden" id="id" name="id" value="${recorrido.id}"/>
+						<input type="hidden" name="atracciones" value=""/>
 	
 						<div class="route_language">
 							<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
@@ -230,11 +231,6 @@ $('#table_route_atractions tbody').on('click', '#remove_atraction', function (e)
 	table_route_atractions.row(this.closest("tr")).remove().draw();
 });
 
-
-
-
-
-
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
@@ -267,9 +263,6 @@ function validarUbicacion(hay_ubicacion, mensaje, hayError) {
 	return hayError;
 }
 
-//Para validar si se ha o no elegido una ubicación
-var location_selected = false;
-
 function validarRecorridoRepetido() {
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
@@ -294,6 +287,11 @@ function validarRecorridoRepetido() {
 		success: function (data) {
 			if (data.existe == false) {
 				document.formNuevo.idioma.value = $("input[name='idioma']:checked").val();
+				var atracciones_aux = "";
+				for (var i = 0; i < dentro_del_recorrido.length; i++) {
+					atracciones_aux += dentro_del_recorrido[i] + ",";
+				}
+				document.formNuevo.atracciones.value = atracciones_aux.substring(0, atracciones_aux.length - 1);
 			  	document.getElementById("formNuevo").submit();
 			} else {
 				document.getElementById("mensajeNombreRepetido").style.display = 'block';

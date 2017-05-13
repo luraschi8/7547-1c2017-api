@@ -57,14 +57,23 @@ public class RecorridoControlador {
 		return model;
 	}
 	
+	private void agregarAtracciones(Recorrido recorrido, String atracciones) {
+		String atracciones_separadas[] = atracciones.split(",");
+		for (int i = 0; i < atracciones_separadas.length; i++) {
+			recorrido.addAtractionToRoute(atraccionDao.get(Long.parseLong(atracciones_separadas[i])));
+		}
+		recorrido.setCantAtracciones(atracciones_separadas.length);
+	}
+	
 	@RequestMapping("recorridoNuevoValidar")
 	public String nuevo(@ModelAttribute("recorrido") Recorrido recorrido, @RequestParam("idCiudad") int idCiudad,
-							@RequestParam("idioma") String idioma) {
+							@RequestParam("idioma") String idioma, @RequestParam("atracciones") String atracciones) {
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		recorrido.setCiudad(ciudad);
 		recorrido.setBorrado(0);
 		recorrido.setIdioma(idioma);
+		agregarAtracciones(recorrido, atracciones);
 		recorridoDao.guardar(recorrido);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
