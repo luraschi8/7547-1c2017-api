@@ -28,21 +28,27 @@ create table Ciudad (
 
 create table Atraccion (
 	id bigint(10) primary key not null auto_increment,
-	nombre varchar(50) not null,
     idCiudad bigint(10) not null,
-    horario varchar(100),
-    descripcion varchar(250),
-    precio varchar(100),
+    nombre varchar(50) not null,
     latitud float not null,
     longitud float not null,
     borrado tinyint default 0 not null,
     plano mediumblob,
-    audioEN mediumblob,
-    audioES mediumblob,
     video mediumblob,
     recorrible tinyint default 0,
-    idioma varchar(2),
     foreign key (idCiudad) references Ciudad (id)
+);
+
+create table AtraccionIdioma (
+	id bigint(10) primary key not null auto_increment,
+    idAtraccion bigint(10) not null,
+	idioma varchar(3) not null,
+    horario varchar(100),
+    descripcion varchar(250),
+    borrado tinyint default 0 not null,
+    precio varchar(100),
+    audio mediumblob,
+    foreign key (idAtraccion) references Atraccion (id)
 );
 
 create table ImagenAtraccion (
@@ -55,15 +61,21 @@ create table ImagenAtraccion (
 create table PuntoDeInteres (
 	id bigint(10) primary key not null auto_increment,
     nombre varchar(50),
+    borrado tinyint default 0 not null,
+    imagen mediumblob,
+    idAtraccion bigint(10),
+    foreign key (idAtraccion) references Atraccion (id)
+);
+
+create table PuntoIdioma (
+	id bigint(10) primary key not null auto_increment,
+    idioma varchar(3) not null,
     descripcion varchar(250),
     orden tinyint,
     borrado tinyint default 0 not null,
-    imagen mediumblob,
-    audioEN mediumblob,
-    audioES mediumblob,
-    idAtraccion bigint(10),
-    idioma varchar(2),
-    foreign key (idAtraccion) references Atraccion (id)
+    audio mediumblob,
+    idPunto bigint(10),
+    foreign key (idPunto) references PuntoDeInteres (id)
 );
 
 create table Resenia (

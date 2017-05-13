@@ -27,30 +27,36 @@
 	
 				<!-- Información principal -->
 				<div class="atraction-main-information">
-					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
-					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.latitud}"/>
+					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.atraccion.ciudad.id}"/>
+					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.atraccion.ciudad.latitud}"/>
 	
-					<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
-					<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
+					<form:input type="hidden" id="latitud" name="latitud" path="atraccion.latitud"/>
+					<form:input type="hidden" id="longitud" name="longitud" path="atraccion.longitud"/>
 					<input type="hidden" id="id" name="id" value="${atraccion.id}"/>
-					
-					
 					
 					<div>
 						<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
 						  	<div>
-							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="es" style="margin: 4px" checked="checked">Español
-							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="en" style="margin: 4px; margin-left: 15px;">Inglés
+							  	<c:choose>
+							  		<c:when test="${idioma =='EN'}">
+							  			<input type="radio" id="langES" name="idioma" path="idioma" value="ES" style="margin: 4px" onclick="cambiarIdioma()">Español
+									  	<input type="radio" id="langEN" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" checked="checked" onclick="cambiarIdioma()">Inglés
+							  		</c:when>
+							  		<c:otherwise>
+							  			<input type="radio" id="langES" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked" onclick="cambiarIdioma()">Español
+									  	<input type="radio" id="langEN" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" onclick="cambiarIdioma()">Inglés
+							  		</c:otherwise>	
+							  			
+							  	</c:choose>
 							</div>
 					</div>
 					
-					
-					
 					<div>
-						<form:label class="atraction-label atraction-name-label" path="nombre">Nombre</form:label><font color="red"> *</font>
+						<form:label class="atraction-label atraction-name-label" path="atraccion.nombre">Nombre</form:label><font color="red"> *</font>
 					</div>
+					<!-- -->
 					<div>
-						<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="1" id="nombre" path="nombre" name="nombre" class="atraction-box atraction-name-box"  placeholder="Ingrese el nombre de la atracción" required></textarea>
+						<form:input path="atraccion.nombre" type="text" onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_ATRACCION)" rows="1" id="nombre" name="nombre" class="atraction-box atraction-name-box" placeholder="Ingrese el nombre de la atracción"/>
 					</div>
 					
 					<div class="alert alert-danger fade in atraction-alert" id="mensajeNombreVacio" style="display: none;">
@@ -85,10 +91,10 @@
 					</div>
 					
 					<div>
-						<form:label class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
+						<form:label class="atraction-label atraction-recorrible-label" path="atraccion.recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
-							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show(); $('#view-atraction-points-of-interest-panel').show();">Sí
-							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide(); $('#view-atraction-points-of-interest-panel').hide();">No
+							  	<input type="radio" id="es-recorrible" name="recorrible" path="atraccion.recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show(); $('#view-atraction-points-of-interest-panel').show();">Si
+							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="atraccion.recorrible" value="0" checked="checked" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide(); $('#view-atraction-points-of-interest-panel').hide();">No
 							</div>
 					</div>
 				</div>
@@ -98,7 +104,7 @@
 					<!-- Plano -->
 					<div id="blueprints" style="display: none;style="float:left"">
 						<div>
-							<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label><font color="red"> *</font>
+							<form:label class="atraction-label atraction-blueprints-label" path="atraccion.plano">Plano</form:label><font color="red"> *</font>
 						</div>
 						<div class="atraction-blueprints-box" style="float:left">
 							<img id="plano" style="width:100%; height:100%">
@@ -124,7 +130,7 @@
 					<!-- Galería -->
 					<div style="clear: left">
 						<div>
-							<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label><font color="red"> *</font>
+							<label class="atraction-label atraction-gallery-label">Galería</label><font color="red"> *</font>
 						</div>
 						<div id ="container" class="atraction-gallery atraction-gallery-box">
 							<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
@@ -175,7 +181,7 @@
 					
 					<!-- Audioguía -->
 					<div class="new-atraction-audio-group">
-						<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
+						<label class="atraction-label atraction-audio-label">Audioguía</label>
 						<div>
 							<!-- Reproducir audioguía -->
 							<div style="float:left">
@@ -274,7 +280,7 @@
 	</form:form>
 </div>
 
-<form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post"></form:form>
+<form:form id="formAtras" action="ciudadVer?idCiudad=${atraccion.atraccion.ciudad.id}" method="post"></form:form>
 <div class="btn-final" style="text-align:center;">
 	<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
 	<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Guardar" />
@@ -415,6 +421,13 @@
 	</div>
 </div>
 
+<form style="display: none" class="form-city-add-atraction" id="formAgregarAtraccion" name="formAgregarAtraccion" action="atraccionNuevo" method="post">
+	<input id="idCliudad" name="idCiudad" type="hidden" value="${atraccion.atraccion.ciudad.id}"/>
+	<input id="latitudCiudad" name="latitudCiudad" type="hidden" value="${atraccion.atraccion.ciudad.latitud}"/>
+	<input id="longitudCiudad" name="longitudCiudad" type="hidden" value="${atraccion.atraccion.ciudad.longitud}"/>
+	<input id="idioma" name="idioma" type="hidden" value="${idioma}"/>
+</form>
+
 
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 <script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
@@ -509,11 +522,15 @@ function validarAtraccionRepetida() {
 		"id": document.formNuevo.idCiudad.value,
 	}
 	
-	var json = {
+	var a = {
 		"ciudad": ciudad,
-		"nombre": document.formNuevo.nombre.value,
 		"latitud": document.formNuevo.latitud.value,
-		"longitud": document.formNuevo.longitud.value
+		"longitud": document.formNuevo.longitud.value,
+		"nombre": document.formNuevo.nombre.value
+	}
+	
+	var json = {
+		"atraccion": a,
 	};
 	
 	$.ajax({
@@ -526,7 +543,7 @@ function validarAtraccionRepetida() {
 		success: function (data) {
 			if (data.existe == false) {
 				document.formNuevo.recorrible.value = $("input[name='recorrible']:checked").val();
-				document.formNuevo.recorrible.value = $("input[name='idioma']:checked").val();
+				document.formNuevo.idioma.value = $("input[name='idioma']:checked").val();
 				if (far_away) {
 				    bootbox.confirm({
 			    	    message: "La atracción se encuentra a más de 15km de distancia de la ciudad. ¿Desea guardar los cambios de todos modos?",
@@ -555,14 +572,12 @@ function validarAtraccionRepetida() {
 }
 </script>
 
-
 <!-- Plano -->
 <script>
 $(document).ready(function() {
 	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajePlanoIncorrectoError");
 });
 </script>
-
 
 <!-- Gallery -->
 <script>
@@ -804,11 +819,11 @@ $(document).ready(function() {
 </script>
 
 <c:set var="latitud_ciudad">
-	${atraccion.ciudad.latitud}
+	${atraccion.atraccion.ciudad.latitud}
 </c:set>
 
 <c:set var="longitud_ciudad">
-	${atraccion.ciudad.longitud}
+	${atraccion.atraccion.ciudad.longitud}
 </c:set>
 
 <c:set var="id">
@@ -906,10 +921,35 @@ function checkIfIsOutOfRange(coordinates) {
 };
 
 /* PUNTO DE INTERES  */
+<c:set var="idioma">
+	${idioma}
+</c:set>
+idiomaCheck = $("input[name='idioma']:checked").val();
+
+$(document).ready(function() {
+	var idioma = "${idioma}";
+	if (idioma != "") {
+		var idIdioma = "lang" + idioma;
+		document.getElementById(idIdioma).checked = true;
+	}
+	console.log("IDIOMA: " + idioma);
+});
+
+
+function cambiarIdioma() {
+	var idiomaACambiar = "";
+	if (idiomaCheck == "EN") {
+		idiomaACambiar = "ES"
+	} else {
+		idiomaACambiar = "EN";	
+	}
+	document.formAgregarAtraccion.idioma.value = idiomaACambiar;
+	document.getElementById("formAgregarAtraccion").submit();
+}
 
 var table = $('#tablita').DataTable( {
 	dom: 'frtip',
-	ajax: "puntoAtraccionNuevoJson/${id}",
+	ajax: "puntoAtraccionNuevoJson/${id}/" + idiomaCheck,
 	columns: [
 		{	data:"orden",
 			render: function (data,type,row) {
@@ -917,9 +957,11 @@ var table = $('#tablita').DataTable( {
 		 	}
 		},
 		{	data: "id",
-        	render: function (data,type,row) {
-        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
-        	}
+         	render: function (data,type,row) {
+		 		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data 
+		 		+ '" style="align: center; width:40px; height:40px"/></div>' 
+		 		+ '<span style="display:none" class="clasePuntoId">' + data + '</span>'
+		 	}
         },
         {data: "nombre" },
 		{defaultContent:'<button class="btn btn-danger" id="borrar">Borrar</button>'},
@@ -973,6 +1015,7 @@ function crearPunto() {
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
 	formData.append("nombre",document.getElementById('puntoNombreTextarea').value);//document.formNuevoPuntoDeInteres.puntoNombre.value);
 	formData.append("descripcion",document.getElementById('puntoDescripcionTextarea').value);//document.formNuevoPuntoDeInteres.puntoDescripcion.value);
+	formData.append("idioma",$("input[name='idioma']:checked").val());
 	$.ajax({
 		url : "crearPunto",
 		type : "POST",

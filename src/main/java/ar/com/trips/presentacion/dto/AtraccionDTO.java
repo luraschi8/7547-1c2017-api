@@ -3,6 +3,8 @@ package ar.com.trips.presentacion.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.trips.util.enums.Idioma;
+
 public class AtraccionDTO {
 
 	private long id;
@@ -33,7 +35,9 @@ public class AtraccionDTO {
 		
 	private List<String> listaImagenes = new ArrayList<>();
 	
-	private String idioma;
+	private String imagen;
+	
+	private Idioma idioma;
 
 	public long getId() {
 		return id;
@@ -147,11 +151,20 @@ public class AtraccionDTO {
 		this.listaImagenes = listaImagenes;
 	}
 
-	public String getIdioma() {
+	public Idioma getIdioma() {
 		return idioma;
 	}
 
-	public void setIdioma(String idioma) {
+	public void setIdioma(Idioma idioma) {
 		this.idioma = idioma;
 	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
 }

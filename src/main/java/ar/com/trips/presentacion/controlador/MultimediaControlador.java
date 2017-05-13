@@ -18,13 +18,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
+import ar.com.trips.persistencia.dao.IAtraccionIdiomaDAO;
 import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
+import ar.com.trips.persistencia.dao.IPuntoDeInteresIdiomaDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
+import ar.com.trips.persistencia.modelo.PuntoIdioma;
 
 @Controller
 public class MultimediaControlador {
@@ -36,7 +40,13 @@ public class MultimediaControlador {
 	private IAtraccionDAO atraccionDao;
 	
 	@Autowired
+	private IAtraccionIdiomaDAO atraccionIdiomaDao;
+	
+	@Autowired
 	private IPuntoDeInteresDAO puntoDao;
+	
+	@Autowired
+	private IPuntoDeInteresIdiomaDAO puntoIdiomaDao;
 	
 	@Autowired
 	private IImagenAtraccionDAO imagenAtraccionDao;
@@ -106,10 +116,9 @@ public class MultimediaControlador {
 	@RequestMapping(value = "/audioAtraccion", method = RequestMethod.GET)
 	@ResponseBody public void getAudio(@RequestParam("id") Long id, HttpServletResponse response) {
 	    try {
-	        Atraccion atraccion = atraccionDao.get(id);
+	        AtraccionIdioma atraccion = atraccionIdiomaDao.get(id);
 	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-	        //response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
-	        ByteArrayInputStream iStream = new ByteArrayInputStream(atraccion.getAudioEN());
+	        ByteArrayInputStream iStream = new ByteArrayInputStream(atraccion.getAudio());
 	        IOUtils.copy(iStream, response.getOutputStream());
 	        response.flushBuffer();
 	    } catch (java.nio.file.NoSuchFileException e) {
@@ -124,10 +133,9 @@ public class MultimediaControlador {
 	@RequestMapping(value = "/audioPunto", method = RequestMethod.GET)
 	@ResponseBody public void getAudioPunto(@RequestParam("id") Long id, HttpServletResponse response) {
 	    try {
-	        PuntoDeInteres punto = puntoDao.get(id);
+	        PuntoIdioma punto = puntoIdiomaDao.get(id);
 	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-	        //response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
-	        ByteArrayInputStream iStream = new ByteArrayInputStream(punto.getAudioEN());
+	        ByteArrayInputStream iStream = new ByteArrayInputStream(punto.getAudio());
 	        IOUtils.copy(iStream, response.getOutputStream());
 	        response.flushBuffer();
 	    } catch (java.nio.file.NoSuchFileException e) {

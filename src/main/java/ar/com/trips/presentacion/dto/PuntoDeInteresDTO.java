@@ -8,9 +8,9 @@ public class PuntoDeInteresDTO {
 	
 	private String descripcion;
 	
-	private String audioEN;
+	private int orden;
 	
-	private String audioES;
+	private String audio;
 	
 	private String imagen;
 	
@@ -40,20 +40,12 @@ public class PuntoDeInteresDTO {
 		this.descripcion = descripcion;
 	}
 
-	public String getAudioEN() {
-		return audioEN;
+	public String getAudio() {
+		return audio;
 	}
 
-	public void setAudioEN(String audioEN) {
-		this.audioEN = audioEN;
-	}
-
-	public String getAudioES() {
-		return audioES;
-	}
-
-	public void setAudioES(String audioES) {
-		this.audioES = audioES;
+	public void setAudio(String audio) {
+		this.audio = audio;
 	}
 
 	public String getImagen() {
@@ -71,4 +63,13 @@ public class PuntoDeInteresDTO {
 	public void setIdioma(String idioma) {
 		this.idioma = idioma;
 	}
+
+	public int getOrden() {
+		return orden;
+	}
+
+	public void setOrden(int orden) {
+		this.orden = orden;
+	}
+	
 }

@@ -12,7 +12,7 @@
 <head>
 <jsp:include page="../template/importacion.jsp"></jsp:include>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Trips - ${atraccion.nombre}</title>
+<title>Trips - ${atraccion.atraccion.nombre}</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 	    </div>
     </div>
     
-	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.nombre} - ${atraccion.ciudad.nombre}</h1>
+	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.atraccion.nombre} - ${atraccion.atraccion.ciudad.nombre}</h1>
 
 <div id="attractionForm">
 	<form:form id ="formModificar" name="formModificar" action="atraccionModificar" method="post" commandName="atraccion" enctype="multipart/form-data">
@@ -43,24 +43,24 @@
 				
 				<!-- Información principal -->
 				<div class="atraction-main-information">
-					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.ciudad.id}"/>
-					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.latitud}"/>
-					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.ciudad.longitud}"/>
+					<input type="hidden" id="idCiudad" name="idCiudad" value="${atraccion.atraccion.ciudad.id}"/>
+					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.atraccion.ciudad.latitud}"/>
+					<input type="hidden" id="latitudCiudad" name="latitudCiudad" value="${atraccion.atraccion.ciudad.longitud}"/>
 	
-					<form:input type="hidden" id="latitud" name="latitud" path="latitud"/>
-					<form:input type="hidden" id="longitud" name="longitud" path="longitud"/>
+					<input type="hidden" id="latitud" name="latitud" value="${atraccion.atraccion.latitud}"/>
+					<input type="hidden" id="longitud" name="longitud" value="${atraccion.atraccion.longitud}"/>
 					
 					<div>
-						<form:label class="atraction-label atraction-main-information-label" path="nombre">Nombre</form:label>
-						<input type="hidden" id="nombre" name="nombre" value="${atraccion.nombre}"/>
+						<form:label class="atraction-label atraction-main-information-label" path="atraccion.nombre">Nombre</form:label>
+						<input type="hidden" id="nombre" name="nombre" value="${atraccion.atraccion.nombre}"/>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-name" onclick="editField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)">
 							<span class="glyphicon glyphicon-pencil"></span>
 						</button>
 					</div>
 					<div>
 						<div>
-							<p id="nombreEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.nombre}">${atraccion.nombre}</p>
-							<textarea onkeydown="calculateMaxLength('#nombreEditadoTextarea', MAX_NOMBRE_ATRACCION)" style="display:none" rows="1" id="nombreEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.nombre}">${atraccion.nombre}</textarea>
+							<p id="nombreEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${atraccion.atraccion.nombre}">${atraccion.atraccion.nombre}</p>
+							<textarea onkeydown="calculateMaxLength('#nombreEditadoTextarea', MAX_NOMBRE_ATRACCION)" style="display:none" rows="1" id="nombreEditadoTextarea" class="atraction-box atraction-name-box" value="${atraccion.atraccion.nombre}">${atraccion.atraccion.nombre}</textarea>
 						</div>
 						<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-nombre" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -141,7 +141,7 @@
 					</div>
 					
 					<div>
-						<form:label id="recorrible" name="recorrible" class="atraction-label atraction-recorrible-label" path="recorrible">&iquestEs recorrible?</form:label>
+						<form:label id="recorrible" name="recorrible" class="atraction-label atraction-recorrible-label" path="atraccion.recorrible">&iquestEs recorrible?</form:label>
 						  	<div>
 							  	<input type="radio" id="es-recorrible" name="recorrible" path="recorrible" value="1" style="margin: 4px" onclick="$('#blueprints').show(); $('#view-atraction-points-of-interest-panel').show();">Sí
 							  	<input type="radio" id="no-es-recorrible" name="recorrible" path="recorrible" value="0" style="margin: 4px; margin-left: 15px;" onclick="$('#blueprints').hide(); $('#view-atraction-points-of-interest-panel').hide();">No
@@ -153,7 +153,7 @@
 				<!-- Plano -->
 				<div id="blueprints">
 					<div>
-						<form:label class="atraction-label atraction-blueprints-label" path="plano">Plano</form:label>
+						<form:label class="atraction-label atraction-blueprints-label" path="atraccion.plano">Plano</form:label>
 					</div>
 					<div class="atraction-blueprints-box" style="float: left">
 						<img id="plano" style="width:100%; height:100%">
@@ -182,7 +182,7 @@
 					<input type="hidden" id="videoCambiado" name="videoCambiado" value=0>					
 					
 					<div>
-						<form:label class="atraction-label atraction-gallery-label" path="listaImagenes">Galería</form:label>
+						<form:label class="atraction-label atraction-gallery-label" path="atraccion.listaImagenes">Galería</form:label>
 					</div>
 					<div id="container" class="atraction-gallery-box" style="float:left">
 						<img class="atraction-gallery" id="imagenGaleria" style="width:100%; height:100%;">
@@ -235,7 +235,7 @@
 				
 				<!-- Audioguía -->
 				<div style="clear: both">
-					<form:label class="atraction-label atraction-audio-label" path="audioES">Audioguía</form:label>
+					<form:label class="atraction-label atraction-audio-label" path="audio">Audioguía</form:label>
 					<input type="hidden" id="audioCambiado" name="audioCambiado" value=0>
 					<div>
 						<!-- Reproducir audioguía -->
@@ -372,10 +372,9 @@
 	</form:form>
 </div>
 
-<c:set var="id">
+<c:set var="idIdioma">
 	${atraccion.id}
 </c:set>
-
 
 <c:set var="editarResenia">
 	Editar
@@ -388,12 +387,37 @@
 <c:set var="mensajeBorrarResenia">
  	Se borrará la reseña seleccionada. ¿Desea continuar?
 </c:set>
+
 <input id="mensajeBorrarResenia" type="hidden" value="${mensajeBorrarResenia}" />
  
 <form id ="formBorrarResenia" name="formBorrarResenia" action="borrarResenia" method="post">
 	<input id="idResenia" name="idResenia" type="hidden">
 	<input id="idAtraccion" name="idAtraccion" value="${atraccion.id}" type="hidden"> 
 </form>
+
+<c:set var="latitud_atraccion">
+	${atraccion.atraccion.latitud}
+</c:set>
+
+<c:set var="longitud_atraccion">
+	${atraccion.atraccion.longitud}
+</c:set>
+
+<c:set var="latitud_ciudad">
+	${atraccion.atraccion.ciudad.latitud}
+</c:set>
+
+<c:set var="longitud_ciudad">
+	${atraccion.atraccion.ciudad.longitud}
+</c:set>
+
+<c:set var="id">
+	${atraccion.atraccion.id}
+</c:set>
+
+<c:set var="idioma">
+	${idioma}
+</c:set>
 
     
 <script>
@@ -656,7 +680,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	</div>
 </div>
 
-<form:form id="formAtras" name="formAtras" action="ciudadVer?idCiudad=${atraccion.ciudad.id}" method="post">
+<form:form id="formAtras" name="formAtras" action="ciudadVer?idCiudad=${atraccion.atraccion.ciudad.id}" method="post">
 	<input id="ordenOriginal" name="ordenOriginal" type="hidden" value="">
 </form:form>
 <div class="btn-final" style="text-align:center;">
@@ -676,7 +700,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				</div>
 				
 				<div>
-					<textarea onkeydown="calculateMaxLength('#atraccionDescripcionNuevoLenguajeTextarea', MAX_DESCRIPCION_ATRACCION)" id="atraccionDescripcionNuevoLenguajeTextarea" path="descripcion" name="atraccionDescripcionNuevoLenguajeTextarea" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese la descripción de la atracción" required="required"/></textarea>
+					<textarea onkeydown="calculateMaxLength('#atraccionDescripcionNuevoLenguaje', MAX_DESCRIPCION_ATRACCION)" id="atraccionDescripcionNuevoLenguaje" path="descripcion" name="atraccionDescripcionNuevoLenguaje" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese la descripción de la atracción" required="required"/></textarea>
 				</div>
 			</div>
 			<div class="alert alert-danger fade in atraction_new_language_alert" id="mensajeDescripcionVaciaAtraccionNuevoLenguajeError" style="display: none; margin-top: 2%;">
@@ -690,7 +714,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				</div>
 				
 				<div>
-					<textarea onkeydown="calculateMaxLength('#atraccionHorarioNuevoLenguajeTextarea', MAX_HORARIO_ATRACCION)" id="atraccionHorarioNuevoLenguajeTextarea" path="horario" name="atraccionHorarioNuevoLenguajeTextarea" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese el horario de la atracción" required="required"/></textarea>
+					<textarea onkeydown="calculateMaxLength('#atraccionHorarioNuevoLenguaje', MAX_HORARIO_ATRACCION)" id="atraccionHorarioNuevoLenguaje" path="horario" name="atraccionHorarioNuevoLenguaje" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese el horario de la atracción" required="required"/></textarea>
 				</div>
 			</div>
 			
@@ -700,7 +724,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 				</div>
 				
 				<div>
-					<textarea onkeydown="calculateMaxLength('#atraccionPrecioNuevoLenguajeTextarea', MAX_PRECIO_ATRACCION)" id="atraccionPrecioNuevoLenguajeTextarea" path="precio" name="atraccionPrecioNuevoLenguajeTextarea" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese el precio de la atracción" required="required"/></textarea>
+					<textarea onkeydown="calculateMaxLength('#atraccionPrecioNuevoLenguaje', MAX_PRECIO_ATRACCION)" id="atraccionPrecioNuevoLenguaje" path="precio" name="atraccionPrecioNuevoLenguaje" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese el precio de la atracción" required="required"/></textarea>
 				</div>
 			</div>
 
@@ -746,7 +770,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div class="btn_final_atraction_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%;">
 				<input id="botonCancelarAtraccionNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closeAtractionNewLanguagePopup();"/>
-				<input id="botonGuardarAtraccionNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+				<input id="botonGuardarAtraccionNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarAtraccionNuuevoLenguaje();"/>
 			</div>
 		</form:form>
 	</div>
@@ -822,7 +846,6 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 
 
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
-<script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 
 <script>
 $('#atraction_add_language_btn').on('click', function(e) {
@@ -865,49 +888,6 @@ function closePointOfInterestNewLanguagePopup() {
 	document.getElementById('atraction-point-of-interest-popup-form').style.display = 'block';
 }
 
-function validarPuntoDeInteresRepetido() {
-	hideAllPointOfInterestErrorMessages();
-	hayError = 0;
-	hayError = validarElemento('pdi-nombre', 'mensajeNombreVacioPuntoDeInteresError', hayError);
-	hayError = validarElemento('pdi-descripcion', 'mensajeDescripcionVaciaPuntoDeInteresError', hayError);
-	if ((document.getElementById('pdi-archivo-imagen').value == '') && (!hayError)) {
-		document.getElementById("mensajeImagenIncorrectaPuntoDeInteresError").style.display = 'block';
-		hayError = 1;
-	}
-	if ((document.getElementById('archivoAudioguiaPdi').value == '') && (!hayError)) {
-		document.getElementById("mensajeAudioPdiIncorrectoError").style.display = 'block';
-		hayError = 1;
-	}
-
-	if (hayError == 1) {
-		return;
-	}
-
-	/*var ciudad = {
-		"id": document.formModificar.idCiudad.value,
-	}
-	var json = {
-		"ciudad": ciudad,
-		"id": document.formModificar.id.value,
-		"nombre": document.formModificar.nombre.value
-	};
-	$.ajax({
-		url : "validarAtraccion",
-		type : "POST",
-		data : JSON.stringify(json),
-		processData : false,
-		dataType: "json",
-		contentType : "application/json",
-		success: function (data) {
-			if (data.existe == false) {
-			  	document.getElementById("formNuevoPuntoDeInteres").submit();
-			} else {
-				document.getElementById("mensajeNombrePuntoDeInteresRepetido").style.display = 'block';
-			}
-		}
-	});*/
-}
-
 </script>
 
 
@@ -925,7 +905,7 @@ $("#precioEditadoTextarea").attr("maxlength", MAX_PRECIO_ATRACCION);
 const MAX_COMENTARIO = "500";
 $("atraction-comment").attr("maxlength", MAX_COMENTARIO);
 
-if (${atraccion.recorrible}) {
+if (${atraccion.atraccion.recorrible}) {
 	$("#es-recorrible").attr("checked", "checked");
 	$("#blueprints").show();
 	$("#view-atraction-points-of-interest-panel").show();
@@ -1016,10 +996,14 @@ $(document).ready(function() {
 		var ciudad = {
 			"id": document.formModificar.idCiudad.value,
 		}
-		var json = {
+		var a = {
 			"ciudad": ciudad,
 			"id": document.formModificar.id.value,
 			"nombre": document.formModificar.nombre.value
+		}
+		
+		var json = {
+			"atraccion": a
 		};
 		$.ajax({
 			url : "validarAtraccion",
@@ -1078,7 +1062,7 @@ $(document).ready(function() {
 	};
 
 	if (document.getElementById('es-recorrible').checked) {
-		document.getElementById('plano').src = "${pageContext.request.contextPath}/planoAtraccion?id=${atraccion.id}";
+		document.getElementById('plano').src = "${pageContext.request.contextPath}/planoAtraccion?id=${atraccion.atraccion.id}";
 	} else {
 		document.getElementById('plano').src = "//:0";
 		document.getElementById('archivoPlano').src = "//:0";
@@ -1170,7 +1154,7 @@ function hideGalleryErrorMessages() {
 /*--------Galería-----------*/
 
 $(document).ready(function() {
-	<c:forEach items="${atraccion.listaImagenes}" var="imagenAtraccion">
+	<c:forEach items="${atraccion.atraccion.listaImagenes}" var="imagenAtraccion">
 	    var imAt = new Object();
 	    imAt.src = "${pageContext.request.contextPath}/imagenAtraccion?id=" + '${imagenAtraccion.id}';
 	    imAt.imagen = 1;
@@ -1179,20 +1163,20 @@ $(document).ready(function() {
 	    imageNumber += 1;
 	</c:forEach>
 
-	<c:if test="${atraccion.video != null}">
+	<c:if test="${atraccion.atraccion.video != null}">
 		var imAt = new Object();
-	    imAt.src = "${pageContext.request.contextPath}/videoAtraccion?id=" + '${atraccion.id}';
+	    imAt.src = "${pageContext.request.contextPath}/videoAtraccion?id=" + '${atraccion.atraccion.id}';
 	    imAt.imagen = 0;
 	    multimedia.push(imAt);
 		videoNumber = 1;
 		video = document.getElementById('videoGaleria');
 		var source = document.createElement('source');
-	    source.src = "${pageContext.request.contextPath}/videoAtraccion?id=" + '${atraccion.id}';
+	    source.src = "${pageContext.request.contextPath}/videoAtraccion?id=" + '${atraccion.atraccion.id}';
 	    source.type = "video/mp4";
 		video.appendChild(source);
 	</c:if>
 	
-	<c:if test="${atraccion.audioEN != null}">
+	<c:if test="${atraccion.audio != null}">
 		var audio = document.getElementById('audio');
 	    audio.src = "${pageContext.request.contextPath}/audioAtraccion?id=" + '${atraccion.id}';
 	</c:if>
@@ -1362,24 +1346,7 @@ $(document).ready(function() {
 </script>
 
 
-<c:set var="latitud_atraccion">
-	${atraccion.latitud}
-</c:set>
 
-<c:set var="longitud_atraccion">
-	${atraccion.longitud}
-</c:set>
-
-<c:set var="latitud_ciudad">
-	${atraccion.ciudad.latitud}
-</c:set>
-
-<c:set var="longitud_ciudad">
-	${atraccion.ciudad.longitud}
-</c:set>
-<c:set var="id">
-	${atraccion.id}
-</c:set>
 
 <!-- Mapa -->
 <script>
@@ -1532,10 +1499,11 @@ function isOutOfRange(coordinates) {
     return out_of_range;
 }
 
+
 /* PUNTO DE INTERES  */
 var table = $('#tablita').DataTable( {
 	dom: 'frtip',
-	ajax: "puntoAtraccionNuevoJson/${id}",
+	ajax: "puntoAtraccionNuevoJson/${id}/${idioma}",
 	columns: [
 		{	data:"orden",
 			render: function (data,type,row) {
@@ -1562,8 +1530,8 @@ var table = $('#tablita').DataTable( {
 });
 
 ordenOriginal = '';
-<c:if test="${atraccion.listaPuntosDeInteres != null}">
-	<c:forEach items="${atraccion.listaPuntosDeInteres}" var="punto">
+<c:if test="${atraccion.atraccion.listaPuntosDeInteres != null}">
+	<c:forEach items="${atraccion.atraccion.listaPuntosDeInteres}" var="punto">
 	    <c:if test="${punto.borrado == 0}">
 	    	ordenOriginal += ${punto.id} + ";";
 	    </c:if>
@@ -1579,7 +1547,7 @@ $('#tablita tbody').on('click', '#borrar', function (e) {
 		if (response) {
 			var formData = new FormData();
 			formData.append("id",id);
-			formData.append("idAtraccion",${id});
+			formData.append("idAtraccion",${idIdioma});
 			$.ajax({
 				url : "borrarPunto",
 				type : "POST",
@@ -1658,7 +1626,8 @@ function crearPunto() {
 	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
 	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombreTextarea.value);
 	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcionTextarea.value);
-	formData.append("idAtraccion",${id});
+	formData.append("idAtraccion","${id}");
+	formData.append("idioma","${idioma}");
 	$.ajax({
 		url : "crearPunto",
 		type : "POST",

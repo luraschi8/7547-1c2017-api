@@ -15,7 +15,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -29,18 +28,9 @@ public class Atraccion extends Modelo{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private long id;
-	
+		
 	@Column(name="nombre")
 	private String nombre;
-	
-	@Column(name="horario")
-	private String horario;
-	
-	@Column(name="descripcion")
-	private String descripcion;
-	
-	@Column(name="precio")
-	private String precio;
 	
 	@Column(name="latitud")
 	private float latitud;
@@ -57,18 +47,6 @@ public class Atraccion extends Modelo{
 	@JsonBackReference(value="plano")
 	private byte[] plano;
 	
-	@Column(name="audioEN")
-	@Lob
-	@Type(type="org.hibernate.type.ImageType")
-	@JsonBackReference(value="audioEN")
-	private byte[] audioEN;
-	
-	@Column(name="audioES")
-	@Lob
-	@Type(type="org.hibernate.type.ImageType")
-	@JsonBackReference(value="audioES")
-	private byte[] audioES;
-	
 	@Column(name="video")
 	@Lob
 	@Type(type="org.hibernate.type.ImageType")
@@ -78,9 +56,6 @@ public class Atraccion extends Modelo{
 	@Column(name="recorrible")
 	private int recorrible;
 	
-	@Column(name="idioma")
-	private String idioma;
-		
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idCiudad")
 	@JsonBackReference(value="ciudad")
@@ -90,28 +65,17 @@ public class Atraccion extends Modelo{
 	@JsonBackReference(value="listaImagenes")
 	private List<ImagenAtraccion> listaImagenes = new ArrayList<>();
 	
-	@Transient
-	private byte[] imagen;
-	
-	@Transient
-	private List<byte[]> imagenes;
-	
-	@Transient
-	private byte[] plan;
-	
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaPuntosDeInteres")
 	private List<PuntoDeInteres> listaPuntosDeInteres = new ArrayList<>();
-	
-	@Transient
-	private int cantPuntosDeInteres;
 	
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER)
 	@JsonBackReference(value="listaResenias")
 	private List<Resenia> listaResenias = new ArrayList<>();
 	
-	@Transient
-	private int cantResenias;
+	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@JsonBackReference(value="listaAtraccionIdioma")
+	private List<AtraccionIdioma> listaAtraccionIdioma = new ArrayList<>();
 
 	public Atraccion() {
 		
@@ -124,37 +88,13 @@ public class Atraccion extends Modelo{
 	public void setId(long id) {
 		this.id = id;
 	}
-
+	
 	public String getNombre() {
 		return nombre;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public String getHorario() {
-		return horario;
-	}
-
-	public void setHorario(String horario) {
-		this.horario = horario;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public String getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(String precio) {
-		this.precio = precio;
 	}
 
 	public float getLatitud() {
@@ -189,44 +129,12 @@ public class Atraccion extends Modelo{
 		this.plano = plano;
 	}
 
-	public byte[] getAudioEN() {
-		return audioEN;
-	}
-
-	public void setAudioEN(byte[] audioEN) {
-		this.audioEN = audioEN;
-	}
-
-	public byte[] getAudioES() {
-		return audioES;
-	}
-
-	public void setAudioES(byte[] audioES) {
-		this.audioES = audioES;
-	}
-
 	public byte[] getVideo() {
 		return video;
 	}
 
 	public void setVideo(byte[] video) {
 		this.video = video;
-	}
-
-	public List<byte[]> getImagenes() {
-		return imagenes;
-	}
-
-	public void setImagenes(List<byte[]> imagenes) {
-		this.imagenes = imagenes;
-	}
-
-	public byte[] getPlan() {
-		return plan;
-	}
-
-	public void setPlan(byte[] plan) {
-		this.plan = plan;
 	}
 
 	public int getRecorrible() {
@@ -253,14 +161,6 @@ public class Atraccion extends Modelo{
 		this.listaImagenes = listaImagenes;
 	}
 
-	public byte[] getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
-	}
-	
 	public List<PuntoDeInteres> getListaPuntosDeInteres() {
 		return listaPuntosDeInteres;
 	}
@@ -268,15 +168,7 @@ public class Atraccion extends Modelo{
 	public void setListaPuntosDeInteres(List<PuntoDeInteres> listaPuntosDeInteres) {
 		this.listaPuntosDeInteres = listaPuntosDeInteres;
 	}
-	
-	public int getCantPuntosDeInteres() {
-		return cantPuntosDeInteres;
-	}
 
-	public void setCantPuntosDeInteres(int cantPuntosDeInteres) {
-		this.cantPuntosDeInteres = cantPuntosDeInteres;
-	}
-	
 	public List<Resenia> getListaResenias() {
 		return listaResenias;
 	}
@@ -284,20 +176,17 @@ public class Atraccion extends Modelo{
 	public void setListaResenias(List<Resenia> listaResenias) {
 		this.listaResenias = listaResenias;
 	}
-	
-	public int getCantResenias() {
-		return cantResenias;
+
+	public List<AtraccionIdioma> getListaAtraccionIdioma() {
+		return listaAtraccionIdioma;
 	}
 
-	public void setCantResenias(int cantResenias) {
-		this.cantResenias = cantResenias;
-	}
-	
-	public String getIdioma() {
-		return idioma;
+	public void setListaAtraccionIdioma(List<AtraccionIdioma> listaAtraccionIdioma) {
+		this.listaAtraccionIdioma = listaAtraccionIdioma;
 	}
 
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
+	public void addAtraccionIdioma(AtraccionIdioma atraccion) {
+		this.getListaAtraccionIdioma().add(atraccion);
 	}
+
 }

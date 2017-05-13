@@ -1,5 +1,8 @@
 package ar.com.trips.persistencia.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -29,17 +32,8 @@ public class PuntoDeInteres extends Modelo {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="descripcion")
-	private String descripcion;
-	
-	@Column(name="orden")
-	private int orden;
-	
 	@Column(name="borrado")
 	private int borrado;
-	
-	@Column(name="idioma")
-	private String idioma;
 	
 	@Column(name="imagen")
 	@Lob
@@ -47,26 +41,14 @@ public class PuntoDeInteres extends Modelo {
 	@JsonBackReference(value="imagen")
 	private byte[] imagen;
 	
-	@Column(name="audioEN")
-	@Lob
-	@Type(type="org.hibernate.type.ImageType")
-	@JsonBackReference(value="audioEN")
-	private byte[] audioEN;
-	
-	@Column(name="audioES")
-	@Lob
-	@Type(type="org.hibernate.type.ImageType")
-	@JsonBackReference(value="audioES")
-	private byte[] audioES;
-	
-		
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idAtraccion")
 	@JsonBackReference(value="atraccion")
 	private Atraccion atraccion;
 	
-	@Transient
-	private String imagenString;
+	@OneToMany(mappedBy="puntoDeInteres",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonBackReference(value="listaPuntoIdioma")
+	private List<PuntoIdioma> listaPuntoIdioma = new ArrayList<>();
 
 	public PuntoDeInteres() {
 		
@@ -88,28 +70,20 @@ public class PuntoDeInteres extends Modelo {
 		this.nombre = nombre;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	
-	public int getOrden() {
-		return orden;
-	}
-
-	public void setOrden(int orden) {
-		this.orden = orden;
-	}
-
 	public int getBorrado() {
 		return borrado;
 	}
 
 	public void setBorrado(int borrado) {
 		this.borrado = borrado;
+	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
 	}
 
 	public Atraccion getAtraccion() {
@@ -120,43 +94,15 @@ public class PuntoDeInteres extends Modelo {
 		this.atraccion = atraccion;
 	}
 
-	public byte[] getImagen() {
-		return imagen;
+	public List<PuntoIdioma> getListaPuntoIdioma() {
+		return listaPuntoIdioma;
 	}
 
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
+	public void setListaPuntoIdioma(List<PuntoIdioma> listaPuntoIdioma) {
+		this.listaPuntoIdioma = listaPuntoIdioma;
 	}
 	
-	public byte[] getAudioEN() {
-		return audioEN;
-	}
-
-	public void setAudioEN(byte[] audioEN) {
-		this.audioEN = audioEN;
-	}
-
-	public byte[] getAudioES() {
-		return audioES;
-	}
-
-	public void setAudioES(byte[] audioES) {
-		this.audioES = audioES;
-	}
-
-	public String getImagenString() {
-		return imagenString;
-	}
-
-	public void setImagenString(String imagenString) {
-		this.imagenString = imagenString;
-	}
-	
-	public String getIdioma() {
-		return idioma;
-	}
-
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
+	public void add(PuntoIdioma puntoIdioma) {
+		getListaPuntoIdioma().add(puntoIdioma);
 	}
 }

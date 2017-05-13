@@ -1,10 +1,12 @@
 package ar.com.trips.presentacion.rest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Recorrido;
+import ar.com.trips.presentacion.dto.AtraccionDTO;
 import ar.com.trips.presentacion.dto.RecorridoDTO;
+import ar.com.trips.presentacion.mapper.AtraccionMapper;
 import ar.com.trips.presentacion.validacion.RecorridoValidacion;
 
 @RestController
@@ -76,28 +80,33 @@ public class RecorridoControladorRest {
 	}
 	
 	@RequestMapping(path="/atraccionesFueraDelRecorridoNuevoJson/{idCiudad}", method=RequestMethod.GET)
-	public HashMap<String, List<Atraccion>> getAtraccionesFueraDelRecorridoNuevo(@PathVariable int idCiudad) {
-		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();
+	public HashMap<String, List<AtraccionDTO>> getAtraccionesFueraDelRecorridoNuevo(@PathVariable int idCiudad) {
+		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
 		List<Atraccion> list = recorridoDao.listarAtraccionesFueraDelRecorridoNuevo(idCiudad);
+		List<AtraccionDTO> listaRetorno = new ArrayList<>();
 		for (Atraccion a : list) {
+			AtraccionDTO dto = AtraccionMapper.map(a);
 			if (a.getListaImagenes().size() > 0) {
-				a.setImagen(a.getListaImagenes().get(0).getImagen());
+				dto.setImagen(DatatypeConverter.printBase64Binary(a.getListaImagenes().get(0).getImagen()));
 			}
+			listaRetorno.add(dto);
 		}
-		lista.put(DATA, list);
+		lista.put(DATA, listaRetorno);
 		return lista;
 	}
 	
 	@RequestMapping(path="/atraccionesEnElRecorridoNuevoJson/{idCiudad}", method=RequestMethod.GET)
-	public HashMap<String, List<Atraccion>> listarAtraccionesEnElRecorridoNuevo(@PathVariable int idCiudad) {
-		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();
+	public HashMap<String, List<AtraccionDTO>> listarAtraccionesEnElRecorridoNuevo(@PathVariable int idCiudad) {
+		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
 		List<Atraccion> list = recorridoDao.listarAtraccionesEnElRecorridoNuevo();
+		List<AtraccionDTO> listaRetorno = new ArrayList<>();
 		for (Atraccion a : list) {
+			AtraccionDTO dto = AtraccionMapper.map(a);
 			if (a.getListaImagenes().size() > 0) {
-				a.setImagen(a.getListaImagenes().get(0).getImagen());
+				dto.setImagen(DatatypeConverter.printBase64Binary(a.getListaImagenes().get(0).getImagen()));
 			}
 		}
-		lista.put(DATA, list);
+		lista.put(DATA, listaRetorno);
 		return lista;
 	}
 	

@@ -1,6 +1,7 @@
 package ar.com.trips.presentacion.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,9 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
+import ar.com.trips.persistencia.dao.IPuntoDeInteresIdiomaDAO;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
+import ar.com.trips.persistencia.modelo.PuntoIdioma;
 import ar.com.trips.presentacion.dto.PuntoDeInteresDTO;
+import ar.com.trips.presentacion.mapper.PuntoMapper;
 import ar.com.trips.presentacion.validacion.PuntoDeInteresValidacion;
+import ar.com.trips.util.enums.Idioma;
 
 @RestController
 public class PuntoDeInteresRest {
@@ -32,42 +37,50 @@ public class PuntoDeInteresRest {
 	private IPuntoDeInteresDAO puntoDao;
 	
 	@Autowired
+	private IPuntoDeInteresIdiomaDAO puntoIdiomaDao;
+	
+	@Autowired
 	private PuntoDeInteresValidacion puntoValidacion;
 	
-	@RequestMapping(path="/puntoAtraccionJson/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, List<PuntoDeInteres>> listarPuntoDeInteresesAtraccion(@PathVariable int idAtraccion) {
-		HashMap<String, List<PuntoDeInteres>> lista = new HashMap<String, List<PuntoDeInteres>>();
-		List<PuntoDeInteres> list = puntoDao.listarPorAtraccion(idAtraccion);
-		for (PuntoDeInteres punto : list) {
-			punto.setImagenString(DatatypeConverter.printBase64Binary(punto.getImagen()));
+	@RequestMapping(path="/puntoAtraccionJson/{idAtraccion}/{idioma}",method=RequestMethod.GET)
+	public HashMap<String, List<PuntoDeInteresDTO>> listarPuntoDeInteresesAtraccion(@PathVariable int idAtraccion,@PathVariable String idioma) {
+		HashMap<String, List<PuntoDeInteresDTO>> hash = new HashMap<String, List<PuntoDeInteresDTO>>();
+		List<PuntoIdioma> list = puntoIdiomaDao.listarPorAtraccion(idAtraccion,idioma);
+		List<PuntoDeInteresDTO> lista = new ArrayList<>();
+		for (PuntoIdioma punto : list) {
+			PuntoDeInteresDTO puntoDto = PuntoMapper.map(punto);
+			lista.add(puntoDto);
 		}
-		lista.put(DATA, list);
-		return lista;
+		hash.put(DATA, lista);
+		return hash;
 	}
 	
-	@RequestMapping(path="/puntoAtraccionNuevoJson/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, List<PuntoDeInteres>> listarPuntoDeInteresesAtraccionNuevo(@PathVariable int idAtraccion) {
-		HashMap<String, List<PuntoDeInteres>> lista = new HashMap<String, List<PuntoDeInteres>>();
-		List<PuntoDeInteres> list = puntoDao.listarPorAtraccionNuevo(idAtraccion);
-		lista.put(DATA, list);
-		return lista;
+	@RequestMapping(path="/puntoAtraccionNuevoJson/{idAtraccion}/{idioma}",method=RequestMethod.GET)
+	public HashMap<String, List<PuntoDeInteresDTO>> listarPuntoDeInteresesAtraccionNuevo(@PathVariable int idAtraccion,
+			@PathVariable String idioma) {
+		HashMap<String, List<PuntoDeInteresDTO>> hash = new HashMap<String, List<PuntoDeInteresDTO>>();
+		List<PuntoIdioma> list = puntoIdiomaDao.listarPorAtraccionNuevo(idAtraccion,idioma);
+		List<PuntoDeInteresDTO> lista = new ArrayList<>();
+		for (PuntoIdioma punto : list) {
+			PuntoDeInteresDTO puntoDto = PuntoMapper.map(punto);
+			lista.add(puntoDto);
+		}
+		hash.put(DATA, lista);
+		return hash;
 	}
 	
-	@RequestMapping(path="/punto/{idPuntoDeInteres}",method=RequestMethod.GET)
+	@RequestMapping(path="/punto/{idPuntoDeInteres}/{idioma}",method=RequestMethod.GET)
 	public HashMap<String, PuntoDeInteresDTO> getPuntoDeInteres(HttpServletRequest request, HttpServletResponse response,
-								@PathVariable long idPuntoDeInteres) {
+								@PathVariable long idPuntoDeInteres,@PathVariable String idioma) {
 		HashMap<String, PuntoDeInteresDTO> lista = new HashMap<String, PuntoDeInteresDTO>();
-		PuntoDeInteres punto = puntoDao.get(idPuntoDeInteres);
+		PuntoIdioma punto = puntoIdiomaDao.get(idPuntoDeInteres, idioma);
 		String url = request.getRequestURL().toString();
 		url = url.substring(0, url.indexOf("punto"));
-		PuntoDeInteresDTO dto = new PuntoDeInteresDTO();
-		dto.setId(idPuntoDeInteres);
-		dto.setNombre(punto.getNombre());
-		dto.setDescripcion(punto.getDescripcion());
-		if (punto.getAudioEN() != null) {
-			dto.setAudioEN(url + "audioPunto?id=" + punto.getId());
+		PuntoDeInteresDTO dto = PuntoMapper.map(punto);
+		if (punto.getAudio() != null) {
+			dto.setAudio(url + "audioPunto?id=" + punto.getId());
 		}
-		dto.setImagen(DatatypeConverter.printBase64Binary(punto.getImagen()));
+		dto.setImagen(DatatypeConverter.printBase64Binary(punto.getPuntoDeInteres().getImagen()));
 		lista.put(DATA, dto);
 		return lista;
 	}
@@ -75,26 +88,31 @@ public class PuntoDeInteresRest {
 	@RequestMapping(path="/crearPunto",method=RequestMethod.POST)
 	public HashMap<String, Boolean> crearPunto(@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
+			@RequestParam("idioma") String idioma,
 			@RequestParam(name="imagen") MultipartFile imagen,
 			@RequestParam(name="idAtraccion",required=false) Integer idAtraccion,
 			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-		List<PuntoDeInteres> listaPuntos = puntoDao.listarPorAtraccionNuevo(idAtraccion);
+		List<PuntoIdioma> listaPuntos = puntoIdiomaDao.listarPorAtraccionNuevo(idAtraccion,idioma);
 		int orden = 0;
-		for (PuntoDeInteres puntoDeInteres : listaPuntos) {
+		for (PuntoIdioma puntoDeInteres : listaPuntos) {
 			if (puntoDeInteres.getOrden() > orden) {
 				orden = puntoDeInteres.getOrden();
 			}
 		}
 		PuntoDeInteres punto = new PuntoDeInteres();
 		punto.setNombre(nombre);
-		punto.setDescripcion(descripcion);
 		punto.setImagen(imagen.getBytes());
-		punto.setOrden(++orden);
+		PuntoIdioma puntoIdioma = new PuntoIdioma();
+		puntoIdioma.setDescripcion(descripcion);
+		puntoIdioma.setIdioma(Idioma.valueOf(idioma));
+		puntoIdioma.setOrden(++orden);
 		if (audio != null ) {
-			punto.setAudioEN(audio.getBytes());
+			puntoIdioma.setAudio(audio.getBytes());
 		}
-		puntoDao.guardar(punto);
+		puntoIdioma.setPuntoDeInteres(punto);
+		punto.add(puntoIdioma);
+		puntoDao.guardar(puntoIdioma);
 		lista.put(EXISTE, true);
 		return lista;
 	}
@@ -114,14 +132,14 @@ public class PuntoDeInteresRest {
 	@RequestMapping(path="/cambiarOrden",method=RequestMethod.POST)
 	public HashMap<String, Boolean> cambiarOrden(@RequestParam("ordenPuntos") String ordenPuntos) {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-		puntoDao.cambiarOrdenes(ordenPuntos);
+		puntoIdiomaDao.cambiarOrdenes(ordenPuntos);
 		return lista;
 	}
 	
 	@RequestMapping(path="/borrarPunto",method=RequestMethod.POST)
 	public HashMap<String, Boolean> borrarPunto(@RequestParam("id") Integer id,@RequestParam("idAtraccion") Integer idAtraccion) {
 		HashMap<String, Boolean> respuesta = new HashMap<String, Boolean>();
-		puntoDao.borrar(id,idAtraccion);
+		puntoDao.borrar(id);
 		return respuesta;
 	}
 	
@@ -129,17 +147,17 @@ public class PuntoDeInteresRest {
 	public HashMap<String, Boolean> modificarPunto(@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
 			@RequestParam(name="imagen") MultipartFile imagen,
-			@RequestParam(name="id",required=false) int id,
+			@RequestParam(name="id",required=false) Long id,
 			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-		PuntoDeInteres punto = puntoDao.get(id);
-		punto.setNombre(nombre);
+		PuntoIdioma punto = puntoIdiomaDao.get(id);
+		punto.getPuntoDeInteres().setNombre(nombre);
 		punto.setDescripcion(descripcion);
 		if (imagen != null) {
-			punto.setImagen(imagen.getBytes());
+			punto.getPuntoDeInteres().setImagen(imagen.getBytes());
 		}
 		if (audio != null) {
-			punto.setAudioEN(audio.getBytes());
+			punto.setAudio(audio.getBytes());
 		}
 		puntoDao.guardar(punto);
 		lista.put(EXISTE, true);
