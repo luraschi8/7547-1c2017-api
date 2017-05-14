@@ -4,6 +4,8 @@ public class PuntoDeInteresDTO {
 
 	private long id;
 	
+	private long idPunto;
+	
 	private String nombre;
 	
 	private String descripcion;
@@ -15,13 +17,21 @@ public class PuntoDeInteresDTO {
 	private String imagen;
 	
 	private String idioma;
-
+	
 	public long getId() {
 		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public long getIdPunto() {
+		return idPunto;
+	}
+
+	public void setIdPunto(long idPunto) {
+		this.idPunto = idPunto;
 	}
 
 	public String getNombre() {

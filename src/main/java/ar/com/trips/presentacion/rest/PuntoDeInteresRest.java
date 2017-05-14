@@ -3,6 +3,7 @@ package ar.com.trips.presentacion.rest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -160,6 +161,36 @@ public class PuntoDeInteresRest {
 			punto.setAudio(audio.getBytes());
 		}
 		puntoDao.guardar(punto);
+		lista.put(EXISTE, true);
+		return lista;
+	}
+	
+	@RequestMapping(path="/agregarLenguajePunto",method=RequestMethod.POST)
+	public HashMap<String, Boolean> crearPunto(@RequestParam("id") Long idPunto,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
+		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
+		PuntoDeInteres a = puntoDao.get(idPunto);
+		LinkedHashSet<PuntoIdioma> listaIdiomas = new LinkedHashSet<PuntoIdioma>(a.getListaPuntoIdioma());
+		if (listaIdiomas.size() > 1 ) {
+			lista.put(EXISTE, false);
+			return lista;
+		}
+		Idioma idioma = a.getListaPuntoIdioma().get(0).getIdioma();
+		if (idioma == Idioma.EN) {
+			idioma = Idioma.ES;
+		} else {
+			idioma = Idioma.EN;
+		}
+		PuntoIdioma punto = new PuntoIdioma();
+		punto.setDescripcion(descripcion);
+		punto.setIdioma(idioma);
+		if (audio != null ) {
+			punto.setAudio(audio.getBytes());
+		}
+		punto.setPuntoDeInteres(a);;
+		a.add(punto);
+		puntoIdiomaDao.guardar(punto);
 		lista.put(EXISTE, true);
 		return lista;
 	}

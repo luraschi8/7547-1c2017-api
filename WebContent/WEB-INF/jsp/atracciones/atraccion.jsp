@@ -20,10 +20,10 @@
 	<div class="nav-wrapper">
 		<div class="nav-menu">
    		    <ul class="clearfix">
-	        	<li id="select_language">Idioma
+	        	<li id="select_language">${idioma}
 		        	<ul class="sub-menu">
-			        	<li onclick="setSpanish();"><a href="">Español</a></li>
-			            <li onclick="setEnglish();"><a href="">Inglés</a></li>
+			        	<li onclick="setSpanish();">Español</li>
+			            <li onclick="setEnglish();">Inglés</li>
 			        </ul>
 			    </li>
 	        </ul>
@@ -524,6 +524,8 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			<h2 style="width: 100%; height: 8%" class="new_point_of_interest_header puntoCreacion">Nuevo punto de interés</h2>
 			<h2 style="width: 100%; height: 8%; display: none;" class="view_point_of_interest_header puntoEdicion">Ver punto de interés</h2>
 			
+			<p style="display: none;" id="idPunto" name="idPunto"></p> 
+			
 			<div style="width: 100%; height: 11%">
 				<div style="display: inline-block;">
 					<label class="atraction-label" path="nombre">Nombre</label><font color="red" class="puntoCreacionInline">&nbsp;*</font>
@@ -651,7 +653,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			<div class="btn-final-pdi-form" style="width: 100%; text-align:center; clear:both;">
 				<input id="botonCancelarPuntoDeInteres" class="btn btn-default" type="button" value="Cancelar" onclick="closeNewPointOfInterestForm();"/>
 				<input id="botonGuardarPuntoDeInteres" class="btn btn-default btn-primary puntoCreacionInline" type="button" value="Guardar"/>
-				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary puntoEdicionInline" type="button" value="Guardar"/>
+				<input id="botonGuardarEdicionPuntoDeInteres" style="display: none" class="btn btn-default btn-primary puntoEdicionInline" type="button" value="Guardareee"/>
 			</div>
 		</form:form>
 	</div>
@@ -770,7 +772,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div class="btn_final_atraction_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%;">
 				<input id="botonCancelarAtraccionNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closeAtractionNewLanguagePopup();"/>
-				<input id="botonGuardarAtraccionNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarAtraccionNuuevoLenguaje();"/>
+				<input id="botonGuardarAtraccionNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarAtraccionNuevoLenguaje();"/>
 			</div>
 		</form:form>
 	</div>
@@ -838,12 +840,16 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div class="btn_final_point_of_interest_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%; margin-bottom: 3%;">
 				<input id="botonCancelarPuntoNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closePointOfInterestNewLanguagePopup();"/>
-				<input id="botonGuardarPuntoNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar"/>
+				<input id="botonGuardarPuntoNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarPuntoNuevoLenguaje()"/>
 			</div>
 		</form:form>
 	</div>
 </div>
 
+<form:form id="formVer" name="formVer" action="atraccionVer" method="get">
+	<input id="idAtraccion" name="idAtraccion" type="hidden" value="${atraccion.atraccion.id}"/>
+	<input id="idioma" name="idioma" type="hidden" value="${idioma}"/>
+</form:form>
 
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 
@@ -859,11 +865,13 @@ $('#point_of_interest_add_language_btn').on('click', function(e) {
 });
 
 function setSpanish() {
-	document.getElementById('select_language').innerHTML = 'Idioma - Español';
+	document.formVer.idioma.value = "ES";
+	document.getElementById("formVer").submit();
 }
 
 function setEnglish() {
-	document.getElementById('select_language').innerHTML = 'Idioma - Inglés';
+	document.formVer.idioma.value = "EN";
+	document.formVer.submit();
 }
 
 function hideAllPointsOfInterestNewLanguageErrorMessages() {
@@ -998,7 +1006,7 @@ $(document).ready(function() {
 		}
 		var a = {
 			"ciudad": ciudad,
-			"id": document.formModificar.id.value,
+			"id": "${id}",
 			"nombre": document.formModificar.nombre.value
 		}
 		
@@ -1512,7 +1520,13 @@ var table = $('#tablita').DataTable( {
 		},
 		{	data: "id",
          	render: function (data,type,row) {
-		 		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data 
+         	console.log("DATA");
+         	console.log(data);
+         	console.log("TYPE");
+         	console.log(type);
+         	console.log("ROW");
+         	console.log(row);
+		 		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + row["idPunto"] 
 		 		+ '" style="align: center; width:40px; height:40px"/></div>' 
 		 		+ '<span style="display:none" class="clasePuntoId">' + data + '</span>'
 		 	}
@@ -1573,6 +1587,7 @@ $('#tablita tbody').on('click', '#ver', function (e) {
 	var data = table.row(this.closest("tr")).data();
 	document.getElementById("puntoNombre").innerHTML = data["nombre"];
 	document.getElementById("puntoDescripcion").innerHTML = data["descripcion"];
+	document.getElementById("idPunto").value = data["id"];
 	document.getElementById('puntoImagen').src = "${pageContext.request.contextPath}/imagenPunto?id=" + data["id"];
 	showEditionElements();
 });
@@ -1673,6 +1688,63 @@ function validarPuntoDeInteresRepetido() {
 		}
 	});
 };
+
+
+
+
+/* ***************************
+Agregar Idioma
+*****************************/
+
+function guardarAtraccionNuevoLenguaje() {
+	var formData = new FormData();
+	formData.append("id","${id}");
+	formData.append("descripcion",document.getElementById("atraccionDescripcionNuevoLenguaje").value);
+	formData.append("horario",document.getElementById("atraccionHorarioNuevoLenguaje").value);
+	formData.append("precio",document.getElementById("atraccionPrecioNuevoLenguaje").value);
+	formData.append("audio",document.getElementById("archivoAudioguiaAtraccionNuevoLenguaje").files[0]);
+	$.ajax({
+		url : "agregarLenguajeAtraccion",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data.existe == false) {
+				alert("Ya existe tanto en inglés como castellano");
+				closeAtractionNewLanguagePopup();
+			} else {
+				closeAtractionNewLanguagePopup();
+			}
+		}
+	});
+}
+
+function guardarPuntoNuevoLenguaje() {
+	var formData = new FormData();
+	formData.append("id",document.getElementById("idPunto").value);
+	formData.append("descripcion",document.getElementById("puntoDescripcionNuevoLenguajeTextarea").value);
+	formData.append("audio",document.getElementById("archivoAudioguiaPuntoDeInteresNuevoLenguaje").files[0]);
+	$.ajax({
+		url : "agregarLenguajePunto",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data.existe == false) {
+				alert("Ya existe tanto en inglés como castellano");
+				closePointOfInterestNewLanguagePopup();
+			} else {
+				closePointOfInterestNewLanguagePopup();
+			}
+		}
+	});
+}
 </script>
 		
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places,geometry&callback=initMap&language=es" async defer></script>

@@ -1,7 +1,9 @@
 package ar.com.trips.presentacion.rest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IAtraccionIdiomaDAO;
@@ -101,6 +105,40 @@ public class AtraccionControladorRest {
 		} else {
 			lista.put(EXISTE, false);
 		}
+		return lista;
+	}
+	
+	@RequestMapping(path="/agregarLenguajeAtraccion",method=RequestMethod.POST)
+	public HashMap<String, Boolean> crearPunto(@RequestParam("id") Long idAtraccion,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam("horario") String horario,
+			@RequestParam("precio") String precio,
+			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
+		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
+		Atraccion a = atraccionDao.get(idAtraccion);
+		LinkedHashSet<AtraccionIdioma> listaIdiomas = new LinkedHashSet<AtraccionIdioma>(a.getListaAtraccionIdioma());
+		if (listaIdiomas.size() > 1 ) {
+			lista.put(EXISTE, false);
+			return lista;
+		}
+		Idioma idioma = a.getListaAtraccionIdioma().get(0).getIdioma();
+		if (idioma == Idioma.EN) {
+			idioma = Idioma.ES;
+		} else {
+			idioma = Idioma.EN;
+		}
+		AtraccionIdioma atraccion = new AtraccionIdioma();
+		atraccion.setDescripcion(descripcion);
+		atraccion.setHorario(horario);
+		atraccion.setPrecio(precio);
+		atraccion.setIdioma(idioma);
+		if (audio != null ) {
+			atraccion.setAudio(audio.getBytes());
+		}
+		atraccion.setAtraccion(a);
+		a.addAtraccionIdioma(atraccion);
+		atraccionIdiomaDao.guardar(atraccion);
+		lista.put(EXISTE, true);
 		return lista;
 	}
 }

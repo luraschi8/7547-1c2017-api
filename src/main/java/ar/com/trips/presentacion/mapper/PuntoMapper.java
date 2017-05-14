@@ -14,6 +14,7 @@ public class PuntoMapper {
 		dto.setDescripcion(punto.getDescripcion());
 		dto.setOrden(punto.getOrden());
 		dto.setImagen(DatatypeConverter.printBase64Binary(punto.getPuntoDeInteres().getImagen()));
+		dto.setIdPunto(punto.getPuntoDeInteres().getId());
 		return dto;
 	}
 	

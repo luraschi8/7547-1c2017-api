@@ -173,6 +173,14 @@ public class AtraccionControlador {
 	public ModelAndView ver(@RequestParam("idAtraccion") long id,@RequestParam(name="idioma")String idioma ) {
 		Atraccion atraccion = atraccionDao.get(id);
 		AtraccionIdioma a = atraccionIdiomaDao.get(id, idioma);
+		if (a == null) {
+			if (idioma == "ES") {
+				idioma = "EN";
+			} else {
+				idioma = "ES";
+			}
+			a = atraccionIdiomaDao.get(id, idioma);
+		}
 		a.setAtraccion(atraccion);
 		ModelAndView model = new ModelAndView("atracciones/atraccion");
 		model.addObject("atraccion", a);

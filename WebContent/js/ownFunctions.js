@@ -184,9 +184,9 @@ function showAtractionNewLanguagePopup() {
 
 function closeAtractionNewLanguagePopup() {
 	document.getElementById('atraction_new_language_popup').style.display = 'none';
-	document.getElementById('atraccionDescripcionNuevoLenguajeTextarea').value = '';
-	document.getElementById('atraccionHorarioNuevoLenguajeTextarea').value = '';
-	document.getElementById('atraccionPrecioNuevoLenguajeTextarea').value = '';
+	document.getElementById('atraccionDescripcionNuevoLenguaje').value = '';
+	document.getElementById('atraccionHorarioNuevoLenguaje').value = '';
+	document.getElementById('atraccionPrecioNuevoLenguaje').value = '';
 	document.getElementById('audioAtraccionNuevoLenguaje').src = '';
 	hideAllAtractionNewLanguageErrorMessages();
 	enableAtractionPage();
@@ -199,31 +199,3 @@ function hideAllRouteErrorMessages() {
 	document.getElementById("mensajeNombreRepetido").style.display = "none";
 }
 
-function guardarAtraccionNuuevoLenguaje() {
-	var formData = new FormData();
-	formData.append("imagen",document.getElementById("puntoArchivoImagen").files[0]);
-	formData.append("audio",document.getElementById("archivoAudioguiaPdi").files[0]);
-	formData.append("nombre",document.formNuevoPuntoDeInteres.puntoNombreTextarea.value);
-	formData.append("descripcion",document.formNuevoPuntoDeInteres.puntoDescripcionTextarea.value);
-	formData.append("idAtraccion","${id}");
-	formData.append("idioma","${idioma}");
-	$.ajax({
-		url : "crearPunto",
-		type : "POST",
-		data : formData,
-		enctype: 'multipart/form-data',
-		processData : false,
-		contentType: false,
-		dataType: 'json',
-		success: function (data) {
-			if (data.existe == false) {
-				alert("HOW");
-			} else {
-				hideAllAtractionErrorMessages();
-				guardarOrden();
-				table.ajax.reload();
-				closeNewPointOfInterestForm();
-			}
-		}
-	});
-}
