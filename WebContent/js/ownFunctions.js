@@ -34,22 +34,28 @@ function validateImage(button_id, file_id, image_id, message_id) {
 	}
 }
 
+function hideMessage(message) {
+	if (document.getElementById(message) != null) {
+		document.getElementById(message).style.display = "none";
+	}
+}
+
 function hideAllAtractionErrorMessages() {
-	document.getElementById("mensajeNombreVacio").style.display = "none";
-	document.getElementById("mensajeDescripcionVacia").style.display = 'none';
-	document.getElementById("mensajePlanoNecesario").style.display = 'none';
-	document.getElementById("mensajeImagenIncorrectaError").style.display = "none";
-	document.getElementById("mensajeHayVideo").style.display = 'none';
-	document.getElementById("mensajeCincoArchivos").style.display = 'none';
-	document.getElementById("mensajeTamanoImagen").style.display = "none";
-	document.getElementById("mensajeTamanoVideo").style.display = 'none';
-	document.getElementById("mensajeUnaImagen").style.display = 'none';
-	document.getElementById("mensajeAudioIncorrectoError").style.display = "none";
-	document.getElementById("mensajeUbicacionVacia").style.display = 'none';
-	document.getElementById("mensajeUbicacionLejana").style.display = 'none';
-	document.getElementById("mensajeNombreRepetido").style.display = "none";
-	document.getElementById('mensajeAudioTamano').style.display = 'none';
-	document.getElementById("mensajePuntoDeInteresNecesario").style.display = 'none';
+	hideMessage("mensajeNombreVacio");
+	hideMessage("mensajeDescripcionVacia");
+	hideMessage("mensajePlanoNecesario");
+	hideMessage("mensajeImagenIncorrectaError");
+	hideMessage("mensajeHayVideo");
+	hideMessage("mensajeCincoArchivos");
+	hideMessage("mensajeTamanoImagen");
+	hideMessage("mensajeTamanoVideo");
+	hideMessage("mensajeUnaImagen");
+	hideMessage("mensajeAudioIncorrectoError");
+	hideMessage("mensajeUbicacionVacia");
+	hideMessage("mensajeUbicacionLejana");
+	hideMessage("mensajeNombreRepetido");
+	hideMessage("mensajeAudioTamano");
+	hideMessage("mensajePuntoDeInteresNecesario");
 }
 
 function saveField(field, ok, cancel, vacio, obligatorio) {
@@ -69,7 +75,6 @@ function saveField(field, ok, cancel, vacio, obligatorio) {
 function cancelField(field, ok, cancel) {
 	hideAllAtractionErrorMessages();
 	hideEdition(field, ok, cancel);
-    //$(field).html($(field).val());
 	$(field).show();
 }
 
@@ -127,6 +132,7 @@ function validateAudio(btn_get, btn_erase, file_id, audio, modified_audio, size_
 	
 	document.getElementById(btn_get).onclick = function() {
 		hideAllAtractionErrorMessages();
+		hideAllRouteErrorMessages();
 		document.getElementById(file_id).addEventListener('change', readURL, true);
 		var fileButton = document.getElementById(file_id);
 		fileButton.click();
@@ -193,9 +199,10 @@ function closeAtractionNewLanguagePopup() {
 }
 
 function hideAllRouteErrorMessages() {
-	document.getElementById("mensajeNombreVacio").style.display = "none";
-	document.getElementById("mensajeDescripcionVacia").style.display = 'none';
-	document.getElementById("mensajeNingunaAtraccionElegida").style.display = 'none';
-	document.getElementById("mensajeNombreRepetido").style.display = "none";
+	hideMessage("mensajeNombreVacio");
+	hideMessage("mensajeDescripcionVacia");
+	hideMessage("mensajeNingunaAtraccionElegida");
+	hideMessage("mensajeNombreRepetido");
+	hideMessage("mensajeAudioRecorridoIncorrectoError");
+	hideMessage("mensajeAudioRecorridoTamano");
 }
-

@@ -24,7 +24,7 @@ body {
 }
 
 #archivoImagenPiso, #archivoAudioguia, #archivoGaleria, #archivoPlano, #archivoAudioguiaPdi, #archivoAudioguiaAtraccionNuevoLenguaje,
-#archivoAudioguiaPuntoDeInteresNuevoLenguaje {
+#archivoAudioguiaPuntoDeInteresNuevoLenguaje, #archivoAudioguiaRecorrido {
     display: none;
 }
 
