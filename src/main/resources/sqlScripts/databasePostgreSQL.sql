@@ -49,7 +49,7 @@ create table AtraccionIdioma (
 	idioma varchar(3) not null,
     horario varchar(100),
     descripcion varchar(250),
-    borrado tinyint default 0 not null,
+    borrado int default 0 not null,
     precio varchar(100),
     audio bytea,
     foreign key (idAtraccion) references Atraccion (id)
@@ -75,8 +75,8 @@ create table PuntoIdioma (
 	id serial primary key not null,
     idioma varchar(3) not null,
     descripcion varchar(250),
-    orden tinyint,
-    borrado tinyint default 0 not null,
+    orden int,
+    borrado int default 0 not null,
     audio bytea,
     idPunto bigint,
     foreign key (idPunto) references PuntoDeInteres (id)
@@ -99,9 +99,25 @@ create table Resenia (
 create table Recorrido (
 	id serial primary key not null,
     nombre varchar(50),
-    descripcion varchar(250),
     borrado int default 0 not null,
-    idioma varchar(2),
     idCiudad bigint not null,
     foreign key (idCiudad) references Ciudad (id)
 );
+
+create table RecorridoIdioma (
+	id serial primary key not null,
+    idioma varchar(3) not null,
+    descripcion varchar(250),
+    borrado int default 0 not null,
+    audio bytea,
+    idRecorrido bigint not null,
+    foreign key (idRecorrido) references Recorrido (id)
+);
+
+create table RecorridoAtraccion (
+	id serial primary key not null,
+	idAtraccion bigint not null,
+    idRecorrido bigint not null,
+    foreign key (idAtraccion) references Atraccion (id),
+    foreign key (idRecorrido) references Recorrido (id)
+)
