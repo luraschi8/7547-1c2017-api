@@ -44,17 +44,19 @@ public class RecorridoControlador {
 	@RequestMapping("recorridoNuevo")
 	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad, @RequestParam("latitudCiudad") float latitudCiudad, @RequestParam("longitudCiudad") float longitudCiudad) {
 		ModelAndView model = new ModelAndView(RECORRIDO_NUEVO_PATH);
-		Recorrido recorrido = new Recorrido();
+		Recorrido r = new Recorrido();
+		RecorridoIdioma recorrido = new RecorridoIdioma();
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
 		ciudad.setLatitud(latitudCiudad);
 		ciudad.setLongitud(longitudCiudad);
-		recorrido.setCiudad(ciudad);
+		recorrido.setRecorrido(r);
+		recorrido.getRecorrido().setCiudad(ciudad);
 
 		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);
 		for (Atraccion a : list) {
 			if (a.getBorrado() != 0) {
-				recorrido.addAtractionToRoute(a);
+				recorrido.getRecorrido().addAtractionToRoute(a);
 			}
 		}
 
@@ -93,8 +95,8 @@ public class RecorridoControlador {
 	}
 
 	@RequestMapping(path="recorridoVer")
-	public ModelAndView ver(@RequestParam("idRecorrido") long id) {
-		Recorrido recorrido = recorridoDao.get(id);
+	public ModelAndView ver(@RequestParam("idRecorrido") long id, @RequestParam("idioma") String idioma) {
+		RecorridoIdioma recorrido = recorridoIdiomaDao.get(id,idioma);
 		ModelAndView model = new ModelAndView("recorridos/recorrido");
 		model.addObject("recorrido", recorrido);		
 		return model;
