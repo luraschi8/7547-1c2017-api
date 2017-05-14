@@ -143,6 +143,7 @@
 
 <form:form id="formVerRecorrido" name="formVerRecorrido" action="recorridoVer" method="get" commandName="recorrido">
 	<input id="idRecorrido" name="idRecorrido" type="hidden"/>
+	<input id="idioma" name="idioma" type="hidden"/>
 </form:form>
 
 <c:set var="marcar">
@@ -319,6 +320,7 @@ $('#route_table tbody').on('click', '#verRecorrido', function (e) {
 	var data = route_table.row(this.closest("tr")).data();
 	e.preventDefault();
 	document.formVerRecorrido.idRecorrido.value = data["id"];
+	document.formVerRecorrido.idioma.value = "ES";
 	document.getElementById("formVerRecorrido").submit();
 });
 </script>

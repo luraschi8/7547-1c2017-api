@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Trips - ${recorrido.nombre}</title>
+<title>Trips - ${recorrido.recorrido.nombre}</title>
 </head>
 <body>
 	<div class="nav-wrapper route-new-page-header">
@@ -27,7 +27,7 @@
 	    </div>
     </div>
 
-	<h1 class="page-header route-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">${recorrido.nombre} - ${recorrido.ciudad.nombre}</h1>	
+	<h1 class="page-header route-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">${recorrido.recorrido.nombre} - ${recorrido.recorrido.ciudad.nombre}</h1>	
 	
 	
 	
@@ -46,25 +46,15 @@
 	
 					<!-- Información principal -->
 					<div class="route_main_information">
-						<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.ciudad.id}"/>
+						<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.recorrido.ciudad.id}"/>
 						<input type="hidden" id="id" name="id" value="${recorrido.id}"/>
 						<input type="hidden" name="atracciones" value=""/>
 						
 						
-						
-						
-						
-						
 
-
-						
-						
-						
-						
-						
-						<div class="route_name" style="margin-top: 1.5%">
-							<form:label class="route_name_label" path="nombre">Nombre</form:label>
-							<input type="hidden" id="nombreEditado" name="nombreEditado" value="${recorridoIdioma.recorrido.nombre}"/>
+						<div class="route_name" style="margin-top: 2%">
+							<form class="route_name_label" path="recorrido.nombre">Nombre</label>
+							<input type="hidden" id="nombreEditado" name="nombreEditado" value="${recorrido.recorrido.nombre}"/>
 							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-name" onclick="editField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</button>
@@ -75,8 +65,8 @@
 						
 						<div>
 							<div>
-								<p id="nombreEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${recorrido.nombre}">${recorrido.nombre}</p>
-								<textarea onkeydown="calculateMaxLength('#nombreEditadoTextarea', MAX_NOMBRE_RECORRIDO)" style="display:none" rows="1" id="nombreEditadoTextarea" class="route_box" value="${recorrido.nombre}">${recorrido.nombre}</textarea>
+								<p id="nombreEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${recorrido.recorrido.nombre}">${recorrido.recorrido.nombre}</p>
+								<textarea onkeydown="calculateMaxLength('#nombreEditadoTextarea', MAX_NOMBRE_RECORRIDO)" style="display:none" rows="1" id="nombreEditadoTextarea" class="route_box" value="${recorrido.recorrido.nombre}">${recorrido.recorrido.nombre}</textarea>
 							</div>
 							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-nombre" onclick="cancelField('#nombreEditado', 'ok-nombre', 'cancel-nombre')">
 								<span class="glyphicon glyphicon-remove"></span>
@@ -102,7 +92,7 @@
 						
 						
 						<div class="route_description" style="margin-top: 1%">
-							<form:label class="route_description_label" path="descripcion">Descripción</form:label>
+							<label class="route_description_label" path="descripcion">Descripción</label>
 						</div>
 						<div>
 							<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_RECORRIDO)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="route_box"  placeholder="Ingrese la descripcion del recorrido" required></textarea>

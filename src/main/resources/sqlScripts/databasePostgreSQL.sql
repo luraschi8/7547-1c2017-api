@@ -2,10 +2,15 @@
 
 drop table Permiso;
 drop table ImagenAtraccion;
+drop table PuntoIdioma;
 drop table PuntoDeInteres;
 drop table Resenia;
 drop table Usuario;
+drop table AtraccionIdioma;
 drop table Atraccion;
+drop table RecorridoIdioma;
+drop table RecorridoAtraccion;
+drop table Recorrido;
 drop table Ciudad;
 
 create table Usuario (
