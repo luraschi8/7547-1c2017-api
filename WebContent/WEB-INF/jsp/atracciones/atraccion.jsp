@@ -17,7 +17,7 @@
 
 <body>
 
-	<div class="nav-wrapper">
+	<div class="nav-wrapper atraction-new-page-header">
 		<div class="nav-menu">
    		    <ul class="clearfix">
 	        	<li id="select_language">${idioma}

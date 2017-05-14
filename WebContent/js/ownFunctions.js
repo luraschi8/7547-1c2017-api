@@ -206,3 +206,36 @@ function hideAllRouteErrorMessages() {
 	hideMessage("mensajeAudioRecorridoIncorrectoError");
 	hideMessage("mensajeAudioRecorridoTamano");
 }
+
+function disableRoutePage() {
+	$("#routeForm").addClass("disable-buttons");
+	$(".btn-final").addClass("disable-buttons");
+	$(".route-new-page-header").addClass("disable-buttons");
+}
+
+function enableRoutePage() {
+	$("#routeForm").removeClass("disable-buttons");
+	$(".btn-final").removeClass("disable-buttons");
+	$(".route-new-page-header").removeClass("disable-buttons");
+}
+
+function hideAllRouteNewLanguageErrorMessages() {
+	document.getElementById('mensajeDescripcionVaciaRecorridoNuevoLenguajeError').style.display = 'none';
+	document.getElementById('mensajeAudiorecorridoNuevoLenguajeIncorrectoError').style.display = 'none';
+	document.getElementById('mensajeAudioRecorridoNuevoLenguajeTamano').style.display = 'none';
+}
+
+function showRouteNewLanguagePopup() {
+	document.getElementById("route_new_language_popup").style.display = 'block';
+	document.getElementById('route_new_language_popup').focus();
+	document.getElementById('routeForm').blur();
+	disableRoutePage();
+}
+
+function closeRouteNewLanguagePopup() {
+	document.getElementById('route_new_language_popup').style.display = 'none';
+	document.getElementById('recorridoDescripcionNuevoLenguaje').value = '';
+	document.getElementById('audioRecorridoNuevoLenguaje').src = '';
+	hideAllRouteNewLanguageErrorMessages();
+	enableRoutePage();
+}

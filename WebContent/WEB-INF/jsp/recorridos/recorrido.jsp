@@ -14,7 +14,7 @@
 <title>Trips - ${recorrido.nombre}</title>
 </head>
 <body>
-	<div class="nav-wrapper">
+	<div class="nav-wrapper route-new-page-header">
 		<div class="nav-menu">
    		    <ul class="clearfix">
 	        	<li>Idioma
@@ -27,7 +27,7 @@
 	    </div>
     </div>
 
-	<h1 class="page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">${recorrido.nombre} - ${recorrido.ciudad.nombre}</h1>	
+	<h1 class="page-header route-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">${recorrido.nombre} - ${recorrido.ciudad.nombre}</h1>	
 	
 	
 	
@@ -207,6 +207,10 @@
 				</div>
 			</div>
 		</div>
+		
+		<div style="clear: both; margin-top: 5%;">
+			<input id="route_add_language_btn" class="btn btn-default btn-success" type="button" value="Agregar idioma"/>
+		</div>
 	
 		<div class="alert alert-danger fade in error_msg_route_already_exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
@@ -221,10 +225,87 @@
 		<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
 		<input id="botonGuardar" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 	</div>
+	
+	
+	
+	
+<div id="route_new_language_popup" style="display: none; width: 50%; height: 100%">
+	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
+		<form:form class="route_new_language" style="width: 100%; height: 100%" id="formRecorridoNuevoLenguaje" name="formRecorridoNuevoLenguaje" action="nuevoLenguajeRecorrido" method="post" commandName="atraccion" enctype="multipart/form-data">
+			<h2 style="width: 100%; height: 8%">Añadir lenguaje</h2>
+			
+			<div style="width: 100%; height: 20%">
+				<div style="display: inline-block;">
+					<label class="atraction-label" path="descripcion">Descripción</label><font color="red"> *</font>
+				</div>
+				
+				<div>
+					<textarea onkeydown="calculateMaxLength('#recorridoDescripcionNuevoLenguaje', MAX_DESCRIPCION_RECORRIDO)" id="recorridoDescripcionNuevoLenguaje" path="descripcion" name="recorridoDescripcionNuevoLenguaje" class="atraccion_nuevo_lenguaje_box"  placeholder="Ingrese la descripción del recorrido" required="required"/></textarea>
+				</div>
+			</div>
+			<div class="alert alert-danger fade in atraction_new_language_alert" id="mensajeDescripcionVaciaRecorridoNuevoLenguajeError" style="display: none; margin-top: 2%;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
+			</div>
+			
+			<div style="width: 100%; height: 14%">
+				<div style="width: 100%; height: 40%">
+					<label class="atraction-label" path="audio">Audioguía</label>
+				</div>
+				<input type="hidden" id="audioCambiadoRecorridoNuevoLenguaje" name="audioCambiadoRecorridoNuevoLenguaje" value=0>
+				<div style="width: 100%; height: 60%">
+					<!-- Reproducir audioguía -->
+					<div style="float: left; width: 85%; height: 50%">
+						<audio id="audioRecorridoNuevoLenguaje" style="width: 100%;" controls>
+						    <source type="audio/mpeg">
+						</audio> 
+					</div>
+					
+					<!-- Botón agregar audioguía -->
+					<div style="float: right; width: 15%; height: 50%; text-align: right;">
+						<button type="button" class="btn btn-default btn-sm" id="getAudioRecorridoNuevoLenguaje">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+					
+						<button type="button" class="btn btn-default btn-sm" id="borrarAudioRecorridoNuevoLenguaje">
+							<span class="glyphicon glyphicon-erase"></span>
+						</button>
+	
+						<input type="file" name="archivoAudioguiaRecorridoNuevoLenguaje" id="archivoAudioguiaRecorridoNuevoLenguaje"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="alert alert-danger fade in atraction_new_language_alert" id="mensajeAudioRecorridoNuevoLenguajeIncorrectoError" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+			</div>
+			
+			<div class="alert alert-danger fade in atraction_new_language_alert" id="mensajeAudioRecorridoNuevoLenguajeTamano" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>Error!</strong> El archivo pesa más de 3MB. Por favor, seleccione uno de menor tamaño.
+			</div>
+
+			<font style="margin-left: 1%;" color="red" size="1">Los campos indicados con * son obligatorios</font>
+			
+			<div class="btn_final_route_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%;">
+				<input id="botonCancelarRecorridoNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closeRecorridoNewLanguagePopup();"/>
+				<input id="botonGuardarRecorridoNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarRecorridoNuevoLenguaje();"/>
+			</div>
+		</form:form>
+	</div>
+</div>
 
 <script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 
-<script>	
+<script>
+validateAudio("getAudioRecorridoNuevoLenguaje", "borrarAudioRecorridoNuevoLenguaje", "archivoAudioguiaRecorridoNuevoLenguaje", "audioRecorridoNuevoLenguaje", "audioCambiadoRecorridoNuevoLenguaje", "mensajeAudioRecorridoNuevoLenguajeTamano", "mensajeAudioRecorridoNuevoLenguajeIncorrectoError");
+
+$('#route_add_language_btn').on('click', function(e) {
+	e.preventDefault();
+	showRouteNewLanguagePopup();
+});
+
 $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
