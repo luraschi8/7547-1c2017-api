@@ -27,7 +27,7 @@
 	
 					<!-- Información principal -->
 					<div class="route_main_information">
-						<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.ciudad.id}"/>
+						<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.recorrido.ciudad.id}"/>
 						<input type="hidden" id="id" name="id" value="${recorrido.id}"/>
 						<input type="hidden" name="atracciones" value=""/>
 	
@@ -40,7 +40,7 @@
 						</div>
 						
 						<div class="route_name" style="margin-top: 1%">
-							<form:label class="route_name_label" path="nombre">Nombre<font color="red"> *</font></form:label>
+							<form:label class="route_name_label" path="recorrido.nombre">Nombre<font color="red"> *</font></form:label>
 						</div>
 						<div>
 							<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_RECORRIDO)" rows="1" id="nombre" path="nombre" name="nombre" class="route_box" placeholder="Ingrese el nombre del recorrido" required></textarea>
@@ -168,7 +168,7 @@
 		</form:form>
 	</div>
 	
-	<form:form id="formAtras" action="ciudadVer?idCiudad=${recorrido.ciudad.id}" method="post"></form:form>
+	<form:form id="formAtras" action="ciudadVer?idCiudad=${recorrido.recorrido.ciudad.id}" method="post"></form:form>
 	<div class="btn-final" style="text-align:center;">
 		<input id="botonAtras" class="btn btn-default" type="button" value="Cancelar" />
 		<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Guardar" />
@@ -193,7 +193,7 @@ var dentro_del_recorrido = new Array();
 
 var table_all_atractions = $('#table_all_atractions').DataTable( {
 	dom: 'frtip',
-	ajax: "atraccionesFueraDelRecorridoNuevoJson/${recorrido.ciudad.id}",
+	ajax: "atraccionesFueraDelRecorridoNuevoJson/${recorrido.recorrido.ciudad.id}",
     columns: [
         {	data: "id",
         	render: function (data,type,row) {
@@ -215,7 +215,7 @@ var table_all_atractions = $('#table_all_atractions').DataTable( {
 
 var table_route_atractions = $('#table_route_atractions').DataTable( {
 	dom: 'frtip',
-	ajax: "atraccionesEnElRecorridoNuevoJson/${recorrido.ciudad.id}",
+	ajax: "atraccionesEnElRecorridoNuevoJson/${recorrido.recorrido.ciudad.id}",
     columns: [
     	{defaultContent:'<button class="btn btn-danger" id="remove_atraction"> < </button>'},
         {	data: "id",
@@ -344,11 +344,11 @@ function validarRecorridoRepetido() {
 </script>
 
 <c:set var="latitud_ciudad">
-	${recorrido.ciudad.latitud}
+	${recorrido.recorrido.ciudad.latitud}
 </c:set>
 
 <c:set var="longitud_ciudad">
-	${recorrido.ciudad.longitud}
+	${recorrido.recorrido.ciudad.longitud}
 </c:set>
 
 <script>
