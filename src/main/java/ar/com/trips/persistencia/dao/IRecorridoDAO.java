@@ -16,9 +16,10 @@ public interface IRecorridoDAO extends IDAO {
 
 	boolean recorridoExistente(Recorrido recorrido);
 	
-	List<Atraccion> listarAtraccionesFueraDelRecorrido(long id);
+	List<Atraccion> listarAtraccionesEnElRecorridoNuevo();
+
+	/*List<Atraccion> listarAtraccionesFueraDelRecorrido(long id);
 
 	List<Atraccion> listarAtraccionesFueraDelRecorridoNuevo(int idCiudad);
-
-	List<Atraccion> listarAtraccionesEnElRecorridoNuevo();
+*/
 }

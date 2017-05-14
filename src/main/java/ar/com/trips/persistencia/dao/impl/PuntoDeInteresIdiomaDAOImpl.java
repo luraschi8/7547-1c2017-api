@@ -8,8 +8,6 @@ import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IPuntoDeInteresIdiomaDAO;
-import ar.com.trips.persistencia.modelo.Atraccion;
-import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 import ar.com.trips.persistencia.modelo.PuntoIdioma;
 
 public class PuntoDeInteresIdiomaDAOImpl extends DAOImpl implements IPuntoDeInteresIdiomaDAO {
@@ -68,18 +66,6 @@ public class PuntoDeInteresIdiomaDAOImpl extends DAOImpl implements IPuntoDeInte
 		s.getTransaction().commit();
 		s.close();
 		this.actualizarOrdenes((int)model.getPuntoDeInteres().getAtraccion().getId(),model.getIdioma().name());
-	}
-	
-	@Override
-	public boolean puntoExistente(PuntoIdioma punto) {
-		Session session = sessionFactory.openSession();
-		String query = "FROM " + PuntoDeInteres.class.getName() + " a WHERE (a.atraccion.id = '"
-				+ punto.getPuntoDeInteres().getAtraccion().getId() + "' OR a.atraccion.id is null) AND a.borrado = 0"
-				+ " AND a.id != '" + punto.getId() + "' AND a.idioma = '" + punto.getIdioma() + "'";
-		@SuppressWarnings("unchecked")
-		List<Atraccion> lista = session.createQuery(query).list();
-		session.close();
-		return lista.size() != 0;
 	}
 	
 	@Override

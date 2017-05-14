@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
+import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Recorrido;
+import ar.com.trips.persistencia.modelo.RecorridoIdioma;
 import ar.com.trips.presentacion.dto.AtraccionDTO;
 import ar.com.trips.presentacion.dto.RecorridoDTO;
 import ar.com.trips.presentacion.mapper.AtraccionMapper;
+import ar.com.trips.presentacion.mapper.RecorridoMapper;
 import ar.com.trips.presentacion.validacion.RecorridoValidacion;
 
 @RestController
@@ -31,6 +34,9 @@ public class RecorridoControladorRest {
 	
 	@Autowired
 	private IRecorridoDAO recorridoDao;
+	
+	@Autowired
+	private IRecorridoIdiomaDAO recorridoIdiomaDao;
 	
 	@Autowired
 	RecorridoValidacion recorridoValidacion;
@@ -51,18 +57,14 @@ public class RecorridoControladorRest {
 		return lista;
 	}
 	
-	@RequestMapping(path="/recorrido/{idRecorrido}", method=RequestMethod.GET)
+	@RequestMapping(path="/recorrido/{idRecorrido}/{idioma}", method=RequestMethod.GET)
 	public HashMap<String, RecorridoDTO> getAtraccion(HttpServletRequest request, HttpServletResponse response,
-								@PathVariable long idRecorrido) {
+								@PathVariable long idRecorrido,@PathVariable String idioma) {
 		HashMap<String, RecorridoDTO> lista = new HashMap<String, RecorridoDTO>();
-		Recorrido a = recorridoDao.get(idRecorrido);
+		RecorridoIdioma a = recorridoIdiomaDao.get(idRecorrido,idioma);
 		String url = request.getRequestURL().toString();
 		url = url.substring(0, url.indexOf("recorrido"));
-		RecorridoDTO dto = new RecorridoDTO();
-		dto.setId(idRecorrido);
-		dto.setNombre(a.getNombre());
-		dto.setDescripcion(a.getDescripcion());
-		dto.setIdioma(a.getIdioma());
+		RecorridoDTO dto = RecorridoMapper.map(a);
 		lista.put(DATA, dto);
 		return lista;
 	}
@@ -78,7 +80,8 @@ public class RecorridoControladorRest {
 		}
 		return lista;
 	}
-	
+
+	/*
 	@RequestMapping(path="/atraccionesFueraDelRecorridoNuevoJson/{idCiudad}", method=RequestMethod.GET)
 	public HashMap<String, List<AtraccionDTO>> getAtraccionesFueraDelRecorridoNuevo(@PathVariable int idCiudad) {
 		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
@@ -93,7 +96,7 @@ public class RecorridoControladorRest {
 		}
 		lista.put(DATA, listaRetorno);
 		return lista;
-	}
+	}*/
 	
 	@RequestMapping(path="/atraccionesEnElRecorridoNuevoJson/{idCiudad}", method=RequestMethod.GET)
 	public HashMap<String, List<AtraccionDTO>> listarAtraccionesEnElRecorridoNuevo(@PathVariable int idCiudad) {

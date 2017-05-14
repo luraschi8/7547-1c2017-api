@@ -1,7 +1,9 @@
 package ar.com.trips.persistencia.modelo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -76,6 +80,12 @@ public class Atraccion extends Modelo{
 	@OneToMany(mappedBy="atraccion",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JsonBackReference(value="listaAtraccionIdioma")
 	private List<AtraccionIdioma> listaAtraccionIdioma = new ArrayList<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "RecorridoAtraccion", joinColumns = {
+			@JoinColumn(name = "idAtraccionIdioma") },
+			inverseJoinColumns = { @JoinColumn(name = "idRecorridoIdioma") })
+	private Set<Recorrido> listaRecorridos = new HashSet<Recorrido>();
 
 	public Atraccion() {
 		

@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -36,21 +36,13 @@ public class Recorrido extends Modelo {
 	@Column(name="borrado")
 	private int borrado;
 	
-	@Column(name="idioma")
-	private String idioma;
-		
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)
 	@JoinColumn(name="idCiudad")
 	@JsonBackReference(value="ciudad")
 	private Ciudad ciudad;
 	
-	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
-	@JsonBackReference(value="listaAtraccionesEnElRecorrido")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "listaRecorridos")
 	private List<Atraccion> listaAtraccionesEnElRecorrido = new ArrayList<>();
-	
-	@OneToMany(mappedBy="ciudad",fetch=FetchType.EAGER)
-	@JsonBackReference(value="listaAtraccionesFueraDelRecorrido")
-	private List<Atraccion> listaAtraccionesFueraDelRecorrido = new ArrayList<>();
 	
 	@Transient
 	private int cantAtracciones;
@@ -107,28 +99,12 @@ public class Recorrido extends Modelo {
 		this.listaAtraccionesEnElRecorrido = listaAtraccionesEnElRecorrido;
 	}
 	
-	public List<Atraccion> getListaAtraccionesFueraDelRecorrido() {
-		return listaAtraccionesFueraDelRecorrido;
-	}
-
-	public void setListaAtraccionesFueraDelRecorrido(List<Atraccion> listaAtraccionesFueraDelRecorrido) {
-		this.listaAtraccionesFueraDelRecorrido = listaAtraccionesFueraDelRecorrido;
-	}
-	
 	public int getCantAtracciones() {
 		return cantAtracciones;
 	}
 
 	public void setCantAtracciones(int cantAtracciones) {
 		this.cantAtracciones = cantAtracciones;
-	}
-	
-	public String getIdioma() {
-		return idioma;
-	}
-
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
 	}
 	
 	public void addAtractionToRoute(Atraccion atraccion) {

@@ -12,9 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
+import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.Recorrido;
+import ar.com.trips.persistencia.modelo.RecorridoIdioma;
+import ar.com.trips.util.enums.Idioma;
 
 @Controller
 public class RecorridoControlador {
@@ -23,6 +26,9 @@ public class RecorridoControlador {
 	
 	@Autowired
 	private IRecorridoDAO recorridoDao;
+	
+	@Autowired
+	private IRecorridoIdiomaDAO recorridoIdiomaDao;
 	
 	@Autowired
 	private IAtraccionDAO atraccionDao;
@@ -72,7 +78,9 @@ public class RecorridoControlador {
 		ciudad.setId(idCiudad);
 		recorrido.setCiudad(ciudad);
 		recorrido.setBorrado(0);
-		recorrido.setIdioma(idioma);
+		RecorridoIdioma recorridoIdioma = new RecorridoIdioma();
+		recorridoIdioma.setIdioma(Idioma.valueOf(idioma));
+		recorridoIdioma.setRecorrido(recorrido);
 		agregarAtracciones(recorrido, atracciones);
 		recorridoDao.guardar(recorrido);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
@@ -93,15 +101,15 @@ public class RecorridoControlador {
 	}
 	
 	@RequestMapping("recorridoModificar")
-	public ModelAndView modificar(@ModelAttribute("recorrido") Recorrido recorridoId,
+	public ModelAndView modificar(@ModelAttribute("recorrido") RecorridoIdioma recorrido,
 									@RequestParam("nombre") String nombreModificado,
 									@RequestParam("descripcion") String descripcionModificada,
 									@RequestParam("idioma") String idiomaModificado) throws IOException {
-		Recorrido recorrido = recorridoDao.get(recorridoId.getId());
-		recorrido.setNombre(nombreModificado);
+		recorrido = recorridoIdiomaDao.get(recorrido.getId());
+		recorrido.getRecorrido().setNombre(nombreModificado);
 		recorrido.setDescripcion(descripcionModificada);
-		recorrido.setIdioma(idiomaModificado);
+		recorrido.setIdioma(Idioma.valueOf(idiomaModificado));
 		recorridoDao.modificar(recorrido);
-		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + recorrido.getCiudad().getId());
+		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + recorrido.getRecorrido().getCiudad().getId());
 	}
 }

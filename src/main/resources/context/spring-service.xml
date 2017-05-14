@@ -45,6 +45,9 @@
 				</value>
 				<value>ar.com.trips.persistencia.modelo.Recorrido
 				</value>
+				<value>ar.com.trips.persistencia.modelo.RecorridoIdioma
+				</value>
+				
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -81,6 +84,8 @@
 		class="ar.com.trips.persistencia.dao.impl.ReseniaDAOImpl" />
 	<bean id="RecorridoDAO"
 		class="ar.com.trips.persistencia.dao.impl.RecorridoDAOImpl" />
+	<bean id="RecorridoIdiomaDAO"
+		class="ar.com.trips.persistencia.dao.impl.RecorridoIdiomaDAOImpl" />
 	
 	
 	<!-- Validaciones -->

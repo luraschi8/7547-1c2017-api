@@ -97,7 +97,24 @@ create table Recorrido (
     nombre varchar(50),
     descripcion varchar(250),
     borrado tinyint default 0 not null,
-    idioma varchar(2),
     idCiudad bigint(10) not null,
     foreign key (idCiudad) references Ciudad (id)
 );
+
+create table RecorridoIdioma (
+	id bigint(10) primary key not null auto_increment,
+    idioma varchar(3) not null,
+    descripcion varchar(250),
+    borrado tinyint default 0 not null,
+    audio mediumblob,
+    idRecorrido bigint(10),
+    foreign key (idRecorrido) references PuntoDeInteres (id)
+);
+
+create table RecorridoAtraccion (
+	id bigint(10) primary key not null auto_increment,
+	idAtraccionIdioma bigint(10) not null,
+    idRecorridoIdioma bigint(10) not null,
+    foreign key (idAtraccionIdioma) references AtraccionIdioma (id),
+    foreign key (idRecorridoIdioma) references RecorridoIdioma (id)
+)

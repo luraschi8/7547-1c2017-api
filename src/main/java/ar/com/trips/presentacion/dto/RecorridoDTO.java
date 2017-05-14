@@ -4,6 +4,8 @@ public class RecorridoDTO {
 
 	private long id;
 	
+	private long idRecorrido;
+	
 	private String nombre;
 	
 	private String descripcion;
@@ -18,6 +20,14 @@ public class RecorridoDTO {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public long getIdRecorrido() {
+		return idRecorrido;
+	}
+
+	public void setIdRecorrido(long idRecorrido) {
+		this.idRecorrido = idRecorrido;
 	}
 
 	public String getNombre() {
