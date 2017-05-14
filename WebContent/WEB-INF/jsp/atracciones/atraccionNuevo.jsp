@@ -182,6 +182,7 @@
 					<!-- Audioguía -->
 					<div class="new-atraction-audio-group">
 						<label class="atraction-label atraction-audio-label">Audioguía</label>
+						<input type="hidden" id="audioCambiado" name="audioCambiado" value=0>
 						<div>
 							<!-- Reproducir audioguía -->
 							<div style="float:left">
@@ -774,48 +775,7 @@ $(document).ready(function() {
 <!-- Audioguía -->
 <script>
 validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
-
-$(document).ready(function() {
-	document.getElementById('atraction-get-audio-file').onclick = function() {
-		hideAllAtractionErrorMessages();
-		document.getElementById('archivoAudioguia').addEventListener('change', readURL, true);
-		var fileButton = document.getElementById('archivoAudioguia');
-		fileButton.click();
-	};
-	
-	$("#archivoAudioguia").change(function() {
-	    var file = document.getElementById("archivoAudioguia").files[0];
-	    var val = $(this).val();
-	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
-	        case 'mp3':
-	        	if (file.size > (3 * 1024 * 1024)) {
-	        		document.getElementById('mensajeAudioTamano').style.display = 'block';
-	        		document.getElementById('archivoAudioguia').value = "" ;
-					document.getElementById('audio').src = "" ;
-	        		return;
-	        	}
-	        	document.getElementById("mensajeAudioIncorrectoError").style.display = 'none';
-	        	break;
-	        default:
-	            $(this).val('');
-				document.getElementById("mensajeAudioIncorrectoError").style.display = 'block';
-				document.getElementById('archivoAudioguia').value = "" ;
-				document.getElementById('audio').src = "" ;
-				break;
-	    }
-	});
-	
-	function readURL(){
-		var file = document.getElementById("archivoAudioguia").files[0];
-		var reader = new FileReader();
-	    reader.onloadend = function(){
-			document.getElementById('audio').src = reader.result;
-		}
-		if(file) {
-			reader.readAsDataURL(file);
-		} 
-	}
-});
+validateAudio("atraction-get-audio-file", "atraction-erase-audio-file", "archivoAudioguia", "audio", "audioCambiado", "mensajeAudioTamano", "mensajeAudioIncorrectoError");
 </script>
 
 <c:set var="latitud_ciudad">

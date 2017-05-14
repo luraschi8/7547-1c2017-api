@@ -63,6 +63,45 @@
 						 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
 						</div>
 					</div>
+					
+					<!-- Audioguía -->
+					<div style="width: 100%; height: 15%">
+						<div style="width: 100%; height: 40%">
+							<label class="atraction-label" path="audioES">Audioguía</label>
+						</div>
+						<input type="hidden" id="audioCambiadoRecorrido" name="audioCambiadoRecorrido" value=0>
+						<div style="width: 100%; height: 60%">
+							<!-- Reproducir audioguía -->
+							<div style="float: left; width: 85%; height: 50%">
+								<audio id="audioRecorrido" style="width: 100%;" controls>
+								    <source type="audio/mpeg">
+								</audio> 
+							</div>
+							
+							<!-- Botón agregar audioguía -->
+							<div style="float: right; width: 15%; height: 50%; text-align: right;">
+								<button type="button" class="btn btn-default btn-sm btn-atraction-get-route-audio-file" id="getAudioRecorrido">
+									<span class="glyphicon glyphicon-pencil"></span>
+								 </button>
+							
+								<button type="button" class="btn btn-default btn-sm btn-atraction-erase-route-audio-file" id="borrarAudioRecorrido">
+									<span class="glyphicon glyphicon-erase"></span>
+								 </button>
+						
+								<input type="file" name="archivoAudioguiaRecorrido" id="archivoAudioguiaRecorrido"/>
+							</div>
+						</div>
+					</div>
+					
+					<div class="alert alert-danger fade in atraction-alert-incorrect-audio" id="mensajeAudioRecorridoIncorrectoError" style="display: none;">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>Error!</strong> El archivo seleccionado no es un audio válido. Por favor, introduzca otro.
+					</div>
+					
+					<div class="alert alert-danger fade in atraction-alert-incorrect-audio" id="mensajeAudioRecorridoTamano" style="display: none;">
+					 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+					 	<strong>Error!</strong> El archivo pesa mas de 3MB. Por favor, seleccione uno de menor tamaño.
+					</div>
 				</div>
 				
 				<!-- Bloque derecho -->
@@ -135,6 +174,7 @@
 		<input id="botonNuevo" class="btn btn-default btn-primary" type="button" value="Guardar" />
 	</div>
 
+<script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 
 <!-- Definición de constantes -->
 <script>
@@ -146,6 +186,8 @@ $("#descripcion").attr("maxlength", MAX_DESCRIPCION_RECORRIDO);
 </script>
 
 <script>
+validateAudio("getAudioRecorrido", "borrarAudioRecorrido", "archivoAudioguiaRecorrido", "audioRecorrido", "audioCambiadoRecorrido", "mensajeAudioRecorridoTamano", "mensajeAudioRecorridoIncorrectoError");
+
 var fuera_del_recorrido = new Array();
 var dentro_del_recorrido = new Array();
 
