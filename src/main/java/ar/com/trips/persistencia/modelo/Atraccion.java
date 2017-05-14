@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -81,7 +80,7 @@ public class Atraccion extends Modelo{
 	@JsonBackReference(value="listaAtraccionIdioma")
 	private List<AtraccionIdioma> listaAtraccionIdioma = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "listaAtraccionesEnElRecorrido")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "listaAtraccionesEnElRecorrido")
 	@JsonBackReference(value="listaRecorridos")
 	private Set<Recorrido> listaRecorridos = new HashSet<Recorrido>();
 
