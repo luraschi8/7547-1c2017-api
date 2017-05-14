@@ -15,12 +15,12 @@
 <title>Trips - ${atraccion.atraccion.nombre}</title>
 </head>
 
-<body>
+<body onload="setLanguage()">
 
 	<div class="nav-wrapper atraction-new-page-header">
 		<div class="nav-menu">
    		    <ul class="clearfix">
-	        	<li id="select_language">${idioma}
+	        	<li id="select_language">
 		        	<ul class="sub-menu">
 			        	<li onclick="setSpanish();">Español</li>
 			            <li onclick="setEnglish();">Inglés</li>
@@ -864,6 +864,14 @@ $('#point_of_interest_add_language_btn').on('click', function(e) {
 	showPointOfInterestNewLanguagePopup();
 });
 
+function setLanguage() {
+	if ("${idioma}" == "ES") {
+		document.getElementById("select_language").innerHTML = "Español <ul class='sub-menu'> <li onclick='setSpanish();'>Español</li> <li onclick='setEnglish();'>Inglés</li> </ul>";
+	} else {
+		document.getElementById("select_language").innerHTML = "Inglés <ul class='sub-menu'> <li onclick='setSpanish();'>Español</li> <li onclick='setEnglish();'>Inglés</li> </ul>";
+	}
+}
+
 function setSpanish() {
 	document.formVer.idioma.value = "ES";
 	document.getElementById("formVer").submit();
@@ -936,7 +944,6 @@ function validarElemento(elemento, mensaje, hayError) {
 }
 	
 $(document).ready(function() {
-
 	far_away = false;
 	
 	function updateForm() {

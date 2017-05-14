@@ -175,9 +175,9 @@ public class AtraccionControlador {
 		AtraccionIdioma a = atraccionIdiomaDao.get(id, idioma);
 		if (a == null) {
 			if (idioma == "ES") {
-				idioma = "EN";
-			} else {
 				idioma = "ES";
+			} else {
+				idioma = "EN";
 			}
 			a = atraccionIdiomaDao.get(id, idioma);
 		}
