@@ -221,7 +221,7 @@ function enableRoutePage() {
 
 function hideAllRouteNewLanguageErrorMessages() {
 	document.getElementById('mensajeDescripcionVaciaRecorridoNuevoLenguajeError').style.display = 'none';
-	document.getElementById('mensajeAudiorecorridoNuevoLenguajeIncorrectoError').style.display = 'none';
+	document.getElementById('mensajeAudioRecorridoNuevoLenguajeIncorrectoError').style.display = 'none';
 	document.getElementById('mensajeAudioRecorridoNuevoLenguajeTamano').style.display = 'none';
 }
 

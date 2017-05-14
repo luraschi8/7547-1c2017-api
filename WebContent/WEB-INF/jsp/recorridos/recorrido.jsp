@@ -210,7 +210,7 @@
 		</form:form>
 	</div>
 	
-	<form:form id="formAtras" action="ciudadVer?idCiudad=${recorrido.ciudad.id}" method="post"></form:form>
+	<form:form id="formAtras" action="ciudadVer?idCiudad=${recorrido.recorrido.ciudad.id}" method="post"></form:form>
 	<div class="btn-final" style="text-align:center;">
 		<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
 		<input id="botonGuardar" class="btn btn-default btn-primary" type="button" value="Aceptar" />
@@ -219,12 +219,12 @@
 	
 	
 	
-<div id="route_new_language_popup" style="display: none; width: 50%; height: 100%">
+<div id="route_new_language_popup" style="display: none; width: 50%; height: 60%">
 	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
 		<form:form class="route_new_language" style="width: 100%; height: 100%" id="formRecorridoNuevoLenguaje" name="formRecorridoNuevoLenguaje" action="nuevoLenguajeRecorrido" method="post" commandName="atraccion" enctype="multipart/form-data">
-			<h2 style="width: 100%; height: 8%">Añadir lenguaje</h2>
+			<h2 style="width: 100%; height: 12%">Añadir lenguaje</h2>
 			
-			<div style="width: 100%; height: 20%">
+			<div style="width: 100%; height: 27%">
 				<div style="display: inline-block;">
 					<label class="atraction-label" path="descripcion">Descripción</label><font color="red"> *</font>
 				</div>
@@ -238,7 +238,7 @@
 			 	<strong>&iexclError!</strong> La descripción no puede estar vacía.
 			</div>
 			
-			<div style="width: 100%; height: 14%">
+			<div style="width: 100%; height: 30%">
 				<div style="width: 100%; height: 40%">
 					<label class="atraction-label" path="audio">Audioguía</label>
 				</div>
@@ -279,7 +279,7 @@
 			<font style="margin-left: 1%;" color="red" size="1">Los campos indicados con * son obligatorios</font>
 			
 			<div class="btn_final_route_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%;">
-				<input id="botonCancelarRecorridoNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closeRecorridoNewLanguagePopup();"/>
+				<input id="botonCancelarRecorridoNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closeRouteNewLanguagePopup();"/>
 				<input id="botonGuardarRecorridoNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarRecorridoNuevoLenguaje();"/>
 			</div>
 		</form:form>
