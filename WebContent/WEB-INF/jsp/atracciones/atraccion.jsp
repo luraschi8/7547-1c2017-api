@@ -944,6 +944,7 @@ function validarElemento(elemento, mensaje, hayError) {
 }
 	
 $(document).ready(function() {
+	validateAudio("getAudioPuntoDeInteresNuevoLenguaje", "borrarAudioPuntoDeInteresNuevoLenguaje", "archivoAudioguiaPuntoDeInteresNuevoLenguaje", "audioPuntoDeInteresNuevoLenguaje", "audioCambiadoPuntoDeInteresNuevoLenguaje", "mensajeAudioPuntoDeInteresNuevoLenguajeTamano", "mensajeAudioPuntoDeInteresNuevoLenguajeIncorrectoError");
 	far_away = false;
 	
 	function updateForm() {

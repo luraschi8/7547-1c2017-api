@@ -143,7 +143,6 @@ function closeViewCommentPopUp() {
 $(document).ready(function() {
 	validateImage("puntoGetImagen", "puntoArchivoImagen", "puntoImagen", "mensajeImagenIncorrectaPuntoDeInteresError");
 	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
-	validateAudio("getAudioPuntoDeInteresNuevoLenguaje", "borrarAudioPuntoDeInteresNuevoLenguaje", "archivoAudioguiaPuntoDeInteresNuevoLenguaje", "audioPuntoDeInteresNuevoLenguaje", "audioCambiadoPuntoDeInteresNuevoLenguaje", "mensajeAudioPuntoDeInteresNuevoLenguajeTamano", "mensajeAudioPuntoDeInteresNuevoLenguajeIncorrectoError");
 });
 
 function updatePointOfInterestForm() {
