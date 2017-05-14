@@ -3,6 +3,7 @@ package ar.com.trips.persistencia.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
@@ -57,6 +58,15 @@ public class RecorridoDAOImpl extends DAOImpl implements IRecorridoDAO {
 		List<Atraccion> lista = session.createQuery(query).list();
 		session.close();
 		return lista;
+	}
+
+	@Override
+	public void guardarRecorrido(Recorrido recorrido) {
+		Session s = sessionFactory.openSession();
+		Transaction tx = s.beginTransaction();
+		s.merge(recorrido);
+		tx.commit();
+		s.close();
 	}
 
 	/*

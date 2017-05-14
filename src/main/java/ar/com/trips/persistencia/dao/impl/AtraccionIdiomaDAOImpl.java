@@ -11,10 +11,10 @@ import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 public class AtraccionIdiomaDAOImpl extends DAOImpl implements IAtraccionIdiomaDAO {
 
 	@Override
-	public List listarPorCiudad(int idCiudad) {
+	public List<AtraccionIdioma> listarPorCiudad(int idCiudad, String idioma) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.atraccion.ciudad.id = " + idCiudad 
-				+ " AND a.borrado = 0";
+				+ " AND a.idioma = '" + idioma + "' AND a.borrado = 0";
 		@SuppressWarnings("unchecked")
 		List<AtraccionIdioma> lista = session.createQuery(query).list();
 		session.close();

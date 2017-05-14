@@ -67,6 +67,22 @@ public class AtraccionControladorRest {
 		return lista;
 	}
 	
+	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}/{idioma}",method=RequestMethod.GET)
+	public HashMap<String, List<AtraccionDTO>> listarAtraccionesCiudadIdioma(@PathVariable int idCiudad,@PathVariable String idioma) {
+		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
+		List<AtraccionDTO> listaAtracciones = new ArrayList<>();
+		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad(idCiudad,idioma);
+		for (AtraccionIdioma a : list) {
+			AtraccionDTO atraccion = AtraccionMapper.map(a);
+			if (a.getAtraccion().getListaImagenes().size() > 0) {
+				atraccion.setImagen(DatatypeConverter.printBase64Binary(a.getAtraccion().getListaImagenes().get(0).getImagen()));
+			}
+			listaAtracciones.add(atraccion);
+		}
+		lista.put(DATA, listaAtracciones);
+		return lista;
+	}
+	
 	@RequestMapping(path="/atraccion/{idAtraccion}/{idioma}",method=RequestMethod.GET)
 	public HashMap<String, AtraccionDTO> getAtraccion(HttpServletRequest request, HttpServletResponse response,
 								@PathVariable long idAtraccion,@PathVariable String idioma) {

@@ -34,8 +34,8 @@
 						<div class="route_language">
 							<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
 						  	<div>
-							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="es" style="margin: 4px" checked="checked">Español
-							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="en" style="margin: 4px; margin-left: 15px;">Inglés
+							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked">Español
+							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;">Inglés
 							</div>
 						</div>
 						
@@ -43,7 +43,7 @@
 							<form:label class="route_name_label" path="recorrido.nombre">Nombre<font color="red"> *</font></form:label>
 						</div>
 						<div>
-							<textarea onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_RECORRIDO)" rows="1" id="nombre" path="nombre" name="nombre" class="route_box" placeholder="Ingrese el nombre del recorrido" required></textarea>
+							<form:input onkeydown="calculateMaxLength('#nombre', MAX_NOMBRE_RECORRIDO)" rows="1" id="nombre" path="recorrido.nombre" name="nombre" class="route_box" placeholder="Ingrese el nombre del recorrido" required="required"></form:input>
 						</div>
 						
 						<div class="alert alert-danger fade in route_alert" id="mensajeNombreVacio" style="display: none;">
@@ -190,10 +190,10 @@ validateAudio("getAudioRecorrido", "borrarAudioRecorrido", "archivoAudioguiaReco
 
 var fuera_del_recorrido = new Array();
 var dentro_del_recorrido = new Array();
-
+idiomaCheck = $("input[name='idioma']:checked").val();
 var table_all_atractions = $('#table_all_atractions').DataTable( {
 	dom: 'frtip',
-	ajax: "atraccionesFueraDelRecorridoNuevoJson/${recorrido.recorrido.ciudad.id}",
+	ajax: "atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/" + idiomaCheck,
     columns: [
         {	data: "id",
         	render: function (data,type,row) {

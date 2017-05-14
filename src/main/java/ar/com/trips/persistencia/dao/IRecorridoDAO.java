@@ -17,6 +17,8 @@ public interface IRecorridoDAO extends IDAO {
 	boolean recorridoExistente(Recorrido recorrido);
 	
 	List<Atraccion> listarAtraccionesEnElRecorridoNuevo();
+	
+	void guardarRecorrido(Recorrido recorrido);
 
 	/*List<Atraccion> listarAtraccionesFueraDelRecorrido(long id);
 

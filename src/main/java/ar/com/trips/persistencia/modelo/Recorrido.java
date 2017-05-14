@@ -1,7 +1,9 @@
 package ar.com.trips.persistencia.modelo;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,8 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -30,9 +34,6 @@ public class Recorrido extends Modelo {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="descripcion")
-	private String descripcion;
-	
 	@Column(name="borrado")
 	private int borrado;
 	
@@ -41,8 +42,15 @@ public class Recorrido extends Modelo {
 	@JsonBackReference(value="ciudad")
 	private Ciudad ciudad;
 	
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "listaRecorridos")
-	private List<Atraccion> listaAtraccionesEnElRecorrido = new ArrayList<>();
+	@OneToMany(mappedBy="recorrido",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonBackReference(value="listaRecorridoIdioma")
+	private List<RecorridoIdioma> listaRecorridoIdioma = new ArrayList<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "RecorridoAtraccion", joinColumns = {
+			@JoinColumn(name = "idRecorrido", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "idAtraccion", nullable = false, updatable = false) })
+	private Set<Atraccion> listaAtraccionesEnElRecorrido = new LinkedHashSet<>();
 	
 	@Transient
 	private int cantAtracciones;
@@ -67,14 +75,6 @@ public class Recorrido extends Modelo {
 		this.nombre = nombre;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
 	public int getBorrado() {
 		return borrado;
 	}
@@ -91,14 +91,14 @@ public class Recorrido extends Modelo {
 		this.ciudad = ciudad;
 	}
 	
-	public List<Atraccion> getListaAtraccionesEnElRecorrido() {
+	public Set<Atraccion> getListaAtraccionesEnElRecorrido() {
 		return listaAtraccionesEnElRecorrido;
 	}
 
-	public void setListaAtraccionesEnElRecorrido(List<Atraccion> listaAtraccionesEnElRecorrido) {
+	public void setListaAtraccionesEnElRecorrido(Set<Atraccion> listaAtraccionesEnElRecorrido) {
 		this.listaAtraccionesEnElRecorrido = listaAtraccionesEnElRecorrido;
 	}
-	
+
 	public int getCantAtracciones() {
 		return cantAtracciones;
 	}
@@ -108,6 +108,19 @@ public class Recorrido extends Modelo {
 	}
 	
 	public void addAtractionToRoute(Atraccion atraccion) {
-		this.listaAtraccionesEnElRecorrido.add(atraccion);
+		this.getListaAtraccionesEnElRecorrido().add(atraccion);
 	}
+
+	public List<RecorridoIdioma> getListaRecorridoIdioma() {
+		return listaRecorridoIdioma;
+	}
+
+	public void setListaRecorridoIdioma(List<RecorridoIdioma> listaRecorridoIdioma) {
+		this.listaRecorridoIdioma = listaRecorridoIdioma;
+	}
+	
+	public void addRecorridoIdioma(RecorridoIdioma recorrido) {
+		this.getListaRecorridoIdioma().add(recorrido);
+	}
+	
 }

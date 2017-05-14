@@ -81,10 +81,8 @@ public class Atraccion extends Modelo{
 	@JsonBackReference(value="listaAtraccionIdioma")
 	private List<AtraccionIdioma> listaAtraccionIdioma = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "RecorridoAtraccion", joinColumns = {
-			@JoinColumn(name = "idAtraccionIdioma") },
-			inverseJoinColumns = { @JoinColumn(name = "idRecorridoIdioma") })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "listaAtraccionesEnElRecorrido")
+	@JsonBackReference(value="listaRecorridos")
 	private Set<Recorrido> listaRecorridos = new HashSet<Recorrido>();
 
 	public Atraccion() {
@@ -197,6 +195,18 @@ public class Atraccion extends Modelo{
 
 	public void addAtraccionIdioma(AtraccionIdioma atraccion) {
 		this.getListaAtraccionIdioma().add(atraccion);
+	}
+	
+	public Set<Recorrido> getListaRecorridos() {
+		return listaRecorridos;
+	}
+
+	public void setListaRecorridos(Set<Recorrido> listaRecorridos) {
+		this.listaRecorridos = listaRecorridos;
+	}
+
+	public void addRecorrido(Recorrido recorrido) {
+		this.getListaRecorridos().add(recorrido);
 	}
 
 }

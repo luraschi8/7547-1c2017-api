@@ -42,7 +42,8 @@ public class RecorridoControlador {
 	}
 	
 	@RequestMapping("recorridoNuevo")
-	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad, @RequestParam("latitudCiudad") float latitudCiudad, @RequestParam("longitudCiudad") float longitudCiudad) {
+	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad, @RequestParam("latitudCiudad") float latitudCiudad,
+			@RequestParam("longitudCiudad") float longitudCiudad, @RequestParam(name="idioma",required=false)String idioma) {
 		ModelAndView model = new ModelAndView(RECORRIDO_NUEVO_PATH);
 		Recorrido r = new Recorrido();
 		RecorridoIdioma recorrido = new RecorridoIdioma();
@@ -60,31 +61,34 @@ public class RecorridoControlador {
 			}
 		}
 
-		
 		model.addObject("recorrido", recorrido);
+		model.addObject("idioma",idioma);
 		return model;
 	}
 	
 	private void agregarAtracciones(Recorrido recorrido, String atracciones) {
 		String atracciones_separadas[] = atracciones.split(",");
 		for (int i = 0; i < atracciones_separadas.length; i++) {
-			recorrido.addAtractionToRoute(atraccionDao.get(Long.parseLong(atracciones_separadas[i])));
+			Atraccion atraccion  = atraccionDao.get(Long.parseLong(atracciones_separadas[i]));
+//			atraccion.setId(Long.parseLong(atracciones_separadas[i]));
+			atraccion.addRecorrido(recorrido);
+			recorrido.addAtractionToRoute(atraccion);
 		}
 		recorrido.setCantAtracciones(atracciones_separadas.length);
 	}
 	
 	@RequestMapping("recorridoNuevoValidar")
-	public String nuevo(@ModelAttribute("recorrido") Recorrido recorrido, @RequestParam("idCiudad") int idCiudad,
+	public String nuevo(@ModelAttribute("recorrido") RecorridoIdioma recorrido, @RequestParam("idCiudad") int idCiudad,
 							@RequestParam("idioma") String idioma, @RequestParam("atracciones") String atracciones) {
+		Recorrido r = recorrido.getRecorrido();
+		r.addRecorridoIdioma(recorrido);
 		Ciudad ciudad = new Ciudad();
 		ciudad.setId(idCiudad);
-		recorrido.setCiudad(ciudad);
+		r.setCiudad(ciudad);
 		recorrido.setBorrado(0);
-		RecorridoIdioma recorridoIdioma = new RecorridoIdioma();
-		recorridoIdioma.setIdioma(Idioma.valueOf(idioma));
-		recorridoIdioma.setRecorrido(recorrido);
-		agregarAtracciones(recorrido, atracciones);
-		recorridoDao.guardar(recorrido);
+		recorrido.setIdioma(Idioma.valueOf(idioma));
+		agregarAtracciones(r, atracciones);
+		recorridoDao.guardar(r);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
 	}
 	
