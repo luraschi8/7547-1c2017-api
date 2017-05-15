@@ -3,6 +3,7 @@ package ar.com.trips.presentacion.rest;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -156,8 +157,8 @@ public class RecorridoControladorRest {
 		}
 		HashMap<Long,AtraccionDTO> listaRetorno = new HashMap<>();
 		for(AtraccionIdioma a : list) {
-			if (!listaAtracciones.containsKey(a.getId()) && !listaRetorno.containsKey(a.getId())) {
-				AtraccionDTO dto = AtraccionMapper.map(a);
+			if (!listaAtracciones.containsKey(a.getAtraccion().getId()) && !listaRetorno.containsKey(a.getAtraccion().getId())) {
+				AtraccionDTO dto = AtraccionMapper.map(a.getAtraccion());
 				if (a.getAtraccion().getListaImagenes().size() > 0) {
 					dto.setImagen(DatatypeConverter.printBase64Binary(a.getAtraccion().getListaImagenes().get(0).getImagen()));
 				}
@@ -173,17 +174,32 @@ public class RecorridoControladorRest {
 			@RequestParam("descripcion") String descripcion,
 			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
-		Recorrido a = recorridoDao.get(id);
-		LinkedHashSet<RecorridoIdioma> listaIdiomas = new LinkedHashSet<RecorridoIdioma>(a.getListaRecorridoIdioma());
+		Recorrido rec = recorridoDao.get(id);
+		LinkedHashSet<RecorridoIdioma> listaIdiomas = new LinkedHashSet<RecorridoIdioma>(rec.getListaRecorridoIdioma());
 		if (listaIdiomas.size() > 1 ) {
 			lista.put(EXISTE, false);
+			lista.put("otroIdioma", true);
 			return lista;
 		}
-		Idioma idioma = a.getListaRecorridoIdioma().get(0).getIdioma();
+		Idioma idioma = rec.getListaRecorridoIdioma().get(0).getIdioma();
 		if (idioma == Idioma.EN) {
 			idioma = Idioma.ES;
 		} else {
 			idioma = Idioma.EN;
+		}
+		int contador = 0;
+		for(Atraccion a : rec.getListaAtraccionesEnElRecorrido()) {
+			Set<AtraccionIdioma> listaAtraccionIdiomas = new HashSet<AtraccionIdioma>(a.getListaAtraccionIdioma());
+			for (AtraccionIdioma aIdioma : listaAtraccionIdiomas) {
+				if (aIdioma.getIdioma() == idioma) {
+					contador++;
+				}
+			}
+		}
+		if (contador != rec.getListaAtraccionesEnElRecorrido().size()) {
+			lista.put(EXISTE, false);
+			lista.put("otroIdioma", false);
+			return lista;
 		}
 		RecorridoIdioma recorrido = new RecorridoIdioma();
 		recorrido.setDescripcion(descripcion);
@@ -191,8 +207,8 @@ public class RecorridoControladorRest {
 		if (audio != null ) {
 			recorrido.setAudio(audio.getBytes());
 		}
-		recorrido.setRecorrido(a);;
-		a.addRecorridoIdioma(recorrido);
+		recorrido.setRecorrido(rec);;
+		rec.addRecorridoIdioma(recorrido);
 		recorridoIdiomaDao.guardar(recorrido);
 		lista.put(EXISTE, true);
 		return lista;

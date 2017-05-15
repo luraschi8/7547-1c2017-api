@@ -424,6 +424,14 @@ var table_route_atractions = $('#tablaAtraccionesRecorrido').DataTable( {
     ordering:true,
     bFilter: false
 });
+
+$(document).ready(function() {
+	<c:if test="${recorrido.audio != null}">
+		var audio = document.getElementById('audioRecorrido');
+	    audio.src = "${pageContext.request.contextPath}/audioRecorrido?id=" + '${recorrido.id}';
+	</c:if>
+});
+
 </script>
 
 <c:set var="latitud_ciudad">
@@ -464,9 +472,14 @@ function guardarRecorridoNuevoLenguaje() {
 		dataType: 'json',
 		success: function (data) {
 			if (data.existe == false) {
-				alert("Ya existe tanto en inglés como castellano");
+				if (data.otroIdioma == true) {
+					alert("Ya existe tanto en inglés como castellano");
+				} else {
+					alert("Se encuentran atracciones que no cuentan con el idioma requerido");
+				}
 				closeRouteNewLanguagePopup();
 			} else {
+				alert("Idioma agregado");
 				closeRouteNewLanguagePopup();
 			}
 		}

@@ -23,12 +23,14 @@ import ar.com.trips.persistencia.dao.ICiudadDAO;
 import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
 import ar.com.trips.persistencia.dao.IPuntoDeInteresIdiomaDAO;
+import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
 import ar.com.trips.persistencia.modelo.PuntoIdioma;
+import ar.com.trips.persistencia.modelo.RecorridoIdioma;
 
 @Controller
 public class MultimediaControlador {
@@ -47,6 +49,9 @@ public class MultimediaControlador {
 	
 	@Autowired
 	private IPuntoDeInteresIdiomaDAO puntoIdiomaDao;
+	
+	@Autowired
+	private IRecorridoIdiomaDAO recorridoIdiomaDao;
 	
 	@Autowired
 	private IImagenAtraccionDAO imagenAtraccionDao;
@@ -136,6 +141,23 @@ public class MultimediaControlador {
 	        PuntoIdioma punto = puntoIdiomaDao.get(id);
 	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 	        ByteArrayInputStream iStream = new ByteArrayInputStream(punto.getAudio());
+	        IOUtils.copy(iStream, response.getOutputStream());
+	        response.flushBuffer();
+	    } catch (java.nio.file.NoSuchFileException e) {
+	        e.printStackTrace();
+	    	response.setStatus(HttpStatus.NOT_FOUND.value());
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+	    }
+	}
+	
+	@RequestMapping(value = "/audioRecorrido", method = RequestMethod.GET)
+	@ResponseBody public void getAudioRecorrido(@RequestParam("id") Long id, HttpServletResponse response) {
+	    try {
+	        RecorridoIdioma recorrido = recorridoIdiomaDao.get(id);
+	        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+	        ByteArrayInputStream iStream = new ByteArrayInputStream(recorrido.getAudio());
 	        IOUtils.copy(iStream, response.getOutputStream());
 	        response.flushBuffer();
 	    } catch (java.nio.file.NoSuchFileException e) {
