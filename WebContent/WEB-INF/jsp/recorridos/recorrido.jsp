@@ -293,7 +293,7 @@
 </c:set>
 
 <form:form id="formVer" name="formVer" action="recorridoVer" method="get">
-	<input id="idRecorrido" name="idRecorrido" type="hidden" value="${recorrido.id}"/>
+	<input id="idRecorrido" name="idRecorrido" type="hidden" value="${recorrido.recorrido.id}"/>
 	<input id="idioma" name="idioma" type="hidden" value="${idioma}"/>
 </form:form>
 
