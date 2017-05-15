@@ -5,9 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.com.trips.persistencia.dao.IRecorridoDAO;
 import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
-import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Recorrido;
 import ar.com.trips.persistencia.modelo.RecorridoIdioma;
 
