@@ -263,7 +263,6 @@ $('#table_all_atractions tbody').on('click', '#add_atraction', function (e) {
 	table_all_atractions.row(this.closest("tr")).remove().draw();
 });
 
-
 $('#table_route_atractions tbody').on('click', '#remove_atraction', function (e) {
 	e.preventDefault();
 	var data = table_route_atractions.row(this.closest("tr")).data();
@@ -319,6 +318,13 @@ function checkEmptyFields() {
 					for (var i = 0; i < dentro_del_recorrido.length; i ++) {
 		        		fuera_del_recorrido.push(dentro_del_recorrido.pop());
 					}
+
+					if (idiomaCheck == "ES") {
+						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/EN").load();
+					} else {
+						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/ES").load();
+					}
+
 					table_all_atractions.ajax.reload();
 					table_route_atractions.ajax.reload();
 		        }
