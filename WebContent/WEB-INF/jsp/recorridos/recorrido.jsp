@@ -380,6 +380,34 @@ var table_route_atractions = $('#tablaAtraccionesRecorrido').DataTable( {
     bFilter: false
 });
 
+/* ***************************
+Agregar Idioma
+*****************************/
+
+function guardarRecorridoNuevoLenguaje() {
+	var formData = new FormData();
+	formData.append("id","${idRecorrido}");
+	formData.append("descripcion",document.getElementById("recorridoDescripcionNuevoLenguaje").value);
+	formData.append("audio",document.getElementById("archivoAudioguiaRecorridoNuevoLenguaje").files[0]);
+	$.ajax({
+		url : "agregarLenguajeRecorrido",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data.existe == false) {
+				alert("Ya existe tanto en inglés como castellano");
+				closeRouteNewLanguagePopup();
+			} else {
+				closeRouteNewLanguagePopup();
+			}
+		}
+	});
+}
+
 </script>
 	
 </body>

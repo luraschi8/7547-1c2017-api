@@ -1,11 +1,11 @@
 package ar.com.trips.presentacion.rest;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import static java.lang.Math.toIntExact;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
 import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
@@ -30,6 +32,7 @@ import ar.com.trips.presentacion.dto.RecorridoDTO;
 import ar.com.trips.presentacion.mapper.AtraccionMapper;
 import ar.com.trips.presentacion.mapper.RecorridoMapper;
 import ar.com.trips.presentacion.validacion.RecorridoValidacion;
+import ar.com.trips.util.enums.Idioma;
 
 @RestController
 public class RecorridoControladorRest {
@@ -147,7 +150,7 @@ public class RecorridoControladorRest {
 		HashMap<String, Collection<AtraccionDTO>> lista = new HashMap<String, Collection<AtraccionDTO>>();
 		Recorrido recorrido = recorridoDao.get(idRecorrido);
 		HashMap<Long,Atraccion> listaAtracciones = new HashMap<>();
-		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad(toIntExact(recorrido.getCiudad().getId()), idioma);;
+		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad((int)recorrido.getCiudad().getId(), idioma);;
 		for (Atraccion a : recorrido.getListaAtraccionesEnElRecorrido()) {
 			listaAtracciones.put(a.getId(), a);
 		}
@@ -162,6 +165,36 @@ public class RecorridoControladorRest {
 			}
 		}
 		lista.put(DATA, listaRetorno.values());
+		return lista;
+	}
+	
+	@RequestMapping(path="/agregarLenguajeRecorrido",method=RequestMethod.POST)
+	public HashMap<String, Boolean> crearPunto(@RequestParam("id") Long id,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
+		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
+		Recorrido a = recorridoDao.get(id);
+		LinkedHashSet<RecorridoIdioma> listaIdiomas = new LinkedHashSet<RecorridoIdioma>(a.getListaRecorridoIdioma());
+		if (listaIdiomas.size() > 1 ) {
+			lista.put(EXISTE, false);
+			return lista;
+		}
+		Idioma idioma = a.getListaRecorridoIdioma().get(0).getIdioma();
+		if (idioma == Idioma.EN) {
+			idioma = Idioma.ES;
+		} else {
+			idioma = Idioma.EN;
+		}
+		RecorridoIdioma recorrido = new RecorridoIdioma();
+		recorrido.setDescripcion(descripcion);
+		recorrido.setIdioma(idioma);
+		if (audio != null ) {
+			recorrido.setAudio(audio.getBytes());
+		}
+		recorrido.setRecorrido(a);;
+		a.addRecorridoIdioma(recorrido);
+		recorridoIdiomaDao.guardar(recorrido);
+		lista.put(EXISTE, true);
 		return lista;
 	}
 }
