@@ -80,23 +80,6 @@ public class RecorridoControladorRest {
 		}
 		return lista;
 	}
-
-	/*
-	@RequestMapping(path="/atraccionesFueraDelRecorridoNuevoJson/{idCiudad}", method=RequestMethod.GET)
-	public HashMap<String, List<AtraccionDTO>> getAtraccionesFueraDelRecorridoNuevo(@PathVariable int idCiudad) {
-		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
-		List<Atraccion> list = recorridoDao.listarAtraccionesFueraDelRecorridoNuevo(idCiudad);
-		List<AtraccionDTO> listaRetorno = new ArrayList<>();
-		for (Atraccion a : list) {
-			AtraccionDTO dto = AtraccionMapper.map(a);
-			if (a.getListaImagenes().size() > 0) {
-				dto.setImagen(DatatypeConverter.printBase64Binary(a.getListaImagenes().get(0).getImagen()));
-			}
-			listaRetorno.add(dto);
-		}
-		lista.put(DATA, listaRetorno);
-		return lista;
-	}*/
 	
 	@RequestMapping(path="/atraccionesEnElRecorridoNuevoJson/{idCiudad}", method=RequestMethod.GET)
 	public HashMap<String, List<AtraccionDTO>> listarAtraccionesEnElRecorridoNuevo(@PathVariable int idCiudad) {
@@ -113,16 +96,42 @@ public class RecorridoControladorRest {
 		return lista;
 	}
 	
-	/*@RequestMapping(path="/atraccionesEnElRecorridoCiudadJson/{idRecorrido}", method=RequestMethod.GET)
-	public HashMap<String, List<Atraccion>> listarAtraccionesEnElRecorrido(@PathVariable int idCiudad) {
-		HashMap<String, List<Atraccion>> lista = new HashMap<String, List<Atraccion>>();
-		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);
-		for (Atraccion a : list) {
+	@RequestMapping(path="/atraccionesRecorridoJson/{idRecorrido}", method=RequestMethod.GET)
+	public HashMap<String, List<AtraccionDTO>> listarAtraccionesRecorrido(@PathVariable Long idRecorrido) {
+		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
+		Recorrido recorrido = recorridoDao.get(idRecorrido);
+		List<AtraccionDTO> listaRetorno = new ArrayList<>();
+		for (Atraccion a : recorrido.getListaAtraccionesEnElRecorrido()) {
+			AtraccionDTO dto = AtraccionMapper.map(a);
 			if (a.getListaImagenes().size() > 0) {
-				a.setImagen(a.getListaImagenes().get(0).getImagen());
+				dto.setImagen(DatatypeConverter.printBase64Binary(a.getListaImagenes().get(0).getImagen()));
+			}
+			listaRetorno.add(dto);
+		}
+		lista.put(DATA, listaRetorno);
+		return lista;
+	}
+	
+	@RequestMapping(path="/atraccionesFueraRecorridoJson/{idRecorrido}", method=RequestMethod.GET)
+	public HashMap<String, List<AtraccionDTO>> listarAtraccionesFueraRecorrido(@PathVariable Long idRecorrido) {
+		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
+		Recorrido recorrido = recorridoDao.get(idRecorrido);
+		HashMap<Long,Atraccion> listaAtracciones = new HashMap<>();
+		for (Atraccion a : recorrido.getListaAtraccionesEnElRecorrido()) {
+			listaAtracciones.put(a.getId(), a);
+		}
+		List<AtraccionDTO> listaRetorno = new ArrayList<>();
+		for(Atraccion a : recorrido.getCiudad().getListaAtracciones()) {
+			if (!listaAtracciones.containsKey(a.getId())) {
+				AtraccionDTO dto = AtraccionMapper.map(a);
+				if (a.getListaImagenes().size() > 0) {
+					dto.setImagen(DatatypeConverter.printBase64Binary(a.getListaImagenes().get(0).getImagen()));
+				}
+				listaRetorno.add(dto);
 			}
 		}
-		lista.put(DATA, list);
+		lista.put(DATA, listaRetorno);
 		return lista;
-	}*/
+	}
+	
 }

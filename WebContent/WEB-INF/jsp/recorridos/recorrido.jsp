@@ -20,8 +20,8 @@
    		    <ul class="clearfix">
 	        	<li id="select_language">Idioma
 		        	<ul class="sub-menu">
-			        	<li onclick="setSpanish();"><a href="">Español</a></li>
-			            <li onclick="setEnglish();"><a href="">Inglés</a></li>
+			        	<li onclick="setSpanish();">Español</li>
+			            <li onclick="setEnglish();">Inglés</li>
 			        </ul>
 			    </li>
 	        </ul>
@@ -158,7 +158,7 @@
 					<label>Atracciones de la ciudad</label>
 					<div style="width: 100%;" class="panel panel-primary route-panel">
 						<div class="panel-body route_panel_body">
-							<table id="table_all_atractions" class="display order-column route_board" cellspacing="0">
+							<table id="tablaAtracciones" class="display order-column route_board" cellspacing="0">
 								<thead>
 									<tr>
 										<th></th> <!-- Imagen -->
@@ -176,7 +176,7 @@
 					<label>Atracciones del recorrido</label>
 					<div style="width: 100%;" class="panel panel-primary route-panel">
 						<div class="panel-body route_panel_body">
-							<table id="table_route_atractions" class="display order-column route_board" cellspacing="0">
+							<table id="tablaAtraccionesRecorrido" class="display order-column route_board" cellspacing="0">
 								<thead>
 									<tr>
 										<th></th> <!-- Quitar -->
@@ -284,6 +284,14 @@
 	${recorrido.idioma}
 </c:set>
 
+<c:set var="idRecorrido">
+	${recorrido.recorrido.id}
+</c:set>
+
+<c:set var="id">
+	${recorrido.id}
+</c:set>
+
 <form:form id="formVer" name="formVer" action="recorridoVer" method="get">
 	<input id="idRecorrido" name="idRecorrido" type="hidden" value="${recorrido.id}"/>
 	<input id="idioma" name="idioma" type="hidden" value="${idioma}"/>
@@ -321,6 +329,48 @@ function setLanguage() {
 		document.getElementById("select_language").innerHTML = "Ingl&eacute;s <ul class='sub-menu'> <li onclick='setSpanish();'>Espa&ntilde;ol</li> <li onclick='setEnglish();'>Ingl&eacute;s</li> </ul>";
 	}
 }
+
+var table_all_atractions = $('#tablaAtracciones').DataTable( {
+	dom: 'frtip',
+	ajax: "atraccionesFueraRecorridoJson/${idRecorrido}",
+    columns: [
+        {	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },
+        {data: "nombre" },
+        {defaultContent:'<button class="btn btn-success" id="add_atraction"> > </button>'}
+        ],
+    "columnDefs": [
+   		{className: "dt-body-right", "targets": [2]}
+    ],
+    select:true,
+    paging:false,
+    pageLength:30,
+    ordering:true,
+    bFilter: false
+});
+
+var table_route_atractions = $('#tablaAtraccionesRecorrido').DataTable( {
+	dom: 'frtip',
+	ajax: "atraccionesRecorridoJson/${idRecorrido}",
+    columns: [
+    	{defaultContent:'<button class="btn btn-danger" id="remove_atraction"> < </button>'},
+        {	data: "id",
+        	render: function (data,type,row) {
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        	}
+        },
+        {data: "nombre"}
+        ],
+    select:true,
+    paging:false,
+    pageLength:30,
+    ordering:true,
+    bFilter: false
+});
+
 </script>
 	
 </body>
