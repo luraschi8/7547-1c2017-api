@@ -13,14 +13,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Trips - ${recorrido.recorrido.nombre}</title>
 </head>
-<body>
+
+<body onload="setLanguage();">
 	<div class="nav-wrapper route-new-page-header">
 		<div class="nav-menu">
    		    <ul class="clearfix">
-	        	<li>Idioma
+	        	<li id="select_language">Idioma
 		        	<ul class="sub-menu">
-			        	<li><a href="">Español</a></li>
-			            <li><a href="">Inglés</a></li>
+			        	<li onclick="setSpanish();"><a href="">Español</a></li>
+			            <li onclick="setEnglish();"><a href="">Inglés</a></li>
 			        </ul>
 			    </li>
 	        </ul>
@@ -29,40 +30,29 @@
 
 	<h1 class="page-header route-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">${recorrido.recorrido.nombre} - ${recorrido.recorrido.ciudad.nombre}</h1>	
 	
-	
-	
-	
-	
-	
-	
 	<div id="routeForm" style="width: 94%; margin-left: 3%; margin-right: 3%">
-		<form:form id="formNuevo" name="formNuevo" action="recorridoNuevoValidar" method="post" commandName="recorrido" enctype="multipart/form-data">
+		<form:form id="formModificar" name="formModificar" action="recorridoNuevoValidar" method="post" commandName="recorrido" enctype="multipart/form-data">
 		
 		<div class="route_new_form" style="display: inline-block; overflow: hidden;">
 			
-			<div class="route_main_information_and_map" style="width: 100%; margin_bottom: 75%;">
+			<div class="route_main_information_and_map" style="width: 100%;">
 				<!-- Bloque izquierdo -->
-				<div class="route_left_block" style="float:left; margin-top: -1%">
+				<div class="route_left_block" style="float:left; margin-top: -0.5%">
 	
 					<!-- Información principal -->
 					<div class="route_main_information">
 						<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.recorrido.ciudad.id}"/>
 						<input type="hidden" id="id" name="id" value="${recorrido.id}"/>
 						<input type="hidden" name="atracciones" value=""/>
-						
-						
 
 						<div class="route_name" style="margin-top: 2%">
-							<form class="route_name_label" path="recorrido.nombre">Nombre</label>
-							<input type="hidden" id="nombreEditado" name="nombreEditado" value="${recorrido.recorrido.nombre}"/>
+							<form:label class="route_name_label" path="recorrido.nombre">Nombre</form:label>
+							<input type="hidden" id="nombre" name="nombre" value="${recorrido.recorrido.nombre}"/>
 							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-name" onclick="editField('#nombreEditado', 'ok-nombre', 'cancel-nombre', 'mensajeNombreVacio', true)">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</button>
 						</div>
-						
-						
-						
-						
+
 						<div>
 							<div>
 								<p id="nombreEditado" style="white-space: pre-wrap;" class="atraction-box atraction-name-box" path="nombre" contenteditable="false" value="${recorrido.recorrido.nombre}">${recorrido.recorrido.nombre}</p>
@@ -75,51 +65,56 @@
 								<span class="glyphicon glyphicon-ok"></span>
 							</button>
 						</div>
-						
-						
 
-						
 						<div class="alert alert-danger fade in route_alert" id="mensajeNombreVacio" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclError!</strong> No se ha seleccionado un nombre para el recorrido.
+						 	<strong>&iexclError!</strong> El nombre no puede estar vacío. Se ha dejado el último nombre válido.
 						</div>
-						
-						
-						
-						
-						
-						
-						
+
 						
 						<div class="route_description" style="margin-top: 1%">
-							<label class="route_description_label" path="descripcion">Descripción</label>
+							<form:label class="route_description_label" path="descripcion">Descripción</form:label>
+							<input type="hidden" id="descripcion" name="descripcion" value="${recorrido.descripcion}"/>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" id="edit-description" onclick="editField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
 						</div>
+
 						<div>
-							<textarea onkeydown="calculateMaxLength('#descripcion', MAX_DESCRIPCION_RECORRIDO)" rows="4" id="descripcion" path="descripcion" name="descripcion" class="route_box"  placeholder="Ingrese la descripcion del recorrido" required></textarea>
+							<div>
+								<p id="descripcionEditada" style="white-space: pre-wrap;" class="atraction-box atraction-description-box" path="descripcion" contenteditable="false" value="${recorrido.descripcion}">${recorrido.descripcion}</p>
+								<textarea onkeydown="calculateMaxLength('#descripcionEditadaTextarea', MAX_DESCRIPCION_RECORRIDO)" style="display:none" rows="1" id="descripcionEditadaTextarea" class="route_box" value="${recorrido.descripcion}">${recorrido.descripcion}</textarea>
+							</div>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: red;" id="cancel-descripcion" onclick="cancelField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion')">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+							<button type="button" class="btn btn-default btn-sm btn-edit-main-information" style="display:none; background-color: green;" id="ok-descripcion" onclick="saveField('#descripcionEditada', 'ok-descripcion', 'cancel-descripcion', 'mensajeDescripcionVacia', true)">
+								<span class="glyphicon glyphicon-ok"></span>
+							</button>
 						</div>
-						
+	
 						<div class="alert alert-danger fade in route_alert" id="mensajeDescripcionVacia" style="display: none;">
 						 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-						 	<strong>&iexclError!</strong> No se ha seleccionado una descripción para la atracción.
+						 	<strong>&iexclError!</strong> La descripción no puede estar vacía. Se ha dejado la última descripción válida.
 						</div>
 					</div>
 					
 					<!-- Audioguía -->
-					<div style="width: 100%; height: 15%">
-						<div style="width: 100%; height: 40%">
+					<div style="width: 100%; height: 10%">
+						<div style="width: 100%; height: 10%">
 							<label class="atraction-label" path="audioES">Audioguía</label>
 						</div>
 						<input type="hidden" id="audioCambiadoRecorrido" name="audioCambiadoRecorrido" value=0>
-						<div style="width: 100%; height: 60%">
+						<div style="width: 100%; height: 10%; margin-top: 1%;">
 							<!-- Reproducir audioguía -->
-							<div style="float: left; width: 85%; height: 50%">
+							<div style="float: left; width: 85%; height: 10%">
 								<audio id="audioRecorrido" style="width: 100%;" controls>
 								    <source type="audio/mpeg">
 								</audio> 
 							</div>
 							
 							<!-- Botón agregar audioguía -->
-							<div style="float: right; width: 15%; height: 50%; text-align: right;">
+							<div style="float: right; width: 15%; height: 10%; text-align: right;">
 								<button type="button" class="btn btn-default btn-sm btn-atraction-get-route-audio-file" id="getAudioRecorrido">
 									<span class="glyphicon glyphicon-pencil"></span>
 								 </button>
@@ -198,7 +193,7 @@
 			</div>
 		</div>
 		
-		<div style="clear: both; margin-top: 5%;">
+		<div style="clear: both;">
 			<input id="route_add_language_btn" class="btn btn-default btn-success" type="button" value="Agregar idioma"/>
 		</div>
 	
@@ -215,10 +210,9 @@
 		<input id="botonAtras" class="btn btn-default" type="button" value="Atrás" />
 		<input id="botonGuardar" class="btn btn-default btn-primary" type="button" value="Aceptar" />
 	</div>
-	
-	
-	
-	
+
+
+
 <div id="route_new_language_popup" style="display: none; width: 50%; height: 60%">
 	<div style="margin-left: 5%; margin-right: 5%; width: 90%; height: 90%">
 		<form:form class="route_new_language" style="width: 100%; height: 100%" id="formRecorridoNuevoLenguaje" name="formRecorridoNuevoLenguaje" action="nuevoLenguajeRecorrido" method="post" commandName="atraccion" enctype="multipart/form-data">
@@ -286,6 +280,15 @@
 	</div>
 </div>
 
+<c:set var="idioma">
+	${recorrido.idioma}
+</c:set>
+
+<form:form id="formVer" name="formVer" action="recorridoVer" method="get">
+	<input id="idRecorrido" name="idRecorrido" type="hidden" value="${recorrido.id}"/>
+	<input id="idioma" name="idioma" type="hidden" value="${idioma}"/>
+</form:form>
+
 <script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 
 <script>
@@ -300,6 +303,24 @@ $('#botonAtras').on('click', function(e) {
 	e.preventDefault();
 	document.getElementById("formAtras").submit();
 });
+
+function setSpanish() {
+	document.formVer.idioma.value = "ES";
+	document.getElementById("formVer").submit();
+}
+
+function setEnglish() {
+	document.formVer.idioma.value = "EN";
+	document.formVer.submit();
+}
+
+function setLanguage() {
+	if ("${idioma}" == "ES") {
+		document.getElementById("select_language").innerHTML = "Espa&ntilde;ol <ul class='sub-menu'> <li onclick='setSpanish();'>Espa&ntilde;ol</li> <li onclick='setEnglish();'>Ingl&eacute;s</li> </ul>";
+	} else {
+		document.getElementById("select_language").innerHTML = "Ingl&eacute;s <ul class='sub-menu'> <li onclick='setSpanish();'>Espa&ntilde;ol</li> <li onclick='setEnglish();'>Ingl&eacute;s</li> </ul>";
+	}
+}
 </script>
 	
 </body>

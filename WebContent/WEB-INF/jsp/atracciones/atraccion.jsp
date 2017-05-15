@@ -15,7 +15,7 @@
 <title>Trips - ${atraccion.atraccion.nombre}</title>
 </head>
 
-<body onload="setLanguage()">
+<body onload="setLanguage();">
 
 	<div class="nav-wrapper atraction-new-page-header">
 		<div class="nav-menu">
@@ -851,6 +851,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	<input id="idioma" name="idioma" type="hidden" value="${idioma}"/>
 </form:form>
 
+<script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 
 <script>
@@ -864,14 +865,6 @@ $('#point_of_interest_add_language_btn').on('click', function(e) {
 	showPointOfInterestNewLanguagePopup();
 });
 
-function setLanguage() {
-	if ("${idioma}" == "ES") {
-		document.getElementById("select_language").innerHTML = "Español <ul class='sub-menu'> <li onclick='setSpanish();'>Español</li> <li onclick='setEnglish();'>Inglés</li> </ul>";
-	} else {
-		document.getElementById("select_language").innerHTML = "Inglés <ul class='sub-menu'> <li onclick='setSpanish();'>Español</li> <li onclick='setEnglish();'>Inglés</li> </ul>";
-	}
-}
-
 function setSpanish() {
 	document.formVer.idioma.value = "ES";
 	document.getElementById("formVer").submit();
@@ -879,7 +872,15 @@ function setSpanish() {
 
 function setEnglish() {
 	document.formVer.idioma.value = "EN";
-	document.formVer.submit();
+	document.getElementById("formVer").submit();
+}
+
+function setLanguage() {
+	if ("${idioma}" == "ES") {
+		document.getElementById("select_language").innerHTML = "Espa&ntilde;ol <ul class='sub-menu'> <li onclick='setSpanish();'>Espa&ntilde;ol</li> <li onclick='setEnglish();'>Ingl&eacute;s</li> </ul>";
+	} else {
+		document.getElementById("select_language").innerHTML = "Ingl&eacute;s <ul class='sub-menu'> <li onclick='setSpanish();'>Espa&ntilde;ol</li> <li onclick='setEnglish();'>Ingl&eacute;s</li> </ul>";
+	}
 }
 
 function hideAllPointsOfInterestNewLanguageErrorMessages() {
