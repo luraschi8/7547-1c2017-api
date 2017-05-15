@@ -203,7 +203,7 @@ var table_all_atractions = $('#table_all_atractions').DataTable( {
     columns: [
         {	data: "id",
         	render: function (data,type,row) {
-        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + row["idAtraccion"] + '" style="align: center; width:40px; height:40px"/></div'
         	}
         },
         {data: "nombre" },

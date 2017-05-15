@@ -1529,12 +1529,6 @@ var table = $('#tablita').DataTable( {
 		},
 		{	data: "id",
          	render: function (data,type,row) {
-         	console.log("DATA");
-         	console.log(data);
-         	console.log("TYPE");
-         	console.log(type);
-         	console.log("ROW");
-         	console.log(row);
 		 		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + row["idPunto"] 
 		 		+ '" style="align: center; width:40px; height:40px"/></div>' 
 		 		+ '<span style="display:none" class="clasePuntoId">' + data + '</span>'

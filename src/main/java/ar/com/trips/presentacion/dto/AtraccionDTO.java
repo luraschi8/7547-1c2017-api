@@ -9,6 +9,8 @@ public class AtraccionDTO {
 
 	private long id;
 	
+	private long idAtraccion;
+	
 	private String nombre;
 	
 	private String horario;
@@ -45,6 +47,14 @@ public class AtraccionDTO {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getIdAtraccion() {
+		return idAtraccion;
+	}
+
+	public void setIdAtraccion(long idAtraccion) {
+		this.idAtraccion = idAtraccion;
 	}
 
 	public String getNombre() {

@@ -9,6 +9,7 @@ public class AtraccionMapper {
 	public static AtraccionDTO map(AtraccionIdioma atraccion) {
 		AtraccionDTO dto = new AtraccionDTO();
 		dto.setId(atraccion.getId());
+		dto.setIdAtraccion(atraccion.getAtraccion().getId());
 		dto.setNombre(atraccion.getAtraccion().getNombre());
 		dto.setHorario(atraccion.getHorario());
 		dto.setDescripcion(atraccion.getDescripcion());

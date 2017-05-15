@@ -917,7 +917,7 @@ var table = $('#tablita').DataTable( {
 		},
 		{	data: "id",
          	render: function (data,type,row) {
-		 		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + data 
+		 		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPunto?id=' + row["idPunto"] 
 		 		+ '" style="align: center; width:40px; height:40px"/></div>' 
 		 		+ '<span style="display:none" class="clasePuntoId">' + data + '</span>'
 		 	}
