@@ -460,6 +460,42 @@ $('#botonNuevo').on('click', function(e) {
  	validarAtraccionRepetida();
 });
 
+function checkEmptyFields(idiomaACambiar) {
+	var empty_fields = true;
+	if ((document.getElementById("nombre").value != "") || (document.getElementById("descripcion").value != "") ||
+			(document.getElementById("horario").value != "") || (document.getElementById("precio").value != "") ||
+			(document.getElementById("latitud").value != "0.0") || (document.getElementById("longitud").value != "0.0") ||
+			(document.getElementById("audio").src != "") || (document.getElementById('es-recorrible').checked)
+			|| (imageNumber != 0)) {
+		empty_fields = false;
+	}
+	if (!empty_fields) {
+		bootbox.confirm({
+		    message: "Si cambia de idioma se perderá la información cargada. ¿Desea continuar?",
+		    buttons: {
+		        confirm: {
+		            label: 'Sí'
+		        },
+		        cancel: {
+		            label: 'No'
+		        }
+		    },
+		    callback: function(result) {
+		        if (result) {
+		        	document.formAgregarAtraccion.idioma.value = idiomaACambiar;
+		        	document.getElementById("formAgregarAtraccion").submit();
+		        } else {
+		        	if (idiomaCheck == "ES") {
+		        		$("input[name='idioma']:checked").val("EN");
+					} else {
+						$("input[name='idioma']:checked").val("ES");
+					}
+			    }
+		    }
+		});
+	}
+}
+
 function validarElemento(elemento, mensaje, hayError) {
 	if ((document.getElementById(elemento).value == '') && (!hayError)) {
 		document.getElementById(mensaje).style.display = 'block';
@@ -894,7 +930,6 @@ $(document).ready(function() {
 	console.log("IDIOMA: " + idioma);
 });
 
-
 function cambiarIdioma() {
 	var idiomaACambiar = "";
 	if (idiomaCheck == "EN") {
@@ -902,8 +937,7 @@ function cambiarIdioma() {
 	} else {
 		idiomaACambiar = "EN";	
 	}
-	document.formAgregarAtraccion.idioma.value = idiomaACambiar;
-	document.getElementById("formAgregarAtraccion").submit();
+	checkEmptyFields(idiomaACambiar);
 }
 
 var table = $('#tablita').DataTable( {
