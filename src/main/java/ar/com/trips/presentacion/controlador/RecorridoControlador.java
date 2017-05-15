@@ -100,10 +100,28 @@ public class RecorridoControlador {
 
 	@RequestMapping(path="recorridoVer")
 	public ModelAndView ver(@RequestParam("idRecorrido") long id, @RequestParam("idioma") String idioma) {
-		RecorridoIdioma recorrido = recorridoIdiomaDao.get(id,idioma);
+		Recorrido recorrido = recorridoDao.get(id);
+		RecorridoIdioma r = recorridoIdiomaDao.get(id, idioma);
+		if (r == null) {
+			if (idioma.equals("ES")) {
+				idioma = "EN";
+			} else {
+				idioma = "ES";
+			}
+			r = recorridoIdiomaDao.get(id, idioma);
+		}
+		r.setRecorrido(recorrido);
+		ModelAndView model = new ModelAndView("recorridos/recorrido");
+		model.addObject("recorrido", r);
+		model.addObject("idioma",idioma);
+		return model;
+		
+		
+		
+		/*RecorridoIdioma recorrido = recorridoIdiomaDao.get(id,idioma);
 		ModelAndView model = new ModelAndView("recorridos/recorrido");
 		model.addObject("recorrido", recorrido);		
-		return model;
+		return model;*/
 	}
 	
 	@RequestMapping("recorridoModificar")

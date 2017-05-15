@@ -299,6 +299,15 @@
 
 <script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 
+<!-- Definición de constantes -->
+<script>
+const MAX_NOMBRE_RECORRIDO = "50";
+const MAX_DESCRIPCION_RECORRIDO = "250";
+
+$("#nombre").attr("maxlength", MAX_NOMBRE_RECORRIDO);
+$("#descripcion").attr("maxlength", MAX_DESCRIPCION_RECORRIDO);
+</script>
+
 <script>
 validateAudio("getAudioRecorridoNuevoLenguaje", "borrarAudioRecorridoNuevoLenguaje", "archivoAudioguiaRecorridoNuevoLenguaje", "audioRecorridoNuevoLenguaje", "audioCambiadoRecorridoNuevoLenguaje", "mensajeAudioRecorridoNuevoLenguajeTamano", "mensajeAudioRecorridoNuevoLenguajeIncorrectoError");
 
@@ -319,7 +328,7 @@ function setSpanish() {
 
 function setEnglish() {
 	document.formVer.idioma.value = "EN";
-	document.formVer.submit();
+	document.getElementById("formVer").submit();
 }
 
 function setLanguage() {
