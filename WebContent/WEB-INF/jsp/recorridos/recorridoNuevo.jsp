@@ -34,8 +34,8 @@
 						<div class="route_language">
 							<form:label class="atraction-label atraction-language-label" path="idioma">Seleccione el idioma</form:label>
 						  	<div>
-							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked">Español
-							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;">Inglés
+							  	<input type="radio" id="lang_es" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked" onclick="checkEmptyFields();">Español
+							  	<input type="radio" id="lang_en" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" onclick="checkEmptyFields();">Inglés
 							</div>
 						</div>
 						
@@ -159,10 +159,15 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="alert alert-danger fade in error_msg_route_already_exists" id="mensajeCantidadAtracciones" style="display: none;">
+		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+		 	<strong>&iexclError!</strong> El recorrido debe tener por lo menos dos atracciones seleccionadas.
+		</div>
 	
 		<div class="alert alert-danger fade in error_msg_route_already_exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
-		 	<strong>&iexclError!</strong>El recorrido seleccionado ya se encuentra registrado. Seleccione otro nombre.
+		 	<strong>&iexclError!</strong> El recorrido seleccionado ya se encuentra registrado. Seleccione otro nombre.
 		</div>
 		
 		</form:form>
@@ -191,6 +196,7 @@ validateAudio("getAudioRecorrido", "borrarAudioRecorrido", "archivoAudioguiaReco
 var fuera_del_recorrido = new Array();
 var dentro_del_recorrido = new Array();
 idiomaCheck = $("input[name='idioma']:checked").val();
+
 var table_all_atractions = $('#table_all_atractions').DataTable( {
 	dom: 'frtip',
 	ajax: "atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/" + idiomaCheck,
@@ -285,6 +291,47 @@ $('#botonNuevo').on('click', function(e) {
  	validarRecorridoRepetido();
 });
 
+
+
+
+function checkEmptyFields() {
+	var empty_fields = true;
+	if ((document.getElementById("nombre").value != "") || (document.getElementById("descripcion").value != "") ||
+			(document.getElementById("audioRecorrido").src != "") || (dentro_del_recorrido.length > 0)) {
+		empty_fields = false;
+	}
+	if (!empty_fields) {
+		bootbox.confirm({
+		    message: "Si cambia de idioma se perderá la información cargada. ¿Desea continuar?",
+		    buttons: {
+		        confirm: {
+		            label: 'Sí'
+		        },
+		        cancel: {
+		            label: 'No'
+		        }
+		    },
+		    callback: function(result) {
+		        if (result) {
+		        	document.getElementById("nombre").value = "";
+		        	document.getElementById("descripcion").value = "";
+		        	document.getElementById("audioRecorrido").src = "//:0";
+					for (var i = 0; i < dentro_del_recorrido.length; i ++) {
+		        		fuera_del_recorrido.push(dentro_del_recorrido.pop());
+					}
+					table_all_atractions.ajax.reload();
+					table_route_atractions.ajax.reload();
+		        }
+		    }
+		});
+	}
+}
+
+
+
+
+
+
 function validarElemento(elemento, mensaje, hayError) {
 	if ((document.getElementById(elemento).value == '') && (!hayError)) {
 		document.getElementById(mensaje).style.display = 'block';
@@ -305,10 +352,21 @@ function validarUbicacion(hay_ubicacion, mensaje, hayError) {
 	return hayError;
 }
 
+function validarCantidadAtracciones(mensaje, hayError) {
+	if ((dentro_del_recorrido.length < 2) && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById(mensaje).style.display = 'none';
+	}
+	return hayError;
+}
+
 function validarRecorridoRepetido() {
 	hayError = 0;
 	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
 	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
+	hayError = validarCantidadAtracciones('mensajeCantidadAtracciones', hayError);
 	if (hayError == 1) {
 		return;
 	}
