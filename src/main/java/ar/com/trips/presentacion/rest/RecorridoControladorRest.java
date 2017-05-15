@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import static java.lang.Math.toIntExact;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
 import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
+import ar.com.trips.persistencia.dao.impl.AtraccionIdiomaDAOImpl;
 import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.Recorrido;
 import ar.com.trips.persistencia.modelo.RecorridoIdioma;
 import ar.com.trips.presentacion.dto.AtraccionDTO;
@@ -42,6 +45,9 @@ public class RecorridoControladorRest {
 	
 	@Autowired
 	RecorridoValidacion recorridoValidacion;
+	
+	@Autowired
+	AtraccionIdiomaDAOImpl atraccionIdiomaDao;
 	
 	@RequestMapping("/recorridosJson")
 	public HashMap<String, List<Recorrido>> listar() {
@@ -136,4 +142,26 @@ public class RecorridoControladorRest {
 		return lista;
 	}
 	
+	@RequestMapping(path="/atraccionesFueraRecorridoJson/{idRecorrido}/{idioma}",method=RequestMethod.GET)
+	public HashMap<String, Collection<AtraccionDTO>> listarAtraccionesFueraRecorridoIdioma(@PathVariable Long idRecorrido, @PathVariable String idioma) {
+		HashMap<String, Collection<AtraccionDTO>> lista = new HashMap<String, Collection<AtraccionDTO>>();
+		Recorrido recorrido = recorridoDao.get(idRecorrido);
+		HashMap<Long,Atraccion> listaAtracciones = new HashMap<>();
+		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad(toIntExact(recorrido.getCiudad().getId()), idioma);;
+		for (Atraccion a : recorrido.getListaAtraccionesEnElRecorrido()) {
+			listaAtracciones.put(a.getId(), a);
+		}
+		HashMap<Long,AtraccionDTO> listaRetorno = new HashMap<>();
+		for(AtraccionIdioma a : list) {
+			if (!listaAtracciones.containsKey(a.getId()) && !listaRetorno.containsKey(a.getId())) {
+				AtraccionDTO dto = AtraccionMapper.map(a);
+				if (a.getAtraccion().getListaImagenes().size() > 0) {
+					dto.setImagen(DatatypeConverter.printBase64Binary(a.getAtraccion().getListaImagenes().get(0).getImagen()));
+				}
+				listaRetorno.put(dto.getId(),dto);
+			}
+		}
+		lista.put(DATA, listaRetorno.values());
+		return lista;
+	}
 }

@@ -341,7 +341,7 @@ function setLanguage() {
 
 var table_all_atractions = $('#tablaAtracciones').DataTable( {
 	dom: 'frtip',
-	ajax: "atraccionesFueraRecorridoJson/${idRecorrido}",
+	ajax: "atraccionesFueraRecorridoJson/${idRecorrido}/${idioma}",
     columns: [
         {	data: "id",
         	render: function (data,type,row) {
