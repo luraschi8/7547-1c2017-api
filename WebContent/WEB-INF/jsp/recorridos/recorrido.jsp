@@ -14,7 +14,7 @@
 <title>Trips - ${recorrido.recorrido.nombre}</title>
 </head>
 
-<body onload="setLanguage();">
+<body onload="setLanguage(); initializeTables();">
 	<div class="nav-wrapper route-new-page-header">
 		<div class="nav-menu">
    		    <ul class="clearfix">
@@ -311,6 +311,9 @@ $("#descripcion").attr("maxlength", MAX_DESCRIPCION_RECORRIDO);
 <script>
 validateAudio("getAudioRecorridoNuevoLenguaje", "borrarAudioRecorridoNuevoLenguaje", "archivoAudioguiaRecorridoNuevoLenguaje", "audioRecorridoNuevoLenguaje", "audioCambiadoRecorridoNuevoLenguaje", "mensajeAudioRecorridoNuevoLenguajeTamano", "mensajeAudioRecorridoNuevoLenguajeIncorrectoError");
 
+var fuera_del_recorrido = new Array();
+var dentro_del_recorrido = new Array();
+
 $('#route_add_language_btn').on('click', function(e) {
 	e.preventDefault();
 	showRouteNewLanguagePopup();
@@ -338,6 +341,48 @@ function setLanguage() {
 		document.getElementById("select_language").innerHTML = "Ingl&eacute;s <ul class='sub-menu'> <li onclick='setSpanish();'>Espa&ntilde;ol</li> <li onclick='setEnglish();'>Ingl&eacute;s</li> </ul>";
 	}
 }
+
+function initializeTables() {
+	table_route_atractions.rows().every(function () {
+	    var data = this.data();
+	    dentro_del_recorrido.push(data["id"]);
+	    drawAtractionInMap(data);
+	});
+	table_all_atractions.rows().every(function () {
+	    var data = this.data();
+	    fuera_del_recorrido.push(data["id"]);
+	});
+}
+
+$('#table_all_atractions tbody').on('click', '#add_atraction', function (e) {
+	e.preventDefault();
+	var data = table_all_atractions.row(this.closest("tr")).data();
+	drawAtractionInMap(data);
+	dentro_del_recorrido.push(data["id"]);
+	fuera_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
+	table_route_atractions.row.add({
+        "id":       data.id,
+        "nombre":   data.nombre,
+        "latitud":   data.latitud,
+        "longitud":   data.longitud
+    }).draw();
+	table_all_atractions.row(this.closest("tr")).remove().draw();
+});
+
+$('#table_route_atractions tbody').on('click', '#remove_atraction', function (e) {
+	e.preventDefault();
+	var data = table_route_atractions.row(this.closest("tr")).data();
+	drawAtractionInMap(data);
+	dentro_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
+	fuera_del_recorrido.push(data["id"]);
+	table_all_atractions.row.add({
+        "id":       data.id,
+        "nombre":   data.nombre,
+        "latitud":   data.latitud,
+        "longitud":   data.longitud
+    }).draw();
+	table_route_atractions.row(this.closest("tr")).remove().draw();
+});
 
 var table_all_atractions = $('#tablaAtracciones').DataTable( {
 	dom: 'frtip',
@@ -379,6 +424,26 @@ var table_route_atractions = $('#tablaAtraccionesRecorrido').DataTable( {
     ordering:true,
     bFilter: false
 });
+</script>
+
+<c:set var="latitud_ciudad">
+	${recorrido.recorrido.ciudad.latitud}
+</c:set>
+
+<c:set var="longitud_ciudad">
+	${recorrido.recorrido.ciudad.longitud}
+</c:set>
+
+<script>
+var map;
+var markers = [];
+
+function initMap() {
+	map = new google.maps.Map(document.getElementById('view_or_edit_route_map'), {
+	    center: {lat: ${latitud_ciudad}, lng: ${longitud_ciudad}},
+	    zoom: 13
+	});
+};
 
 /* ***************************
 Agregar Idioma
@@ -408,7 +473,29 @@ function guardarRecorridoNuevoLenguaje() {
 	});
 }
 
+function drawAtractionInMap(data) {
+	var latitud = data["latitud"];
+	var longitud = data["longitud"];
+	var myLatlng = new google.maps.LatLng(latitud, longitud);
+	for (var i = 0; i < markers.length; i++) {
+		pos = markers[i].getPosition();
+		if (pos.lat() == myLatlng.lat() && pos.lng() == myLatlng.lng()) {
+			markers[i].setMap(null);
+			markers.splice(i, 1);
+			return;
+		}
+	}
+	var marker = new google.maps.Marker({
+         position: myLatlng
+    });
+    
+    marker.setMap(map);
+	map.setCenter(marker.getPosition());
+	markers.push(marker);
+}
 </script>
-	
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKp5v5dZ8eFIHFp7Ek1cvIhrOwKv7XMtA&libraries=places&callback=initMap" async defer></script>
+
 </body>
 </html>
