@@ -320,14 +320,20 @@ function checkEmptyFields() {
 					}
 
 					if (idiomaCheck == "ES") {
-						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/EN").load();
-					} else {
 						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/ES").load();
+					} else {
+						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/EN").load();
 					}
 
 					table_all_atractions.ajax.reload();
 					table_route_atractions.ajax.reload();
-		        }
+		        } else {
+		        	if (idiomaCheck == "ES") {
+		        		$("input[name='idioma']:checked").val("EN");
+					} else {
+						$("input[name='idioma']:checked").val("ES");
+					}
+			    }
 		    }
 		});
 	}

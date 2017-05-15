@@ -15,7 +15,7 @@
 
 </head>
 
-<body>
+<body onload="mostrarAtracciones();">
 
 <form:form class="form-horizontal" id ="formModificar" name="formModificar" action="ciudadModificar" method="post" commandName="ciudad" enctype="multipart/form-data">
 	<form:input id="id" type="hidden" name="id" path="id" value="${ciudad.id}"/>
@@ -72,7 +72,7 @@
 				</table>
 			</div>
 				
-			<div class="panel-body routes_panel_body" style="display: none;">
+			<div class="panel-body routes_panel_body">
 				<table id="route_table" class="display order-column view-city-board" cellspacing="0">
 					<thead>
 						<tr>
@@ -272,10 +272,14 @@ $('#botonAgregarRecorrido').on('click', function(e) {
 	document.getElementById("formAgregarRecorrido").submit();
 });
 
-$('#botonAtracciones').on('click', function(e) {
-	e.preventDefault();
+function mostrarAtracciones() {
 	document.getElementsByClassName("routes_panel_body")[0].style.display = "none";
 	document.getElementsByClassName("atractions_panel_body")[0].style.display = "block";
+}
+
+$('#botonAtracciones').on('click', function(e) {
+	e.preventDefault();
+	mostrarAtracciones();
 });
 
 $('#botonRecorridos').on('click', function(e) {
