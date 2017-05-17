@@ -31,14 +31,6 @@ public class ReseniaRest {
 	@Autowired
 	private IReseniaDAO reseniaDao;
 	
-	@RequestMapping(path="/reseniaDaoJson/{idAtraccion}",method=RequestMethod.GET)
-	public HashMap<String, List<Resenia>> listarReseniaAtraccion(@PathVariable int idAtraccion) {
-		HashMap<String, List<Resenia>> lista = new HashMap<String, List<Resenia>>();
-		List<Resenia> list = reseniaDao.listarPorAtraccion(idAtraccion);
-		lista.put(DATA, list);
-		return lista;
-	}
-
 	@RequestMapping(path="/reseniasAtraccionJson/{idAtraccion}",method=RequestMethod.GET)
 	public HashMap<String, List<Resenia>> listarReseniasAtraccionNuevo(@PathVariable int idAtraccion) {
 		HashMap<String, List<Resenia>> lista = new HashMap<String, List<Resenia>>();

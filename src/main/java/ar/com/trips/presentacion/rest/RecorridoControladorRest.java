@@ -65,6 +65,9 @@ public class RecorridoControladorRest {
 	public HashMap<String, List<Recorrido>> listarRecorridoCiudad(@PathVariable int idCiudad) {
 		HashMap<String, List<Recorrido>> lista = new HashMap<String, List<Recorrido>>();
 		List<Recorrido> list = recorridoDao.listarPorCiudad(idCiudad);
+		for (Recorrido recorrido : list) {
+			recorrido.setCantAtracciones(recorrido.getListaAtraccionesEnElRecorrido().size());
+		}
 		lista.put(DATA, list);
 		return lista;
 	}
