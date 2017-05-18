@@ -428,6 +428,8 @@ var table_route_atractions = $('#tablaAtraccionesRecorrido').DataTable( {
 });
 
 $(document).ready(function() {
+	checkRecorridoNuevoLenguaje();
+	
 	<c:if test="${recorrido.audio != null}">
 		var audio = document.getElementById('audioRecorrido');
 	    audio.src = "${pageContext.request.contextPath}/audioRecorrido?id=" + '${recorrido.id}';
@@ -459,6 +461,25 @@ function initMap() {
 Agregar Idioma
 *****************************/
 
+function checkRecorridoNuevoLenguaje() {
+	var formData = new FormData();
+	formData.append("id", "${idRecorrido}");
+	$.ajax({
+		url : "checkAgregarLenguajeRecorrido",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data == true) {
+				document.getElementById('route_add_language_btn').style.display = 'none';
+			}
+		}
+	});
+}
+
 function guardarRecorridoNuevoLenguaje() {
 	var formData = new FormData();
 	formData.append("id","${idRecorrido}");
@@ -479,11 +500,9 @@ function guardarRecorridoNuevoLenguaje() {
 				} else {
 					alert("Se encuentran atracciones que no cuentan con el idioma requerido");
 				}
-				closeRouteNewLanguagePopup();
-			} else {
-				alert("Idioma agregado");
-				closeRouteNewLanguagePopup();
 			}
+			closeRouteNewLanguagePopup();
+			document.getElementById("route_add_language_btn").style.display = "none";
 		}
 	});
 }

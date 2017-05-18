@@ -165,6 +165,16 @@ public class PuntoDeInteresRest {
 		return lista;
 	}
 	
+	@RequestMapping(path="/checkAgregarLenguajePunto",method=RequestMethod.POST)
+	public Boolean needToHidePointAddLanguageButton(@RequestParam("id") Long idPunto) throws IOException {
+		PuntoDeInteres a = puntoDao.get(idPunto);
+		LinkedHashSet<PuntoIdioma> listaIdiomas = new LinkedHashSet<PuntoIdioma>(a.getListaPuntoIdioma());
+		if (listaIdiomas.size() > 1 ) {
+			return true;
+		}
+		return false;
+	}
+	
 	@RequestMapping(path="/agregarLenguajePunto",method=RequestMethod.POST)
 	public HashMap<String, Boolean> crearPunto(@RequestParam("id") Long idPunto,
 			@RequestParam("descripcion") String descripcion,

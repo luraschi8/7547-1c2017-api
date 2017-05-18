@@ -172,6 +172,16 @@ public class RecorridoControladorRest {
 		return lista;
 	}
 	
+	@RequestMapping(path="/checkAgregarLenguajeRecorrido",method=RequestMethod.POST)
+	public Boolean needToHideRouteAddLanguageButton(@RequestParam("id") Long id) throws IOException {
+		Recorrido rec = recorridoDao.get(id);
+		LinkedHashSet<RecorridoIdioma> listaIdiomas = new LinkedHashSet<RecorridoIdioma>(rec.getListaRecorridoIdioma());
+		if (listaIdiomas.size() > 1 ) {
+			return true;
+		}
+		return false;
+	}
+	
 	@RequestMapping(path="/agregarLenguajeRecorrido",method=RequestMethod.POST)
 	public HashMap<String, Boolean> crearPunto(@RequestParam("id") Long id,
 			@RequestParam("descripcion") String descripcion,

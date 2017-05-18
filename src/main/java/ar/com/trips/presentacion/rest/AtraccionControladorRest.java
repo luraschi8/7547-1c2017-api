@@ -124,6 +124,16 @@ public class AtraccionControladorRest {
 		return lista;
 	}
 	
+	@RequestMapping(path="/checkAgregarLenguajeAtraccion", method=RequestMethod.POST)
+	public Boolean needToHideAtractionAddLanguageButton(@RequestParam("id") Long idAtraccion) throws IOException {
+		Atraccion a = atraccionDao.get(idAtraccion);
+		LinkedHashSet<AtraccionIdioma> listaIdiomas = new LinkedHashSet<AtraccionIdioma>(a.getListaAtraccionIdioma());
+		if (listaIdiomas.size() > 1 ) {
+			return true;
+		}
+		return false;
+	}
+	
 	@RequestMapping(path="/agregarLenguajeAtraccion",method=RequestMethod.POST)
 	public HashMap<String, Boolean> crearPunto(@RequestParam("id") Long idAtraccion,
 			@RequestParam("descripcion") String descripcion,

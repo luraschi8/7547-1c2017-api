@@ -840,7 +840,7 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 			
 			<div class="btn_final_point_of_interest_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%; margin-bottom: 3%;">
 				<input id="botonCancelarPuntoNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closePointOfInterestNewLanguagePopup();"/>
-				<input id="botonGuardarPuntoNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarPuntoNuevoLenguaje()"/>
+				<input id="botonGuardarPuntoNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarPuntoNuevoLenguaje();"/>
 			</div>
 		</form:form>
 	</div>
@@ -945,6 +945,7 @@ function validarElemento(elemento, mensaje, hayError) {
 }
 	
 $(document).ready(function() {
+	checkAtraccionNuevoLenguaje();
 	validateAudio("getAudioPuntoDeInteresNuevoLenguaje", "borrarAudioPuntoDeInteresNuevoLenguaje", "archivoAudioguiaPuntoDeInteresNuevoLenguaje", "audioPuntoDeInteresNuevoLenguaje", "audioCambiadoPuntoDeInteresNuevoLenguaje", "mensajeAudioPuntoDeInteresNuevoLenguajeTamano", "mensajeAudioPuntoDeInteresNuevoLenguajeIncorrectoError");
 	far_away = false;
 	
@@ -1695,9 +1696,47 @@ function validarPuntoDeInteresRepetido() {
 
 
 
-/* ***************************
+/****************************
 Agregar Idioma
 *****************************/
+
+function checkAtraccionNuevoLenguaje() {
+	var formData = new FormData();
+	formData.append("id", "${id}");
+	$.ajax({
+		url : "checkAgregarLenguajeAtraccion",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data == true) {
+				document.getElementById('atraction_add_language_btn').style.display = 'none';
+			}
+		}
+	});
+}
+
+function checkPuntoNuevoLenguaje() {
+	var formData = new FormData();
+	formData.append("id", document.getElementById("idPunto").value);
+	$.ajax({
+		url : "checkAgregarLenguajePunto",
+		type : "GET",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data == true) {
+				document.getElementById('point_of_interest_add_language_btn').style.display = 'none';
+			}
+		}
+	});
+}
 
 function guardarAtraccionNuevoLenguaje() {
 	var formData = new FormData();
@@ -1715,12 +1754,8 @@ function guardarAtraccionNuevoLenguaje() {
 		contentType: false,
 		dataType: 'json',
 		success: function (data) {
-			if (data.existe == false) {
-				alert("Ya existe tanto en inglés como castellano");
-				closeAtractionNewLanguagePopup();
-			} else {
-				closeAtractionNewLanguagePopup();
-			}
+			closeAtractionNewLanguagePopup();
+			document.getElementById('atraction_add_language_btn').style.display = 'none';
 		}
 	});
 }
@@ -1739,12 +1774,9 @@ function guardarPuntoNuevoLenguaje() {
 		contentType: false,
 		dataType: 'json',
 		success: function (data) {
-			if (data.existe == false) {
-				alert("Ya existe tanto en inglés como castellano");
-				closePointOfInterestNewLanguagePopup();
-			} else {
-				closePointOfInterestNewLanguagePopup();
-			}
+			closePointOfInterestNewLanguagePopup();
+			checkPuntoNuevoLenguaje();
+			document.getElementById('point_of_interest_add_language_btn').style.display = 'none';
 		}
 	});
 }
