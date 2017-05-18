@@ -39,12 +39,12 @@
 						  	<div>
 							  	<c:choose>
 							  		<c:when test="${idioma =='EN'}">
-							  			<input type="radio" id="langES" name="idioma" path="idioma" value="ES" style="margin: 4px" onclick="cambiarIdioma()">Español
-									  	<input type="radio" id="langEN" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" checked="checked" onclick="cambiarIdioma()">Inglés
+							  			<input type="radio" id="langES" name="idioma" path="idioma" value="ES" style="margin: 4px" onclick="checkEmptyFields()">Español
+									  	<input type="radio" id="langEN" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" checked="checked" onclick="checkEmptyFields()">Inglés
 							  		</c:when>
 							  		<c:otherwise>
-							  			<input type="radio" id="langES" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked" onclick="cambiarIdioma()">Español
-									  	<input type="radio" id="langEN" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" onclick="cambiarIdioma()">Inglés
+							  			<input type="radio" id="langES" name="idioma" path="idioma" value="ES" style="margin: 4px" checked="checked" onclick="checkEmptyFields()">Español
+									  	<input type="radio" id="langEN" name="idioma" path="idioma" value="EN" style="margin: 4px; margin-left: 15px;" onclick="checkEmptyFields()">Inglés
 							  		</c:otherwise>	
 							  			
 							  	</c:choose>
@@ -460,11 +460,11 @@ $('#botonNuevo').on('click', function(e) {
  	validarAtraccionRepetida();
 });
 
-function checkEmptyFields(idiomaACambiar) {
+function checkEmptyFields() {
 	var empty_fields = true;
 	if ((document.getElementById("nombre").value != "") || (document.getElementById("descripcion").value != "") ||
 			(document.getElementById("horario").value != "") || (document.getElementById("precio").value != "") ||
-			(document.getElementById("latitud").value != "0.0") || (document.getElementById("longitud").value != "0.0") ||
+			((document.getElementById("latitud").value != "0.0") && (document.getElementById("longitud").value != "0.0")) ||
 			(document.getElementById("audio").src != "") || (document.getElementById('es-recorrible').checked)
 			|| (imageNumber != 0)) {
 		empty_fields = false;
@@ -481,14 +481,15 @@ function checkEmptyFields(idiomaACambiar) {
 		        }
 		    },
 		    callback: function(result) {
+		    	idiomaCheck = $("input[name='idioma']:checked").val();
 		        if (result) {
-		        	document.formAgregarAtraccion.idioma.value = idiomaACambiar;
+		        	document.formAgregarAtraccion.idioma.value = idiomaCheck;
 		        	document.getElementById("formAgregarAtraccion").submit();
 		        } else {
 		        	if (idiomaCheck == "ES") {
-		        		$("input[name='idioma']:checked").val("EN");
+		        		$("#langEN").prop("checked", true);
 					} else {
-						$("input[name='idioma']:checked").val("ES");
+						$("#langES").prop("checked", true);
 					}
 			    }
 		    }
@@ -919,7 +920,7 @@ function checkIfIsOutOfRange(coordinates) {
 <c:set var="idioma">
 	${idioma}
 </c:set>
-idiomaCheck = $("input[name='idioma']:checked").val();
+var idiomaCheck = $("input[name='idioma']:checked").val();
 
 $(document).ready(function() {
 	var idioma = "${idioma}";
@@ -927,18 +928,7 @@ $(document).ready(function() {
 		var idIdioma = "lang" + idioma;
 		document.getElementById(idIdioma).checked = true;
 	}
-	console.log("IDIOMA: " + idioma);
 });
-
-function cambiarIdioma() {
-	var idiomaACambiar = "";
-	if (idiomaCheck == "EN") {
-		idiomaACambiar = "ES"
-	} else {
-		idiomaACambiar = "EN";	
-	}
-	checkEmptyFields(idiomaACambiar);
-}
 
 var table = $('#tablita').DataTable( {
 	dom: 'frtip',

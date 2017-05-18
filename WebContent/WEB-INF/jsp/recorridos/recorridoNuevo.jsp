@@ -13,6 +13,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Trips - Nuevo recorrido</title>
 </head>
+
 <body>
 	<h1 class="page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Nuevo recorrido</h1>
 	
@@ -195,7 +196,7 @@ validateAudio("getAudioRecorrido", "borrarAudioRecorrido", "archivoAudioguiaReco
 
 var fuera_del_recorrido = new Array();
 var dentro_del_recorrido = new Array();
-idiomaCheck = $("input[name='idioma']:checked").val();
+var idiomaCheck = $("input[name='idioma']:checked").val();
 
 var table_all_atractions = $('#table_all_atractions').DataTable( {
 	dom: 'frtip',
@@ -290,13 +291,11 @@ $('#botonNuevo').on('click', function(e) {
  	validarRecorridoRepetido();
 });
 
-
-
-
 function checkEmptyFields() {
 	var empty_fields = true;
 	if ((document.getElementById("nombre").value != "") || (document.getElementById("descripcion").value != "") ||
-			(document.getElementById("audioRecorrido").src != "") || (dentro_del_recorrido.length > 0)) {
+			((document.getElementById("audioRecorrido").src != "") && (document.getElementById("audioRecorrido").src != "http://:0/")) ||
+			(dentro_del_recorrido.length > 0)) {
 		empty_fields = false;
 	}
 	if (!empty_fields) {
@@ -318,31 +317,25 @@ function checkEmptyFields() {
 					for (var i = 0; i < dentro_del_recorrido.length; i ++) {
 		        		fuera_del_recorrido.push(dentro_del_recorrido.pop());
 					}
-
 					if (idiomaCheck == "ES") {
 						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/ES").load();
 					} else {
 						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/EN").load();
 					}
-
 					table_all_atractions.ajax.reload();
 					table_route_atractions.ajax.reload();
 		        } else {
+		        	idiomaCheck = $("input[name='idioma']:checked").val();
 		        	if (idiomaCheck == "ES") {
-		        		$("input[name='idioma']:checked").val("EN");
+		        		$("#lang_en").prop("checked", true);
 					} else {
-						$("input[name='idioma']:checked").val("ES");
+						$("#lang_es").prop("checked", true);
 					}
 			    }
 		    }
 		});
 	}
 }
-
-
-
-
-
 
 function validarElemento(elemento, mensaje, hayError) {
 	if ((document.getElementById(elemento).value == '') && (!hayError)) {
