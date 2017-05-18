@@ -1283,7 +1283,7 @@ $(document).ready(function() {
 				imageVideo.id = 'archivoGaleria' + posiblesId[0];
 				imageNumber = imageNumber + 1;
 	        	break;
-	        case 'mp4': case 'avi': 
+	        case 'mp4': case 'webm': case 'm4v':
 	        	if (videoNumber == 1) {
 	        		document.getElementById('mensajeHayVideo').style.display = 'block';
 	        		elem = document.getElementById('archivoGaleria');
@@ -1307,7 +1307,11 @@ $(document).ready(function() {
 	        	if (ext == 'mp4') {
 	        		videoType='video/mp4';
 	        	} else {
-	        		videoType='video/avi';
+	        		if (ext == 'webm') {
+	        			videoType='video/webm';
+	        		} else {
+	        			videoType='video/m4v';
+		        	}
 	        	}
 	        	document.getElementById('archivoGaleria').name = 'unVideo';
 	        	document.getElementById('archivoGaleria').id = 'archivoGaleria' + posiblesId[0];	
