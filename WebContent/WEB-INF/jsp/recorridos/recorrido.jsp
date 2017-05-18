@@ -31,7 +31,7 @@
 	<h1 class="page-header route-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">${recorrido.recorrido.nombre} - ${recorrido.recorrido.ciudad.nombre}</h1>	
 	
 	<div id="routeForm" style="width: 94%; margin-left: 3%; margin-right: 3%">
-		<form:form id="formModificar" name="formModificar" action="recorridoNuevoValidar" method="post" commandName="recorrido" enctype="multipart/form-data">
+		<form:form id="formModificar" name="formModificar" action="recorridoModificar" method="post" commandName="recorrido" enctype="multipart/form-data">
 		
 		<div class="route_new_form" style="display: inline-block; overflow: hidden;">
 			
@@ -170,6 +170,10 @@
 							</table>
 						</div>
 					</div>
+					
+					<div>
+						<input id="route_add_language_btn" class="btn btn-default btn-success" type="button" value="Agregar idioma"/>
+					</div>
 				</div>
 				
 				<div class="route_right_block" style="float: right; width: 48%; margin-top: 2%;">
@@ -193,9 +197,7 @@
 			</div>
 		</div>
 		
-		<div style="clear: both;">
-			<input id="route_add_language_btn" class="btn btn-default btn-success" type="button" value="Agregar idioma"/>
-		</div>
+		
 	
 		<div class="alert alert-danger fade in error_msg_route_already_exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
@@ -354,7 +356,7 @@ function initializeTables() {
 	});
 }
 
-$('#table_all_atractions tbody').on('click', '#add_atraction', function (e) {
+$(document).on('click', '#add_atraction', function (e) {
 	e.preventDefault();
 	var data = table_all_atractions.row(this.closest("tr")).data();
 	drawAtractionInMap(data);
@@ -369,7 +371,7 @@ $('#table_all_atractions tbody').on('click', '#add_atraction', function (e) {
 	table_all_atractions.row(this.closest("tr")).remove().draw();
 });
 
-$('#table_route_atractions tbody').on('click', '#remove_atraction', function (e) {
+$(document).on('click', '#remove_atraction', function (e) {
 	e.preventDefault();
 	var data = table_route_atractions.row(this.closest("tr")).data();
 	drawAtractionInMap(data);

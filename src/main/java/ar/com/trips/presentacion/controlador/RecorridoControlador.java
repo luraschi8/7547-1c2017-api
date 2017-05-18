@@ -127,12 +127,10 @@ public class RecorridoControlador {
 	@RequestMapping("recorridoModificar")
 	public ModelAndView modificar(@ModelAttribute("recorrido") RecorridoIdioma recorrido,
 									@RequestParam("nombre") String nombreModificado,
-									@RequestParam("descripcion") String descripcionModificada,
-									@RequestParam("idioma") String idiomaModificado) throws IOException {
+									@RequestParam("descripcion") String descripcionModificada) throws IOException {
 		recorrido = recorridoIdiomaDao.get(recorrido.getId());
 		recorrido.getRecorrido().setNombre(nombreModificado);
 		recorrido.setDescripcion(descripcionModificada);
-		recorrido.setIdioma(Idioma.valueOf(idiomaModificado));
 		recorridoDao.modificar(recorrido);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + recorrido.getRecorrido().getCiudad().getId());
 	}
