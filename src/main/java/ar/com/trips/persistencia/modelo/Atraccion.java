@@ -1,9 +1,7 @@
 package ar.com.trips.persistencia.modelo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -82,7 +80,7 @@ public class Atraccion extends Modelo{
 	
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "listaAtraccionesEnElRecorrido")
 	@JsonBackReference(value="listaRecorridos")
-	private Set<Recorrido> listaRecorridos = new HashSet<Recorrido>();
+	private List<Recorrido> listaRecorridos;
 
 	public Atraccion() {
 		
@@ -196,11 +194,11 @@ public class Atraccion extends Modelo{
 		this.getListaAtraccionIdioma().add(atraccion);
 	}
 	
-	public Set<Recorrido> getListaRecorridos() {
+	public List<Recorrido> getListaRecorridos() {
 		return listaRecorridos;
 	}
 
-	public void setListaRecorridos(Set<Recorrido> listaRecorridos) {
+	public void setListaRecorridos(List<Recorrido> listaRecorridos) {
 		this.listaRecorridos = listaRecorridos;
 	}
 
@@ -208,4 +206,18 @@ public class Atraccion extends Modelo{
 		this.getListaRecorridos().add(recorrido);
 	}
 
+	public Atraccion eraseRecorrido(Recorrido recorrido) {
+		System.out.print("Cantidad de elementos antes: " + this.listaRecorridos.size() + "\n");
+		for (int i = 0; i < this.listaRecorridos.size(); i ++) {
+			System.out.print("ID del get: " + this.listaRecorridos.get(i).getId() + "\n");
+			System.out.print("ID del recorrido: " + recorrido.getId() + "\n");
+			if (this.listaRecorridos.get(i).getId() == recorrido.getId()) {
+				System.out.print("Lo borró\n");
+				this.listaRecorridos.remove(i);
+				System.out.print("Cantidad de elementos después: " + this.listaRecorridos.size() + "\n");
+				return this;
+			}
+		}
+		return this;
+	}
 }

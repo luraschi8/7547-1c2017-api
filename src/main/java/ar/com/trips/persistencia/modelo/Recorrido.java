@@ -122,5 +122,4 @@ public class Recorrido extends Modelo {
 	public void addRecorridoIdioma(RecorridoIdioma recorrido) {
 		this.getListaRecorridoIdioma().add(recorrido);
 	}
-	
 }

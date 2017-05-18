@@ -59,6 +59,16 @@ public class RecorridoDAOImpl extends DAOImpl implements IRecorridoDAO {
 		session.close();
 		return lista;
 	}
+	
+	@Override
+	public List<Atraccion> listarAtracciones(int idCiudad) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.ciudad.id = " + idCiudad + " AND a.borrado = 0";
+		@SuppressWarnings("unchecked")
+		List<Atraccion> lista = session.createQuery(query).list();
+		session.close();
+		return lista;
+	}
 
 	@Override
 	public void guardarRecorrido(Recorrido recorrido) {

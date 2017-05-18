@@ -70,7 +70,6 @@ public class RecorridoControlador {
 		String atracciones_separadas[] = atracciones.split(",");
 		for (int i = 0; i < atracciones_separadas.length; i++) {
 			Atraccion atraccion  = atraccionDao.get(Long.parseLong(atracciones_separadas[i]));
-//			atraccion.setId(Long.parseLong(atracciones_separadas[i]));
 			atraccion.addRecorrido(recorrido);
 			recorrido.addAtractionToRoute(atraccion);
 		}
@@ -93,7 +92,11 @@ public class RecorridoControlador {
 	}
 	
 	@RequestMapping("recorridoBorrar")
-	public ModelAndView borrar(@RequestParam("idRecorrido") int id,@RequestParam("idCiudadRecorrido") int idCiudad) {
+	public ModelAndView borrar(@RequestParam("idRecorrido") long id, @RequestParam("idCiudadRecorrido") int idCiudad) {
+		List<Atraccion> atracciones = recorridoDao.listarAtracciones(idCiudad);
+		for (int i = 0; i < atracciones.size(); i++) {
+			atraccionDao.modificar(atracciones.get(i).eraseRecorrido(recorridoDao.get(id)));
+		}
 		recorridoDao.borrar(id);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + idCiudad);
 	}

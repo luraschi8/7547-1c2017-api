@@ -222,12 +222,29 @@ $('#tablita tbody').on('click', '#marcar', function (e) {
 $('#tablita tbody').on('click', '#borrar', function (e) {
 	var data = table.row(this.closest("tr")).data();
 	var id = data["id"];
-	var mensaje = document.getElementById("mensajeBorrar").value;
-	e.preventDefault();
-	bootbox.confirm(mensaje, function (response) {
-		if (response) {
-			document.formBorrar.idAtraccion.value = id;
-			document.getElementById("formBorrar").submit();
+	var formData = new FormData();
+	formData.append("id", id);
+	$.ajax({
+		url : "checkAtraccionEsParteDeUnRecorrido",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data == true) {
+				bootbox.alert("La atracción forma parte de al menos un recorrido. No puede borrarse.");
+			} else {
+				var mensaje = document.getElementById("mensajeBorrar").value;
+				e.preventDefault();
+				bootbox.confirm(mensaje, function (response) {
+					if (response) {
+						document.formBorrar.idAtraccion.value = id;
+						document.getElementById("formBorrar").submit();
+					}
+				});
+			}
 		}
 	});
 });
