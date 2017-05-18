@@ -95,7 +95,7 @@ public class RecorridoControlador {
 	public ModelAndView borrar(@RequestParam("idRecorrido") long id, @RequestParam("idCiudadRecorrido") int idCiudad) {
 		List<Atraccion> atracciones = recorridoDao.listarAtracciones(idCiudad);
 		for (int i = 0; i < atracciones.size(); i++) {
-			atraccionDao.modificar(atracciones.get(i).eraseRecorrido(recorridoDao.get(id)));
+			atracciones.get(i).eraseRecorrido(recorridoDao.get(id));
 		}
 		recorridoDao.borrar(id);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + idCiudad);

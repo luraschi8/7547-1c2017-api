@@ -171,12 +171,10 @@ public class AtraccionControladorRest {
 	@RequestMapping(path="/checkAtraccionEsParteDeUnRecorrido", method=RequestMethod.POST)
 	public Boolean checkAtraccionEsParteDeUnRecorrido(@RequestParam("id") Long idAtraccion) throws IOException {
 		Atraccion a = atraccionDao.get(idAtraccion);
-		System.out.print("Cantidad en el chequeoooooo: " + a.getListaRecorridos().size() + "\n");
-		if (a.getListaRecorridos().size() > 0) {
-			for (int i = 0; i < a.getListaRecorridos().size(); i ++) {
-				System.out.print("ID: " + a.getListaRecorridos().get(i).getId() + "\n");
+		for (int i = 0; i < a.getListaRecorridos().size(); i ++) {
+			if (a.getListaRecorridos().get(i).getBorrado() == 0) {
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}

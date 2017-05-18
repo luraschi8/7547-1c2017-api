@@ -206,18 +206,11 @@ public class Atraccion extends Modelo{
 		this.getListaRecorridos().add(recorrido);
 	}
 
-	public Atraccion eraseRecorrido(Recorrido recorrido) {
-		System.out.print("Cantidad de elementos antes: " + this.listaRecorridos.size() + "\n");
+	public void eraseRecorrido(Recorrido recorrido) {
 		for (int i = 0; i < this.listaRecorridos.size(); i ++) {
-			System.out.print("ID del get: " + this.listaRecorridos.get(i).getId() + "\n");
-			System.out.print("ID del recorrido: " + recorrido.getId() + "\n");
 			if (this.listaRecorridos.get(i).getId() == recorrido.getId()) {
-				System.out.print("Lo borró\n");
 				this.listaRecorridos.remove(i);
-				System.out.print("Cantidad de elementos después: " + this.listaRecorridos.size() + "\n");
-				return this;
 			}
 		}
-		return this;
 	}
 }
