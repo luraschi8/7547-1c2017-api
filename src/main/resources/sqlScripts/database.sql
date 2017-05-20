@@ -96,6 +96,7 @@ create table Recorrido (
 	id bigint(10) primary key not null auto_increment,
     nombre varchar(50),
     borrado tinyint default 0 not null,
+    atracciones_ordenadas varchar(1000),
     idCiudad bigint(10) not null,
     foreign key (idCiudad) references Ciudad (id)
 );

@@ -105,6 +105,7 @@ create table Recorrido (
 	id serial primary key not null,
     nombre varchar(50),
     borrado int default 0 not null,
+    atracciones_ordenadas varchar(1000),
     idCiudad bigint not null,
     foreign key (idCiudad) references Ciudad (id)
 );
