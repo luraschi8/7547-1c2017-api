@@ -1113,6 +1113,43 @@ $(document).ready(function() {
 		} 
 	}
 });
+
+$(document).ready(function() {
+	document.getElementById('puntoGetImagen').onclick = function() {
+		hideAllAtractionErrorMessages();
+		document.getElementById('puntoArchivoImagen').addEventListener('change', readURL, true);
+		document.getElementById('puntoArchivoImagen').src = "//:0";
+		var fileButton = document.getElementById('puntoArchivoImagen');
+		fileButton.click();
+	};
+
+	$("#puntoArchivoImagen").change(function() {
+	    var val = $(this).val();
+	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	        case 'gif': case 'jpg': case 'png': case 'jpeg': case 'bmp': 
+	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	break;
+	        default:
+	            $(this).val('');
+				document.getElementById("mensajeImagenVaciaPuntoDeInteresError").style.display = 'block';
+				document.getElementById('puntoArchivoImagen').src = "";
+				document.getElementById('puntoImagen').src = "";
+				break;
+	    }
+	});
+	
+	function readURL() {
+		document.getElementById("puntoImagenCambiada").value = "1";
+		var file = document.getElementById("puntoArchivoImagen").files[0];
+		var reader = new FileReader();
+	    reader.onloadend = function() {
+			document.getElementById('puntoImagen').src = reader.result ;        
+			}
+		if(file) {
+			reader.readAsDataURL(file);
+		} 
+	}
+});
 </script>
 
 
@@ -1364,6 +1401,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 	validateAudio("atraction-get-audio-file", "borrarAudio", "archivoAudioguia", "audio", "audioCambiado", "mensajeAudioTamano", "mensajeAudioIncorrectoError");
 	validateAudio("getAudioAtraccionNuevoLenguaje", "borrarAudioAtraccionNuevoLenguaje", "archivoAudioguiaAtraccionNuevoLenguaje", "audioAtraccionNuevoLenguaje", "audioCambiadoAtraccionNuevoLenguaje", "mensajeAudioAtraccionNuevoLenguajeTamano", "mensajeAudioAtraccionNuevoLenguajeIncorrectoError");
+	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
 });
 </script>
 
