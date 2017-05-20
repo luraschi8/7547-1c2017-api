@@ -316,7 +316,7 @@ $("#descripcion").attr("maxlength", MAX_DESCRIPCION_RECORRIDO);
 
 <script>
 validateAudio("getAudioRecorridoNuevoLenguaje", "borrarAudioRecorridoNuevoLenguaje", "archivoAudioguiaRecorridoNuevoLenguaje", "audioRecorridoNuevoLenguaje", "audioCambiadoRecorridoNuevoLenguaje", "mensajeAudioRecorridoNuevoLenguajeTamano", "mensajeAudioRecorridoNuevoLenguajeIncorrectoError");
-
+validateAudio("getAudioRecorrido", "borrarAudioRecorrido", "archivoAudioguiaRecorrido", "audioRecorrido", "audioCambiadoRecorrido", "mensajeAudioRecorridoTamano", "mensajeAudioRecorridoIncorrectoError");
 
 var fuera_del_recorrido = new Array();
 var dentro_del_recorrido = new Array();
