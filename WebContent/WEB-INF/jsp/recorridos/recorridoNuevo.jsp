@@ -198,13 +198,57 @@ var fuera_del_recorrido = new Array();
 var dentro_del_recorrido = new Array();
 var idiomaCheck = $("input[name='idioma']:checked").val();
 
+function initializeAllAtractions() {
+	table_all_atractions.rows().every(function () {
+	    var data = this.data();
+	    if (data["idioma"] ==  $("input[name='idioma']:checked").val()) {
+	    	fuera_del_recorrido.push(data["idAtraccion"]);
+	    }
+	});
+}
+
+$(document).ready(function() {
+	$(document).on('click', '#add_atraction', function (e) {
+		if (fuera_del_recorrido.length == 0) {
+			initializeAllAtractions();
+		}
+		e.preventDefault();
+		var data = table_all_atractions.row(this.closest("tr")).data();
+		drawAtractionInMap(data);
+		dentro_del_recorrido.push(data["idAtraccion"]);
+		fuera_del_recorrido.splice(dentro_del_recorrido.indexOf(data["idAtraccion"]), 1);
+		table_route_atractions.row.add({
+	        "idAtraccion": data.idAtraccion,
+	        "nombre": data.nombre,
+	        "latitud": data.latitud,
+	        "longitud": data.longitud
+	    }).draw();
+		table_all_atractions.row(this.closest("tr")).remove().draw();
+	});
+	
+	$(document).on('click', '#remove_atraction', function (e) {
+		e.preventDefault();
+		var data = table_route_atractions.row(this.closest("tr")).data();
+		drawAtractionInMap(data);
+		dentro_del_recorrido.splice(dentro_del_recorrido.indexOf(data["idAtraccion"]), 1);
+		fuera_del_recorrido.push(data["idAtraccion"]);
+		table_all_atractions.row.add({
+	        "idAtraccion": data.idAtraccion,
+	        "nombre": data.nombre,
+	        "latitud": data.latitud,
+	        "longitud": data.longitud
+	    }).draw();
+		table_route_atractions.row(this.closest("tr")).remove().draw();
+	});
+});
+
 var table_all_atractions = $('#table_all_atractions').DataTable( {
 	dom: 'frtip',
 	ajax: "atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/" + idiomaCheck,
     columns: [
-        {	data: "id",
+        {	data: "idAtraccion",
         	render: function (data,type,row) {
-        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + row["idAtraccion"] + '" style="align: center; width:40px; height:40px"/></div'
+        		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
         	}
         },
         {data: "nombre" },
@@ -225,7 +269,7 @@ var table_route_atractions = $('#table_route_atractions').DataTable( {
 	ajax: "atraccionesEnElRecorridoNuevoJson/${recorrido.recorrido.ciudad.id}",
     columns: [
     	{defaultContent:'<button class="btn btn-danger" id="remove_atraction"> < </button>'},
-        {	data: "id",
+        {	data: "idAtraccion",
         	render: function (data,type,row) {
         		return '<div align="center"><img src="${pageContext.request.contextPath}/imagenPrincipalAtraccion?id=' + data + '" style="align: center; width:40px; height:40px"/></div'
         	}
@@ -237,48 +281,6 @@ var table_route_atractions = $('#table_route_atractions').DataTable( {
     pageLength:30,
     ordering:true,
     bFilter: false
-});
-
-function initializeAllAtractions() {
-	table_all_atractions.rows().every(function () {
-	    var data = this.data();
-	    if (data["idioma"] ==  $("input[name='idioma']:checked").val()) {
-	    	fuera_del_recorrido.push(data["idAtraccion"]);
-	    }
-	});
-}
-
-$('#table_all_atractions tbody').on('click', '#add_atraction', function (e) {
-	if (fuera_del_recorrido.length == 0) {
-		initializeAllAtractions();
-	}
-	e.preventDefault();
-	var data = table_all_atractions.row(this.closest("tr")).data();
-	drawAtractionInMap(data);
-	dentro_del_recorrido.push(data["idAtraccion"]);
-	fuera_del_recorrido.splice(dentro_del_recorrido.indexOf(data["idAtraccion"]), 1);
-	table_route_atractions.row.add({
-        "id":       data.idAtraccion,
-        "nombre":   data.nombre,
-        "latitud":   data.latitud,
-        "longitud":   data.longitud
-    }).draw();
-	table_all_atractions.row(this.closest("tr")).remove().draw();
-});
-
-$('#table_route_atractions tbody').on('click', '#remove_atraction', function (e) {
-	e.preventDefault();
-	var data = table_route_atractions.row(this.closest("tr")).data();
-	drawAtractionInMap(data);
-	dentro_del_recorrido.splice(dentro_del_recorrido.indexOf(data["idAtraccion"]), 1);
-	fuera_del_recorrido.push(data["idAtraccion"]);
-	table_all_atractions.row.add({
-        "idAtraccion": data.idAtraccion,
-        "nombre": data.nombre,
-        "latitud": data.latitud,
-        "longitud": data.longitud
-    }).draw();
-	table_route_atractions.row(this.closest("tr")).remove().draw();
 });
 
 $('#botonAtras').on('click', function(e) {

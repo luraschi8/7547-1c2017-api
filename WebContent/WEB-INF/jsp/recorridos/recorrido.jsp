@@ -363,6 +363,7 @@ function initializeTables() {
 	    //fuera_del_recorrido.push(data["id"]);
 	});
 }
+
 $(document).ready(function() {
 	$(document).on('click', '#add_atraction', function (e) {
 		e.preventDefault();
