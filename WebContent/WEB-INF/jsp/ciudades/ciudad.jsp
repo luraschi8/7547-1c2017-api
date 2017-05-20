@@ -72,7 +72,7 @@
 				</table>
 			</div>
 				
-			<div class="panel-body routes_panel_body">
+			<div class="panel-body routes_panel_body" style="visibility: hidden;">
 				<table id="route_table" class="display order-column view-city-board" cellspacing="0">
 					<thead>
 						<tr>
@@ -291,6 +291,7 @@ $('#botonAgregarRecorrido').on('click', function(e) {
 
 function mostrarAtracciones() {
 	document.getElementsByClassName("routes_panel_body")[0].style.display = "none";
+	document.getElementsByClassName("routes_panel_body")[0].style.visibility = "visible";
 	document.getElementsByClassName("atractions_panel_body")[0].style.display = "block";
 }
 

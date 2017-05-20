@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -154,21 +155,21 @@ public class RecorridoControladorRest {
 		HashMap<String, Collection<AtraccionDTO>> lista = new HashMap<String, Collection<AtraccionDTO>>();
 		Recorrido recorrido = recorridoDao.get(idRecorrido);
 		HashMap<Long,Atraccion> listaAtracciones = new HashMap<>();
-		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad((int)recorrido.getCiudad().getId(), idioma);;
+		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad((int)recorrido.getCiudad().getId(), idioma);
 		for (Atraccion a : recorrido.getListaAtraccionesEnElRecorrido()) {
 			listaAtracciones.put(a.getId(), a);
-		}
-		HashMap<Long,AtraccionDTO> listaRetorno = new HashMap<>();
+		}		
+		LinkedList<AtraccionDTO> listaRetornoBis = new LinkedList<>();
 		for(AtraccionIdioma a : list) {
-			if (!listaAtracciones.containsKey(a.getAtraccion().getId()) && !listaRetorno.containsKey(a.getAtraccion().getId())) {
+			if (!listaAtracciones.containsKey(a.getAtraccion().getId()) && (a.getAtraccion().getBorrado() == 0)) {
 				AtraccionDTO dto = AtraccionMapper.map(a.getAtraccion());
 				if (a.getAtraccion().getListaImagenes().size() > 0) {
 					dto.setImagen(DatatypeConverter.printBase64Binary(a.getAtraccion().getListaImagenes().get(0).getImagen()));
-				}
-				listaRetorno.put(dto.getId(),dto);
+				}				
+				listaRetornoBis.add(dto);
 			}
 		}
-		lista.put(DATA, listaRetorno.values());
+		lista.put(DATA, listaRetornoBis);
 		return lista;
 	}
 	

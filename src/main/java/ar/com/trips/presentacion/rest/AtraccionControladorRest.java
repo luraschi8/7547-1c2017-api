@@ -77,7 +77,10 @@ public class AtraccionControladorRest {
 			if (a.getAtraccion().getListaImagenes().size() > 0) {
 				atraccion.setImagen(DatatypeConverter.printBase64Binary(a.getAtraccion().getListaImagenes().get(0).getImagen()));
 			}
-			listaAtracciones.add(atraccion);
+			Atraccion atraccion_aux = atraccionDao.get(atraccion.getIdAtraccion());
+			if (atraccion_aux.getBorrado() == 0) {
+				listaAtracciones.add(atraccion);
+			}
 		}
 		lista.put(DATA, listaAtracciones);
 		return lista;

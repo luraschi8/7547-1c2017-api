@@ -357,7 +357,10 @@ function initializeTables() {
 	});
 	table_all_atractions.rows().every(function () {
 	    var data = this.data();
-	    fuera_del_recorrido.push(data["id"]);
+	    if (data["borrado"] ==  0) {
+	    	fuera_del_recorrido.push(data["id"]);
+	    }
+	    //fuera_del_recorrido.push(data["id"]);
 	});
 }
 $(document).ready(function() {

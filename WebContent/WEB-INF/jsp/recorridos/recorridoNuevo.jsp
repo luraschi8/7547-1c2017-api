@@ -242,7 +242,9 @@ var table_route_atractions = $('#table_route_atractions').DataTable( {
 function initializeAllAtractions() {
 	table_all_atractions.rows().every(function () {
 	    var data = this.data();
-	    fuera_del_recorrido.push(data["idAtraccion"]);
+	    if (data["idioma"] ==  $("input[name='idioma']:checked").val()) {
+	    	fuera_del_recorrido.push(data["idAtraccion"]);
+	    }
 	});
 }
 
@@ -291,6 +293,16 @@ $('#botonNuevo').on('click', function(e) {
  	validarRecorridoRepetido();
 });
 
+function updateTables() {
+	if (idiomaCheck == "ES") {
+		table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/ES").load();
+	} else {
+		table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/EN").load();
+	}
+	table_all_atractions.ajax.reload();
+	table_route_atractions.ajax.reload();
+}
+
 function checkEmptyFields() {
 	var empty_fields = true;
 	if ((document.getElementById("nombre").value != "") || (document.getElementById("descripcion").value != "") ||
@@ -298,6 +310,7 @@ function checkEmptyFields() {
 			(dentro_del_recorrido.length > 0)) {
 		empty_fields = false;
 	}
+	idiomaCheck = $("input[name='idioma']:checked").val();
 	if (!empty_fields) {
 		bootbox.confirm({
 		    message: "Si cambia de idioma se perderá la información cargada. ¿Desea continuar?",
@@ -314,18 +327,12 @@ function checkEmptyFields() {
 		        	document.getElementById("nombre").value = "";
 		        	document.getElementById("descripcion").value = "";
 		        	document.getElementById("audioRecorrido").src = "//:0";
-					for (var i = 0; i < dentro_del_recorrido.length; i ++) {
+		        	var size = dentro_del_recorrido.length;
+					for (var i = 0; i < size; i ++) {
 		        		fuera_del_recorrido.push(dentro_del_recorrido.pop());
 					}
-					if (idiomaCheck == "ES") {
-						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/ES").load();
-					} else {
-						table_all_atractions.ajax.url("atraccionesCiudadJson/${recorrido.recorrido.ciudad.id}/EN").load();
-					}
-					table_all_atractions.ajax.reload();
-					table_route_atractions.ajax.reload();
+					updateTables();
 		        } else {
-		        	idiomaCheck = $("input[name='idioma']:checked").val();
 		        	if (idiomaCheck == "ES") {
 		        		$("#lang_en").prop("checked", true);
 					} else {
@@ -334,6 +341,8 @@ function checkEmptyFields() {
 			    }
 		    }
 		});
+	} else {
+		updateTables();
 	}
 }
 
