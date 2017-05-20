@@ -44,6 +44,7 @@
 						<input type="hidden" id="idCiudad" name="idCiudad" value="${recorrido.recorrido.ciudad.id}"/>
 						<input type="hidden" id="id" name="id" value="${recorrido.id}"/>
 						<input type="hidden" name="atracciones" value=""/>
+						<input type="hidden" name="atraccionesCambiadas" id="atraccionesCambiadas" value="0"/>
 
 						<div class="route_name" style="margin-top: 2%">
 							<form:label class="route_name_label" path="recorrido.nombre">Nombre</form:label>
@@ -197,7 +198,10 @@
 			</div>
 		</div>
 		
-		
+		<div class="alert alert-danger fade in error_msg_route_already_exists" id="mensajeCantidadAtracciones" style="display: none;">
+		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+		 	<strong>&iexclError!</strong> El recorrido debe tener por lo menos dos atracciones seleccionadas.
+		</div>	
 	
 		<div class="alert alert-danger fade in error_msg_route_already_exists" id="mensajeNombreRepetido" style="display: none;">
 		 	<a class="close" data-dismiss="alert" aria-label="close"></a>
@@ -291,7 +295,7 @@
 </c:set>
 
 <c:set var="id">
-	${recorrido.id}
+	${recorrido.recorrido.id}
 </c:set>
 
 <form:form id="formVer" name="formVer" action="recorridoVer" method="get">
@@ -312,6 +316,7 @@ $("#descripcion").attr("maxlength", MAX_DESCRIPCION_RECORRIDO);
 
 <script>
 validateAudio("getAudioRecorridoNuevoLenguaje", "borrarAudioRecorridoNuevoLenguaje", "archivoAudioguiaRecorridoNuevoLenguaje", "audioRecorridoNuevoLenguaje", "audioCambiadoRecorridoNuevoLenguaje", "mensajeAudioRecorridoNuevoLenguajeTamano", "mensajeAudioRecorridoNuevoLenguajeIncorrectoError");
+
 
 var fuera_del_recorrido = new Array();
 var dentro_del_recorrido = new Array();
@@ -355,35 +360,38 @@ function initializeTables() {
 	    fuera_del_recorrido.push(data["id"]);
 	});
 }
-
-$(document).on('click', '#add_atraction', function (e) {
-	e.preventDefault();
-	var data = table_all_atractions.row(this.closest("tr")).data();
-	drawAtractionInMap(data);
-	dentro_del_recorrido.push(data["id"]);
-	fuera_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
-	table_route_atractions.row.add({
-        "id":       data.id,
-        "nombre":   data.nombre,
-        "latitud":   data.latitud,
-        "longitud":   data.longitud
-    }).draw();
-	table_all_atractions.row(this.closest("tr")).remove().draw();
-});
-
-$(document).on('click', '#remove_atraction', function (e) {
-	e.preventDefault();
-	var data = table_route_atractions.row(this.closest("tr")).data();
-	drawAtractionInMap(data);
-	dentro_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
-	fuera_del_recorrido.push(data["id"]);
-	table_all_atractions.row.add({
-        "id":       data.id,
-        "nombre":   data.nombre,
-        "latitud":   data.latitud,
-        "longitud":   data.longitud
-    }).draw();
-	table_route_atractions.row(this.closest("tr")).remove().draw();
+$(document).ready(function() {
+	$(document).on('click', '#add_atraction', function (e) {
+		e.preventDefault();
+		var data = table_all_atractions.row(this.closest("tr")).data();
+		drawAtractionInMap(data);
+		dentro_del_recorrido.push(data["id"]);
+		document.getElementById("atraccionesCambiadas").value = 1;
+		fuera_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
+		table_route_atractions.row.add({
+	        "id":       data.id,
+	        "nombre":   data.nombre,
+	        "latitud":   data.latitud,
+	        "longitud":   data.longitud
+	    }).draw();
+		table_all_atractions.row(this.closest("tr")).remove().draw();
+	});
+	
+	$(document).on('click', '#remove_atraction', function (e) {
+		e.preventDefault();
+		var data = table_route_atractions.row(this.closest("tr")).data();
+		drawAtractionInMap(data);
+		dentro_del_recorrido.splice(dentro_del_recorrido.indexOf(data["id"]), 1);
+		fuera_del_recorrido.push(data["id"]);
+		document.getElementById("atraccionesCambiadas").value = 1;
+		table_all_atractions.row.add({
+	        "id":       data.id,
+	        "nombre":   data.nombre,
+	        "latitud":   data.latitud,
+	        "longitud":   data.longitud
+	    }).draw();
+		table_route_atractions.row(this.closest("tr")).remove().draw();
+	});
 });
 
 var table_all_atractions = $('#tablaAtracciones').DataTable( {
@@ -457,6 +465,75 @@ function initMap() {
 	});
 };
 
+function hideErrorMessages() {
+	document.getElementById("mensajeNombreVacio").style.display = 'none';
+	document.getElementById("mensajeDescripcionVacia").style.display = 'none';
+	document.getElementById("mensajeAudioRecorridoIncorrectoError").style.display = 'none';
+	document.getElementById("mensajeAudioRecorridoTamano").style.display = 'none';
+	document.getElementById("mensajeNingunaAtraccionElegida").style.display = 'none';
+	document.getElementById("mensajeNombreRepetido").style.display = 'none';
+}
+
+function updateForm() {
+	document.formModificar.nombre.value = $('#nombreEditado').html();
+	document.formModificar.descripcion.value = $('#descripcionEditada').html();
+}
+
+$('#botonGuardar').on('click', function(e) {
+	e.preventDefault();
+	hideErrorMessages();
+	updateForm();
+	validarRecorridoRepetido();
+});
+
+function validarCantidadAtracciones(mensaje, hayError) {
+	if ((dentro_del_recorrido.length < 2) && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById(mensaje).style.display = 'none';
+	}
+	return hayError;
+}
+
+function validarRecorridoRepetido() {
+	hayError = 0;
+	hayError = validarElemento('nombre', 'mensajeNombreVacio', hayError);
+	hayError = validarElemento('descripcion', 'mensajeDescripcionVacia', hayError);
+	hayError = validarCantidadAtracciones('mensajeCantidadAtracciones', hayError);
+	if (hayError == 1) {
+		return;
+	}
+	var ciudad = {
+		"id": document.formModificar.idCiudad.value,
+	}
+	var json = {
+		"ciudad": ciudad,
+		"id": "${id}",
+		"nombre": document.formModificar.nombre.value,
+	};
+	$.ajax({
+		url : "validarRecorrido",
+		type : "POST",
+		data : JSON.stringify(json),
+		processData : false,
+		dataType: "json",
+		contentType : "application/json",
+		success: function (data) {
+			if (data.existe == false) {
+				var atracciones_aux = "";
+				for (var i = 0; i < dentro_del_recorrido.length; i++) {
+					atracciones_aux += dentro_del_recorrido[i] + ",";
+				}
+				document.formModificar.atracciones.value = atracciones_aux.substring(0, atracciones_aux.length - 1);
+			  	document.getElementById("formModificar").submit();
+			} else {
+				document.getElementById("mensajeNombreRepetido").style.display = 'block';
+			}
+		}
+	});
+
+}
 /* ***************************
 Agregar Idioma
 *****************************/
@@ -526,6 +603,16 @@ function drawAtractionInMap(data) {
     marker.setMap(map);
 	map.setCenter(marker.getPosition());
 	markers.push(marker);
+}
+
+function validarElemento(elemento, mensaje, hayError) {
+	if ((document.getElementById(elemento).value == '') && (!hayError)) {
+		document.getElementById(mensaje).style.display = 'block';
+		hayError = 1;
+	} else {
+		document.getElementById(mensaje).style.display = 'none';
+	}
+	return hayError;
 }
 </script>
 

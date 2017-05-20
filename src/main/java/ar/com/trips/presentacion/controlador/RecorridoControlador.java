@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
@@ -68,6 +69,7 @@ public class RecorridoControlador {
 	
 	private void agregarAtracciones(Recorrido recorrido, String atracciones) {
 		String atracciones_separadas[] = atracciones.split(",");
+		recorrido.getListaAtraccionesEnElRecorrido().clear();
 		for (int i = 0; i < atracciones_separadas.length; i++) {
 			Atraccion atraccion  = atraccionDao.get(Long.parseLong(atracciones_separadas[i]));
 			atraccion.addRecorrido(recorrido);
@@ -78,7 +80,8 @@ public class RecorridoControlador {
 	
 	@RequestMapping("recorridoNuevoValidar")
 	public String nuevo(@ModelAttribute("recorrido") RecorridoIdioma recorrido, @RequestParam("idCiudad") int idCiudad,
-							@RequestParam("idioma") String idioma, @RequestParam("atracciones") String atracciones) {
+							@RequestParam("idioma") String idioma, @RequestParam("atracciones") String atracciones,
+							@RequestParam(name="archivoAudioguiaRecorrido") MultipartFile audio) {
 		Recorrido r = recorrido.getRecorrido();
 		r.addRecorridoIdioma(recorrido);
 		Ciudad ciudad = new Ciudad();
@@ -86,6 +89,11 @@ public class RecorridoControlador {
 		r.setCiudad(ciudad);
 		recorrido.setBorrado(0);
 		recorrido.setIdioma(Idioma.valueOf(idioma));
+		try {
+			recorrido.setAudio(audio.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		agregarAtracciones(r, atracciones);
 		recorridoDao.guardar(r);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
@@ -130,10 +138,25 @@ public class RecorridoControlador {
 	@RequestMapping("recorridoModificar")
 	public ModelAndView modificar(@ModelAttribute("recorrido") RecorridoIdioma recorrido,
 									@RequestParam("nombre") String nombreModificado,
-									@RequestParam("descripcion") String descripcionModificada) throws IOException {
+									@RequestParam("descripcion") String descripcionModificada,
+									@RequestParam("audioCambiadoRecorrido") Long audioCambiado,
+									@RequestParam("atracciones") String atracciones,
+									@RequestParam("atraccionesCambiadas") Long atraccionesCambiadas,
+									@RequestParam(name="archivoAudioguiaRecorrido") MultipartFile audio) throws IOException {
 		recorrido = recorridoIdiomaDao.get(recorrido.getId());
 		recorrido.getRecorrido().setNombre(nombreModificado);
 		recorrido.setDescripcion(descripcionModificada);
+		if (audioCambiado == 1) {
+			recorrido.setAudio(null);
+		}
+		try {
+			recorrido.setAudio(audio.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (atraccionesCambiadas == 1) {
+			agregarAtracciones(recorrido.getRecorrido(), atracciones);
+		}
 		recorridoDao.modificar(recorrido);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + recorrido.getRecorrido().getCiudad().getId());
 	}
