@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
 import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
 import ar.com.trips.persistencia.dao.impl.AtraccionIdiomaDAOImpl;
@@ -44,6 +45,9 @@ public class RecorridoControladorRest {
 	
 	@Autowired
 	private IRecorridoDAO recorridoDao;
+	
+	@Autowired
+	private IAtraccionDAO atraccionDao;
 	
 	@Autowired
 	private IRecorridoIdiomaDAO recorridoIdiomaDao;
@@ -117,6 +121,16 @@ public class RecorridoControladorRest {
 		HashMap<String, Set<AtraccionDTO>> lista = new HashMap<String, Set<AtraccionDTO>>();
 		Recorrido recorrido = recorridoDao.get(idRecorrido);
 		Set<AtraccionDTO> listaRetorno = new LinkedHashSet<>();
+
+		Set<Atraccion> lista_auxiliar = new LinkedHashSet<>();
+		recorrido.getListaAtraccionesEnElRecorrido().clear();
+		String atracciones_separadas[] = recorrido.getAtraccionesOrdenadas().split(",");
+		for (int i = 0; i < atracciones_separadas.length; i++) {
+			Atraccion atraccion  = atraccionDao.get(Long.parseLong(atracciones_separadas[i]));
+			lista_auxiliar.add(atraccion);
+		}
+		recorrido.setListaAtraccionesEnElRecorrido(lista_auxiliar);
+
 		for (Atraccion a : recorrido.getListaAtraccionesEnElRecorrido()) {
 			AtraccionDTO dto = AtraccionMapper.map(a);
 			if (a.getListaImagenes().size() > 0) {

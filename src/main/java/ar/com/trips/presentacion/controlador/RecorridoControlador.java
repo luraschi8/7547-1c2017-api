@@ -69,6 +69,7 @@ public class RecorridoControlador {
 	
 	private void agregarAtracciones(Recorrido recorrido, String atracciones) {
 		String atracciones_separadas[] = atracciones.split(",");
+		recorrido.setAtraccionesOrdenadas(atracciones);
 		recorrido.getListaAtraccionesEnElRecorrido().clear();
 		for (int i = 0; i < atracciones_separadas.length; i++) {
 			Atraccion atraccion  = atraccionDao.get(Long.parseLong(atracciones_separadas[i]));
@@ -126,13 +127,6 @@ public class RecorridoControlador {
 		model.addObject("recorrido", r);
 		model.addObject("idioma",idioma);
 		return model;
-		
-		
-		
-		/*RecorridoIdioma recorrido = recorridoIdiomaDao.get(id,idioma);
-		ModelAndView model = new ModelAndView("recorridos/recorrido");
-		model.addObject("recorrido", recorrido);		
-		return model;*/
 	}
 	
 	@RequestMapping("recorridoModificar")
@@ -157,6 +151,7 @@ public class RecorridoControlador {
 		if (atraccionesCambiadas == 1) {
 			agregarAtracciones(recorrido.getRecorrido(), atracciones);
 		}
+		recorrido.getRecorrido().setAtraccionesOrdenadas(atracciones);
 		recorridoDao.modificar(recorrido);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + recorrido.getRecorrido().getCiudad().getId());
 	}

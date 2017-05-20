@@ -54,6 +54,9 @@ public class Recorrido extends Modelo {
 	
 	@Transient
 	private int cantAtracciones;
+	
+	@Column(name="atracciones_ordenadas")
+	private String atracciones_ordenadas;
 
 	public Recorrido() {
 		
@@ -121,5 +124,13 @@ public class Recorrido extends Modelo {
 	
 	public void addRecorridoIdioma(RecorridoIdioma recorrido) {
 		this.getListaRecorridoIdioma().add(recorrido);
+	}
+	
+	public String getAtraccionesOrdenadas() {
+		return this.atracciones_ordenadas;
+	}
+
+	public void setAtraccionesOrdenadas(String atracciones) {
+		this.atracciones_ordenadas = atracciones;
 	}
 }
