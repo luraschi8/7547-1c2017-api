@@ -145,20 +145,21 @@ public class PuntoDeInteresRest {
 	}
 	
 	@RequestMapping(path="/modificarPunto",method=RequestMethod.POST)
-	public HashMap<String, Boolean> modificarPunto(@RequestParam("nombre") String nombre,
-			@RequestParam("descripcion") String descripcion,
-			@RequestParam(name="imagen") MultipartFile imagen,
-			@RequestParam(name="id",required=false) Long id,
-			@RequestParam(name="audio",required=false) MultipartFile audio) throws IOException {
+	public HashMap<String, Boolean> modificarPunto(@RequestParam(name="id") Long id, @RequestParam("nombre") String nombre,
+			@RequestParam("descripcion") String descripcion, @RequestParam(name="imagenCambiada") Long imagenCambiada,
+			@RequestParam(name="imagen", required=false) MultipartFile imagen, @RequestParam(name="audioCambiado") Long audioCambiado,
+			@RequestParam(name="audio", required=false) MultipartFile audio) throws IOException {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
 		PuntoIdioma punto = puntoIdiomaDao.get(id);
 		punto.getPuntoDeInteres().setNombre(nombre);
 		punto.setDescripcion(descripcion);
-		if (imagen != null) {
+		if (imagenCambiada == 1) {
 			punto.getPuntoDeInteres().setImagen(imagen.getBytes());
 		}
-		if (audio != null) {
-			punto.setAudio(audio.getBytes());
+		if (audioCambiado == 1) {
+			if (audio != null) {
+				punto.setAudio(audio.getBytes());
+			}
 		}
 		puntoDao.guardar(punto);
 		lista.put(EXISTE, true);

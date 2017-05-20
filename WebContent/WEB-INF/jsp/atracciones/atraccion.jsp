@@ -1569,7 +1569,7 @@ $('#tablita tbody').on('click', '#borrar', function (e) {
 		if (response) {
 			var formData = new FormData();
 			formData.append("id",id);
-			formData.append("idAtraccion",${idIdioma});
+			formData.append("idAtraccion",${id});
 			$.ajax({
 				url : "borrarPunto",
 				type : "POST",
@@ -1610,18 +1610,18 @@ $('#botonGuardarEdicionPuntoDeInteres').on('click', function(e) {
 	validarEdicionPunto();
 	
 	var formData = new FormData();
-	//formData.append("imagen", document.getElementById("puntoArchivoImagen").files[0]);
-	//formData.append("audio", document.getElementById("archivoAudioguiaPdi").files[0]);
-	formData.append("imagen", null);
-	formData.append("audio", null);
+	formData.append("id", table.row(this.closest("tr")).data()["id"]);
 	formData.append("nombre", document.getElementById("puntoNombreTextarea").value);
 	formData.append("descripcion", document.getElementById("puntoDescripcionTextarea").value);
-	formData.append("id", table.row(this.closest("tr")).data()["id"]);
-	alert(document.getElementById("puntoArchivoImagen").files[0]);
-	alert(document.getElementById("archivoAudioguiaPdi").files[0]);
-	alert(document.getElementById("puntoNombre").innerHTML);
-	alert(document.getElementById("puntoDescripcion").innerHTML);
-	alert(table.row(this.closest("tr")).data()["id"]);
+	formData.append("imagenCambiada", document.getElementById("puntoImagenCambiada").value);
+	formData.append("imagen", document.getElementById("puntoArchivoImagen").files[0]);
+	formData.append("audioCambiado", document.getElementById("audioCambiadoPdi").value);
+	formData.append("audio", document.getElementById("archivoAudioguiaPdi").files[0]);
+	/* console.log("id");
+	console.log("nombre");
+	console.log("desc);
+	console.log("imagenCambiada");
+	console.log("audioCambiadoa"); */
 	$.ajax({
 		url : "modificarPunto",
 		type : "POST",
@@ -1635,7 +1635,6 @@ $('#botonGuardarEdicionPuntoDeInteres').on('click', function(e) {
 				alert("HOW");
 			} else {
 				hideAllAtractionErrorMessages();
-				guardarOrden();
 				table.ajax.reload();
 				closeNewPointOfInterestForm();
 			}
