@@ -140,10 +140,10 @@ function closeViewCommentPopUp() {
 	enableAtractionPage();
 }
 
-/*$(document).ready(function() {
+$(document).ready(function() {
 	validateImage("puntoGetImagen", "puntoArchivoImagen", "puntoImagen", "mensajeImagenIncorrectaPuntoDeInteresError");
 	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
-});*/
+});
 
 function updatePointOfInterestForm() {
 	document.formNuevoPuntoDeInteres.nombre.value = $('#pdi-nombre').val();

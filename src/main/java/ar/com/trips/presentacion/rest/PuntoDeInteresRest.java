@@ -157,11 +157,12 @@ public class PuntoDeInteresRest {
 			punto.getPuntoDeInteres().setImagen(imagen.getBytes());
 		}
 		if (audioCambiado == 1) {
+			punto.setAudio(null);
 			if (audio != null) {
 				punto.setAudio(audio.getBytes());
 			}
 		}
-		puntoDao.guardar(punto);
+		puntoDao.modificar(punto);
 		lista.put(EXISTE, true);
 		return lista;
 	}

@@ -851,7 +851,6 @@ $('#tablaResenias tbody').on('click', '#editarResenia', function (e) {
 	<input id="idioma" name="idioma" type="hidden" value="${idioma}"/>
 </form:form>
 
-<script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
 <script src="${pageContext.request.contextPath}/js/puntoInteres.js"></script>
 
 <script>
@@ -1401,7 +1400,6 @@ $(document).ready(function() {
 $(document).ready(function() {
 	validateAudio("atraction-get-audio-file", "borrarAudio", "archivoAudioguia", "audio", "audioCambiado", "mensajeAudioTamano", "mensajeAudioIncorrectoError");
 	validateAudio("getAudioAtraccionNuevoLenguaje", "borrarAudioAtraccionNuevoLenguaje", "archivoAudioguiaAtraccionNuevoLenguaje", "audioAtraccionNuevoLenguaje", "audioCambiadoAtraccionNuevoLenguaje", "mensajeAudioAtraccionNuevoLenguajeTamano", "mensajeAudioAtraccionNuevoLenguajeIncorrectoError");
-	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
 });
 </script>
 
@@ -1633,8 +1631,9 @@ $('#tablita tbody').on('click', '#ver', function (e) {
 	var data = table.row(this.closest("tr")).data();
 	document.getElementById("puntoNombre").innerHTML = data["nombre"];
 	document.getElementById("puntoDescripcion").innerHTML = data["descripcion"];
-	document.getElementById("idPunto").value = data["id"];
-	document.getElementById('puntoImagen').src = "${pageContext.request.contextPath}/imagenPunto?id=" + data["id"];
+	document.getElementById("idPunto").value = data["idPunto"];
+	document.getElementById('puntoImagen').src = "${pageContext.request.contextPath}/imagenPunto?id=" + data["idPunto"];
+	document.getElementById('puntoAudio').src = "${pageContext.request.contextPath}/audioPunto?id=" + data["id"];
 	showEditionElements();
 });
 
@@ -1643,8 +1642,14 @@ $('#botonGuardarPuntoDeInteres').on('click', function(e) {
 	validarPunto();
 });
 
+function updateEdicionPunto() {
+	document.getElementById("puntoNombreTextarea").value = $('#puntoNombre').html();
+	document.getElementById("puntoDescripcionTextarea").value = $('#puntoDescripcion').html();
+}
+
 $('#botonGuardarEdicionPuntoDeInteres').on('click', function(e) {
 	e.preventDefault();
+	updateEdicionPunto();
 	validarEdicionPunto();
 	
 	var formData = new FormData();
@@ -1655,11 +1660,6 @@ $('#botonGuardarEdicionPuntoDeInteres').on('click', function(e) {
 	formData.append("imagen", document.getElementById("puntoArchivoImagen").files[0]);
 	formData.append("audioCambiado", document.getElementById("audioCambiadoPdi").value);
 	formData.append("audio", document.getElementById("archivoAudioguiaPdi").files[0]);
-	/* console.log("id");
-	console.log("nombre");
-	console.log("desc);
-	console.log("imagenCambiada");
-	console.log("audioCambiadoa"); */
 	$.ajax({
 		url : "modificarPunto",
 		type : "POST",
