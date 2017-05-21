@@ -224,7 +224,7 @@ public class RecorridoControladorRest {
 				}
 			}
 		}
-		if (contador != rec.getListaAtraccionesEnElRecorrido().size()) {
+		if (contador < 2/*!= rec.getListaAtraccionesEnElRecorrido().size()*/) {
 			lista.put(EXISTE, false);
 			lista.put("otroIdioma", false);
 			return lista;
@@ -235,7 +235,7 @@ public class RecorridoControladorRest {
 		if (audio != null ) {
 			recorrido.setAudio(audio.getBytes());
 		}
-		recorrido.setRecorrido(rec);;
+		recorrido.setRecorrido(rec);
 		rec.addRecorridoIdioma(recorrido);
 		recorridoIdiomaDao.guardar(recorrido);
 		lista.put(EXISTE, true);
