@@ -612,7 +612,7 @@ function validarAtraccionRepetida() {
 <!-- Plano -->
 <script>
 $(document).ready(function() {
-	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajePlanoIncorrectoError");
+	validateImage("atraction-get-blueprints", "archivoPlano", "plano", "mensajePlanoIncorrectoError", null);
 });
 </script>
 

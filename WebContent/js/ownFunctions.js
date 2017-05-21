@@ -1,4 +1,4 @@
-function validateImage(button_id, file_id, image_id, message_id) {
+function validateImage(button_id, file_id, image_id, message_id, changed_image_id) {
 	document.getElementById(button_id).onclick = function() {
 		document.getElementById(file_id).addEventListener('change', readURL, true);
 		var fileButton = document.getElementById(file_id);
@@ -23,6 +23,9 @@ function validateImage(button_id, file_id, image_id, message_id) {
 	});
 	
 	function readURL(){
+		if (changed_image_id != null) {
+			document.getElementById(changed_image_id).value = "1";
+		}
 		var file = document.getElementById(file_id).files[0];
 		var reader = new FileReader();
 	    reader.onloadend = function(){

@@ -141,7 +141,7 @@ function closeViewCommentPopUp() {
 }
 
 $(document).ready(function() {
-	validateImage("puntoGetImagen", "puntoArchivoImagen", "puntoImagen", "mensajeImagenIncorrectaPuntoDeInteresError");
+	validateImage("puntoGetImagen", "puntoArchivoImagen", "puntoImagen", "mensajeImagenIncorrectaPuntoDeInteresError", "puntoImagenCambiada");
 	validateAudio("puntoGetAudio", "borrarAudioPdi", "archivoAudioguiaPdi", "puntoAudio", "audioCambiadoPdi", "mensajeAudioPdiTamano", "mensajeAudioPdiIncorrectoError");
 });
 
