@@ -1,6 +1,7 @@
 package ar.com.trips.presentacion.controlador;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +15,14 @@ import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IAtraccionIdiomaDAO;
 import ar.com.trips.persistencia.dao.IImagenAtraccionDAO;
 import ar.com.trips.persistencia.dao.IPuntoDeInteresDAO;
+import ar.com.trips.persistencia.dao.IPuntoDeInteresIdiomaDAO;
 import ar.com.trips.persistencia.dao.IReseniaDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 import ar.com.trips.persistencia.modelo.PuntoDeInteres;
+import ar.com.trips.persistencia.modelo.PuntoIdioma;
 import ar.com.trips.util.enums.Idioma;
 
 @Controller
@@ -35,6 +38,9 @@ public class AtraccionControlador {
 	
 	@Autowired
 	private IPuntoDeInteresDAO puntoDao;
+	
+	@Autowired
+	private IPuntoDeInteresIdiomaDAO puntoIdiomaDao;
 	
 	@Autowired
 	private IReseniaDAO reseniaDao;
@@ -173,6 +179,7 @@ public class AtraccionControlador {
 	public ModelAndView ver(@RequestParam("idAtraccion") long id,@RequestParam(name="idioma")String idioma ) {
 		Atraccion atraccion = atraccionDao.get(id);
 		AtraccionIdioma a = atraccionIdiomaDao.get(id, idioma);
+		List<PuntoIdioma> listaPuntos = null;
 		if (a == null) {
 			if (idioma.equals("ES")) {
 				idioma = "EN";
@@ -181,9 +188,14 @@ public class AtraccionControlador {
 			}
 			a = atraccionIdiomaDao.get(id, idioma);
 		}
+		if (atraccion.getRecorrible() == 1) {
+			listaPuntos = puntoIdiomaDao.listarPorAtraccion((int) id, idioma);
+		}
 		a.setAtraccion(atraccion);
+		
 		ModelAndView model = new ModelAndView("atracciones/atraccion");
 		model.addObject("atraccion", a);
+		model.addObject("listaPuntos", listaPuntos);
 		model.addObject("idioma",idioma);
 		return model;
 	}

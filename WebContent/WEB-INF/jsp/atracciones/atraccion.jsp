@@ -1588,8 +1588,8 @@ var table = $('#tablita').DataTable( {
 });
 
 ordenOriginal = '';
-<c:if test="${atraccion.atraccion.listaPuntosDeInteres != null}">
-	<c:forEach items="${atraccion.atraccion.listaPuntosDeInteres}" var="punto">
+<c:if test="${listaPuntos != null}">
+	<c:forEach items="${listaPuntos}" var="punto">
 	    <c:if test="${punto.borrado == 0}">
 	    	ordenOriginal += ${punto.id} + ";";
 	    </c:if>
@@ -1605,7 +1605,7 @@ $('#tablita tbody').on('click', '#borrar', function (e) {
 		if (response) {
 			var formData = new FormData();
 			formData.append("id",id);
-			formData.append("idAtraccion",${id});
+			formData.append("idAtraccion",${idIdioma});
 			$.ajax({
 				url : "borrarPunto",
 				type : "POST",

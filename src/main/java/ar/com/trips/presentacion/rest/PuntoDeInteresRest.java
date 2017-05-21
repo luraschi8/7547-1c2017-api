@@ -140,7 +140,7 @@ public class PuntoDeInteresRest {
 	@RequestMapping(path="/borrarPunto",method=RequestMethod.POST)
 	public HashMap<String, Boolean> borrarPunto(@RequestParam("id") Integer id,@RequestParam("idAtraccion") Integer idAtraccion) {
 		HashMap<String, Boolean> respuesta = new HashMap<String, Boolean>();
-		puntoDao.borrar(id);
+		puntoIdiomaDao.borrar(id);
 		return respuesta;
 	}
 	
