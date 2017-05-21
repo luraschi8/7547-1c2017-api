@@ -278,7 +278,12 @@
 
 			<font style="margin-left: 1%;" color="red" size="1">Los campos indicados con * son obligatorios</font>
 			
-			<div class="btn_final_route_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%;">
+			<div class="alert alert-danger fade in route_alert" id="mensajeAtraccionesQueNoEstanEnAmbosIdiomas" style="display: none;">
+			 	<a class="close" data-dismiss="alert" aria-label="close"></a>
+			 	<strong>&iexclError!</strong> Se encuentran atracciones que no cuentan con el idioma requerido.
+			</div>
+			
+			<div class="btn_final_route_new_language_popup" style="width: 100%; text-align:center; clear:both; margin-top: 3%; margin-bottom: 3%;">
 				<input id="botonCancelarRecorridoNuevoLenguaje" class="btn btn-default" type="button" value="Cancelar" onclick="closeRouteNewLanguagePopup();"/>
 				<input id="botonGuardarRecorridoNuevoLenguaje" class="btn btn-default btn-primary" type="button" value="Guardar" onclick="guardarRecorridoNuevoLenguaje();"/>
 			</div>
@@ -360,7 +365,6 @@ function initializeTables() {
 	    if (data["borrado"] ==  0) {
 	    	fuera_del_recorrido.push(data["id"]);
 	    }
-	    //fuera_del_recorrido.push(data["id"]);
 	});
 }
 
@@ -575,15 +579,20 @@ function guardarRecorridoNuevoLenguaje() {
 		contentType: false,
 		dataType: 'json',
 		success: function (data) {
+			var atraction_without_the_required_language = false;
 			if (data.existe == false) {
 				if (data.otroIdioma == true) {
 					alert("Ya existe tanto en inglés como castellano");
 				} else {
-					alert("Se encuentran atracciones que no cuentan con el idioma requerido");
+					//alert("Se encuentran atracciones que no cuentan con el idioma requerido");
+					document.getElementById("mensajeAtraccionesQueNoEstanEnAmbosIdiomas").style.display = "block";
+					atraction_without_the_required_language = true;
 				}
 			}
-			closeRouteNewLanguagePopup();
-			document.getElementById("route_add_language_btn").style.display = "none";
+			if (!atraction_without_the_required_language) {
+				closeRouteNewLanguagePopup();
+				document.getElementById("route_add_language_btn").style.display = "none";
+			}
 		}
 	});
 }
