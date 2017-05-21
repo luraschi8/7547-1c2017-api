@@ -109,6 +109,7 @@ public class PuntoDeInteresIdiomaDAOImpl extends DAOImpl implements IPuntoDeInte
 		for (String id : ids) {
 			PuntoIdioma punto = get(Long.parseLong(id));
 			punto.setBorrado(0);
+			punto.getPuntoDeInteres().setBorrado(0);
 			punto.setOrden(orden);
 			lista.add(punto);
 			orden++;

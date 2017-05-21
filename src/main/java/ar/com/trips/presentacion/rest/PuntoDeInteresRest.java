@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -141,6 +142,17 @@ public class PuntoDeInteresRest {
 	public HashMap<String, Boolean> borrarPunto(@RequestParam("id") Integer id,@RequestParam("idAtraccion") Integer idAtraccion) {
 		HashMap<String, Boolean> respuesta = new HashMap<String, Boolean>();
 		puntoIdiomaDao.borrar(id);
+		PuntoIdioma punto = puntoIdiomaDao.get(new Long(id));
+		Set<PuntoIdioma> lista = new LinkedHashSet(punto.getPuntoDeInteres().getListaPuntoIdioma());
+		int cont = 0;
+		for (PuntoIdioma puntoIdioma : lista) {
+			if (puntoIdioma.getBorrado() == 0) {
+				cont++;
+			}
+		}
+		if (cont == 0) {
+			puntoDao.borrar(punto.getPuntoDeInteres().getId());
+		}
 		return respuesta;
 	}
 	
