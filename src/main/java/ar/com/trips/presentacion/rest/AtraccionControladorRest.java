@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -104,7 +105,8 @@ public class AtraccionControladorRest {
 			dto.setPlano(url + "planoAtraccion?id=" + atraccion.getAtraccion().getId());
 		}
 		List<String> imagenes = new ArrayList<>();
-		for (ImagenAtraccion i : atraccion.getAtraccion().getListaImagenes()) {
+		Set<ImagenAtraccion> setImagenes = new LinkedHashSet(atraccion.getAtraccion().getListaImagenes());
+		for (ImagenAtraccion i : setImagenes) {
 			imagenes.add(DatatypeConverter.printBase64Binary(i.getImagen()));
 		}
 		dto.setListaImagenes(imagenes);

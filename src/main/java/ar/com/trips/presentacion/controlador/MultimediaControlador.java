@@ -145,10 +145,10 @@ public class MultimediaControlador {
 	        response.flushBuffer();
 	    } catch (java.nio.file.NoSuchFileException e) {
 	        e.printStackTrace();
-	    	response.setStatus(HttpStatus.NOT_FOUND.value());
+	    	//response.setStatus(HttpStatus.NOT_FOUND.value());
 	    } catch (Exception e) {
 	    	e.printStackTrace();
-	        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+	        //response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 	    }
 	}
 	
