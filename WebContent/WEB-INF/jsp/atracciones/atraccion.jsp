@@ -1780,6 +1780,11 @@ function checkPuntoNuevoLenguaje() {
 }
 
 function guardarAtraccionNuevoLenguaje() {
+	hayError = 0;
+	hayError = validarElemento('atraccionDescripcionNuevoLenguaje', 'mensajeDescripcionVaciaAtraccionNuevoLenguajeError', hayError);
+	if(hayError == 1) {
+		return;
+	}
 	var formData = new FormData();
 	formData.append("id","${id}");
 	formData.append("descripcion",document.getElementById("atraccionDescripcionNuevoLenguaje").value);
@@ -1802,6 +1807,11 @@ function guardarAtraccionNuevoLenguaje() {
 }
 
 function guardarPuntoNuevoLenguaje() {
+	hayError = 0;
+	hayError = validarElemento('puntoDescripcionNuevoLenguajeTextarea', 'mensajeDescripcionVaciaPuntoDeInteresNuevoLenguajeError', hayError);
+	if(hayError == 1) {
+		return;
+	}
 	var formData = new FormData();
 	formData.append("id",document.getElementById("idPunto").value);
 	formData.append("descripcion",document.getElementById("puntoDescripcionNuevoLenguajeTextarea").value);
