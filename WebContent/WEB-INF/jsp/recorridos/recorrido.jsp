@@ -14,7 +14,7 @@
 <title>Trips - ${recorrido.recorrido.nombre}</title>
 </head>
 
-<body onload="setLanguage(); initializeTables();">
+<body onload="setLanguage();">
 	<div class="nav-wrapper route-new-page-header">
 		<div class="nav-menu">
    		    <ul class="clearfix">
@@ -425,6 +425,9 @@ var table_all_atractions = $('#tablaAtracciones').DataTable( {
 });
 
 var table_route_atractions = $('#tablaAtraccionesRecorrido').DataTable( {
+	"initComplete": function(settings, json) {
+		initializeTables();
+	},
 	dom: 'frtip',
 	ajax: "atraccionesRecorridoJson/${idRecorrido}",
     columns: [
