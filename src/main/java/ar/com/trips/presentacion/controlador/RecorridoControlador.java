@@ -15,6 +15,7 @@ import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
 import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.Recorrido;
 import ar.com.trips.persistencia.modelo.RecorridoIdioma;
@@ -143,16 +144,24 @@ public class RecorridoControlador {
 		if (audioCambiado == 1) {
 			recorrido.setAudio(null);
 		}
-		try {
-			recorrido.setAudio(audio.getBytes());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		guardarAudio(recorrido,audio);
 		if (atraccionesCambiadas == 1) {
 			agregarAtracciones(recorrido.getRecorrido(), atracciones);
 		}
 		recorrido.getRecorrido().setAtraccionesOrdenadas(atracciones);
 		recorridoDao.modificar(recorrido);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + recorrido.getRecorrido().getCiudad().getId());
+	}
+	
+	private void guardarAudio(RecorridoIdioma recorrido, MultipartFile audio) {
+		try {
+			byte[] bytes = audio.getBytes();
+			if (bytes.length != 0) {
+				recorrido.setAudio(bytes);
+			}
+		} catch (Exception e) {
+			recorrido.setAudio(null);
+			e.printStackTrace();
+		}
 	}
 }

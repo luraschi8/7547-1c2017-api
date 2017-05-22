@@ -1,7 +1,10 @@
 package ar.com.trips.presentacion.controlador;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -178,6 +181,8 @@ public class AtraccionControlador {
 	@RequestMapping(path="atraccionVer")
 	public ModelAndView ver(@RequestParam("idAtraccion") long id,@RequestParam(name="idioma")String idioma ) {
 		Atraccion atraccion = atraccionDao.get(id);
+		Set<ImagenAtraccion> imagenes = new LinkedHashSet<>(atraccion.getListaImagenes());
+		atraccion.setListaImagenes(new ArrayList<>(imagenes));
 		AtraccionIdioma a = atraccionIdiomaDao.get(id, idioma);
 		List<PuntoIdioma> listaPuntos = null;
 		if (a == null) {
