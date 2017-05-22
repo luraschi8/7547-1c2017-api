@@ -104,8 +104,8 @@ public class AtraccionControladorRest {
 		if (atraccion.getAtraccion().getPlano() != null) {
 			dto.setPlano(url + "planoAtraccion?id=" + atraccion.getAtraccion().getId());
 		}
-		List<String> imagenes = new ArrayList<>();
-		Set<ImagenAtraccion> setImagenes = new LinkedHashSet(atraccion.getAtraccion().getListaImagenes());
+		Set<String> imagenes = new LinkedHashSet<>();
+		Set<ImagenAtraccion> setImagenes = new LinkedHashSet<>(atraccion.getAtraccion().getListaImagenes());
 		for (ImagenAtraccion i : setImagenes) {
 			imagenes.add(DatatypeConverter.printBase64Binary(i.getImagen()));
 		}

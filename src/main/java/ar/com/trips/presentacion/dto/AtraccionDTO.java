@@ -1,7 +1,7 @@
 package ar.com.trips.presentacion.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import ar.com.trips.util.enums.Idioma;
 
@@ -35,7 +35,7 @@ public class AtraccionDTO {
 	
 	private int recorrible;
 		
-	private List<String> listaImagenes = new ArrayList<>();
+	private Set<String> listaImagenes = new LinkedHashSet<>();
 	
 	private String imagen;
 	
@@ -153,11 +153,11 @@ public class AtraccionDTO {
 		this.recorrible = recorrible;
 	}
 
-	public List<String> getListaImagenes() {
+	public Set<String> getListaImagenes() {
 		return listaImagenes;
 	}
 
-	public void setListaImagenes(List<String> listaImagenes) {
+	public void setListaImagenes(Set<String> listaImagenes) {
 		this.listaImagenes = listaImagenes;
 	}
 
