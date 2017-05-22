@@ -569,6 +569,11 @@ function checkRecorridoNuevoLenguaje() {
 }
 
 function guardarRecorridoNuevoLenguaje() {
+	hayError = 0;
+	hayError = validarElemento('recorridoDescripcionNuevoLenguaje', 'mensajeDescripcionVaciaRecorridoNuevoLenguajeError', hayError);
+	if(hayError == 1) {
+		return;
+	}
 	var formData = new FormData();
 	formData.append("id","${idRecorrido}");
 	formData.append("descripcion",document.getElementById("recorridoDescripcionNuevoLenguaje").value);
