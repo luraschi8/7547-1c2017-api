@@ -15,7 +15,6 @@ import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IRecorridoDAO;
 import ar.com.trips.persistencia.dao.IRecorridoIdiomaDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
-import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.Ciudad;
 import ar.com.trips.persistencia.modelo.Recorrido;
 import ar.com.trips.persistencia.modelo.RecorridoIdioma;

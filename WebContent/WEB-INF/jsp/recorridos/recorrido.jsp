@@ -40,7 +40,7 @@
 	  	</div>
 	</nav>
 
-	<h1 class="page-header route-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">${recorrido.recorrido.nombre} - ${recorrido.recorrido.ciudad.nombre}</h1>	
+	<h1 class="page-header route-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">${recorrido.recorrido.nombre} - ${recorrido.recorrido.ciudad.nombre}</h1>
 	
 	<div id="routeForm" style="width: 94%; margin-left: 3%; margin-right: 3%">
 		<form:form id="formModificar" name="formModificar" action="recorridoModificar" method="post" commandName="recorrido" enctype="multipart/form-data">
