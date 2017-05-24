@@ -17,6 +17,15 @@
 
 <body onload="mostrarAtracciones();">
 
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li class="active"><a href="ciudades">Ciudades</a></li>
+		      	<li><a href="atraccionesDeMayorInteres">Reportes</a></li>
+		    </ul>
+	  	</div>
+	</nav>
+
 <form:form class="form-horizontal" id ="formModificar" name="formModificar" action="ciudadModificar" method="post" commandName="ciudad" enctype="multipart/form-data">
 	<form:input id="id" type="hidden" name="id" path="id" value="${ciudad.id}"/>
 

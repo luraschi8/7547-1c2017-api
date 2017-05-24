@@ -9,12 +9,20 @@
 <jsp:include page="../template/importacion.jsp"></jsp:include>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
-<title>Trips - Ciudades</title>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	
+	<title>Trips - Ciudades</title>
 </head>
+
 <body>
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li class="active"><a href="ciudades">Ciudades</a></li>
+		      	<li><a href="atraccionesDeMayorInteres">Reportes</a></li>
+		    </ul>
+	  	</div>
+	</nav>
 
 	<h1 class="page-header" style="margin-left: 3%">
 		Ciudades

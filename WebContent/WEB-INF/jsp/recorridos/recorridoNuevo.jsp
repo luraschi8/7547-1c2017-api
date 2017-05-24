@@ -15,6 +15,15 @@
 </head>
 
 <body>
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li class="active"><a href="ciudades">Ciudades</a></li>
+		      	<li><a href="atraccionesDeMayorInteres">Reportes</a></li>
+		    </ul>
+	  	</div>
+	</nav>
+	
 	<h1 class="page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Nuevo recorrido</h1>
 	
 	<div id="routeForm" style="width: 94%; margin-left: 3%; margin-right: 3%">

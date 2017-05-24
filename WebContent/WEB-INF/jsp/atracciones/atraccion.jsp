@@ -17,18 +17,30 @@
 
 <body onload="setLanguage();">
 
-	<div class="nav-wrapper atraction-new-page-header">
-		<div class="nav-menu">
-   		    <ul class="clearfix">
-	        	<li id="select_language">
-		        	<ul class="sub-menu">
-			        	<li onclick="setSpanish();">Español</li>
-			            <li onclick="setEnglish();">Inglés</li>
-			        </ul>
-			    </li>
-	        </ul>
-	    </div>
-    </div>
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li class="active"><a href="ciudades">Ciudades</a></li>
+		      	<li><a href="atraccionesDeMayorInteres">Reportes</a></li>
+		    </ul>
+	  	</div>
+	</nav>
+	
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+	    	<ul class="nav navbar-nav">
+	      		<li class="dropdown" id="select_language">
+	        		<a class="active dropdown-toggle" data-toggle="dropdown" href="#">Idioma
+	        			<span class="caret"></span>
+	        		</a>
+	        		<ul class="dropdown-menu">
+			          	<li onclick="setSpanish();"><a href="#">Español</a></li>
+			          	<li onclick="setEnglish();"><a href="#">Inglés</a></li>
+	        		</ul>
+	      		</li>
+	    	</ul>
+	  	</div>
+	</nav>
     
 	<h1 class="page-header atraction-new-page-header" style="margin-left:5rem">${atraccion.atraccion.nombre} - ${atraccion.atraccion.ciudad.nombre}</h1>
 
@@ -876,9 +888,9 @@ function setEnglish() {
 
 function setLanguage() {
 	if ("${idioma}" == "ES") {
-		document.getElementById("select_language").innerHTML = "Espa&ntilde;ol <ul class='sub-menu'> <li onclick='setSpanish();'>Espa&ntilde;ol</li> <li onclick='setEnglish();'>Ingl&eacute;s</li> </ul>";
+		document.getElementById("select_language").innerHTML = "<a class='active dropdown-toggle' data-toggle='dropdown' href='#'>Espa&ntilde;ol<span class='caret'></span></a><ul class='dropdown-menu'><li onclick='setSpanish();'><a href='#'>Español</a></li><li onclick='setEnglish();'><a href='#'>Inglés</a></li></ul></li>";
 	} else {
-		document.getElementById("select_language").innerHTML = "Ingl&eacute;s <ul class='sub-menu'> <li onclick='setSpanish();'>Espa&ntilde;ol</li> <li onclick='setEnglish();'>Ingl&eacute;s</li> </ul>";
+		document.getElementById("select_language").innerHTML = "<a class='active dropdown-toggle' data-toggle='dropdown' href='#'>Ingl&eacute;s<span class='caret'></span></a><ul class='dropdown-menu'><li onclick='setSpanish();'><a href='#'>Español</a></li><li onclick='setEnglish();'><a href='#'>Inglés</a></li></ul></li>";
 	}
 }
 

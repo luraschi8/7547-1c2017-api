@@ -16,6 +16,15 @@
 </head>
 <body>
 
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li class="active"><a href="ciudades">Ciudades</a></li>
+		      	<li><a href="atraccionesDeMayorInteres">Reportes</a></li>
+		    </ul>
+	  	</div>
+	</nav>
+	
 	<h1 class="page-header">
 		Atracciones
 	</h1>
