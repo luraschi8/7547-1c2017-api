@@ -13,6 +13,37 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Reportes - Atracciones de mayor interés</title>
+	
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(function() {
+		drawChart(data_array);
+	});
+	
+	var data_array = [
+		['Atraccion', ''],
+		["Casa Rosada", 165],
+		["Obelisco", 135],
+		["MALBA", 157]
+	];
+	
+	function drawChart(data_array) {
+		var data = google.visualization.arrayToDataTable(data_array);
+		
+		var options = {
+			title : 'Atracciones de mayor interés de los últimos doce meses',
+			vAxis: {title: 'Cantidad usuarios'},
+			hAxis: {title: 'Atracción'},
+			seriesType: 'bars'
+		};
+		
+		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+		
+	}
+	</script>
 </head>
 
 <body>
@@ -37,5 +68,7 @@
 	</nav>
 	
 	<h1 class="page-header report-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Reportes - Atracciones de mayor interés</h1>
+
+	<div id="chart_div" style="width: 900px; height: 500px;"></div>
 </body>
 </html>

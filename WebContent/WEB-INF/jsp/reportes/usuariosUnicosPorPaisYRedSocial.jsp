@@ -13,6 +13,51 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Reportes - Usuarios únicos por país y red social</title>
+	
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(function() {
+		drawChart(data_array);
+	});
+	
+	var data_array = [
+		['País', ''],
+		["Argentina", 165],
+		["Uruguay", 135],
+		["Brasil", 157]
+	];
+	
+	function drawChart(data_array) {
+		var data = google.visualization.arrayToDataTable(data_array);
+		
+		var options = {
+			title : 'Usuarios únicos por país y red social'
+		};
+		
+		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+
+		// The select handler. Call the chart's getSelection() method
+		  function selectHandler() {
+		    var selectedItem = chart.getSelection()[0];
+		    if (selectedItem) {
+		      var value = data.getValue(selectedItem.row, 0);
+		      alert('Se eligió ' + value + ". Acá se debería dibujar el segundo Pie Chart para este país");
+		    }
+		  }
+
+		  // Listen for the 'select' event, and call my function selectHandler() when
+		  // the user selects something on the chart.
+		  google.visualization.events.addListener(chart, 'select', selectHandler);
+				
+
+		
+		//chart.draw(data, options);
+		
+	}
+	</script>
 </head>
 
 <body>
@@ -37,5 +82,7 @@
 	</nav>
 	
 	<h1 class="page-header report-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Reportes - Usuarios únicos por país y red social</h1>
+
+	<div id="chart_div" style="width: 900px; height: 500px;"></div>
 </body>
 </html>
