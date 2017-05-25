@@ -43,6 +43,12 @@
 
 	<div style="display: inline-block;">
 		<div style="float: left; width: 900px; height: 500px;" id="chart_div"></div>
+		
+		<div style="float: right; margin-top: 55px; width: 200px; height: 50px;" id="select_date">
+			<label>Filtrar por fecha</label>
+			<p>Fecha inicio: <input type="text" id="date_from"></p>
+			<p>Fecha fin: <input type="text" id="date_to"></p>
+		</div>
 	</div>
 	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -83,6 +89,58 @@
 		// the user selects something on the chart.
 		google.visualization.events.addListener(chart, 'select', selectHandler);
 	}
+	</script>
+
+	<script>
+	$(function() {
+		$.datepicker.regional['es'] = {
+			closeText: "Cerrar",
+			prevText: "&#x3C;Ant",
+			nextText: "Sig&#x3E;",
+			currentText: "Hoy",
+			monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+			"Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+			monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
+			"Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+			dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+			dayNamesShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+			dayNamesMin: ["Do","Lu","Ma","Mi","Ju","Vi","Sá"],
+			weekHeader: "Sm",
+			dateFormat: "dd/mm/yy",
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: false,
+			yearSuffix: ""
+		};
+
+		$.datepicker.setDefaults($.datepicker.regional['es']); 
+		
+		var options = { dateFormat: 'dd/mm/yy',
+						changeMonth: true,
+			      		changeYear: true
+			      	  };
+  		
+		var from = $("#date_from").datepicker(options).on("change", function() {
+        	to.datepicker("option", "minDate", getDate(this));
+        });
+
+		var to = $("#date_to").datepicker(options).on("change", function() {
+			from.datepicker("option", "maxDate", getDate(this));
+	    });
+
+		from.datepicker("option", "maxDate", new Date());
+		to.datepicker("option", "maxDate", new Date());
+		
+	    function getDate(element) {
+	        var date;
+	        try {
+	        	date = $.datepicker.parseDate("dd/mm/yy", element.value);
+	        } catch(error) {
+	        	date = null;
+	        }
+			return date;
+	    }
+	});
 	</script>
 </body>
 </html>
