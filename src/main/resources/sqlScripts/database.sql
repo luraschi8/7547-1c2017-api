@@ -7,13 +7,25 @@ use db_trips;
 create table Usuario (
 	id bigint(10) primary key not null auto_increment,
     nombre varchar(50),
-    contrasena varchar(50)
+    idAndroid varchar(30) not null,
+    idRedSocial varchar(30),
+    pais varchar(30)
 );
 
-create table Permiso (
+create table AtraccionesFavoritas (
 	id bigint(10) primary key not null auto_increment,
-    idUsuario bigint(10) not null,
-    permiso bigint(10) not null
+	idUsuario bigint(10) not null,
+    idAtraccion bigint(10) not null,
+    foreign key (idAtraccion) references Atraccion (id),
+    foreign key (idUsuario) references Usuario (id)
+);
+
+create table RecorridosFavoritos (
+	id bigint(10) primary key not null auto_increment,
+	idUsuario bigint(10) not null,
+    idRecorrido bigint(10) not null,
+    foreign key (idRecorrido) references Recorrido (id),
+    foreign key (idUsuario) references Usuario (id)
 );
 
 create table Ciudad (
@@ -117,4 +129,13 @@ create table RecorridoAtraccion (
     idRecorrido bigint(10) not null,
     foreign key (idAtraccion) references Atraccion (id),
     foreign key (idRecorrido) references Recorrido (id)
-)
+);
+
+create table VisitaAtraccion (
+	id bigint(10) primary key not null auto_increment,
+	idAtraccion bigint(10) not null,
+    idAndroid varchar(30) not null,
+    idRedSocial varchar(30),
+    fecha varchar(10), /*DD-MM-AAAA*/
+    foreign key (idAtraccion) references Atraccion (id)
+);
