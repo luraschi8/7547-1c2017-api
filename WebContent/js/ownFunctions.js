@@ -244,11 +244,6 @@ function closeRouteNewLanguagePopup() {
 	enableRoutePage();
 }
 
-
-
-
-
-
 function iniatilizeDates(date_from, date_to) {
 	$.datepicker.regional['es'] = {
 		closeText: "Cerrar",
@@ -261,7 +256,7 @@ function iniatilizeDates(date_from, date_to) {
 		"Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
 		dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
 		dayNamesShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
-		dayNamesMin: ["Do","Lu","Ma","Mi","Ju","Vi","Sá"],
+		dayNamesMin: ["Do","Lu","Ma","Mi","Ju","Vi","S&aacute;"],
 		weekHeader: "Sm",
 		dateFormat: "dd/mm/yy",
 		firstDay: 1,
@@ -284,7 +279,9 @@ function iniatilizeDates(date_from, date_to) {
 	var to = $(date_to).datepicker(options).on("change", function() {
 		from.datepicker("option", "maxDate", getDate(this));
     });
-
+	
+	from.datepicker("option", "minDate", "-1Y");
+	to.datepicker("option", "minDate", "-1Y");
 	from.datepicker("option", "maxDate", new Date());
 	to.datepicker("option", "maxDate", new Date());
 	
