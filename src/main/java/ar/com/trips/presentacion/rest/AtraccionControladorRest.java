@@ -26,6 +26,7 @@ import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
 import ar.com.trips.presentacion.dto.AtraccionDTO;
+import ar.com.trips.presentacion.dto.UsuarioDTO;
 import ar.com.trips.presentacion.mapper.AtraccionMapper;
 import ar.com.trips.presentacion.validacion.AtraccionValidacion;
 import ar.com.trips.util.enums.Idioma;
@@ -87,9 +88,10 @@ public class AtraccionControladorRest {
 		return lista;
 	}
 	
-	@RequestMapping(path="/atraccion/{idAtraccion}/{idioma}",method=RequestMethod.GET)
+	@RequestMapping(path="/atraccion/{idAtraccion}/{idioma}",method=RequestMethod.POST)
 	public HashMap<String, AtraccionDTO> getAtraccion(HttpServletRequest request, HttpServletResponse response,
-								@PathVariable long idAtraccion,@PathVariable String idioma) {
+								@PathVariable long idAtraccion,@PathVariable String idioma,
+								@RequestBody UsuarioDTO usuario) {
 		HashMap<String, AtraccionDTO> lista = new HashMap<String, AtraccionDTO>();
 		if (!Idioma.contains(idioma)) {
 			return null;

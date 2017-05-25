@@ -9,23 +9,8 @@ create table Usuario (
     nombre varchar(50),
     idAndroid varchar(30) not null,
     idRedSocial varchar(30),
-    pais varchar(30)
-);
-
-create table AtraccionesFavoritas (
-	id bigint(10) primary key not null auto_increment,
-	idUsuario bigint(10) not null,
-    idAtraccion bigint(10) not null,
-    foreign key (idAtraccion) references Atraccion (id),
-    foreign key (idUsuario) references Usuario (id)
-);
-
-create table RecorridosFavoritos (
-	id bigint(10) primary key not null auto_increment,
-	idUsuario bigint(10) not null,
-    idRecorrido bigint(10) not null,
-    foreign key (idRecorrido) references Recorrido (id),
-    foreign key (idUsuario) references Usuario (id)
+    pais varchar(30),
+    ultimaFechaConexion varchar(10)
 );
 
 create table Ciudad (
@@ -138,4 +123,21 @@ create table VisitaAtraccion (
     idRedSocial varchar(30),
     fecha varchar(10), /*DD-MM-AAAA*/
     foreign key (idAtraccion) references Atraccion (id)
+);
+
+
+create table AtraccionesFavoritas (
+	id bigint(10) primary key not null auto_increment,
+	idUsuario bigint(10) not null,
+    idAtraccion bigint(10) not null,
+    foreign key (idAtraccion) references Atraccion (id),
+    foreign key (idUsuario) references Usuario (id)
+);
+
+create table RecorridosFavoritos (
+	id bigint(10) primary key not null auto_increment,
+	idUsuario bigint(10) not null,
+    idRecorrido bigint(10) not null,
+    foreign key (idRecorrido) references Recorrido (id),
+    foreign key (idUsuario) references Usuario (id)
 );

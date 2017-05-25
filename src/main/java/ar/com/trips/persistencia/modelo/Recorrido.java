@@ -52,6 +52,10 @@ public class Recorrido extends Modelo {
 			inverseJoinColumns = { @JoinColumn(name = "idAtraccion", nullable = false, updatable = false) })
 	private Set<Atraccion> listaAtraccionesEnElRecorrido = new LinkedHashSet<>();
 	
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "listaRecorridosFavoritos")
+	@JsonBackReference(value="listaUsuarios")
+	private List<Usuario> listaUsuarios;
+	
 	@Transient
 	private int cantAtracciones;
 	
@@ -133,4 +137,17 @@ public class Recorrido extends Modelo {
 	public void setAtraccionesOrdenadas(String atracciones) {
 		this.atracciones_ordenadas = atracciones;
 	}
+
+	public List<Usuario> getListaUsuarios() {
+		return listaUsuarios;
+	}
+
+	public void setListaUsuarios(List<Usuario> listaUsuarios) {
+		this.listaUsuarios = listaUsuarios;
+	}
+	
+	public void addUsuario(Usuario usuario) {
+		this.getListaUsuarios().add(usuario);
+	}
+	
 }

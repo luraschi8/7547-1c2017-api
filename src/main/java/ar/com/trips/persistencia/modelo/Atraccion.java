@@ -81,6 +81,10 @@ public class Atraccion extends Modelo{
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "listaAtraccionesEnElRecorrido")
 	@JsonBackReference(value="listaRecorridos")
 	private List<Recorrido> listaRecorridos;
+	
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "listaAtraccionesFavoritas")
+	@JsonBackReference(value="listaUsuarios")
+	private List<Usuario> listaUsuarios;
 
 	public Atraccion() {
 		
@@ -212,5 +216,17 @@ public class Atraccion extends Modelo{
 				this.listaRecorridos.remove(i);
 			}
 		}
+	}
+	
+	public List<Usuario> getListaUsuarios() {
+		return listaUsuarios;
+	}
+
+	public void setListaUsuarios(List<Usuario> listaUsuarios) {
+		this.listaUsuarios = listaUsuarios;
+	}
+	
+	public void addUsuario(Usuario usuario) {
+		this.getListaUsuarios().add(usuario);
 	}
 }
