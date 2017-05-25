@@ -13,6 +13,33 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Reportes - Atracciones de mayor interés</title>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li><a href="ciudades">Ciudades</a></li>
+		      	<li class="active"><a href="atraccionesDeMayorInteres">Reportes</a></li>
+		    </ul>
+	  	</div>
+	</nav>
+	
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li class="active"><a href="atraccionesDeMayorInteres">Atracciones de mayor interés</a></li>
+		      	<li><a href="usuariosUnicosGlobales">Usuarios únicos globales</a></li>
+		      	<li><a href="usuariosUnicosPorPaisYRedSocial">Usuarios únicos por país y red social</a></li>
+		    </ul>
+	  	</div>
+	</nav>
+	
+	<h1 class="page-header report-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Reportes - Atracciones de mayor interés</h1>
+
+	<div id="chart_div" style="width: 900px; height: 500px;"></div>
+	
 	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
@@ -44,31 +71,5 @@
 		
 	}
 	</script>
-</head>
-
-<body>
-
-	<nav class="navbar navbar-default">
-	  	<div class="container-fluid">
-		    <ul class="nav navbar-nav">
-		      	<li><a href="ciudades">Ciudades</a></li>
-		      	<li class="active"><a href="#">Reportes</a></li>
-		    </ul>
-	  	</div>
-	</nav>
-	
-	<nav class="navbar navbar-default">
-	  	<div class="container-fluid">
-		    <ul class="nav navbar-nav">
-		      	<li class="active"><a href="atraccionesDeMayorInteres">Atracciones de mayor interés</a></li>
-		      	<li><a href="usuariosUnicosGlobales">Usuarios únicos globales</a></li>
-		      	<li><a href="usuariosUnicosPorPaisYRedSocial">Usuarios únicos por país y red social</a></li>
-		    </ul>
-	  	</div>
-	</nav>
-	
-	<h1 class="page-header report-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Reportes - Atracciones de mayor interés</h1>
-
-	<div id="chart_div" style="width: 900px; height: 500px;"></div>
 </body>
 </html>

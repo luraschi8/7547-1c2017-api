@@ -14,6 +14,37 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Reportes - Usuarios únicos por país y red social</title>
 	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li><a href="ciudades">Ciudades</a></li>
+		      	<li class="active"><a href="atraccionesDeMayorInteres">Reportes</a></li>
+		    </ul>
+	  	</div>
+	</nav>
+	
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+		    <ul class="nav navbar-nav">
+		      	<li><a href="atraccionesDeMayorInteres">Atracciones de mayor interés</a></li>
+		      	<li><a href="usuariosUnicosGlobales">Usuarios únicos globales</a></li>
+		      	<li class="active"><a href="usuariosUnicosPorPaisYRedSocial">Usuarios únicos por país y red social</a></li>
+		    </ul>
+	  	</div>
+	</nav>
+	
+	<h1 class="page-header report-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Reportes - Usuarios únicos por país y red social</h1>
+
+	<div style="display: inline-block;">
+		<div style="float: left; width: 900px; height: 500px;" id="chart_div"></div>
+	</div>
+	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 	
@@ -40,49 +71,18 @@
 		chart.draw(data, options);
 
 		// The select handler. Call the chart's getSelection() method
-		  function selectHandler() {
-		    var selectedItem = chart.getSelection()[0];
-		    if (selectedItem) {
-		      var value = data.getValue(selectedItem.row, 0);
-		      alert('Se eligió ' + value + ". Acá se debería dibujar el segundo Pie Chart para este país");
-		    }
-		  }
+		function selectHandler() {
+			var selectedItem = chart.getSelection()[0];
+			if (selectedItem) {
+				var value = data.getValue(selectedItem.row, 0);
+				alert('Se eligió ' + value + ". Acá se debería dibujar el segundo Pie Chart para este país");
+			}
+		}
 
-		  // Listen for the 'select' event, and call my function selectHandler() when
-		  // the user selects something on the chart.
-		  google.visualization.events.addListener(chart, 'select', selectHandler);
-				
-
-		
-		//chart.draw(data, options);
-		
+		// Listen for the 'select' event, and call my function selectHandler() when
+		// the user selects something on the chart.
+		google.visualization.events.addListener(chart, 'select', selectHandler);
 	}
 	</script>
-</head>
-
-<body>
-
-	<nav class="navbar navbar-default">
-	  	<div class="container-fluid">
-		    <ul class="nav navbar-nav">
-		      	<li><a href="ciudades">Ciudades</a></li>
-		      	<li class="active"><a href="#">Reportes</a></li>
-		    </ul>
-	  	</div>
-	</nav>
-	
-	<nav class="navbar navbar-default">
-	  	<div class="container-fluid">
-		    <ul class="nav navbar-nav">
-		      	<li><a href="atraccionesDeMayorInteres">Atracciones de mayor interés</a></li>
-		      	<li><a href="usuariosUnicosGlobales">Usuarios únicos globales</a></li>
-		      	<li class="active"><a href="usuariosUnicosPorPaisYRedSocial">Usuarios únicos por país y red social</a></li>
-		    </ul>
-	  	</div>
-	</nav>
-	
-	<h1 class="page-header report-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Reportes - Usuarios únicos por país y red social</h1>
-
-	<div id="chart_div" style="width: 900px; height: 500px;"></div>
 </body>
 </html>
