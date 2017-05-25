@@ -43,6 +43,12 @@
 
 	<div style="display: inline-block;">
 		<div style="float: left; width: 900px; height: 500px;" id="chart_div"></div>
+		
+		<div style="float: right; margin-top: 55px; width: 200px; height: 50px;" id="select_date">
+			<label>Filtrar por fecha</label>
+			<p>Fecha inicio: <input type="text" id="date_from"></p>
+			<p>Fecha fin: <input type="text" id="date_to"></p>
+		</div>
 	</div>
 	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -83,6 +89,12 @@
 		// the user selects something on the chart.
 		google.visualization.events.addListener(chart, 'select', selectHandler);
 	}
+	</script>
+	
+	<script src="${pageContext.request.contextPath}/js/ownFunctions.js"></script>
+	
+	<script>
+		iniatilizeDates("#date_from", "#date_to");
 	</script>
 </body>
 </html>
