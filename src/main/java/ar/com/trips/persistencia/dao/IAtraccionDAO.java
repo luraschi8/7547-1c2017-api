@@ -6,11 +6,11 @@ import ar.com.trips.persistencia.modelo.Atraccion;
 
 public interface IAtraccionDAO extends IDAO {
 
-	List<Atraccion> listarPorCiudad(int idCiudad);
+	List<Atraccion> listarPorCiudad(Long idCiudad);
 	
 	Atraccion get(Long id);
 
-	void borrar(long id);
+	void borrar(Long id);
 
 	boolean atraccionExistente(Atraccion atraccion);
 }

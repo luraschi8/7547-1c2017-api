@@ -167,7 +167,7 @@ public class AtraccionControlador {
 	}
 	
 	@RequestMapping("atraccionBorrar")
-	public ModelAndView borrar(@RequestParam("idAtraccion") int id,@RequestParam("idCiudadAtraccion") int idCiudad) {
+	public ModelAndView borrar(@RequestParam("idAtraccion") Long id,@RequestParam("idCiudadAtraccion") int idCiudad) {
 		atraccionDao.borrar(id);
 		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + idCiudad);
 	}

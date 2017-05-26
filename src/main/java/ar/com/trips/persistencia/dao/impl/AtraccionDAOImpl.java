@@ -11,7 +11,7 @@ import ar.com.trips.persistencia.modelo.Atraccion;
 public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 
 	@Override
-	public List<Atraccion> listarPorCiudad(int idCiudad) {
+	public List<Atraccion> listarPorCiudad(Long idCiudad) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + Atraccion.class.getName() + " a WHERE a.ciudad.id = " + idCiudad + " AND a.borrado = 0";
 		@SuppressWarnings("unchecked")
@@ -21,7 +21,7 @@ public class AtraccionDAOImpl extends DAOImpl implements IAtraccionDAO {
 	}
 
 	@Transactional
-	public void borrar(long id) {
+	public void borrar(Long id) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		Atraccion model = (Atraccion) s.get(Atraccion.class, id);

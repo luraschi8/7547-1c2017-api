@@ -54,7 +54,7 @@ public class AtraccionControladorRest {
 	}
 
 	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}",method=RequestMethod.GET)
-	public HashMap<String, List<AtraccionDTO>> listarAtraccionesCiudad(@PathVariable int idCiudad) {
+	public HashMap<String, List<AtraccionDTO>> listarAtraccionesCiudad(@PathVariable Long idCiudad) {
 		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
 		List<AtraccionDTO> listaAtracciones = new ArrayList<>();
 		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);

@@ -1,19 +1,14 @@
 package ar.com.trips.presentacion.dto;
 
-public class UsuarioDTO {
-
-	/*
-	 * Nombre y pais solo cuando se accede/loggea a la aplicacion
-	 * 
-	 */
-	
-	private String nombre;
-	
-	private String pais;
+public class FavoritoDTO {
 
 	private String idAndroid;
 	
 	private String idRedSocial;
+	
+	private Long idAtraccion;
+	
+	private Long idCiudad;
 
 	public String getIdAndroid() {
 		return idAndroid;
@@ -31,20 +26,20 @@ public class UsuarioDTO {
 		this.idRedSocial = idRedSocial;
 	}
 
-	public String getPais() {
-		return pais;
+	public Long getIdAtraccion() {
+		return idAtraccion;
 	}
 
-	public void setPais(String pais) {
-		this.pais = pais;
+	public void setIdAtraccion(Long idAtraccion) {
+		this.idAtraccion = idAtraccion;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public Long getIdCiudad() {
+		return idCiudad;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setIdCiudad(Long idCiudad) {
+		this.idCiudad = idCiudad;
 	}
 	
 }

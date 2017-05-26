@@ -43,7 +43,7 @@ public class RecorridoControlador {
 	}
 	
 	@RequestMapping("recorridoNuevo")
-	public ModelAndView nuevo(@RequestParam("idCiudad") int idCiudad, @RequestParam("latitudCiudad") float latitudCiudad,
+	public ModelAndView nuevo(@RequestParam("idCiudad") Long idCiudad, @RequestParam("latitudCiudad") float latitudCiudad,
 			@RequestParam("longitudCiudad") float longitudCiudad, @RequestParam(name="idioma",required=false)String idioma) {
 		ModelAndView model = new ModelAndView(RECORRIDO_NUEVO_PATH);
 		Recorrido r = new Recorrido();

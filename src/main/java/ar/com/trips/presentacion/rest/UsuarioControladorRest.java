@@ -1,15 +1,23 @@
 package ar.com.trips.presentacion.rest;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IUsuarioDAO;
+import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Usuario;
+import ar.com.trips.presentacion.dto.FavoritoDTO;
 import ar.com.trips.presentacion.dto.UsuarioDTO;
 import ar.com.trips.util.Fecha;
 
@@ -20,6 +28,9 @@ public class UsuarioControladorRest {
 	
 	@Autowired
 	private IUsuarioDAO usuarioDao;
+	
+	@Autowired
+	private IAtraccionDAO atraccionDao;
 	
 	@RequestMapping("/usuariosJson")
 	public HashMap<String, List<Usuario>> listar() {
@@ -47,6 +58,66 @@ public class UsuarioControladorRest {
 		usuario.setPais(usuarioDto.getPais());
 		usuario.setUltimaFechaConexion(Fecha.getFecha());
 		usuarioDao.guardar(usuario);
+	}
+	
+	@RequestMapping("/agregarFavorito")
+	public ResponseEntity<String> agregarFavorito(@RequestBody FavoritoDTO favoritoDto) {
+		Usuario usuario = usuarioDao.getByIds(favoritoDto.getIdAndroid(),favoritoDto.getIdRedSocial());
+		if (usuario == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
+		}
+		Atraccion atraccion = atraccionDao.get(favoritoDto.getIdAtraccion());
+		if (atraccion == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Atraccion no encontrada");
+		}
+		usuario.addAtraccion(atraccion);
+		atraccion.addUsuario(usuario);
+		usuario.setUltimaFechaConexion(Fecha.getFecha());
+		usuarioDao.modificar(usuario);
+		return ResponseEntity.ok("");
+	}
+	
+	@RequestMapping("/usuarioFavoritos")
+	public HashMap<String, Set<Atraccion>> usuarioFavoritos(@RequestBody FavoritoDTO favoritoDto) {
+		Usuario usuario = usuarioDao.getByIds(favoritoDto.getIdAndroid(),favoritoDto.getIdRedSocial());
+		Set<Atraccion> listaAtracciones = new LinkedHashSet<Atraccion>();
+		for (Atraccion a : usuario.getListaAtraccionesFavoritas()) {
+			if (a.getCiudad().getId() == favoritoDto.getIdCiudad()) {
+				listaAtracciones.add(a);
+			}
+		}
+		HashMap<String, Set<Atraccion>> lista = new HashMap<String, Set<Atraccion>>();
+		lista.put(DATA, listaAtracciones);
+		return lista;
+	}
+	
+	@RequestMapping("/sacarFavorito")
+	public ResponseEntity<String> sacarFavorito(@RequestBody FavoritoDTO favoritoDto) {
+		Usuario usuario = usuarioDao.getByIds(favoritoDto.getIdAndroid(),favoritoDto.getIdRedSocial());
+		if (usuario == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
+		}
+		Atraccion atraccion = atraccionDao.get(favoritoDto.getIdAtraccion());
+		if (atraccion == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Atraccion no encontrada");
+		}
+		Set<Atraccion> atracciones = usuario.getListaAtraccionesFavoritas(); 
+		for (Iterator<Atraccion> iterator = atracciones.iterator(); iterator.hasNext();) {
+			Atraccion a = iterator.next();
+			if (a.getId() == atraccion.getId()) {
+				iterator.remove();
+			}
+		}
+		List<Usuario> usuarios = atraccion.getListaUsuarios(); 
+		for (Iterator<Usuario> iterator = usuarios.iterator(); iterator.hasNext();) {
+			Usuario u = iterator.next();
+			if (u.getIdRedSocial().equals(usuario.getIdRedSocial())) {
+				iterator.remove();
+			}
+		}
+		usuario.setUltimaFechaConexion(Fecha.getFecha());
+		usuarioDao.modificar(usuario);
+		return ResponseEntity.ok("");
 	}
 	
 }
