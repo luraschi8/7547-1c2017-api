@@ -81,7 +81,8 @@ public class CiudadControlador {
 	
 	@RequestMapping(path="ciudadVer")
 	public ModelAndView ver(@RequestParam("idCiudad") long idCiudad,
-				@RequestParam(name="ordenOriginal",required=false) String ordenOriginal) {
+				@RequestParam(name="ordenOriginal",required=false) String ordenOriginal,
+				@RequestParam(name="showRoutes", required=false) String showRoutes) {
 		puntoDao.borrarPuntosSinAtraccion();
 		if (ordenOriginal != null && !ordenOriginal.equals("")) {
 			puntoIdiomaDao.rollbackPuntosBorrados(ordenOriginal);

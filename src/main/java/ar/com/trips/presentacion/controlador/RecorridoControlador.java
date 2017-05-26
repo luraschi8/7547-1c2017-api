@@ -107,7 +107,7 @@ public class RecorridoControlador {
 			atracciones.get(i).eraseRecorrido(recorridoDao.get(id));
 		}
 		recorridoDao.borrar(id);
-		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + idCiudad);
+		return new ModelAndView("redirect:/ciudadVer?idCiudad=" + idCiudad + "&showRoutes=true");
 	}
 
 	@RequestMapping(path="recorridoVer")

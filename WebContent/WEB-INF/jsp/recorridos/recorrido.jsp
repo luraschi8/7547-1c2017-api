@@ -350,12 +350,48 @@ $('#botonAtras').on('click', function(e) {
 
 function setSpanish() {
 	document.formVer.idioma.value = "ES";
-	document.getElementById("formVer").submit();
+	var formData = new FormData();
+	formData.append("id","${id}");
+	formData.append("language","ES");
+	$.ajax({
+		url : "checkLenguajeRecorridoExiste",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data == true) {
+				document.getElementById("formVer").submit();
+			} else {
+				bootbox.alert("El recorrido no tiene datos cargados en lenguaje español.");
+			}
+		}
+	});
 }
 
 function setEnglish() {
 	document.formVer.idioma.value = "EN";
-	document.getElementById("formVer").submit();
+	var formData = new FormData();
+	formData.append("id","${id}");
+	formData.append("language","EN");
+	$.ajax({
+		url : "checkLenguajeRecorridoExiste",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data == true) {
+				document.getElementById("formVer").submit();
+			} else {
+				bootbox.alert("El recorrido no tiene datos cargados en lenguaje inglés.");
+			}
+		}
+	});
 }
 
 function setLanguage() {

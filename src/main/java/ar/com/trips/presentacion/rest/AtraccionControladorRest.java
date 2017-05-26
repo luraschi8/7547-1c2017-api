@@ -131,11 +131,26 @@ public class AtraccionControladorRest {
 		return lista;
 	}
 	
+	@RequestMapping(path="/checkLenguajeAtraccionExiste", method=RequestMethod.POST)
+	public Boolean languageOfAtractionExists(@RequestParam("id") Long idAtraccion,
+			@RequestParam("language") String language) throws IOException {
+		Atraccion a = atraccionDao.get(idAtraccion);
+		LinkedHashSet<AtraccionIdioma> listaIdiomas = new LinkedHashSet<AtraccionIdioma>(a.getListaAtraccionIdioma());
+		if (listaIdiomas.size() > 1) {
+			return true;
+		} else {
+			if (((AtraccionIdioma) listaIdiomas.toArray()[0]).getIdioma().toString().equals(language)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@RequestMapping(path="/checkAgregarLenguajeAtraccion", method=RequestMethod.POST)
 	public Boolean needToHideAtractionAddLanguageButton(@RequestParam("id") Long idAtraccion) throws IOException {
 		Atraccion a = atraccionDao.get(idAtraccion);
 		LinkedHashSet<AtraccionIdioma> listaIdiomas = new LinkedHashSet<AtraccionIdioma>(a.getListaAtraccionIdioma());
-		if (listaIdiomas.size() > 1 ) {
+		if (listaIdiomas.size() > 1) {
 			return true;
 		}
 		return false;

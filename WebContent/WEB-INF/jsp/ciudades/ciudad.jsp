@@ -15,7 +15,7 @@
 
 </head>
 
-<body onload="mostrarAtracciones();">
+<body onload="mostrarAtracciones(getNumberOfURLParams());">
 
 	<nav class="navbar navbar-default">
 	  	<div class="container-fluid">
@@ -174,6 +174,7 @@
 <script>
 var map;
 var markers = [];
+var show_routes_table_on_load = false;
 
 function initMap() {
 	map = new google.maps.Map(document.getElementById('view-city-map'), {
@@ -298,15 +299,27 @@ $('#botonAgregarRecorrido').on('click', function(e) {
 	document.getElementById("formAgregarRecorrido").submit();
 });
 
-function mostrarAtracciones() {
+function getNumberOfURLParams() {
+	var url_params = window.location.search.substring(1);
+	var parsed_params = url_params.split("&");
+	return parsed_params.length;
+}
+
+function mostrarAtracciones(number_of_params) {
 	document.getElementsByClassName("routes_panel_body")[0].style.display = "none";
 	document.getElementsByClassName("routes_panel_body")[0].style.visibility = "visible";
-	document.getElementsByClassName("atractions_panel_body")[0].style.display = "block";
+	if (number_of_params > 1) {
+		document.getElementsByClassName("routes_panel_body")[0].style.display = "block";
+		document.getElementsByClassName("atractions_panel_body")[0].style.display = "none";
+	} else {
+		document.getElementsByClassName("atractions_panel_body")[0].style.display = "block";
+	}
+	show_routes_table_on_load = false;
 }
 
 $('#botonAtracciones').on('click', function(e) {
 	e.preventDefault();
-	mostrarAtracciones();
+	mostrarAtracciones(0);
 });
 
 $('#botonRecorridos').on('click', function(e) {
@@ -342,6 +355,7 @@ $('#route_table tbody').on('click', '#borrarRecorrido', function (e) {
 	bootbox.confirm(mensaje, function (response) {
 		if (response) {
 			document.formBorrarRecorrido.idRecorrido.value = id;
+			show_routes_table_on_load = true;
 			document.getElementById("formBorrarRecorrido").submit();
 		}
 	});

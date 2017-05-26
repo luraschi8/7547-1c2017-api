@@ -6,7 +6,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-
 <html>
 
 <head>
@@ -878,12 +877,48 @@ $('#point_of_interest_add_language_btn').on('click', function(e) {
 
 function setSpanish() {
 	document.formVer.idioma.value = "ES";
-	document.getElementById("formVer").submit();
+	var formData = new FormData();
+	formData.append("id","${id}");
+	formData.append("language","ES");
+	$.ajax({
+		url : "checkLenguajeAtraccionExiste",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data == true) {
+				document.getElementById("formVer").submit();
+			} else {
+				bootbox.alert("La atracción no tiene datos cargados en lenguaje español.");
+			}
+		}
+	});
 }
 
 function setEnglish() {
 	document.formVer.idioma.value = "EN";
-	document.getElementById("formVer").submit();
+	var formData = new FormData();
+	formData.append("id","${id}");
+	formData.append("language","EN");
+	$.ajax({
+		url : "checkLenguajeAtraccionExiste",
+		type : "POST",
+		data : formData,
+		enctype: 'multipart/form-data',
+		processData : false,
+		contentType: false,
+		dataType: 'json',
+		success: function (data) {
+			if (data == true) {
+				document.getElementById("formVer").submit();
+			} else {
+				bootbox.alert("La atracción no tiene datos cargados en lenguaje inglés.");
+			}
+		}
+	});
 }
 
 function setLanguage() {

@@ -187,6 +187,21 @@ public class RecorridoControladorRest {
 		return lista;
 	}
 	
+	@RequestMapping(path="/checkLenguajeRecorridoExiste", method=RequestMethod.POST)
+	public Boolean languageOfRouteExists(@RequestParam("id") Long id,
+			@RequestParam("language") String language) throws IOException {
+		Recorrido rec = recorridoDao.get(id);
+		LinkedHashSet<RecorridoIdioma> listaIdiomas = new LinkedHashSet<RecorridoIdioma>(rec.getListaRecorridoIdioma());
+		if (listaIdiomas.size() > 1) {
+			return true;
+		} else {
+			if (((RecorridoIdioma) listaIdiomas.toArray()[0]).getIdioma().toString().equals(language)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@RequestMapping(path="/checkAgregarLenguajeRecorrido",method=RequestMethod.POST)
 	public Boolean needToHideRouteAddLanguageButton(@RequestParam("id") Long id) throws IOException {
 		Recorrido rec = recorridoDao.get(id);
@@ -224,7 +239,7 @@ public class RecorridoControladorRest {
 				}
 			}
 		}
-		if (contador < 2/*!= rec.getListaAtraccionesEnElRecorrido().size()*/) {
+		if (contador < 2) {
 			lista.put(EXISTE, false);
 			lista.put("otroIdioma", false);
 			return lista;
