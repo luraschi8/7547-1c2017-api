@@ -174,7 +174,6 @@
 <script>
 var map;
 var markers = [];
-var show_routes_table_on_load = false;
 
 function initMap() {
 	map = new google.maps.Map(document.getElementById('view-city-map'), {
@@ -314,7 +313,6 @@ function mostrarAtracciones(number_of_params) {
 	} else {
 		document.getElementsByClassName("atractions_panel_body")[0].style.display = "block";
 	}
-	show_routes_table_on_load = false;
 }
 
 $('#botonAtracciones').on('click', function(e) {
@@ -355,7 +353,6 @@ $('#route_table tbody').on('click', '#borrarRecorrido', function (e) {
 	bootbox.confirm(mensaje, function (response) {
 		if (response) {
 			document.formBorrarRecorrido.idRecorrido.value = id;
-			show_routes_table_on_load = true;
 			document.getElementById("formBorrarRecorrido").submit();
 		}
 	});
