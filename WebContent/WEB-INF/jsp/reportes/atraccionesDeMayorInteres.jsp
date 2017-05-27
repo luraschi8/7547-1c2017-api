@@ -40,36 +40,83 @@
 
 	<div id="chart_div" style="width: 900px; height: 500px;"></div>
 	
-	
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">
-	
-	google.charts.load('current', {'packages':['corechart']});
-	google.charts.setOnLoadCallback(function() {
-		drawChart(data_array);
-	});
-	
-	var data_array = [
-		['Atraccion', ''],
-		["Casa Rosada", 165],
-		["Obelisco", 135],
-		["MALBA", 157]
-	];
-	
-	function drawChart(data_array) {
-		var data = google.visualization.arrayToDataTable(data_array);
-		
-		var options = {
-			title : 'Atracciones de mayor interés de los últimos doce meses',
-			vAxis: {title: 'Cantidad usuarios'},
-			hAxis: {title: 'Atracción'},
-			seriesType: 'bars'
-		};
-		
-		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-		chart.draw(data, options);
-		
+	<div class="panel-body atraction-points-of-interest">
+		<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th></th>
+					<th></th> <!-- Cantidad -->
+				</tr>
+			</thead>
+			<tbody id="sortable"></tbody>
+		</table>
+	</div>
+					
+					
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+var data_array = [
+	['Atraccion', '']/* ,
+	["Casa Rosada", 165],
+	["Obelisco", 135],
+	["MALBA", 157] */
+];
+
+
+var dataSet = [];
+
+$.ajax({
+	url : "visitasJson",
+	type : "GET",
+	enctype: 'multipart/form-data',
+	processData : false,
+	contentType: false,
+	dataType: 'json',
+	success: function (data) {
+		console.log(data.data);
+		jQuery.each(data.data,function() {
+			data_array.push([this.nombre,this.cantVisitas]);
+			dataSet.push([this.nombre,this.cantVisitas]);
+		})
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(function() {
+			drawChart(data_array);
+		});
+		drawDatatable(dataSet);
 	}
-	</script>
+});
+	 
+function drawDatatable(dataSet) {
+	var tablita = $('#tablita').DataTable({
+		dom: 'frtip',
+		data: dataSet,
+	    columns: [
+	        { title: "Nombre" },
+	        { title: "Cantidad de visitas"}
+	    ],    
+	    select:true,
+	    paging:false,
+	    pageLength:10,
+	    ordering:true,
+	    bFilter: false
+	});
+}
+
+function drawChart(data_array) {
+	var data = google.visualization.arrayToDataTable(data_array);
+	
+	var options = {
+		title : 'Atracciones de mayor interés de los últimos doce meses',
+		vAxis: {title: 'Cantidad usuarios'},
+		hAxis: {title: 'Atracción'},
+		seriesType: 'bars'
+	};
+	
+	var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+	chart.draw(data, options);
+	
+}
+</script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package ar.com.trips.presentacion.rest;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -43,6 +44,7 @@ public class VisitaControladorRest {
 			visitaDto.setNombre(atraccion.getNombre() + "," + atraccion.getCiudad().getNombre());
 			visitasDto.add(visitaDto);
 		}
+		Collections.sort(visitasDto);
 		lista.put(DATA, visitasDto);
 		return lista;
 	}

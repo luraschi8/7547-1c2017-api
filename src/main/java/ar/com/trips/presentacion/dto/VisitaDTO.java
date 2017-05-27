@@ -1,6 +1,6 @@
 package ar.com.trips.presentacion.dto;
 
-public class VisitaDTO {
+public class VisitaDTO implements Comparable<VisitaDTO> {
 
 	private String nombre;
 	
@@ -20,6 +20,16 @@ public class VisitaDTO {
 
 	public void setCantVisitas(Integer cantVisitas) {
 		this.cantVisitas = cantVisitas;
+	}
+
+	@Override
+	public int compareTo(VisitaDTO o) {
+		if (this.cantVisitas < o.getCantVisitas()) {
+			return 1;
+		} else if (this.cantVisitas > o.getCantVisitas()) {
+			return -1;
+		}
+		return 0;
 	}
 	
 }
