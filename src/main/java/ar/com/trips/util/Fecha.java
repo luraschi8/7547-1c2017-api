@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class Fecha {
 
-	private static final String FECHA_HORA = "dd/MM/yyyy HH:mm";
+	private static final String FECHA_HORA = "yyyy/MM/dd HH:mm";
 	
-	private static final String FECHA = "dd/MM/yyyy";
+	private static final String FECHA = "yyyy/MM/dd";
 	
 	public static String getFechaHora() {
 		DateFormat dateFormat = new SimpleDateFormat(FECHA_HORA);
