@@ -48,7 +48,7 @@ public class UsuarioControladorRest {
 			usuario.setUltimaFechaConexion(Fecha.getFecha());
 			usuarioDao.modificar(usuario);
 		}
-		return ResponseEntity.ok("OK");
+		return ResponseEntity.ok("{}");
 	}
 	
 	private void crearUsuario(UsuarioDTO usuarioDto) {
@@ -75,7 +75,7 @@ public class UsuarioControladorRest {
 		atraccion.addUsuario(usuario);
 		usuario.setUltimaFechaConexion(Fecha.getFecha());
 		usuarioDao.modificar(usuario);
-		return ResponseEntity.ok("OK");
+		return ResponseEntity.ok("{}");
 	}
 	
 	@RequestMapping("/usuarioFavoritos")
@@ -118,7 +118,7 @@ public class UsuarioControladorRest {
 		}
 		usuario.setUltimaFechaConexion(Fecha.getFecha());
 		usuarioDao.modificar(usuario);
-		return ResponseEntity.ok("OK");
+		return ResponseEntity.ok("{}");
 	}
 	
 }
