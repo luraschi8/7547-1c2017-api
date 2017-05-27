@@ -42,3 +42,12 @@ insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'
 insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','01/01/2017');
 insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9120','pepe7@gmail.com','01/01/2017');
 insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','01/01/2017');
+
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120',null,'01/01/2017');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120',null,'01/01/2017');
+
+
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe@gmail.com','01/01/2017');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe2@gmail.com','01/01/2017');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9125','pepe@gmail.com','01/01/2017');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9125',null,'01/01/2017');

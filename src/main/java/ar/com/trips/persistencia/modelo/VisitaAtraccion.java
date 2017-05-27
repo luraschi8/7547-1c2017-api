@@ -79,4 +79,5 @@ public class VisitaAtraccion extends Modelo{
 	public void setAtraccion(Atraccion atraccion) {
 		this.atraccion = atraccion;
 	}
+	
 }
