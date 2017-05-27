@@ -123,6 +123,30 @@ public class UsuarioControladorRest {
 		return ResponseEntity.ok("{}");
 	}
 	
+	@RequestMapping(path="/cantidadUsuarios", method=RequestMethod.POST)
+	public HashMap<String, HashMap<Long,Long>> getCantidadUsuarios(@RequestParam("fechaInicio") String fechaInicio,
+			@RequestParam("fechaFin") String fechaFin) {
+		HashMap<String, HashMap<Long,Long>> lista = new HashMap<String, HashMap<Long,Long>>();
+		HashMap<Long,Long> cantidadPorMes = new HashMap<Long,Long>();
+		List<Usuario> usuarios = usuarioDao.getUsuariosParaRangoFechas(fechaInicio, fechaFin);
+		for (Usuario usuario : usuarios) {
+			String fechaUsuario[] = usuario.getUltimaFechaConexion().split("/");
+			String fechaIni[] = fechaInicio.split("/");
+			Long mes = Math.abs(Long.parseLong(fechaIni[1]) - Long.parseLong(fechaUsuario[1]));
+			if (Long.parseLong(fechaIni[2]) < Long.parseLong(fechaUsuario[2])) {
+				mes += 1;
+			}
+			Long cantidad = cantidadPorMes.get(mes);
+			if (cantidad == null) {
+				cantidad = 0L;
+			}
+			cantidad++;
+			cantidadPorMes.put(mes, cantidad);
+		}
+		lista.put(DATA, cantidadPorMes);
+		return lista;
+	}
+	
 	@RequestMapping(path="/cantidadUsuariosRedSocialYSinLogin", method=RequestMethod.POST)
 	public HashMap<String, String> getCantidadUsuariosRedSocialYSinLogin(@RequestParam("fechaInicio") String fechaInicio,
 			@RequestParam("fechaFin") String fechaFin, @RequestParam("pais") String pais) {

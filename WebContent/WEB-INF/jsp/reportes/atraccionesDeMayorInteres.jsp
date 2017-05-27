@@ -74,7 +74,6 @@ $.ajax({
 	contentType: false,
 	dataType: 'json',
 	success: function (data) {
-		console.log(data.data);
 		jQuery.each(data.data,function() {
 			data_array.push([this.nombre,this.cantVisitas]);
 			dataSet.push([this.nombre,this.cantVisitas]);

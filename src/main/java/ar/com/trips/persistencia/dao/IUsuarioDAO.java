@@ -13,4 +13,5 @@ public interface IUsuarioDAO extends IDAO {
 	int getCantidadUsuariosSinLogin(String fechaInicio, String fechaFin, String pais);
 
 	List<Usuario> getUsuariosParaRangoFechas(String fechaInicio, String fechaFin);
+
 }

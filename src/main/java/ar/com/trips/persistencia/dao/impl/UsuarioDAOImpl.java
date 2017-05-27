@@ -29,7 +29,7 @@ public class UsuarioDAOImpl extends DAOImpl implements IUsuarioDAO {
 	public int getCantidadUsuariosRedSocial(String fechaInicio, String fechaFin, String pais) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + Usuario.class.getName() + " a WHERE a.pais = '" + pais +
-				"' AND a.ultimaFechaConexion > '" + fechaInicio + "' AND a.ultimaFechaConexion < '" + fechaFin +
+				"' AND a.ultimaFechaConexion >= '" + fechaInicio + "' AND a.ultimaFechaConexion <= '" + fechaFin +
 				"' AND a.idRedSocial is not null";
 		@SuppressWarnings("unchecked")
 		List<Usuario> lista = session.createQuery(query).list();
@@ -44,7 +44,7 @@ public class UsuarioDAOImpl extends DAOImpl implements IUsuarioDAO {
 	public int getCantidadUsuariosSinLogin(String fechaInicio, String fechaFin, String pais) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + Usuario.class.getName() + " a WHERE a.pais = '" + pais +
-				"' AND a.ultimaFechaConexion > '" + fechaInicio + "' AND a.ultimaFechaConexion < '" + fechaFin +
+				"' AND a.ultimaFechaConexion >= '" + fechaInicio + "' AND a.ultimaFechaConexion <= '" + fechaFin +
 				"' AND a.idRedSocial is null";
 		@SuppressWarnings("unchecked")
 		List<Usuario> lista = session.createQuery(query).list();
@@ -58,8 +58,8 @@ public class UsuarioDAOImpl extends DAOImpl implements IUsuarioDAO {
 	@Override
 	public List<Usuario> getUsuariosParaRangoFechas(String fechaInicio, String fechaFin) {
 		Session session = sessionFactory.openSession();
-		String query = "FROM " + Usuario.class.getName() + " a WHERE a.ultimaFechaConexion > '" + fechaInicio
-				+ "' AND a.ultimaFechaConexion < '" + fechaFin + "' ORDER BY pais ASC";
+		String query = "FROM " + Usuario.class.getName() + " a WHERE a.ultimaFechaConexion >= '" + fechaInicio
+				+ "' AND a.ultimaFechaConexion <= '" + fechaFin + "' ORDER BY pais ASC";
 		@SuppressWarnings("unchecked")
 		List<Usuario> lista = session.createQuery(query).list();
 		session.close();
