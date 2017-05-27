@@ -124,12 +124,34 @@ public class UsuarioControladorRest {
 	}
 	
 	@RequestMapping(path="/cantidadUsuariosRedSocialYSinLogin", method=RequestMethod.POST)
-	public HashMap<String,String> getCantidadUsuariosRedSocialYSinLogin(@RequestParam("fechaInicio") String fechaInicio,
+	public HashMap<String, String> getCantidadUsuariosRedSocialYSinLogin(@RequestParam("fechaInicio") String fechaInicio,
 			@RequestParam("fechaFin") String fechaFin, @RequestParam("pais") String pais) {
 		HashMap<String, String> lista = new HashMap<String, String>();
 		String resultados = Integer.toString(usuarioDao.getCantidadUsuariosRedSocial(fechaInicio, fechaFin, pais));
 		resultados += "," + Integer.toString(usuarioDao.getCantidadUsuariosSinLogin(fechaInicio, fechaFin, pais));
 		lista.put(DATA, resultados);
 		return lista;
+	}
+	
+	@RequestMapping(path="/cantidadUsuariosPais", method=RequestMethod.POST)
+	public HashMap<String, String> getCantidadUsuariosPais(@RequestParam("fechaInicio") String fechaInicio,
+			@RequestParam("fechaFin") String fechaFin) {
+		HashMap<String, String> lista = new HashMap<String, String>();
+		List<Usuario> usuarios = usuarioDao.getUsuariosParaRangoFechas(fechaInicio, fechaFin);
+		if (usuarios != null) {
+			for (int i = 0; i < usuarios.size(); i++) {
+				String pais = usuarios.get(i).getPais();
+				if (lista.containsKey(pais)) {
+					int cantidad = Integer.parseInt((lista.get(pais)));
+					lista.remove(pais);
+					lista.put(pais, String.valueOf(cantidad + 1));
+				} else {
+					lista.put(pais, "1");
+				}
+			}
+			return lista;
+		} else {
+			return null;
+		}
 	}
 }

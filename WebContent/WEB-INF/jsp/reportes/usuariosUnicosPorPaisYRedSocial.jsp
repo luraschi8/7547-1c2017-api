@@ -63,16 +63,54 @@
 	<script type="text/javascript">
 	
 	google.charts.load('current', {'packages':['corechart']});
-	google.charts.setOnLoadCallback(function() {
-		drawCountriesChart(data_array);
+
+	$('#botonBuscar').on('click', function(e) {
+		e.preventDefault();
+		var formData = new FormData();
+		formData.append("fechaInicio", document.getElementById("date_from").value);
+		formData.append("fechaFin", document.getElementById("date_to").value);
+		$.ajax({
+			url : "cantidadUsuariosPais",
+			type : "POST",
+			data : formData,
+			enctype: 'multipart/form-data',
+			processData : false,
+			contentType: false,
+			dataType: 'json',
+			success: function (data) {
+				if (data) {
+					var data_array = [
+						['País', '']
+					];
+					
+					var json = $.parseJSON(resultJSON);
+					$.each(json, function(k, v) {
+					    data_array.push([k, v]);
+					});
+	
+					if (data_array.length > 1) {
+						document.getElementById("no_results").style.display = "none";
+						document.getElementById("secondary_chart_div").style.display = "none";
+						document.getElementById("chart_div").style.display = "block";
+						google.charts.setOnLoadCallback(function() {
+							drawCountriesChart(data_array);
+						});
+					} else {
+						document.getElementById("chart_div").style.display = "none";
+						document.getElementById("secondary_chart_div").style.display = "none";
+						document.getElementById("no_results").style.display = "block";
+					}
+				}
+			}
+		});
 	});
 	
-	var data_array = [
+	/*var data_array = [
 		['País', ''],
 		["Argentina", 165],
 		["Uruguay", 135],
 		["Brasil", 157]
-	];
+	];*/
 
 	function drawSelectedCountryChart(data_array) {
 		var data = google.visualization.arrayToDataTable(data_array);
@@ -122,6 +160,7 @@
 								["Sin login", cantidades[1]]
 							];
 							if (cantidades[0] == cantidades[1] == 0) {
+								document.getElementById("no_results").style.display = "none";
 								document.getElementById("chart_div").style.display = "block";
 								document.getElementById("secondary_chart_div").style.display = "block";
 								google.charts.setOnLoadCallback(function() {
@@ -135,13 +174,6 @@
 						}
 					}
 				});
-				
-
-				
-				/*document.getElementById("secondary_chart_div").style.display = "block";
-				google.charts.setOnLoadCallback(function() {
-					drawSelectedCountryChart(secondary_data_array);
-				});*/
 			}
 		}
 
