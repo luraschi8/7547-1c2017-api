@@ -115,7 +115,7 @@
 					success: function (data) {
 						if (data) {
 							alert("5");
-							var cantidades = data.split(",");
+							var cantidades = data.data.split(",");
 							var data_array = [
 								['Tipo acceso', ''],
 								["Facebook", cantidades[0]],

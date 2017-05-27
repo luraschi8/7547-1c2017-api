@@ -124,10 +124,12 @@ public class UsuarioControladorRest {
 	}
 	
 	@RequestMapping(path="/cantidadUsuariosRedSocialYSinLogin", method=RequestMethod.POST)
-	public String getCantidadUsuariosRedSocialYSinLogin(@RequestParam("fechaInicio") String fechaInicio,
+	public HashMap<String,String> getCantidadUsuariosRedSocialYSinLogin(@RequestParam("fechaInicio") String fechaInicio,
 			@RequestParam("fechaFin") String fechaFin, @RequestParam("pais") String pais) {
+		HashMap<String, String> lista = new HashMap<String, String>();
 		String resultados = Integer.toString(usuarioDao.getCantidadUsuariosRedSocial(fechaInicio, fechaFin, pais));
 		resultados += "," + Integer.toString(usuarioDao.getCantidadUsuariosSinLogin(fechaInicio, fechaFin, pais));
-		return resultados;
+		lista.put(DATA, resultados);
+		return lista;
 	}
 }
