@@ -27,13 +27,11 @@
 		<property name="annotatedClasses">
 			<list>
 				<!-- Aca pondremos las clases que mapeemos -->
-				<value>ar.com.trips.persistencia.modelo.Ciudad
-				</value>
 				<value>ar.com.trips.persistencia.modelo.Atraccion
 				</value>
 				<value>ar.com.trips.persistencia.modelo.AtraccionIdioma
 				</value>
-				<value>ar.com.trips.persistencia.modelo.Usuario
+				<value>ar.com.trips.persistencia.modelo.Ciudad
 				</value>
 				<value>ar.com.trips.persistencia.modelo.ImagenAtraccion
 				</value>
@@ -41,13 +39,16 @@
 				</value>
 				<value>ar.com.trips.persistencia.modelo.PuntoIdioma
 				</value>
-				<value>ar.com.trips.persistencia.modelo.Resenia
-				</value>
 				<value>ar.com.trips.persistencia.modelo.Recorrido
 				</value>
 				<value>ar.com.trips.persistencia.modelo.RecorridoIdioma
 				</value>
-				
+				<value>ar.com.trips.persistencia.modelo.Resenia
+				</value>
+				<value>ar.com.trips.persistencia.modelo.Usuario
+				</value>
+				<value>ar.com.trips.persistencia.modelo.VisitaAtraccion
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -86,6 +87,8 @@
 		class="ar.com.trips.persistencia.dao.impl.RecorridoDAOImpl" />
 	<bean id="RecorridoIdiomaDAO"
 		class="ar.com.trips.persistencia.dao.impl.RecorridoIdiomaDAOImpl" />
+	<bean id="VisitaAtraccionDAO"
+		class="ar.com.trips.persistencia.dao.impl.VisitaAtraccionDAOImpl" />
 	
 	
 	<!-- Validaciones -->

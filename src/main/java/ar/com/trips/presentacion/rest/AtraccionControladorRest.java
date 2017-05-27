@@ -22,13 +22,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IAtraccionIdiomaDAO;
+import ar.com.trips.persistencia.dao.IVisitaAtraccionDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
+import ar.com.trips.persistencia.modelo.VisitaAtraccion;
 import ar.com.trips.presentacion.dto.AtraccionDTO;
 import ar.com.trips.presentacion.dto.UsuarioDTO;
 import ar.com.trips.presentacion.mapper.AtraccionMapper;
 import ar.com.trips.presentacion.validacion.AtraccionValidacion;
+import ar.com.trips.util.Fecha;
 import ar.com.trips.util.enums.Idioma;
 
 @RestController
@@ -39,6 +42,9 @@ public class AtraccionControladorRest {
 	
 	@Autowired
 	private IAtraccionDAO atraccionDao;
+	
+	@Autowired
+	private IVisitaAtraccionDAO visitaAtraccionDao;
 	
 	@Autowired
 	private IAtraccionIdiomaDAO atraccionIdiomaDao;
@@ -115,10 +121,20 @@ public class AtraccionControladorRest {
 		if (atraccion.getAtraccion().getVideo() != null) {
 			dto.setVideo(url + "videoAtraccion?id=" + atraccion.getAtraccion().getId());
 		}
+		crearVisita(usuario,idAtraccion);
 		lista.put(DATA, dto);
 		return lista;
 	}
 	
+	private void crearVisita(UsuarioDTO usuario, long idAtraccion) {
+		VisitaAtraccion visita = new VisitaAtraccion();
+		visita.setAtraccion(atraccionDao.get(idAtraccion));
+		visita.setFecha(Fecha.getFecha());
+		visita.setIdAndroid(usuario.getIdAndroid());
+		visita.setIdRedSocial(usuario.getIdRedSocial());
+		visitaAtraccionDao.guardar(visita);
+	}
+
 	@RequestMapping(path="/validarAtraccion",method=RequestMethod.POST)
 	public HashMap<String, Boolean> validarAtraccion(@RequestBody AtraccionIdioma atraccion) {
 		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();

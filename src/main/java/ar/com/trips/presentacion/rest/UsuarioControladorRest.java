@@ -40,7 +40,7 @@ public class UsuarioControladorRest {
 	}
 	
 	@RequestMapping("/accesoUsuario")
-	public void accesoUsuario(@RequestBody UsuarioDTO usuarioDto) {
+	public ResponseEntity<String> accesoUsuario(@RequestBody UsuarioDTO usuarioDto) {
 		Usuario usuario = usuarioDao.getByIds(usuarioDto.getIdAndroid(),usuarioDto.getIdRedSocial());
 		if (usuario == null) {
 			crearUsuario(usuarioDto);
@@ -48,6 +48,7 @@ public class UsuarioControladorRest {
 			usuario.setUltimaFechaConexion(Fecha.getFecha());
 			usuarioDao.modificar(usuario);
 		}
+		return ResponseEntity.ok("OK");
 	}
 	
 	private void crearUsuario(UsuarioDTO usuarioDto) {
@@ -74,7 +75,7 @@ public class UsuarioControladorRest {
 		atraccion.addUsuario(usuario);
 		usuario.setUltimaFechaConexion(Fecha.getFecha());
 		usuarioDao.modificar(usuario);
-		return ResponseEntity.ok("");
+		return ResponseEntity.ok("OK");
 	}
 	
 	@RequestMapping("/usuarioFavoritos")
@@ -117,7 +118,7 @@ public class UsuarioControladorRest {
 		}
 		usuario.setUltimaFechaConexion(Fecha.getFecha());
 		usuarioDao.modificar(usuario);
-		return ResponseEntity.ok("");
+		return ResponseEntity.ok("OK");
 	}
 	
 }
