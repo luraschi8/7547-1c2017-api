@@ -258,7 +258,7 @@ function iniatilizeDates(date_from, date_to) {
 		dayNamesShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
 		dayNamesMin: ["Do","Lu","Ma","Mi","Ju","Vi","S&aacute;"],
 		weekHeader: "Sm",
-		dateFormat: "dd/mm/yy",
+		dateFormat: "yy/mm/dd",
 		firstDay: 1,
 		isRTL: false,
 		showMonthAfterYear: false,
@@ -267,7 +267,7 @@ function iniatilizeDates(date_from, date_to) {
 
 	$.datepicker.setDefaults($.datepicker.regional['es']); 
 	
-	var options = { dateFormat: 'dd/mm/yy',
+	var options = { dateFormat: 'yy/mm/dd',
 					changeMonth: true,
 		      		changeYear: true
 		      	  };
@@ -288,7 +288,7 @@ function iniatilizeDates(date_from, date_to) {
     function getDate(element) {
         var date;
         try {
-        	date = $.datepicker.parseDate("dd/mm/yy", element.value);
+        	date = $.datepicker.parseDate("yy/mm/dd", element.value);
         } catch(error) {
         	date = null;
         }
