@@ -54,4 +54,18 @@ public class UsuarioDAOImpl extends DAOImpl implements IUsuarioDAO {
 		}
 		return lista.size();
 	}
+	
+	@Override
+	public List<Usuario> getUsuariosParaRangoFechas(String fechaInicio, String fechaFin) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Usuario.class.getName() + " a WHERE a.ultimaFechaConexion > '" + fechaInicio
+				+ "' AND a.ultimaFechaConexion < '" + fechaFin + "' ORDER BY pais ASC";
+		@SuppressWarnings("unchecked")
+		List<Usuario> lista = session.createQuery(query).list();
+		session.close();
+		if (lista == null || lista.size() == 0) {
+			return null;
+		}
+		return lista;
+	}
 }
