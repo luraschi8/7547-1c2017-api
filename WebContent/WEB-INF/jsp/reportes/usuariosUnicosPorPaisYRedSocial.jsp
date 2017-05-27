@@ -84,12 +84,8 @@
 					];
 					
 					$.each(data, function(k, v) {
-					    data_array.push([k, v]);
+					    data_array.push([k, parseInt(v)]);
 					});
-					for (var i = 0; i < data_array.length; i++) {
-						alert(data_array[i][0]);
-						alert(data_array[i][1]);
-					}
 	
 					if (data_array.length > 1) {
 						document.getElementById("no_results").style.display = "none";
@@ -107,13 +103,6 @@
 			}
 		});
 	});
-	
-	/*var data_array = [
-		['País', ''],
-		["Argentina", 165],
-		["Uruguay", 135],
-		["Brasil", 157]
-	];*/
 
 	function drawSelectedCountryChart(data_array) {
 		var data = google.visualization.arrayToDataTable(data_array);
@@ -159,8 +148,8 @@
 							var cantidades = data.data.split(",");
 							var data_array = [
 								['Tipo acceso', ''],
-								["Facebook", cantidades[0]],
-								["Sin login", cantidades[1]]
+								["Facebook", parseInt(cantidades[0])],
+								["Sin login", parseInt(cantidades[1])]
 							];
 							if (cantidades[0] == cantidades[1] == 0) {
 								document.getElementById("no_results").style.display = "none";

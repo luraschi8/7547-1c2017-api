@@ -51,3 +51,20 @@ insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'
 insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe2@gmail.com','01/01/2017');
 insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9125','pepe@gmail.com','01/01/2017');
 insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9125',null,'01/01/2017');
+
+/*insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
+					(1, 'Jose Gomez', '1111', 'josegomez@gmail.com', 'Argentina', '2017/05/22');
+insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
+					(2, 'Juan Perez', '2222', 'juanperez@gmail.com', 'Argentina', '2017/05/25');
+insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
+					(3, 'Alberto Gonzalez', '3333', 'albertogonzalez@gmail.com', 'Brasil', '2017/05/20');
+insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
+					(4, 'Julio Sosa', '4444', 'juliososa@gmail.com', 'Uruguay', '2017/05/27');
+insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
+					(5, 'Jose Gomez', '5555', null, 'Argentina', '2017/05/23');
+insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
+					(6, 'Luciana Alvarez', '6666', 'lucianaalvarez@gmail.com', 'Argentina', '2017/05/26');
+insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
+					(7, 'Juana Martinez', '7777', null, 'Brasil', '2017/05/26');
+insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
+					(8, 'Pablo Perez', '8888', 'pabloperez@gmail.com', 'Uruguay', '2017/05/27');*/
