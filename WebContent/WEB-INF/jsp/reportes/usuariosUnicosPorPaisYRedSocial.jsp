@@ -44,7 +44,10 @@
 	<div style="display: inline-block;">
 		<div style="float: left;">
 			<div style="width: 900px; height: 500px;" id="chart_div"></div>
-			<div style="width: 900px; height: 500px;" id="secondary_chart_div"></div>
+			<div style="width: 900px; height: 500px; display: none;" id="secondary_chart_div"></div>
+			<div style="width: 900px; height: 500px; display: none;" id="no_results">
+				No se cuenta con datos para el rango de fechas seleccionado
+			</div>
 		</div>
 		
 		<div style="float: right; margin-top: 55px; width: 200px; height: 50px;" id="select_date">
@@ -67,12 +70,6 @@
 		["Argentina", 165],
 		["Uruguay", 135],
 		["Brasil", 157]
-	];
-
-	var secondary_data_array = [
-		['Tipo acceso', ''],
-		["Facebook", 123],
-		["Sin login", 42]
 	];
 
 	function drawSelectedCountryChart(data_array) {
@@ -102,10 +99,46 @@
 			if (selectedItem) {
 				var value = data.getValue(selectedItem.row, 0);
 				alert('Se eligió ' + value + ". Acá se debería dibujar el segundo Pie Chart para este país");
-				document.getElementById("secondary_chart_div").style.display = "block";
+
+				var formData = new FormData();
+				formData.append("fechaInicio", document.getElementById("date_from").value);
+				formData.append("fechaFin", document.getElementById("date_to").value);
+				formData.append("pais", value);
+				$.ajax({
+					url : "cantidadUsuariosRedSocialYSinLogin",
+					type : "POST",
+					data : formData,
+					enctype: 'multipart/form-data',
+					processData : false,
+					contentType: false,
+					dataType: 'json',
+					success: function (data) {
+						if (data) {
+							alert("5");
+							var cantidades = data.split(",");
+							var data_array = [
+								['Tipo acceso', ''],
+								["Facebook", cantidades[0]],
+								["Sin login", cantidades[1]]
+							];
+							google.charts.setOnLoadCallback(function() {
+								drawSelectedCountryChart(data_array);
+							});
+						} else {
+							alert("6");
+							document.getElementById("chart_div").style.display = "none";
+							document.getElementById("secondary_chart_div").style.display = "none";
+							document.getElementById("no_results").style.display = "block";
+						}
+					}
+				});
+				
+
+				
+				/*document.getElementById("secondary_chart_div").style.display = "block";
 				google.charts.setOnLoadCallback(function() {
 					drawSelectedCountryChart(secondary_data_array);
-				});
+				});*/
 			}
 		}
 
