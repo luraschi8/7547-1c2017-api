@@ -46,7 +46,8 @@
 			<div style="width: 900px; height: 500px;" id="chart_div"></div>
 			<div style="width: 900px; height: 500px; display: none;" id="secondary_chart_div"></div>
 			<div style="width: 900px; height: 500px; display: none;" id="no_results">
-				No se cuenta con datos para el rango de fechas seleccionado
+				<label style="margin-left: 5%; margin-top: 50px; font-size:25px">
+				No se cuenta con datos para el rango de fechas seleccionado</label>
 			</div>
 		</div>
 		
@@ -54,6 +55,7 @@
 			<label>Filtrar por fecha</label>
 			<p>Fecha inicio: <input type="text" id="date_from"></p>
 			<p>Fecha fin: <input type="text" id="date_to"></p>
+			<input id="botonBuscar" class="btn btn-default btn-primary" type="button" value="Buscar"/>
 		</div>
 	</div>
 	
@@ -98,7 +100,6 @@
 			var selectedItem = chart.getSelection()[0];
 			if (selectedItem) {
 				var value = data.getValue(selectedItem.row, 0);
-				alert('Se eligió ' + value + ". Acá se debería dibujar el segundo Pie Chart para este país");
 
 				var formData = new FormData();
 				formData.append("fechaInicio", document.getElementById("date_from").value);
@@ -114,21 +115,23 @@
 					dataType: 'json',
 					success: function (data) {
 						if (data) {
-							alert("5");
 							var cantidades = data.data.split(",");
 							var data_array = [
 								['Tipo acceso', ''],
 								["Facebook", cantidades[0]],
 								["Sin login", cantidades[1]]
 							];
-							google.charts.setOnLoadCallback(function() {
-								drawSelectedCountryChart(data_array);
-							});
-						} else {
-							alert("6");
-							document.getElementById("chart_div").style.display = "none";
-							document.getElementById("secondary_chart_div").style.display = "none";
-							document.getElementById("no_results").style.display = "block";
+							if (cantidades[0] == cantidades[1] == 0) {
+								document.getElementById("chart_div").style.display = "block";
+								document.getElementById("secondary_chart_div").style.display = "block";
+								google.charts.setOnLoadCallback(function() {
+									drawSelectedCountryChart(data_array);
+								});
+							} else {
+								document.getElementById("chart_div").style.display = "none";
+								document.getElementById("secondary_chart_div").style.display = "none";
+								document.getElementById("no_results").style.display = "block";
+							}
 						}
 					}
 				});

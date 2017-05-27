@@ -45,6 +45,7 @@
 			<label>Filtrar por fecha</label>
 			<p>Fecha inicio: <input type="text" id="date_from"></p>
 			<p>Fecha fin: <input type="text" id="date_to"></p>
+			<input id="botonBuscar" class="btn btn-default btn-primary" type="button" value="Buscar"/>
 		</div>
 	</div>
 	
