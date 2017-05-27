@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
@@ -121,4 +122,11 @@ public class UsuarioControladorRest {
 		return ResponseEntity.ok("{}");
 	}
 	
+	@RequestMapping("/cantidadUsuariosRedSocialYSinLogin")
+	public String getCantidadUsuariosRedSocialYSinLogin(@RequestParam("fechaInicio") String fechaInicio,
+			@RequestParam("fechaFin") String fechaFin, @RequestParam("pais") String pais) {
+		String resultados = Integer.toString(usuarioDao.getCantidadUsuariosRedSocial(fechaInicio, fechaFin, pais));
+		resultados += "," + Integer.toString(usuarioDao.getCantidadUsuariosSinLogin(fechaInicio, fechaFin, pais));
+		return resultados;
+	}
 }

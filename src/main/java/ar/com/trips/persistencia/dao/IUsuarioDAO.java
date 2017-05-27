@@ -6,4 +6,7 @@ public interface IUsuarioDAO extends IDAO {
 
 	Usuario getByIds(String idAndroid, String idRedSocial);
 
+	int getCantidadUsuariosRedSocial(String fechaInicio, String fechaFin, String pais);
+
+	int getCantidadUsuariosSinLogin(String fechaInicio, String fechaFin, String pais);
 }

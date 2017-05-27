@@ -42,7 +42,10 @@
 	<h1 class="page-header report-new-page-header" style="width: 94%; margin-left: 3%; margin-right: 3%">Reportes - Usuarios únicos por país y red social</h1>
 
 	<div style="display: inline-block;">
-		<div style="float: left; width: 900px; height: 500px;" id="chart_div"></div>
+		<div style="float: left;">
+			<div style="width: 900px; height: 500px;" id="chart_div"></div>
+			<div style="width: 900px; height: 500px;" id="secondary_chart_div"></div>
+		</div>
 		
 		<div style="float: right; margin-top: 55px; width: 200px; height: 50px;" id="select_date">
 			<label>Filtrar por fecha</label>
@@ -56,7 +59,7 @@
 	
 	google.charts.load('current', {'packages':['corechart']});
 	google.charts.setOnLoadCallback(function() {
-		drawChart(data_array);
+		drawCountriesChart(data_array);
 	});
 	
 	var data_array = [
@@ -65,8 +68,25 @@
 		["Uruguay", 135],
 		["Brasil", 157]
 	];
+
+	var secondary_data_array = [
+		['Tipo acceso', ''],
+		["Facebook", 123],
+		["Sin login", 42]
+	];
+
+	function drawSelectedCountryChart(data_array) {
+		var data = google.visualization.arrayToDataTable(data_array);
+		
+		var options = {
+			title : 'Usuarios únicos por país y red social'
+		};
+		
+		var chart = new google.visualization.PieChart(document.getElementById('secondary_chart_div'));
+		chart.draw(data, options);
+	}
 	
-	function drawChart(data_array) {
+	function drawCountriesChart(data_array) {
 		var data = google.visualization.arrayToDataTable(data_array);
 		
 		var options = {
@@ -82,6 +102,10 @@
 			if (selectedItem) {
 				var value = data.getValue(selectedItem.row, 0);
 				alert('Se eligió ' + value + ". Acá se debería dibujar el segundo Pie Chart para este país");
+				document.getElementById("secondary_chart_div").style.display = "block";
+				google.charts.setOnLoadCallback(function() {
+					drawSelectedCountryChart(secondary_data_array);
+				});
 			}
 		}
 
