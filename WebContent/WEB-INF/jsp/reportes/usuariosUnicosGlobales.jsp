@@ -115,7 +115,7 @@ $('#botonBuscar').on('click', function(e) {
 				];
 				var data_table = [];
 				$.each(data.data, function(k, v) {
-				    data_array.push([k, v]);
+				    data_array.push([parseInt(k), parseInt(v)]);
 				    data_table.push([k, parseInt(v)]);
 				});
 				if (data_array.length > 1) {
