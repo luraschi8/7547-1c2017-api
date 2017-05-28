@@ -43,9 +43,9 @@
 
 	<div style="display: inline-block;">
 		<div style="float: left;">
-			<div style="width: 900px; height: 500px;" id="chart_div"></div>
+			<div style="width: 900px; height: 500px; display: none;" id="chart_div"></div>
 			<div style="width: 900px; height: 500px; display: none;" id="secondary_chart_div"></div>
-			<div style="width: 900px; height: 500px; display: none;" id="no_results">
+			<div style="width: 900px; height: 500px;" id="no_results">
 				<label style="margin-left: 5%; margin-top: 50px; font-size:25px">
 				No se cuenta con datos para el rango de fechas seleccionado</label>
 			</div>
@@ -84,12 +84,8 @@
 					];
 					
 					$.each(data, function(k, v) {
-					    data_array.push([k, v]);
+					    data_array.push([k, parseInt(v)]);
 					});
-					for (var i = 0; i < data_array.length; i++) {
-						alert(data_array[i][0]);
-						alert(data_array[i][1]);
-					}
 	
 					if (data_array.length > 1) {
 						document.getElementById("no_results").style.display = "none";
@@ -107,13 +103,6 @@
 			}
 		});
 	});
-	
-	/*var data_array = [
-		['País', ''],
-		["Argentina", 165],
-		["Uruguay", 135],
-		["Brasil", 157]
-	];*/
 
 	function drawSelectedCountryChart(data_array) {
 		var data = google.visualization.arrayToDataTable(data_array);
@@ -159,10 +148,10 @@
 							var cantidades = data.data.split(",");
 							var data_array = [
 								['Tipo acceso', ''],
-								["Facebook", cantidades[0]],
-								["Sin login", cantidades[1]]
+								["Facebook", parseInt(cantidades[0])],
+								["Sin login", parseInt(cantidades[1])]
 							];
-							if (cantidades[0] == cantidades[1] == 0) {
+							if (!(parseInt(cantidades[0]) == 0) || !(parseInt(cantidades[1]) == 0)) {
 								document.getElementById("no_results").style.display = "none";
 								document.getElementById("chart_div").style.display = "block";
 								document.getElementById("secondary_chart_div").style.display = "block";
