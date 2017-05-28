@@ -130,6 +130,14 @@
 		});
 	}
 
+	function hideChartsAndTables() {
+		document.getElementById("chart_div").style.display = "none";
+		document.getElementById("secondary_chart_div").style.display = "none";
+		document.getElementById("main_table").style.display = "none";
+		document.getElementById("secondary_table").style.display = "none";
+		document.getElementById("no_results").style.display = "block";
+	}
+
 	$('#botonBuscar').on('click', function(e) {
 		e.preventDefault();
 		var formData = new FormData();
@@ -170,13 +178,11 @@
 						}
 						tabla = drawMainDatatable(data_main_table);
 					} else {
-						document.getElementById("chart_div").style.display = "none";
-						document.getElementById("secondary_chart_div").style.display = "none";
-						document.getElementById("main_table").style.display = "none";
-						document.getElementById("secondary_table").style.display = "none";
-						document.getElementById("no_results").style.display = "block";
+						hideChartsAndTables();
 					}
 				}
+			}, error: function() {
+				hideChartsAndTables();
 			}
 		});
 	});
@@ -244,15 +250,12 @@
 									tabla_secundaria.destroy();
 								}
 								tabla_secundaria = drawSecondaryDatatable(data_secondary_table);
-								
 							} else {
-								document.getElementById("chart_div").style.display = "none";
-								document.getElementById("secondary_chart_div").style.display = "none";
-								document.getElementById("main_table").style.display = "none";
-								document.getElementById("secondary_table").style.display = "none";
-								document.getElementById("no_results").style.display = "block";
+								hideChartsAndTables();
 							}
 						}
+					}, error: function() {
+						hideChartsAndTables();
 					}
 				});
 			}
