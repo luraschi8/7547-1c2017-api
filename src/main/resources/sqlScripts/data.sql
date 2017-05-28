@@ -26,31 +26,31 @@ insert into Resenia(id,idUsuario,nombreUsuario,fecha,hora,comentario,calificacio
 					(3,2,'Juan Pérez','23/04/2017','15:26','No me gustó',2.0,0,1);
                     
                     
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9124','pepe1@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9125','pepe2@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'9126','pepe3@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9127','pepe4@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9128','pepe5@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'9129','pepe6@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9120','pepe7@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9120','pepe7@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'9120','pepe7@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'9120','pepe7@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9120','pepe7@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','01/01/2017');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9124','pepe1@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9125','pepe2@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'9126','pepe3@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9127','pepe4@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9128','pepe5@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'9129','pepe6@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9120','pepe7@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9120','pepe7@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'9120','pepe7@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (3,'9120','pepe7@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (2,'9120','pepe7@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120','pepe7@gmail.com','2017/01/01');
 
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120',null,'01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120',null,'01/01/2017');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120',null,'2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9120',null,'2017/01/01');
 
 
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe2@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9125','pepe@gmail.com','01/01/2017');
-insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9125',null,'01/01/2017');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9123','pepe2@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9125','pepe@gmail.com','2017/01/01');
+insert into VisitaAtraccion(idAtraccion,idAndroid,idRedSocial,fecha) values (1,'9125',null,'2017/01/01');
 
 /*insert into Usuario(id, nombre, idAndroid, idRedSocial, pais, ultimaFechaConexion) values 
 					(1, 'Jose Gomez', '1111', 'josegomez@gmail.com', 'Argentina', '2017/05/22');

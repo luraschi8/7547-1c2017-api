@@ -1,5 +1,6 @@
 package ar.com.trips.presentacion.rest;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,7 +30,11 @@ public class VisitaControladorRest {
 	@RequestMapping("/visitasJson")
 	public HashMap<String, List<VisitaDTO>> listar() {
 		HashMap<String, List<VisitaDTO>> lista = new HashMap<String, List<VisitaDTO>>();
-		Set<VisitaAtraccion> listaVisitas = visitaAtraccionDao.getAll();
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.YEAR, -1);
+		int month = calendar.get(Calendar.MONTH) + 1;
+		String fechaInicio = calendar.get(Calendar.YEAR) + "/" + month + "/" + calendar.get(Calendar.DAY_OF_MONTH);
+		Set<VisitaAtraccion> listaVisitas = visitaAtraccionDao.getAll(fechaInicio);
 		HashMap<Atraccion, Set<UsuarioDTO>> usuariosAtraccion = getUsuariosUnicos(listaVisitas);
 		List<VisitaDTO> visitasDto = new LinkedList<>();
 		for (Atraccion atraccion : usuariosAtraccion.keySet()) {
@@ -39,7 +44,7 @@ public class VisitaControladorRest {
 			visitasDto.add(visitaDto);
 		}
 		Collections.sort(visitasDto);
-		lista.put(DATA, visitasDto);
+		lista.put(DATA, visitasDto.subList(0, 10));
 		return lista;
 	}
 	

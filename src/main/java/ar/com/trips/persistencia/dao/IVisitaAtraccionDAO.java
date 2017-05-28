@@ -6,6 +6,6 @@ import ar.com.trips.persistencia.modelo.VisitaAtraccion;
 
 public interface IVisitaAtraccionDAO extends IDAO {
 
-	Set<VisitaAtraccion> getAll();
+	Set<VisitaAtraccion> getAll(String fechaInicio);
 
 }

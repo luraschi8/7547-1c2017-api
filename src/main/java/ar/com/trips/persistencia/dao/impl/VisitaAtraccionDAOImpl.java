@@ -12,9 +12,9 @@ import ar.com.trips.persistencia.modelo.VisitaAtraccion;
 public class VisitaAtraccionDAOImpl extends DAOImpl implements IVisitaAtraccionDAO {
 
 	@Override
-	public Set<VisitaAtraccion> getAll() {
+	public Set<VisitaAtraccion> getAll(String fechaInicio) {
 		Session session = sessionFactory.openSession();
-		String query = "FROM " + VisitaAtraccion.class.getName();
+		String query = "FROM " + VisitaAtraccion.class.getName() + " WHERE fecha >= '" + fechaInicio + "'";
 		@SuppressWarnings("unchecked")
 		List<VisitaAtraccion> lista = session.createQuery(query).list();
 		session.close();
