@@ -40,8 +40,21 @@
 
 	<div style="display: inline-block;">
 		<div style="float: left;">
-			<div style="width: 900px; height: 500px;" id="chart_div"></div>
-			<div style="width: 900px; height: 500px; display: none;" id="no_results">
+			<div style="width: 900px; height: 500px; display: none;" id="chart_div"></div>
+			
+			<div id="main_table" class="panel-body atraction-points-of-interest">
+				<table id="tabla" class="display order-column view-atraction-board" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="sortable"></tbody>
+				</table>
+			</div>
+			
+			<div style="width: 900px; height: 500px;" id="no_results">
 				<label style="margin-left: 5%; margin-top: 50px; font-size:25px">
 				No se cuenta con datos para el rango de fechas seleccionado</label>
 			</div>
@@ -61,6 +74,27 @@
 
 google.charts.load('current', {'packages':['corechart']});
 
+var tabla;
+
+function drawMainDatatable(data_main_table) {
+	return $('#tabla').DataTable({
+		dom: 'frtip',
+		data: data_main_table,
+	    columns: [
+	        { title: "Mes" },
+	        { title: "Cantidad de usuarios" }
+	    ],  
+	    "columnDefs": [
+	    	{"className": "dt-center", "targets": [1]}
+	    ],  
+	    select:true,
+	    paging:false,
+	    pageLength:10,
+	    ordering:true,
+	    bFilter: false
+	});
+}
+
 $('#botonBuscar').on('click', function(e) {
 	e.preventDefault();
 	var formData = new FormData();
@@ -79,8 +113,10 @@ $('#botonBuscar').on('click', function(e) {
 				var data_array = [
 					['Mes', '']
 				];
+				var data_table = [];
 				$.each(data.data, function(k, v) {
 				    data_array.push([k, v]);
+				    data_table.push([k, parseInt(v)]);
 				});
 				if (data_array.length > 1) {
 					document.getElementById("no_results").style.display = "none";
@@ -88,11 +124,20 @@ $('#botonBuscar').on('click', function(e) {
 					google.charts.setOnLoadCallback(function() {
 						drawChart(data_array);
 					});
+					
+					if (tabla) {
+						tabla.destroy();
+					}
+					tabla = drawMainDatatable(data_table);
 				} else {
 					document.getElementById("chart_div").style.display = "none";
 					document.getElementById("no_results").style.display = "block";
 				}
 			}
+		},
+		error: function () {
+			document.getElementById("chart_div").style.display = "none";
+			document.getElementById("no_results").style.display = "block";
 		}
 	});
 });
