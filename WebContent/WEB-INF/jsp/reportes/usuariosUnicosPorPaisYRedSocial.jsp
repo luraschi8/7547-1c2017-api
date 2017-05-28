@@ -13,9 +13,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Reportes - Usuarios únicos por país y red social</title>
-	
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -44,10 +41,37 @@
 	<div style="display: inline-block;">
 		<div style="float: left;">
 			<div style="width: 900px; height: 500px; display: none;" id="chart_div"></div>
+			
+			<div id="main_table" class="panel-body atraction-points-of-interest">
+				<table id="tabla" class="display order-column view-atraction-board" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="sortable"></tbody>
+				</table>
+			</div>
+			
 			<div style="width: 900px; height: 500px; display: none;" id="secondary_chart_div"></div>
 			<div style="width: 900px; height: 500px;" id="no_results">
 				<label style="margin-left: 5%; margin-top: 50px; font-size:25px">
 				No se cuenta con datos para el rango de fechas seleccionado</label>
+			</div>
+
+			<div id="secondary_table" class="panel-body atraction-points-of-interest">
+				<table id="tabla_secundaria" class="display order-column view-atraction-board" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th></th>
+							<th style="text-align: center;"></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="sortable"></tbody>
+				</table>
 			</div>
 		</div>
 		
@@ -63,6 +87,48 @@
 	<script type="text/javascript">
 	
 	google.charts.load('current', {'packages':['corechart']});
+
+	var tabla, tabla_secundaria;
+	
+	function drawMainDatatable(data_main_table) {
+		return $('#tabla').DataTable({
+			dom: 'frtip',
+			data: data_main_table,
+		    columns: [
+		        { title: "País" },
+		        { title: "Cantidad de usuarios" }
+		    ],  
+		    "columnDefs": [
+		    	{"className": "dt-center", "targets": [1]}
+		    ],  
+		    select:true,
+		    paging:false,
+		    pageLength:10,
+		    ordering:true,
+		    bFilter: false
+		});
+	}
+
+	function drawSecondaryDatatable(data_secondary_table) {
+		return $('#tabla_secundaria').DataTable({
+			dom: 'frtip',
+			data: data_secondary_table,
+		    columns: [
+		        { title: "País" },
+		        { title: "Cantidad de usuarios" },
+		        { title: "Usuarios logueados con Facebook" },
+		        { title: "Usuarios sin loguear" }
+		    ],
+		    "columnDefs": [
+		    	{"className": "dt-center", "targets": [1, 2, 3]}
+		    ],    
+		    select:true,
+		    paging:false,
+		    pageLength:10,
+		    ordering:true,
+		    bFilter: false
+		});
+	}
 
 	$('#botonBuscar').on('click', function(e) {
 		e.preventDefault();
@@ -82,21 +148,32 @@
 					var data_array = [
 						['País', '']
 					];
-					
+
+					var data_main_table = [];
 					$.each(data, function(k, v) {
 					    data_array.push([k, parseInt(v)]);
+					    data_main_table.push([k, parseInt(v)]);
 					});
 	
 					if (data_array.length > 1) {
+						document.getElementById("main_table").style.display = "block";
+						document.getElementById("secondary_table").style.display = "none";
 						document.getElementById("no_results").style.display = "none";
 						document.getElementById("secondary_chart_div").style.display = "none";
 						document.getElementById("chart_div").style.display = "block";
 						google.charts.setOnLoadCallback(function() {
 							drawCountriesChart(data_array);
 						});
+						
+						if (tabla) {
+							tabla.destroy();
+						}
+						tabla = drawMainDatatable(data_main_table);
 					} else {
 						document.getElementById("chart_div").style.display = "none";
 						document.getElementById("secondary_chart_div").style.display = "none";
+						document.getElementById("main_table").style.display = "none";
+						document.getElementById("secondary_table").style.display = "none";
 						document.getElementById("no_results").style.display = "block";
 					}
 				}
@@ -149,18 +226,30 @@
 							var data_array = [
 								['Tipo acceso', ''],
 								["Facebook", parseInt(cantidades[0])],
-								["Sin login", parseInt(cantidades[1])]
+								["Sin loguear", parseInt(cantidades[1])]
 							];
+							var data_secondary_table = [];
+							data_secondary_table.push([value, parseInt(cantidades[0]) + parseInt(cantidades[1]),
+											parseInt(cantidades[0]), parseInt(cantidades[1])]);
 							if (!(parseInt(cantidades[0]) == 0) || !(parseInt(cantidades[1]) == 0)) {
 								document.getElementById("no_results").style.display = "none";
+								document.getElementById("secondary_table").style.display = "block";
 								document.getElementById("chart_div").style.display = "block";
 								document.getElementById("secondary_chart_div").style.display = "block";
 								google.charts.setOnLoadCallback(function() {
 									drawSelectedCountryChart(data_array);
 								});
+
+								if (tabla_secundaria) {
+									tabla_secundaria.destroy();
+								}
+								tabla_secundaria = drawSecondaryDatatable(data_secondary_table);
+								
 							} else {
 								document.getElementById("chart_div").style.display = "none";
 								document.getElementById("secondary_chart_div").style.display = "none";
+								document.getElementById("main_table").style.display = "none";
+								document.getElementById("secondary_table").style.display = "none";
 								document.getElementById("no_results").style.display = "block";
 							}
 						}
