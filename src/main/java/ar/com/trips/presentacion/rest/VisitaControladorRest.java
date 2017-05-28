@@ -44,7 +44,11 @@ public class VisitaControladorRest {
 			visitasDto.add(visitaDto);
 		}
 		Collections.sort(visitasDto);
-		lista.put(DATA, visitasDto.subList(0, 10));
+		if (visitasDto.size() > 10) {
+			lista.put(DATA, visitasDto.subList(0, 10));
+		} else {
+			lista.put(DATA, visitasDto);
+		}
 		return lista;
 	}
 	
