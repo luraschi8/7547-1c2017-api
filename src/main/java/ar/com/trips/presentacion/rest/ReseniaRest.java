@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.trips.persistencia.dao.IReseniaDAO;
+import ar.com.trips.persistencia.dao.IUsuarioDAO;
 import ar.com.trips.persistencia.modelo.Resenia;
 import ar.com.trips.presentacion.dto.ReseniaDTO;
 
@@ -26,10 +29,13 @@ import ar.com.trips.presentacion.dto.ReseniaDTO;
 public class ReseniaRest {
 	
 	public static final String DATA = "data";
-	public static final String EXISTE = "existe";
+	public static final String EXITO = "exito";
 	
 	@Autowired
 	private IReseniaDAO reseniaDao;
+	
+	@Autowired
+	private IUsuarioDAO usuarioDao;
 	
 	@RequestMapping(path="/reseniasAtraccionJson/{idAtraccion}",method=RequestMethod.GET)
 	public HashMap<String, List<Resenia>> listarReseniasAtraccionNuevo(@PathVariable int idAtraccion) {
@@ -63,16 +69,18 @@ public class ReseniaRest {
 	}
 	
 	@RequestMapping(path="/crearResenia",method=RequestMethod.POST)
-	public HashMap<String, Boolean> crearResenia(@RequestBody Resenia resenia) throws IOException {
-		HashMap<String, Boolean> lista = new HashMap<String, Boolean>();
+	public ResponseEntity<String> crearResenia(@RequestBody Resenia resenia) throws IOException {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Date date = new Date();
 		String[] fechaHora = dateFormat.format(date).split(" ");
 		resenia.setFecha(fechaHora[0]);
 		resenia.setHora(fechaHora[1]);
-		reseniaDao.guardar(resenia);
-		lista.put(EXISTE, true);
-		return lista;
+		if (!reseniaDao.puedeComentar(resenia)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya comento");
+		}
+		resenia.setUsuario(usuarioDao.getByIdRedSocial(resenia.getIdRedSocial()));
+		reseniaDao.guardar(resenia);			
+		return ResponseEntity.ok("{}");
 	}
 	
 	@RequestMapping(path="/borrarResenia",method=RequestMethod.POST)

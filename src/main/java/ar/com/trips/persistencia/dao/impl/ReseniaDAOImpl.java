@@ -71,4 +71,18 @@ public class ReseniaDAOImpl extends DAOImpl implements IReseniaDAO {
 		session.close();
 		return lista;
 	}
+
+	@Override
+	public boolean puedeComentar(Resenia resenia) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Resenia.class.getName() + " a WHERE a.atraccion.id = " + resenia.getAtraccion().getId() 
+				+ " AND a.usuario.idRedSocial = '" + resenia.getIdRedSocial() + "' AND a.borrado = 0";
+		@SuppressWarnings("unchecked")
+		List<Resenia> lista = session.createQuery(query).list();
+		session.close();
+		if (lista.size() > 0) {
+			return false;
+		}
+		return true;
+	}
 }

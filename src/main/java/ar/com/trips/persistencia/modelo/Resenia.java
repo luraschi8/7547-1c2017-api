@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -49,6 +50,9 @@ public class Resenia extends Modelo {
 	
 	@Column(name="calificacion")
 	private float calificacion;
+	
+	@Transient
+	private String idRedSocial;
 
 	public Resenia() {
 		
@@ -124,6 +128,14 @@ public class Resenia extends Modelo {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getIdRedSocial() {
+		return idRedSocial;
+	}
+
+	public void setIdRedSocial(String idRedSocial) {
+		this.idRedSocial = idRedSocial;
 	}
 	
 }

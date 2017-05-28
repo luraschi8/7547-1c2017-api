@@ -17,5 +17,7 @@ public interface IReseniaDAO extends IDAO {
 	void guardar(int id, String comentario);
 
 	List<Resenia> listarPorAtraccionPaginada(int idAtraccion, int pagina);
+
+	boolean puedeComentar(Resenia resenia);
 	
 }
