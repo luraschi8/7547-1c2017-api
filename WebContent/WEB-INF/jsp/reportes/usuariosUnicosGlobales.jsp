@@ -61,15 +61,6 @@
 
 google.charts.load('current', {'packages':['corechart']});
 
-var data_array = [
-	['Mes', '']/* ,
-	[{"v": 1, "f":"01/2017"}, 165],
-	[{"v": 2, "f":"02/2017"}, 135],
-	[{"v": 3, "f":"03/2017"}, 157],
-	[{"v": 4, "f":"04/2017"}, 139],
-	[{"v": 5, "f":"05/2017"}, 136] */
-];
-
 $('#botonBuscar').on('click', function(e) {
 	e.preventDefault();
 	var formData = new FormData();
@@ -85,11 +76,12 @@ $('#botonBuscar').on('click', function(e) {
 		dataType: 'json',
 		success: function (data) {
 			if (data) {
-				var json = $.parseJSON(data);
-				$.each(json, function(k, v) {
+				var data_array = [
+					['Mes', '']
+				];
+				$.each(data.data, function(k, v) {
 				    data_array.push([k, v]);
 				});
-
 				if (data_array.length > 1) {
 					document.getElementById("no_results").style.display = "none";
 					document.getElementById("chart_div").style.display = "block";
