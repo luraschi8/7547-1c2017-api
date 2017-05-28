@@ -14,4 +14,8 @@ public interface IUsuarioDAO extends IDAO {
 
 	List<Usuario> getUsuariosParaRangoFechas(String fechaInicio, String fechaFin);
 
+	List<Usuario> getByIdAndroid(String idAndroid);
+
+	Usuario getByIdRedSocial(String idRedSocial);
+
 }

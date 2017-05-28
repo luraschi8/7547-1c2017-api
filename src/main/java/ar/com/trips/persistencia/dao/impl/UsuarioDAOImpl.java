@@ -26,6 +26,29 @@ public class UsuarioDAOImpl extends DAOImpl implements IUsuarioDAO {
 	}
 	
 	@Override
+	public List<Usuario> getByIdAndroid(String idAndroid) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Usuario.class.getName() + " a WHERE a.idAndroid = '" + idAndroid + "'";
+		@SuppressWarnings("unchecked")
+		List<Usuario> lista = session.createQuery(query).list();
+		session.close();
+		return lista;
+	}
+	
+	@Override
+	public Usuario getByIdRedSocial(String idRedSocial) {
+		Session session = sessionFactory.openSession();
+		String query = "FROM " + Usuario.class.getName() + " a WHERE a.idRedSocial = '" + idRedSocial + "'";
+		@SuppressWarnings("unchecked")
+		List<Usuario> lista = session.createQuery(query).list();
+		session.close();
+		if (lista == null || lista.size() == 0) {
+			return null;
+		}
+		return lista.get(0);
+	}
+	
+	@Override
 	public int getCantidadUsuariosRedSocial(String fechaInicio, String fechaFin, String pais) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + Usuario.class.getName() + " a WHERE a.pais = '" + pais +

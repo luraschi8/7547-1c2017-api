@@ -43,17 +43,36 @@ public class UsuarioControladorRest {
 	
 	@RequestMapping("/accesoUsuario")
 	public ResponseEntity<String> accesoUsuario(@RequestBody UsuarioDTO usuarioDto) {
-		Usuario usuario = usuarioDao.getByIds(usuarioDto.getIdAndroid(),usuarioDto.getIdRedSocial());
-		if (usuario == null) {
-			crearUsuario(usuarioDto);
-		} else {
-			usuario.setUltimaFechaConexion(Fecha.getFecha());
-			usuarioDao.modificar(usuario);
-		}
+		Usuario usuario = getUsuario(usuarioDto);
+		usuario.setUltimaFechaConexion(Fecha.getFecha());
+		usuarioDao.modificar(usuario);
 		return ResponseEntity.ok("{}");
 	}
 	
-	private void crearUsuario(UsuarioDTO usuarioDto) {
+	private Usuario getUsuario(UsuarioDTO usuarioDto) {
+		Usuario usuario = usuarioDao.getByIds(usuarioDto.getIdAndroid(),usuarioDto.getIdRedSocial());
+		if (usuario != null) {
+			return usuario;
+		}
+		usuario = usuarioDao.getByIdRedSocial(usuarioDto.getIdRedSocial());
+		if (usuario != null) {
+			usuario.setIdAndroid(usuarioDto.getIdAndroid());
+			return usuario;
+		}
+		List<Usuario> usuarios = usuarioDao.getByIdAndroid(usuarioDto.getIdAndroid());
+		if (usuarios == null || usuarios.size() == 0) {
+			return crearUsuario(usuarioDto);	
+		} 
+		for (Usuario usuario2 : usuarios) {
+			if (usuario2.getIdRedSocial() == null) {
+				usuario2.setIdRedSocial(usuarioDto.getIdRedSocial());
+				return usuario2;
+			}
+		} 
+		return crearUsuario(usuarioDto);
+	}
+	
+	private Usuario crearUsuario(UsuarioDTO usuarioDto) {
 		Usuario usuario = new Usuario();
 		usuario.setIdAndroid(usuarioDto.getIdAndroid());
 		usuario.setIdRedSocial(usuarioDto.getIdRedSocial());
@@ -61,6 +80,7 @@ public class UsuarioControladorRest {
 		usuario.setPais(usuarioDto.getPais());
 		usuario.setUltimaFechaConexion(Fecha.getFecha());
 		usuarioDao.guardar(usuario);
+		return usuario;
 	}
 	
 	@RequestMapping("/agregarFavorito")
