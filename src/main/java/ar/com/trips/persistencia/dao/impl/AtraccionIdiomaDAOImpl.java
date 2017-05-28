@@ -14,7 +14,7 @@ public class AtraccionIdiomaDAOImpl extends DAOImpl implements IAtraccionIdiomaD
 	public List<AtraccionIdioma> listarPorCiudad(int idCiudad, String idioma) {
 		Session session = sessionFactory.openSession();
 		String query = "FROM " + AtraccionIdioma.class.getName() + " a WHERE a.atraccion.ciudad.id = " + idCiudad 
-				+ " AND a.idioma = '" + idioma + "' AND a.borrado = 0";
+				+ " AND a.idioma = '" + idioma + "' AND a.borrado = 0 AND a.atraccion.borrado = 0";
 		@SuppressWarnings("unchecked")
 		List<AtraccionIdioma> lista = session.createQuery(query).list();
 		session.close();

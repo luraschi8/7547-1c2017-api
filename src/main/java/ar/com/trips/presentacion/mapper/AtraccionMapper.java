@@ -1,5 +1,7 @@
 package ar.com.trips.presentacion.mapper;
 
+import javax.xml.bind.DatatypeConverter;
+
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.presentacion.dto.AtraccionDTO;
@@ -18,6 +20,9 @@ public class AtraccionMapper {
 		dto.setLongitud(atraccion.getAtraccion().getLongitud());
 		dto.setRecorrible(atraccion.getAtraccion().getRecorrible());
 		dto.setIdioma(atraccion.getIdioma());
+		if (atraccion.getAtraccion().getListaImagenes().size() > 0) {
+			dto.setImagen(DatatypeConverter.printBase64Binary(atraccion.getAtraccion().getListaImagenes().get(0).getImagen()));
+		}
 		return dto;
 	}
 	
@@ -28,6 +33,9 @@ public class AtraccionMapper {
 		dto.setLatitud(atraccion.getLatitud());
 		dto.setLongitud(atraccion.getLongitud());
 		dto.setRecorrible(atraccion.getRecorrible());
+		if (atraccion.getListaImagenes().size() > 0) {
+			dto.setImagen(DatatypeConverter.printBase64Binary(atraccion.getListaImagenes().get(0).getImagen()));
+		}
 		return dto;
 	}
 	

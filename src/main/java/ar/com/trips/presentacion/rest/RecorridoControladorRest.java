@@ -85,6 +85,9 @@ public class RecorridoControladorRest {
 		String url = request.getRequestURL().toString();
 		url = url.substring(0, url.indexOf("recorrido"));
 		RecorridoDTO dto = RecorridoMapper.map(a);
+		if (a.getAudio() != null) {
+			dto.setAudio(url + "audioRecorrido?id=" + a.getId());
+		}
 		lista.put(DATA, dto);
 		return lista;
 	}
@@ -121,21 +124,11 @@ public class RecorridoControladorRest {
 		HashMap<String, Set<AtraccionDTO>> lista = new HashMap<String, Set<AtraccionDTO>>();
 		Recorrido recorrido = recorridoDao.get(idRecorrido);
 		Set<AtraccionDTO> listaRetorno = new LinkedHashSet<>();
-
-		Set<Atraccion> lista_auxiliar = new LinkedHashSet<>();
-		recorrido.getListaAtraccionesEnElRecorrido().clear();
 		String atracciones_separadas[] = recorrido.getAtraccionesOrdenadas().split(",");
 		for (int i = 0; i < atracciones_separadas.length; i++) {
 			Atraccion atraccion  = atraccionDao.get(Long.parseLong(atracciones_separadas[i]));
-			lista_auxiliar.add(atraccion);
-		}
-		recorrido.setListaAtraccionesEnElRecorrido(lista_auxiliar);
-
-		for (Atraccion a : recorrido.getListaAtraccionesEnElRecorrido()) {
-			AtraccionDTO dto = AtraccionMapper.map(a);
-			if (a.getListaImagenes().size() > 0) {
-				dto.setImagen(DatatypeConverter.printBase64Binary(a.getListaImagenes().get(0).getImagen()));
-			}
+			AtraccionDTO dto = AtraccionMapper.map(atraccion);
+			dto.setOrden(new Long(i+1));
 			listaRetorno.add(dto);
 		}
 		lista.put(DATA, listaRetorno);

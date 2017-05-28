@@ -19,8 +19,10 @@ import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IUsuarioDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.Usuario;
+import ar.com.trips.presentacion.dto.AtraccionDTO;
 import ar.com.trips.presentacion.dto.FavoritoDTO;
 import ar.com.trips.presentacion.dto.UsuarioDTO;
+import ar.com.trips.presentacion.mapper.AtraccionMapper;
 import ar.com.trips.util.Fecha;
 
 @RestController
@@ -101,15 +103,19 @@ public class UsuarioControladorRest {
 	}
 	
 	@RequestMapping("/usuarioFavoritos")
-	public HashMap<String, Set<Atraccion>> usuarioFavoritos(@RequestBody FavoritoDTO favoritoDto) {
+	public HashMap<String, Set<AtraccionDTO>> usuarioFavoritos(@RequestBody FavoritoDTO favoritoDto) {
 		Usuario usuario = usuarioDao.getByIds(favoritoDto.getIdAndroid(),favoritoDto.getIdRedSocial());
-		Set<Atraccion> listaAtracciones = new LinkedHashSet<Atraccion>();
-		for (Atraccion a : usuario.getListaAtraccionesFavoritas()) {
-			if (a.getCiudad().getId() == favoritoDto.getIdCiudad()) {
-				listaAtracciones.add(a);
+		Set<AtraccionDTO> listaAtracciones = new LinkedHashSet<AtraccionDTO>();
+		if (usuario.getListaAtraccionesFavoritas() != null && usuario.getListaAtraccionesFavoritas().size() != 0) {
+			for (Atraccion a : usuario.getListaAtraccionesFavoritas()) {
+				if (a.getCiudad().getId() == favoritoDto.getIdCiudad()) {
+					AtraccionDTO atraccion = AtraccionMapper.map(a);
+					atraccion.setFavorito(true);
+					listaAtracciones.add(atraccion);
+				}
 			}
 		}
-		HashMap<String, Set<Atraccion>> lista = new HashMap<String, Set<Atraccion>>();
+		HashMap<String, Set<AtraccionDTO>> lista = new HashMap<String, Set<AtraccionDTO>>();
 		lista.put(DATA, listaAtracciones);
 		return lista;
 	}

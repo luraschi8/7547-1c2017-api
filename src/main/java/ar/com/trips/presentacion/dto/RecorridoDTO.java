@@ -13,6 +13,8 @@ public class RecorridoDTO {
 	private int borrado;
 	
 	private String idioma;
+	
+	private String audio;
 
 	public long getId() {
 		return id;
@@ -61,4 +63,13 @@ public class RecorridoDTO {
 	public void setIdioma(String idioma) {
 		this.idioma = idioma;
 	}
+
+	public String getAudio() {
+		return audio;
+	}
+
+	public void setAudio(String audio) {
+		this.audio = audio;
+	}
+	
 }

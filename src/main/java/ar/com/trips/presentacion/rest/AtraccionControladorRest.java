@@ -26,6 +26,7 @@ import ar.com.trips.persistencia.dao.IVisitaAtraccionDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
 import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.ImagenAtraccion;
+import ar.com.trips.persistencia.modelo.Usuario;
 import ar.com.trips.persistencia.modelo.VisitaAtraccion;
 import ar.com.trips.presentacion.dto.AtraccionDTO;
 import ar.com.trips.presentacion.dto.UsuarioDTO;
@@ -66,9 +67,6 @@ public class AtraccionControladorRest {
 		List<Atraccion> list = atraccionDao.listarPorCiudad(idCiudad);
 		for (Atraccion a : list) {
 			AtraccionDTO atraccion = AtraccionMapper.map(a);
-			if (a.getListaImagenes().size() > 0) {
-				atraccion.setImagen(DatatypeConverter.printBase64Binary(a.getListaImagenes().get(0).getImagen()));
-			}
 			listaAtracciones.add(atraccion);
 		}
 		lista.put(DATA, listaAtracciones);
@@ -76,19 +74,34 @@ public class AtraccionControladorRest {
 	}
 	
 	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}/{idioma}",method=RequestMethod.GET)
-	public HashMap<String, List<AtraccionDTO>> listarAtraccionesCiudadIdioma(@PathVariable int idCiudad,@PathVariable String idioma) {
+	public HashMap<String, List<AtraccionDTO>> listarAtraccionesCiudadIdiomaGet(@PathVariable int idCiudad,@PathVariable String idioma) {
 		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
 		List<AtraccionDTO> listaAtracciones = new ArrayList<>();
 		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad(idCiudad,idioma);
 		for (AtraccionIdioma a : list) {
 			AtraccionDTO atraccion = AtraccionMapper.map(a);
-			if (a.getAtraccion().getListaImagenes().size() > 0) {
-				atraccion.setImagen(DatatypeConverter.printBase64Binary(a.getAtraccion().getListaImagenes().get(0).getImagen()));
+			listaAtracciones.add(atraccion);
+		}
+		lista.put(DATA, listaAtracciones);
+		return lista;
+	}	
+	
+	@RequestMapping(path="/atraccionesCiudadJson/{idCiudad}/{idioma}",method=RequestMethod.POST)
+	public HashMap<String, List<AtraccionDTO>> listarAtraccionesCiudadIdioma(@PathVariable int idCiudad,@PathVariable String idioma,
+			@RequestBody(required=false) UsuarioDTO usuarioDto ) {
+		HashMap<String, List<AtraccionDTO>> lista = new HashMap<String, List<AtraccionDTO>>();
+		List<AtraccionDTO> listaAtracciones = new ArrayList<>();
+		List<AtraccionIdioma> list = atraccionIdiomaDao.listarPorCiudad(idCiudad,idioma);
+		for (AtraccionIdioma a : list) {
+			AtraccionDTO atraccion = AtraccionMapper.map(a);
+			atraccion.setFavorito(false);
+			for (Usuario usuario : a.getAtraccion().getListaUsuarios()) {
+				if (usuario.getIdRedSocial().equals(usuarioDto.getIdRedSocial())) {
+					atraccion.setFavorito(true);
+					break;
+				}
 			}
-			Atraccion atraccion_aux = atraccionDao.get(atraccion.getIdAtraccion());
-			if (atraccion_aux.getBorrado() == 0) {
-				listaAtracciones.add(atraccion);
-			}
+			listaAtracciones.add(atraccion);
 		}
 		lista.put(DATA, listaAtracciones);
 		return lista;

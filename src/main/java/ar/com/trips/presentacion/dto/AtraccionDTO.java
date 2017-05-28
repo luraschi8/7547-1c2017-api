@@ -40,6 +40,10 @@ public class AtraccionDTO {
 	private String imagen;
 	
 	private Idioma idioma;
+	
+	private boolean favorito;
+	
+	private Long orden;
 
 	public long getId() {
 		return id;
@@ -175,6 +179,22 @@ public class AtraccionDTO {
 
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
+	}
+
+	public boolean isFavorito() {
+		return favorito;
+	}
+
+	public void setFavorito(boolean favorito) {
+		this.favorito = favorito;
+	}
+
+	public Long getOrden() {
+		return orden;
+	}
+
+	public void setOrden(Long orden) {
+		this.orden = orden;
 	}
 	
 }

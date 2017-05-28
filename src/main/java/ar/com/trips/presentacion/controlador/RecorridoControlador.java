@@ -90,11 +90,7 @@ public class RecorridoControlador {
 		r.setCiudad(ciudad);
 		recorrido.setBorrado(0);
 		recorrido.setIdioma(Idioma.valueOf(idioma));
-		try {
-			recorrido.setAudio(audio.getBytes());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		guardarAudio(recorrido,audio);
 		agregarAtracciones(r, atracciones);
 		recorridoDao.guardar(r);
 		return "redirect:/ciudadVer?idCiudad=" + idCiudad;
