@@ -40,8 +40,8 @@
 
 	<div style="display: inline-block;">
 		<div style="float: left;">
-			<div style="width: 900px; height: 500px;" id="chart_div"></div>
-			<div style="width: 900px; height: 500px; display: none;" id="no_results">
+			<div style="width: 900px; height: 500px; display: none;" id="chart_div"></div>
+			<div style="width: 900px; height: 500px;" id="no_results">
 				<label style="margin-left: 5%; margin-top: 50px; font-size:25px">
 				No se cuenta con datos para el rango de fechas seleccionado</label>
 			</div>
@@ -93,6 +93,10 @@ $('#botonBuscar').on('click', function(e) {
 					document.getElementById("no_results").style.display = "block";
 				}
 			}
+		},
+		error: function () {
+			document.getElementById("chart_div").style.display = "none";
+			document.getElementById("no_results").style.display = "block";
 		}
 	});
 });
