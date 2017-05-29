@@ -135,6 +135,27 @@ public class RecorridoControladorRest {
 		return lista;
 	}
 	
+	@RequestMapping(path="/atraccionesRecorridoJson/{idRecorrido}/{idioma}", method=RequestMethod.GET)
+	public HashMap<String, Set<AtraccionDTO>> listarAtraccionesRecorrido(@PathVariable Long idRecorrido,@PathVariable String idioma) {
+		HashMap<String, Set<AtraccionDTO>> lista = new HashMap<String, Set<AtraccionDTO>>();
+		Recorrido recorrido = recorridoDao.get(idRecorrido);
+		Set<AtraccionDTO> listaRetorno = new LinkedHashSet<>();
+		String atracciones_separadas[] = recorrido.getAtraccionesOrdenadas().split(",");
+		for (int i = 0; i < atracciones_separadas.length; i++) {
+			Atraccion atraccion  = atraccionDao.get(Long.parseLong(atracciones_separadas[i]));
+			for (AtraccionIdioma a : atraccion.getListaAtraccionIdioma()) {
+				if (a.getIdioma().toString().equals(idioma)) {
+					AtraccionDTO dto = AtraccionMapper.map(a);
+					dto.setOrden(new Long(i+1));
+					listaRetorno.add(dto);
+					break;
+				}
+			}
+		}
+		lista.put(DATA, listaRetorno);
+		return lista;
+	}
+	
 	@RequestMapping(path="/atraccionesFueraRecorridoJson/{idRecorrido}", method=RequestMethod.GET)
 	public HashMap<String, Collection<AtraccionDTO>> listarAtraccionesFueraRecorrido(@PathVariable Long idRecorrido) {
 		HashMap<String, Collection<AtraccionDTO>> lista = new HashMap<String, Collection<AtraccionDTO>>();
