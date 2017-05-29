@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.trips.persistencia.dao.IAtraccionDAO;
 import ar.com.trips.persistencia.dao.IUsuarioDAO;
 import ar.com.trips.persistencia.modelo.Atraccion;
+import ar.com.trips.persistencia.modelo.AtraccionIdioma;
 import ar.com.trips.persistencia.modelo.Usuario;
 import ar.com.trips.presentacion.dto.AtraccionDTO;
 import ar.com.trips.presentacion.dto.FavoritoDTO;
@@ -102,16 +104,21 @@ public class UsuarioControladorRest {
 		return ResponseEntity.ok("{}");
 	}
 	
-	@RequestMapping("/usuarioFavoritos")
-	public HashMap<String, Set<AtraccionDTO>> usuarioFavoritos(@RequestBody FavoritoDTO favoritoDto) {
-		Usuario usuario = usuarioDao.getByIds(favoritoDto.getIdAndroid(),favoritoDto.getIdRedSocial());
+	@RequestMapping("/usuarioFavoritos/{idioma}")
+	public HashMap<String, Set<AtraccionDTO>> usuarioFavoritos(@RequestBody FavoritoDTO favoritoDto,@PathVariable String idioma) {
+		Usuario usuario = usuarioDao.getByIdRedSocial(favoritoDto.getIdRedSocial());
 		Set<AtraccionDTO> listaAtracciones = new LinkedHashSet<AtraccionDTO>();
 		if (usuario.getListaAtraccionesFavoritas() != null && usuario.getListaAtraccionesFavoritas().size() != 0) {
 			for (Atraccion a : usuario.getListaAtraccionesFavoritas()) {
 				if (a.getCiudad().getId() == favoritoDto.getIdCiudad()) {
-					AtraccionDTO atraccion = AtraccionMapper.map(a);
-					atraccion.setFavorito(true);
-					listaAtracciones.add(atraccion);
+					for (AtraccionIdioma aIdioma : a.getListaAtraccionIdioma()) {
+						if (aIdioma.getIdioma().toString().equals(idioma)) {
+							AtraccionDTO atraccion = AtraccionMapper.map(aIdioma);
+							atraccion.setFavorito(true);
+							listaAtracciones.add(atraccion);
+							break;
+						}
+					}
 				}
 			}
 		}
