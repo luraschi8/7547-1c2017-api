@@ -120,6 +120,7 @@ $('#botonBuscar').on('click', function(e) {
 				});
 				if (data_array.length > 1) {
 					document.getElementById("no_results").style.display = "none";
+					document.getElementById("table").style.display = "block";
 					document.getElementById("chart_div").style.display = "block";
 					google.charts.setOnLoadCallback(function() {
 						drawChart(data_array);

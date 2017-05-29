@@ -190,6 +190,28 @@ public class UsuarioControladorRest {
 			cantidad++;
 			cantidadPorMes.put(mes, cantidad);
 		}
+		
+		
+		String inicio_string[] = fechaInicio.split("/");
+		String fin_string[] = fechaFin.split("/");
+		Long inicio[] = new Long[3], fin[] = new Long[3];
+		for (int i = 0; i < inicio_string.length; i++) {
+			inicio[i] = Long.parseLong(inicio_string[i]);
+			fin[i] = Long.parseLong(fin_string[i]);
+		}
+		
+		Long meses;
+		if ((fin[0] - inicio[0]) == 0) {
+			meses = (fin[1] - inicio[1] + 1L);
+		} else {
+			meses = (fin[1] + 12L - inicio[1]);
+		}
+		for (Long i = 0L; i < meses; i++) {
+			if (!cantidadPorMes.containsKey(i + 1L)) {
+				cantidadPorMes.put(i + 1L, 0L);
+			}
+		}
+
 		lista.put(DATA, cantidadPorMes);
 		return lista;
 	}
