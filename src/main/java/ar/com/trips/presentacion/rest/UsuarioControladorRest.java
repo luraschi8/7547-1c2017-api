@@ -157,10 +157,10 @@ public class UsuarioControladorRest {
 	}
 	
 	@RequestMapping(path="/cantidadUsuarios", method=RequestMethod.POST)
-	public HashMap<String, HashMap<String,Long>> getCantidadUsuarios(@RequestParam("fechaInicio") String fechaInicio,
+	public HashMap<String, HashMap<Long,Long>> getCantidadUsuarios(@RequestParam("fechaInicio") String fechaInicio,
 			@RequestParam("fechaFin") String fechaFin) {
-		HashMap<String, HashMap<String,Long>> lista = new HashMap<String, HashMap<String,Long>>();
-		HashMap<String,Long> cantidadPorMes = new HashMap<String,Long>();
+		HashMap<String, HashMap<Long,Long>> lista = new HashMap<String, HashMap<Long,Long>>();
+		HashMap<Long,Long> cantidadPorMes = new HashMap<Long,Long>();
 		List<Usuario> usuarios = usuarioDao.getUsuariosParaRangoFechas(fechaInicio, fechaFin);
 		for (Usuario usuario : usuarios) {
 			String fechaUsuario[] = usuario.getUltimaFechaConexion().split("/");
@@ -188,7 +188,7 @@ public class UsuarioControladorRest {
 				cantidad = 0L;
 			}
 			cantidad++;
-			cantidadPorMes.put(mes.toString(), cantidad);
+			cantidadPorMes.put(mes, cantidad);
 		}
 		lista.put(DATA, cantidadPorMes);
 		return lista;
