@@ -42,7 +42,7 @@
 		<div style="float: left;">
 			<div style="width: 900px; height: 500px; display: none;" id="chart_div"></div>
 			
-			<div id="main_table" class="panel-body atraction-points-of-interest">
+			<div id="table" class="panel-body atraction-points-of-interest">
 				<table id="tabla" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 					<thead>
 						<tr>
@@ -76,10 +76,10 @@ google.charts.load('current', {'packages':['corechart']});
 
 var tabla;
 
-function drawMainDatatable(data_main_table) {
+function drawMainDatatable(data_table) {
 	return $('#tabla').DataTable({
 		dom: 'frtip',
-		data: data_main_table,
+		data: data_table,
 	    columns: [
 	        { title: "Mes" },
 	        { title: "Cantidad de usuarios" }
@@ -131,12 +131,14 @@ $('#botonBuscar').on('click', function(e) {
 					tabla = drawMainDatatable(data_table);
 				} else {
 					document.getElementById("chart_div").style.display = "none";
+					document.getElementById("table").style.display = "none";
 					document.getElementById("no_results").style.display = "block";
 				}
 			}
 		},
 		error: function () {
 			document.getElementById("chart_div").style.display = "none";
+			document.getElementById("table").style.display = "none";
 			document.getElementById("no_results").style.display = "block";
 		}
 	});
