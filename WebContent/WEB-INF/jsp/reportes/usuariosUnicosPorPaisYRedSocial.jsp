@@ -42,6 +42,11 @@
 		<div style="float: left;">
 			<div style="width: 900px; height: 500px; display: none;" id="chart_div"></div>
 			
+			<div style="width: 900px; height: 500px;" id="no_results">
+				<label style="margin-left: 5%; margin-top: 50px; font-size:25px">
+				No se cuenta con datos para el rango de fechas seleccionado</label>
+			</div>
+			
 			<div id="main_table" class="panel-body atraction-points-of-interest">
 				<table id="tabla" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 					<thead>
@@ -55,10 +60,6 @@
 			</div>
 			
 			<div style="width: 900px; height: 500px; display: none;" id="secondary_chart_div"></div>
-			<div style="width: 900px; height: 500px;" id="no_results">
-				<label style="margin-left: 5%; margin-top: 50px; font-size:25px">
-				No se cuenta con datos para el rango de fechas seleccionado</label>
-			</div>
 
 			<div id="secondary_table" class="panel-body atraction-points-of-interest">
 				<table id="tabla_secundaria" class="display order-column view-atraction-board" cellspacing="0" width="100%">

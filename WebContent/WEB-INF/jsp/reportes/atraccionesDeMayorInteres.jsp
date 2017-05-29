@@ -40,6 +40,11 @@
 
 	<div id="chart_div" style="width: 900px; height: 500px;"></div>
 	
+	<div style="width: 900px; height: 500px; display: none;" id="no_results">
+		<label style="margin-left: 5%; margin-top: 50px; font-size:25px">
+		No se cuenta con datos para mostrar</label>
+	</div>
+	
 	<div class="panel-body atraction-points-of-interest">
 		<table id="tablita" class="display order-column view-atraction-board" cellspacing="0" width="100%">
 			<thead>
@@ -78,11 +83,16 @@ $.ajax({
 			data_array.push([this.nombre,this.cantVisitas]);
 			dataSet.push([this.nombre,this.cantVisitas]);
 		})
-		google.charts.load('current', {'packages':['corechart']});
-		google.charts.setOnLoadCallback(function() {
-			drawChart(data_array);
-		});
-		drawDatatable(dataSet);
+		if (dataSet.length != 0) {
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(function() {
+				drawChart(data_array);
+			});
+			drawDatatable(dataSet);
+		} else {
+			document.getElementById("chart_div").style.display = "none";
+			document.getElementById("no_results").style.display = "block";
+		}
 	}
 });
 	 
@@ -97,7 +107,7 @@ function drawDatatable(dataSet) {
 	    select:true,
 	    paging:false,
 	    pageLength:10,
-	    ordering:true,
+	    "order": [[1, "desc"]],
 	    bFilter: false
 	});
 }
